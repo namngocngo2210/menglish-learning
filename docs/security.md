@@ -4,9 +4,9 @@ Giai đoạn 1 **học sinh công khai không cần tài khoản**, không có t
 
 ## Ranh giới quản trị một chủ — thiết kế, chưa triển khai
 
-- Bản thiết kế v2 ở `docs/previews/sky-blue-v2/` chỉ dùng mock data và state trong bộ nhớ. Màn hình đăng nhập mẫu không xác thực; hash/route frontend không phải biện pháp bảo mật. Không nhập mật khẩu thật, không lưu mật khẩu/token; bản static export không có vùng quản trị được bảo vệ.
+- Quản trị chỉ có **một chủ sở hữu**, không nhân viên/vai trò; học sinh công khai không cần tài khoản. Fixture thiết kế ở `docs/previews/sky-blue-v2/` chỉ dùng mock data và state trong bộ nhớ. Màn hình đăng nhập mẫu không xác thực; hash/route frontend không phải biện pháp bảo mật. Không nhập mật khẩu thật, không lưu mật khẩu/token; bản static export không có vùng quản trị được bảo vệ.
 - Khi được chủ sở hữu phê duyệt triển khai riêng: đăng nhập/session phía server cho **một chủ**, kiểm tra xác thực và phân quyền trên **mọi API admin** (không chỉ ẩn menu), cookie phiên `HttpOnly`, `Secure`, `SameSite` thích hợp; chống CSRF khi dùng cookie, xoay vòng/hủy phiên, rate limit đăng nhập và hành động nhạy cảm.
-- Validate dữ liệu/giới hạn kích thước và tốc độ; audit các thao tác publish/delete/crawl/config, không ghi bí mật hay dữ liệu cá nhân không cần thiết.
+- Validate dữ liệu/giới hạn kích thước và tốc độ; audit log (bảng `audit_log`) cho thao tác publish/delete/crawl/config, không ghi bí mật hay dữ liệu cá nhân không cần thiết.
 - Cấu hình nguồn không cho phép fetch URL tùy ý: cần allowlist nguồn/giao thức, kiểm tra DNS/IP và từng redirect, chặn loopback/private/link-local/metadata, giới hạn timeout/kích thước/kiểu nội dung để chống SSRF. Không coi validation ở frontend là đủ.
 - Ingestion luôn **quarantine/draft → chủ sở hữu kiểm tra nguồn, giấy phép và nội dung → publish**; không auto-publish sau crawl hoặc parse thành công.
 - Auth, schema, API admin, worker/crawler và cơ chế bảo vệ trên là **khoảng trống kiến trúc**, không được triển khai hay khẳng định hoạt động trong PR thiết kế. Cần chủ sở hữu duyệt riêng trước khi thực hiện.

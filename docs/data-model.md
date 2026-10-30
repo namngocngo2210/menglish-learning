@@ -2,13 +2,69 @@
 
 Migration bằng `goose` trong `db/migrations`, truy vấn sinh bằng `sqlc` từ `db/queries`.
 
-## Khoảng trống thiết kế CMS một chủ — chưa có migration
+## Thiết kế CMS một chủ — đề xuất, chưa có migration
 
-Bản preview UI v2 không dùng database và không triển khai schema. Các bảng bên dưới là đề xuất ban đầu, **chưa đủ cho CMS**: `questions.status = active/hidden/reported` không mô tả vòng đời kiểm duyệt. Thiết kế tiếp theo cần phân biệt ingestion quarantine, draft, owner review và published; lưu giấy phép/ghi nguồn + lịch sử duyệt, crawl jobs/failure, preset và audit publish/delete/crawl/config. Chỉ nội dung đã được chủ kiểm tra mới có thể publish, không auto-publish. Một tài khoản owner/session phía server cần thiết kế bảo mật riêng, không trộn với tài khoản học sinh giai đoạn 2.
+Bản preview UI không dùng database. Phần này và các bảng bên dưới là **thiết kế đề xuất**, chưa có migration/SQL được duyệt; schema thực tế cần phê duyệt riêng của chủ sở hữu. Không có admin nhiều người: chỉ một tài khoản chủ, tách khỏi tài khoản phụ huynh/học sinh của giai đoạn 2.
 
-Đây chỉ là ghi nhận khoảng trống; chưa chốt bảng/enum/API mới và không sửa SQL bên dưới thành schema đã duyệt. Auth/schema/API thực tế cần phê duyệt riêng của chủ sở hữu. Không có lời hứa bảo vệ dữ liệu từ bản static export.
+Vòng đời nội dung thay thế `questions.status = active/hidden/reported` (áp tương tự cho `passages`):
 
-## Bảng giai đoạn 1
+`review_status`: `quarantine` (mới crawl/import) → `draft` (đang soạn/sửa) → `in_review` (chờ chủ) → `published`; ngoài ra `rejected`, `archived`. Chỉ `published` mới hiện cho học sinh và đưa vào đề. Crawler chỉ được ghi `quarantine`; chuyển sang `published` chỉ do hành động của chủ, có ghi `audit_log`. Không auto-publish.
+
+Bảng bổ sung (thiết kế):
+
+```sql
+admin_users (                            -- đúng 1 dòng (chủ); không bảng roles
+  id            bigserial PK,
+  email         text UNIQUE NOT NULL,
+  password_hash text NOT NULL,           -- argon2id
+  created_at    timestamptz NOT NULL DEFAULT now(),
+  last_login_at timestamptz NULL
+)
+admin_sessions (                         -- session phía server, cookie chỉ giữ token ngẫu nhiên
+  id            text PK,                 -- hash của token phiên
+  admin_user_id bigint FK admin_users,
+  csrf_secret   text NOT NULL,
+  created_at    timestamptz NOT NULL, expires_at timestamptz NOT NULL, revoked_at timestamptz NULL
+)
+
+-- sources (mở rộng): + allowed_hosts text[] NOT NULL (allowlist chống SSRF),
+--   license_checked_at timestamptz NULL, enabled boolean NOT NULL DEFAULT false
+
+crawl_jobs (
+  id bigserial PK, source_id bigint FK sources,
+  status text NOT NULL,                  -- queued | running | succeeded | failed | cancelled
+  started_at timestamptz, finished_at timestamptz,
+  fetched_count int NOT NULL DEFAULT 0, quarantined_count int NOT NULL DEFAULT 0, error_count int NOT NULL DEFAULT 0
+)
+crawl_errors (
+  id bigserial PK, crawl_job_id bigint FK crawl_jobs, url text, kind text, message text, created_at timestamptz
+)
+
+-- passages, questions: + review_status text NOT NULL DEFAULT 'quarantine',
+--   reviewed_at timestamptz NULL, published_at timestamptz NULL, review_note text NULL
+--   (thay cột status cũ của questions)
+
+mixer_presets (
+  id bigserial PK, name text NOT NULL, grade smallint NOT NULL, skill text NULL,
+  config jsonb NOT NULL,                 -- số câu, phân bổ độ khó, nhóm bài đọc
+  created_at timestamptz NOT NULL DEFAULT now()
+)
+
+-- question_reports (mở rộng): + status text NOT NULL DEFAULT 'open'  -- open | resolved | dismissed
+--   handled_at timestamptz NULL, handled_note text NULL
+
+audit_log (
+  id bigserial PK, admin_user_id bigint FK admin_users NULL,
+  action text NOT NULL,                  -- publish | delete | crawl_start | source_config | login ...
+  entity_type text NOT NULL, entity_id bigint NULL,
+  details jsonb NULL,                    -- không ghi bí mật/PII không cần thiết
+  ip_hash text NULL, created_at timestamptz NOT NULL DEFAULT now()
+)
+```
+
+Thống kê cơ bản và báo cáo câu sai tính từ `attempts` và `question_reports`. `audit_log` chỉ thêm, không sửa/xóa qua API.
+
+## Bảng giai đoạn 1 (bản đầu, sẽ cập nhật theo thiết kế trên)
 
 ```sql
 sources (
@@ -64,7 +120,7 @@ questions (
   source_url    text NOT NULL,
   source_ref    text NULL,              -- năm/tỉnh/mã đề/câu số, id câu Tatoeba...
   stem_hash     text UNIQUE NOT NULL,   -- chống trùng (stem chuẩn hóa)
-  status        text NOT NULL DEFAULT 'active',  -- active | hidden | reported
+  status        text NOT NULL DEFAULT 'active',  -- bản đầu; sẽ thay bằng review_status (xem trên)
   created_at    timestamptz NOT NULL DEFAULT now()
 )
 

@@ -3,11 +3,13 @@
 Website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, tạm chạy ở `beta.meducation.vn`).
 Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng miễn phí không cần đăng nhập, có quảng cáo. Nghe/nói làm sau. Chủ sở hữu duy nhất quản trị nội dung cần đăng nhập riêng phía server; không có đội biên tập hay nhiều vai trò.
 
-## Bổ sung thiết kế UI v2 — chưa triển khai
+## Thiết kế giao diện và admin — chưa triển khai
 
-Fixture `docs/previews/sky-blue-v2/` là Next.js static export riêng để duyệt giao diện, dùng shadcn/ui + Tailwind + Lucide, không phải ứng dụng `web/` hay CMS thật. Màn hình admin/login là mock, không bảo vệ route/API, không lưu credential/session; không có backend, crawl, analytics hay quảng cáo chạy thật.
-
-Thiết kế tương lai phải bổ sung server-side owner login/session, authorization mọi API admin, secure cookie/CSRF phù hợp, audit publish/delete/crawl/config, validation/rate limit và chống SSRF cho cấu hình nguồn (xem [security.md](security.md)). Luồng nội dung: **quarantine/draft → owner review → publish**, không tự xuất bản sau ingestion. Schema/API/session/worker thật cần phê duyệt riêng; PR thiết kế không thực hiện những thay đổi đó. Các phần kiến trúc bên dưới vẫn là kế hoạch tương lai, không phải năng lực đã có của preview.
+- Hướng thị giác: họ màu cam/navy MEnglish, Be Vietnam Pro; xanh da trời chỉ là lịch sử. Chi tiết và trạng thái duyệt: [ui-design.md](ui-design.md).
+- Toolchain `web/` (thiết kế): Next.js + Tailwind CSS + shadcn/ui + Lucide; giao diện do Gemini qua `agy` tạo. Fixture `docs/previews/sky-blue-v2/` chỉ để duyệt thiết kế (static export, mock, không bảo vệ route/API, không credential/session), không phải `web/` hay CMS thật.
+- **Admin một chủ** (không nhân viên/vai trò) thuộc cùng `web` + `api`, tách hoàn toàn khỏi học sinh (học sinh không đăng nhập). Cần: server-side login/session, authorization mọi API admin (`/api/v1/admin/*` thiết kế), secure cookie/CSRF, audit publish/delete/crawl/config, validation/rate limit, chống SSRF cho cấu hình nguồn ([security.md](security.md)).
+- Luồng nội dung: **crawler → quarantine/draft → chủ duyệt → publish**, không tự xuất bản. Crawler chỉ ghi trạng thái quarantine; chỉ hành động của chủ mới chuyển sang published. Bảng dữ liệu: [data-model.md](data-model.md).
+- Schema/API/session/worker thật cần phê duyệt riêng; các phần kiến trúc bên dưới là kế hoạch tương lai.
 
 ## Sơ đồ
 
@@ -68,6 +70,8 @@ docs/       tài liệu thiết kế (thư mục này)
 | POST | `/api/v1/attempts` | Nộp bài (token + đáp án chọn) → điểm, đáp án đúng, giải thích, nguồn |
 | GET  | `/api/v1/internal/sitemap` | Dữ liệu sitemap (chỉ gọi nội bộ, có khóa) |
 | GET  | `/healthz`, `/readyz` | Health check |
+
+API admin (một chủ, cần phiên hợp lệ; **thiết kế, chưa chốt chi tiết**) nằm dưới `/api/v1/admin/*`: nguồn, crawl job, ngân hàng bài/câu, hàng đợi duyệt, đề + preset, báo cáo, thống kê.
 
 Lỗi trả JSON thống nhất `{ "error": { "code", "message" } }`, không lộ chi tiết nội bộ.
 

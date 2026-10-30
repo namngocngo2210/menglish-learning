@@ -1,24 +1,54 @@
-# Tài Liệu Thiết Kế Giao Diện v2 (UI Design Specification)
+# Thiết kế giao diện (UI design)
 
-> **HƯỚNG MỚI NHẤT — CAM/NAVY, KHÔNG CÒN SKY BLUE:** Chủ sở hữu yêu cầu dùng họ màu MEnglish, không đổi tên/logo. Hai màn đại diện tĩnh ở `previews/sky-blue-v2/app/direction/`: home và admin một chủ, mỗi màn có PNG1440/390. Token tham chiếu: trang trí `#f5691a`, CTA `#c2410c` chữ trắng, chữ/viền `#a23f00`, navy `#111a2b` / `#1b2a4a`, nền `#f9f9ff`/trắng, bề mặt ấm `#fff7ed` / `#fff3eb`, font **Be Vietnam Pro** đóng gói cục bộ. Home đổi bố cục thành workbook chú giải làm điểm nhấn; admin tập trung lượt duyệt thủ công, không chỉ thay màu hàng loạt.
->
-> **Chỉ chờ duyệt hướng thẩm mỹ đại diện:** không yêu cầu demo bấm thử; chưa triển khai website. Không tiếp tục polish tất cả màn trước khi chủ duyệt hướng mới. Source và24ảnh xanh trước đó giữ làm lịch sử, không phải hướng đang đề xuất. Các phần SKY BLUE/luồng mock bên dưới mô tả vòng trước, không được hiểu là yêu cầu màu hiện hành. Xem `previews/sky-blue-v2/verification.md` cho bằng chứng và giới hạn.
+> **Trạng thái: THIẾT KẾ, chưa triển khai website.** Chủ sở hữu chưa duyệt thẩm mỹ. Tài liệu này không khẳng định bất kỳ tính năng production nào đã có.
 
-> **Phạm vi chủ sở hữu cập nhật:** chỉ duyệt **ảnh thiết kế tĩnh PNG desktop/mobile** cho học sinh và admin một chủ; **không cần demo bấm thử**. Source Next.js/shadcn/Tailwind/Lucide đã tạo được giữ để tái tạo ảnh, không phải yêu cầu hoàn thiện tương tác hay triển khai website. Các điều khiển mock bên dưới là phần hiện có, không phải tính năng production đã được nghiệm thu. Kết quả build/render và các giới hạn xem `previews/sky-blue-v2/verification.md`.
->
-> **TÌNH TRẠNG TÀI LIỆU:** Tài liệu này là bản thiết kế v2 thay thế bản v1 cũ, **chưa được chủ sở hữu duyệt thẩm mỹ**.
-> *Liên kết lịch sử:* [Bản v1 HTML cũ](previews/sky-blue/preview.html), chưa được phê duyệt; không phải artifact chính của v2.
->
-> Giai đoạn sinh các màn hình ban đầu: `ui-ux-pro-max` và `ui-styling` được đưa bằng **nội dung hướng dẫn inline trong brief Gemini**. Sau đó boss đã cài bản `ui-ux-pro-max` độc lập đầy đủ tại `~/.gemini/antigravity-cli/skills/ui-ux-pro-max` và kiểm chứng native slash expansion thành công; các brief Gemini về sau dùng `/ui-ux-pro-max`. Native skill không đồng nghĩa được tự mở quyền filesystem/terminal, search script vẫn cần quyền tương ứng. Không sinh lại màn hình đã có chỉ để đổi cách nạp skill. Giao diện và sửa lỗi hình ảnh do Gemini `gemini-3.8-flash-medium` qua CLI chính thức.
-> Bản xem trước hiện tại v2 được đặt độc lập tại `docs/previews/sky-blue-v2/`.
+## 0. Hướng thị giác hiện hành (thay thế sky-blue)
+
+Chủ sở hữu chọn **họ màu MEnglish (cam/navy)** thay cho xanh da trời. Chỉ dùng họ màu, **không dùng tên hay logo MEnglish**; tên/logo thương hiệu vẫn **chưa quyết định** ("Góc tiếng Anh" chỉ là tên tạm).
+
+| Vai trò | Giá trị |
+|---------|---------|
+| Cam thương hiệu (chỉ trang trí) | `#f5691a` |
+| Nút CTA (chữ trắng) | `#c2410c` |
+| Chữ/viền nhấn cam (đủ tương phản) | `#a23f00` |
+| Navy | `#111a2b`, `#1b2a4a` |
+| Nền sáng | `#f9f9ff`, trắng |
+| Bề mặt ấm | `#fff7ed`, `#fff3eb` |
+| Font | **Be Vietnam Pro**, đóng gói cục bộ (`@fontsource/be-vietnam-pro`), không gọi font ngoài |
+
+- Palette tham chiếu đọc từ `menglish-main/tailwind.config.js` (chỉ đọc); không import mã giao diện ERP.
+- Cam `#f5691a` không dùng làm màu chữ hay nền nút chữ trắng (không đủ tương phản); dùng `#c2410c`/`#a23f00`.
+- Không dùng tím, không dùng xám đơn sắc mặc định của shadcn.
+
+### Phạm vi bàn giao để duyệt
+
+- Chỉ **4 ảnh PNG tĩnh**: trang chủ học sinh và màn admin một chủ, mỗi màn ở 1440px (desktop) và 390px (mobile). **Không yêu cầu demo bấm thử.**
+- Mã nguồn đại diện: `previews/sky-blue-v2/app/direction/page.tsx` (home) và `previews/sky-blue-v2/app/direction/admin/page.tsx` (admin). Ảnh PNG đi kèm card/ZIP bàn giao, không commit trong repo.
+- Các màn còn lại chưa được làm theo hướng cam/navy và sẽ không được hoàn thiện cho tới khi chủ duyệt hướng thẩm mỹ.
+- Bản xanh da trời trước đó (11 màn, 24 ảnh, `previews/sky-blue/`, route gốc và `partial-*` của `previews/sky-blue-v2/`) là **lịch sử**, không phải hướng được đề xuất. Tên thư mục `sky-blue-v2` được giữ để không mất lịch sử, không phản ánh palette.
+- Bằng chứng build/render và giới hạn: [previews/sky-blue-v2/verification.md](previews/sky-blue-v2/verification.md).
+
+### Toolchain frontend và quy trình tạo giao diện
+
+- Toolchain: **Next.js + Tailwind CSS + shadcn/ui + Lucide** (phiên bản đã kiểm chứng ghi ở `verification.md`: Next 16.4.3, React 19.3.1, Tailwind 4.3.3, Lucide 1.65.0, shadcn CLI 4.23.0). Primitives shadcn lấy từ upstream, không tự viết lại.
+- Mã/thiết kế UI do **Gemini (`gemini-3.8-flash-medium`) qua Antigravity CLI (`agy`)** tạo, dùng skill `/ui-ux-pro-max` native (đã cài và kiểm chứng expansion). Skill native không tự cấp quyền filesystem/terminal. Dev rà soát và kiểm chứng; không dùng Claude/Codex thay thế phần UI.
+- Backend vẫn là Go + Gin ([architecture.md](architecture.md)); chọn Next.js/Tailwind/shadcn/Lucide cho `web/` là quyết định thiết kế, chưa có `web/`.
+
+### Màn hình admin (một chủ) — module thiết kế
+
+Admin chỉ có **một chủ sở hữu**, không nhân viên, không vai trò. Các module: nguồn + giấy phép + crawl job/lỗi; ngân hàng bài đọc/câu hỏi; hàng đợi duyệt; đề thi + preset trộn đề; báo cáo câu sai; thống kê cơ bản. Luồng nội dung: crawl → quarantine/draft → chủ duyệt → publish, **không bao giờ tự publish**. Yêu cầu bảo mật: [security.md](security.md); bảng dữ liệu: [data-model.md](data-model.md).
+
+Học sinh công khai **không cần đăng nhập**.
+
+> Từ mục 1 trở xuống, tài liệu mô tả vòng thiết kế xanh trước đó, giữ làm lịch sử. Màu, font và danh sách màn hình ở đó **không** phải yêu cầu hiện hành; chỉ các nguyên tắc UX/khả năng tiếp cận (mục 3) và ranh giới bảo mật (mục 6) vẫn áp dụng.
 
 ---
 
 ## 1. Mục Đích & Phạm Vi Dự Án
 
 - **Bản xem trước thẩm mỹ (Design Preview Only):** Đây là bản xem trước giao diện được thiết kế để chủ sở hữu và người đánh giá độc lập xem xét về mặt thẩm mỹ, bố cục và luồng trải nghiệm người dùng (aesthetic & UX review). Bản thiết kế này **KHÔNG PHẢI** là mã nguồn triển khai thực tế trên môi trường production.
-- **Tác giả giao diện duy nhất:** Gemini gemini-3.8-flash-medium thông qua công cụ Antigravity CLI chính thức, thực hiện theo kế hoạch phân rã không dùng công cụ (no-tools structured JSON output). Đội ngũ phát triển hiện thực hóa chính xác các nội dung trong danh mục cho phép và thực hiện kiểm chứng độc lập.
-- **Nhánh tài liệu:** `docs/ui-sky-blue-design` (PR 2).
+- **Tác giả giao diện duy nhất:** Gemini `gemini-3.8-flash-medium` qua Antigravity CLI chính thức (`agy`), đầu ra JSON có cấu trúc, không dùng công cụ filesystem. Đội ngũ phát triển hiện thực hóa chính xác các nội dung trong danh mục cho phép và thực hiện kiểm chứng độc lập.
+- **Nhánh tài liệu:** `docs/ui-sky-blue-design` (PR 2; tên nhánh giữ nguyên dù hướng đã đổi sang cam/navy).
 - **Phê duyệt độc lập:** Bản thiết kế chỉ có hiệu lực phục vụ đánh giá; việc nghiệm thu cần quy trình kiểm thử độc lập và sự phê duyệt chính thức từ chủ sở hữu.
 
 ---
@@ -32,23 +62,14 @@
   - **Không** sử dụng giao diện phần mềm doanh nghiệp (generic SaaS) khô khan, xám xịt hoặc đơn điệu.
   - Ngôn ngữ giao diện và hướng dẫn hoàn toàn bằng Tiếng Việt chuẩn mực, hỗ trợ ngắt dòng tự nhiên cho các câu văn bản dài.
 
-### 2.2. Thương Hiệu & Bảng Màu (Bright Sky Blue Palette)
-- **Tên thương hiệu:** Đang trong giai đoạn cân nhắc, chưa chốt tên thương mại cố định. Sử dụng định danh trung tính: **"Góc tiếng Anh"** kèm nhãn hiển thị rõ ràng **"Tên tạm"**.
-- **Tông màu chủ đạo:** Màu xanh da trời tươi sáng (Bright Sky Blue) kết hợp nền trắng và bề mặt sáng tinh tế.
-  - **Màu nền chính (`--background`):** `hsl(204, 100%, 98%)` (Xanh thiên thanh nhạt, dịu mắt).
-  - **Màu văn bản (`--foreground`):** `hsl(215, 35%, 15%)` (Xanh đen đậm, tương phản cao trên nền sáng).
-  - **Màu thương hiệu / Nút chính (`--primary`):** `hsl(201, 96%, 32%)` (Xanh ngọc biển sâu, đảm bảo tỷ lệ tương phản chuẩn).
-  - **Màu phụ (`--secondary`):** `hsl(199, 89%, 94%)` kèm chữ `hsl(201, 90%, 22%)`.
-  - **Màu thẻ & hộp thoại (`--card` / `--popover`):** `hsl(0, 0%, 100%)` (Trắng thuần, viền phân cách mềm mại).
-  - **Màu viền (`--border`):** `hsl(201, 35%, 86%)`.
-  - **TUYỆT ĐỐI TRÁNH:** Không dùng bảng màu tím (purple) hoặc các tông xám/đen trắng mặc định của shadcn (slate/zinc monotone).
+### 2.2. Thương hiệu và bảng màu
+- Tên thương hiệu chưa chốt; "Góc tiếng Anh" là tên tạm kèm nhãn "Tên tạm".
+- Bảng màu bản xanh trước đó (HSL xanh da trời) là lịch sử. Palette hiện hành: xem mục 0 (cam/navy).
 
-### 2.3. Phông Chữ & Tài Nguyên Ngoại Vi (Zero-Fetch Architecture)
-- Hoàn toàn **không nạp tài nguyên từ bên ngoài** (không Google Fonts, không external CDN, không API bên ngoài, không mã theo dõi quảng cáo/analytics).
-- Sử dụng phông chữ hệ thống ngoại tuyến (System Font Stack):
-  `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`.
-- Kích thước chữ cơ sở: `16px` với chiều cao dòng tối thiểu `1.5` để văn bản tiếng Việt dễ đọc, không dính chữ.
-- Biểu tượng SVG thuần túy từ thư viện `lucide-react` (phiên bản 1.65.0), tất cả biểu tượng trang trí đều có thuộc tính `aria-hidden="true"`, các nút hành động chứa biểu tượng đều có nhãn phụ trợ tiếp cận (`aria-label`).
+### 2.3. Phông chữ và tài nguyên ngoại vi (zero-fetch)
+- Không nạp tài nguyên ngoài: không Google Fonts, CDN, API ngoài, analytics/quảng cáo trong bản thiết kế.
+- Font hiện hành: Be Vietnam Pro đóng gói cục bộ (bản xanh trước đó dùng system font stack).
+- Kích thước chữ cơ sở 16px, line-height tối thiểu 1.5. Icon `lucide-react` 1.65.0, icon trang trí có `aria-hidden="true"`, nút chỉ có icon có `aria-label`.
 
 ---
 
@@ -73,7 +94,7 @@
 
 ---
 
-## 4. Kiến Trúc Kỹ Thuật Bản Xem Trước (Fixture v2)
+## 4. Kiến Trúc Kỹ Thuật Bản Xem Trước (Fixture v2, lịch sử vòng xanh)
 
 Bản xem trước được cô lập hoàn toàn tại thư mục `docs/previews/sky-blue-v2/` với các thành phần:
 - **Next.js 16.4.3 (App Router):** Cấu hình `output: 'export'` để xuất thành các tệp tĩnh thuần túy (`out/`).
@@ -88,7 +109,7 @@ Bản xem trước được cô lập hoàn toàn tại thư mục `docs/preview
 
 ---
 
-## 5. Đặc Tả 11 Màn Hình & Tuyến Đường Điều Hướng (Hash Routes)
+## 5. Đặc Tả 11 Màn Hình Vòng Xanh (lịch sử, không phải yêu cầu hiện hành)
 
 Bản xem trước sử dụng hệ thống chuyển màn hình dựa trên URL Hash (`window.location.hash`), hỗ trợ trực tiếp 11 màn hình chức năng mà không phụ thuộc vào máy chủ định tuyến động:
 
@@ -208,8 +229,6 @@ Khi chủ sở hữu phê duyệt triển khai mã nguồn phía máy chủ (Go/
 
 ## 7. Trạng Thái Tiến Độ & Quy Trình Thẩm Định
 
-- **Tiến độ thiết kế:** Phạm vi giao diện v2 đã hoàn thành trọn vẹn 11 màn hình theo đặc tả, sử dụng đầy đủ các component chuẩn của shadcn/ui, đáp ứng yêu cầu thẩm mỹ sáng sủa, thân thiện với lứa tuổi học sinh THCS.
-- **Quy trình nghiệm thu:**
-  1. Đội ngũ kiểm thử độc lập tiến hành thẩm định mã nguồn tĩnh và giao diện.
-  2. Bằng chứng kiểm tra kiểu (typecheck) và biên dịch (build) được lưu trữ riêng tại tệp `verification.md` sau khi chạy trên môi trường thực tế (không tự ý bịa đặt kết quả hay giả mạo ảnh chụp).
-  3. Trình nộp chủ sở hữu đánh giá thẩm mỹ và ra quyết định phê duyệt trước khi chuyển sang các giai đoạn tiếp theo.
+- **Đã có (thiết kế):** mã nguồn đại diện home + admin một chủ theo cam/navy và 4 ảnh PNG tĩnh; mã vòng xanh cũ giữ làm lịch sử.
+- **Chưa có:** chủ sở hữu chưa duyệt thẩm mỹ; chưa có website, backend, auth hay dữ liệu thật.
+- **Quy trình:** (1) chủ duyệt hoặc yêu cầu chỉnh hướng thẩm mỹ; (2) chỉ sau đó mới hoàn thiện các màn còn lại; (3) tester/reviewer độc lập kiểm tra; bằng chứng thực tế ở `verification.md`, không bịa kết quả hay ảnh chụp.
