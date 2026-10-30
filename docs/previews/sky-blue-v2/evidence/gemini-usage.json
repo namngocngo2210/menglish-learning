@@ -1,0 +1,238 @@
+{
+  "model": "gemini-3.8-flash-medium",
+  "route": "official /home/menglish/.local/bin/agy, --mode plan --json-schema <fixed schema> --output-format json -p <inline brief>",
+  "conversations": [
+    {
+      "job": "foundation",
+      "conversation_id": "47304b52-f05d-432e-ad88-27ed76402291",
+      "status": "SUCCESS",
+      "duration_seconds": 63.42226609,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 9097,
+        "output_tokens": 9384,
+        "thinking_tokens": 6833,
+        "cache_read_tokens": 0,
+        "total_tokens": 18481
+      }
+    },
+    {
+      "job": "admin-operations",
+      "conversation_id": "cea5023d-6db0-4b3d-97e7-641aa09231b2",
+      "status": "SUCCESS",
+      "duration_seconds": 137.740945837,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 11292,
+        "output_tokens": 19703,
+        "thinking_tokens": 6068,
+        "cache_read_tokens": 0,
+        "total_tokens": 30995
+      }
+    },
+    {
+      "job": "shell",
+      "conversation_id": "956c284b-c626-45cd-82a2-2c0a63544b66",
+      "status": "SUCCESS",
+      "duration_seconds": 120.710175466,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 13397,
+        "output_tokens": 16650,
+        "thinking_tokens": 6821,
+        "cache_read_tokens": 0,
+        "total_tokens": 30047
+      }
+    },
+    {
+      "job": "design-notes",
+      "conversation_id": "1c6ccac2-8ba7-4baa-8fa8-2b315aee14eb",
+      "status": "SUCCESS",
+      "duration_seconds": 125.025732246,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 12320,
+        "output_tokens": 14388,
+        "thinking_tokens": 7453,
+        "cache_read_tokens": 0,
+        "total_tokens": 26708
+      }
+    },
+    {
+      "job": "partial-admin",
+      "conversation_id": "94da3669-ece2-4287-8ae9-ee2464a6399c",
+      "status": "SUCCESS",
+      "duration_seconds": 60.177791406,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8685,
+        "output_tokens": 8773,
+        "thinking_tokens": 6449,
+        "cache_read_tokens": 0,
+        "total_tokens": 17458
+      }
+    },
+    {
+      "job": "partial-import-fix",
+      "conversation_id": "a4f3d784-104e-44c3-a67c-f293258fb20d",
+      "status": "SUCCESS",
+      "duration_seconds": 53.29443616,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 10745,
+        "output_tokens": 7788,
+        "thinking_tokens": 5466,
+        "cache_read_tokens": 0,
+        "total_tokens": 18533
+      }
+    },
+    {
+      "job": "student-browser",
+      "conversation_id": "694b1c2c-0887-43c4-a523-5c21de0162c2",
+      "status": "SUCCESS",
+      "duration_seconds": 70.840099496,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8629,
+        "output_tokens": 9670,
+        "thinking_tokens": 5843,
+        "cache_read_tokens": 0,
+        "total_tokens": 18299
+      }
+    },
+    {
+      "job": "student-quiz",
+      "conversation_id": "d120c32f-0b4a-402b-b686-56e06dd5a7a7",
+      "status": "SUCCESS",
+      "duration_seconds": 85.155132068,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8876,
+        "output_tokens": 12904,
+        "thinking_tokens": 5673,
+        "cache_read_tokens": 0,
+        "total_tokens": 21780
+      }
+    },
+    {
+      "job": "student-home",
+      "conversation_id": "a636240a-bd8f-427a-8823-077bece8f056",
+      "status": "SUCCESS",
+      "duration_seconds": 140.925498694,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8823,
+        "output_tokens": 20849,
+        "thinking_tokens": 15410,
+        "cache_read_tokens": 0,
+        "total_tokens": 29672
+      }
+    },
+    {
+      "job": "admin-editor",
+      "conversation_id": "66e4dbdc-df15-47f0-b29d-cfdab6dac3cc",
+      "status": "SUCCESS",
+      "duration_seconds": 84.354655429,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8626,
+        "output_tokens": 12500,
+        "thinking_tokens": 4717,
+        "cache_read_tokens": 0,
+        "total_tokens": 21126
+      }
+    },
+    {
+      "job": "admin-bank",
+      "conversation_id": "c2d0dc9a-2cc1-4307-bec6-3979adc070c2",
+      "status": "SUCCESS",
+      "duration_seconds": 129.055101972,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 8728,
+        "output_tokens": 18719,
+        "thinking_tokens": 9771,
+        "cache_read_tokens": 0,
+        "total_tokens": 27447
+      }
+    },
+    {
+      "job": "responsive-repair",
+      "conversation_id": "cca5c455-866e-46c0-b05d-96455d90786a",
+      "status": "SUCCESS",
+      "duration_seconds": 121.26698863,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 14565,
+        "output_tokens": 20370,
+        "thinking_tokens": 16846,
+        "cache_read_tokens": 0,
+        "total_tokens": 34935
+      }
+    },
+    {
+      "job": "favicon",
+      "conversation_id": "4286a61c-dabe-49b4-ab22-5b541f1c17a6",
+      "status": "SUCCESS",
+      "duration_seconds": 68.214492175,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 11940,
+        "output_tokens": 9308,
+        "thinking_tokens": 9053,
+        "cache_read_tokens": 0,
+        "total_tokens": 21248
+      }
+    },
+    {
+      "job": "warm-home-direction",
+      "conversation_id": "420f1a1d-37d3-4477-bcc1-d7009481c6b6",
+      "status": "SUCCESS",
+      "duration_seconds": 76.891754588,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 12589,
+        "output_tokens": 10637,
+        "thinking_tokens": 3933,
+        "cache_read_tokens": 0,
+        "total_tokens": 23226
+      }
+    },
+    {
+      "job": "warm-admin-direction",
+      "conversation_id": "18215755-33fd-4e70-b1c3-2e0e2c19ac0a",
+      "status": "SUCCESS",
+      "duration_seconds": 84.108219627,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 12298,
+        "output_tokens": 11654,
+        "thinking_tokens": 4461,
+        "cache_read_tokens": 0,
+        "total_tokens": 23952
+      }
+    },
+    {
+      "job": "warm-font-fix",
+      "conversation_id": "b4004ed4-1a49-4cbb-9c67-d94173fe9bd6",
+      "status": "SUCCESS",
+      "duration_seconds": 25.934503188,
+      "num_turns": 1,
+      "usage": {
+        "input_tokens": 12830,
+        "output_tokens": 3615,
+        "thinking_tokens": 3378,
+        "cache_read_tokens": 0,
+        "total_tokens": 16445
+      }
+    }
+  ],
+  "totals_unique_conversations": {
+    "input_tokens": 173440,
+    "output_tokens": 206912,
+    "thinking_tokens": 118175,
+    "cache_read_tokens": 0,
+    "total_tokens": 380352
+  },
+  "interpretation": "CLI-reported token counters only. Not dollar billing, account quota or measured savings. thinking_tokens may be a subset: do not add again."
+}

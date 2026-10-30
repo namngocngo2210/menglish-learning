@@ -1,0 +1,59 @@
+{
+  "screens": [
+    {
+      "screen": "warm-home",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "overflow": false,
+      "h1": [
+        "Rèn năng lực đọc & viết với độ chắc chắn\n từng ngữ liệu."
+      ],
+      "smallControls": [],
+      "overflowing": [],
+      "font": "\"Be Vietnam Pro\", sans-serif",
+      "fontsLoaded": true
+    },
+    {
+      "screen": "warm-admin",
+      "width": 1440,
+      "scrollWidth": 1425,
+      "overflow": false,
+      "h1": [
+        "Nội dung tốt, bắt đầu từ một lượt duyệt."
+      ],
+      "smallControls": [],
+      "overflowing": [],
+      "font": "\"Be Vietnam Pro\", sans-serif",
+      "fontsLoaded": true
+    },
+    {
+      "screen": "warm-home",
+      "width": 390,
+      "scrollWidth": 375,
+      "overflow": false,
+      "h1": [
+        "Rèn năng lực đọc & viết với độ chắc chắn\n từng ngữ liệu."
+      ],
+      "smallControls": [],
+      "overflowing": [],
+      "font": "\"Be Vietnam Pro\", sans-serif",
+      "fontsLoaded": true
+    },
+    {
+      "screen": "warm-admin",
+      "width": 390,
+      "scrollWidth": 375,
+      "overflow": false,
+      "h1": [
+        "Nội dung tốt, bắt đầu từ một lượt duyệt."
+      ],
+      "smallControls": [],
+      "overflowing": [],
+      "font": "\"Be Vietnam Pro\", sans-serif",
+      "fontsLoaded": true
+    }
+  ],
+  "errors": [],
+  "externalRequests": [],
+  "captures": 4
+}

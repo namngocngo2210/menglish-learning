@@ -1,181 +1,215 @@
-# Tài liệu Thiết kế Giao diện (UI Design Specification)
-**Dự án**: Nền tảng luyện tiếng Anh THCS (Lớp 6–9)
-**Tài liệu**: Bản đặc tả thiết kế & Phê duyệt sơ bộ của chủ sở hữu (Owner Approval Non-Production Preview)
-**Trạng thái**: Bản duyệt giao diện ngoại tuyến độc lập (Standalone Offline HTML Preview)
+# Tài Liệu Thiết Kế Giao Diện v2 (UI Design Specification)
+
+> **HƯỚNG MỚI NHẤT — CAM/NAVY, KHÔNG CÒN SKY BLUE:** Chủ sở hữu yêu cầu dùng họ màu MEnglish, không đổi tên/logo. Hai màn đại diện tĩnh ở `previews/sky-blue-v2/app/direction/`: home và admin một chủ, mỗi màn có PNG1440/390. Token tham chiếu: trang trí `#f5691a`, CTA `#c2410c` chữ trắng, chữ/viền `#a23f00`, navy `#111a2b` / `#1b2a4a`, nền `#f9f9ff`/trắng, bề mặt ấm `#fff7ed` / `#fff3eb`, font **Be Vietnam Pro** đóng gói cục bộ. Home đổi bố cục thành workbook chú giải làm điểm nhấn; admin tập trung lượt duyệt thủ công, không chỉ thay màu hàng loạt.
+>
+> **Chỉ chờ duyệt hướng thẩm mỹ đại diện:** không yêu cầu demo bấm thử; chưa triển khai website. Không tiếp tục polish tất cả màn trước khi chủ duyệt hướng mới. Source và24ảnh xanh trước đó giữ làm lịch sử, không phải hướng đang đề xuất. Các phần SKY BLUE/luồng mock bên dưới mô tả vòng trước, không được hiểu là yêu cầu màu hiện hành. Xem `previews/sky-blue-v2/verification.md` cho bằng chứng và giới hạn.
+
+> **Phạm vi chủ sở hữu cập nhật:** chỉ duyệt **ảnh thiết kế tĩnh PNG desktop/mobile** cho học sinh và admin một chủ; **không cần demo bấm thử**. Source Next.js/shadcn/Tailwind/Lucide đã tạo được giữ để tái tạo ảnh, không phải yêu cầu hoàn thiện tương tác hay triển khai website. Các điều khiển mock bên dưới là phần hiện có, không phải tính năng production đã được nghiệm thu. Kết quả build/render và các giới hạn xem `previews/sky-blue-v2/verification.md`.
+>
+> **TÌNH TRẠNG TÀI LIỆU:** Tài liệu này là bản thiết kế v2 thay thế bản v1 cũ, **chưa được chủ sở hữu duyệt thẩm mỹ**.
+> *Liên kết lịch sử:* [Bản v1 HTML cũ](previews/sky-blue/preview.html), chưa được phê duyệt; không phải artifact chính của v2.
+>
+> Giai đoạn sinh các màn hình ban đầu: `ui-ux-pro-max` và `ui-styling` được đưa bằng **nội dung hướng dẫn inline trong brief Gemini**. Sau đó boss đã cài bản `ui-ux-pro-max` độc lập đầy đủ tại `~/.gemini/antigravity-cli/skills/ui-ux-pro-max` và kiểm chứng native slash expansion thành công; các brief Gemini về sau dùng `/ui-ux-pro-max`. Native skill không đồng nghĩa được tự mở quyền filesystem/terminal, search script vẫn cần quyền tương ứng. Không sinh lại màn hình đã có chỉ để đổi cách nạp skill. Giao diện và sửa lỗi hình ảnh do Gemini `gemini-3.8-flash-medium` qua CLI chính thức.
+> Bản xem trước hiện tại v2 được đặt độc lập tại `docs/previews/sky-blue-v2/`.
 
 ---
 
-## 1. Phạm vi tài liệu & Mục đích phê duyệt (Scope & Approval Notice)
+## 1. Mục Đích & Phạm Vi Dự Án
 
-Tài liệu này và bản giao diện mẫu đi kèm (`docs/previews/sky-blue/preview.html`) được lập ra nhằm mục đích **duyệt định hướng phong cách giao diện (UI Style), luồng trải nghiệm (UX Flow), hệ thống màu sắc và khả năng đáp ứng trên các cỡ màn hình (Responsive)** trực tiếp với chủ sở hữu dự án trước khi triển khai mã nguồn vào hệ thống Next.js / Go backend.
-
-> [!IMPORTANT]
-> **Giới hạn kỹ thuật của bản Preview**:
-> - Bản preview là mã HTML/CSS/JS độc lập (offline standalone), **không kết nối backend thật**, không lưu dữ liệu vĩnh viễn (no localStorage/database), không có phân tích hành vi hay tracking quảng cáo thực.
-> - Đồng hồ làm bài, điểm số kết quả (8.0/10), trạng thái câu hỏi hoàn toàn là **dữ liệu mẫu định trước (Mock Data)**.
-> - Toàn bộ mã nguồn, dịch vụ crawler, API và kiến trúc hạ tầng hiện có trong dự án vẫn giữ nguyên trạng thái tạm dừng, không bị xáo trộn.
+- **Bản xem trước thẩm mỹ (Design Preview Only):** Đây là bản xem trước giao diện được thiết kế để chủ sở hữu và người đánh giá độc lập xem xét về mặt thẩm mỹ, bố cục và luồng trải nghiệm người dùng (aesthetic & UX review). Bản thiết kế này **KHÔNG PHẢI** là mã nguồn triển khai thực tế trên môi trường production.
+- **Tác giả giao diện duy nhất:** Gemini gemini-3.8-flash-medium thông qua công cụ Antigravity CLI chính thức, thực hiện theo kế hoạch phân rã không dùng công cụ (no-tools structured JSON output). Đội ngũ phát triển hiện thực hóa chính xác các nội dung trong danh mục cho phép và thực hiện kiểm chứng độc lập.
+- **Nhánh tài liệu:** `docs/ui-sky-blue-design` (PR 2).
+- **Phê duyệt độc lập:** Bản thiết kế chỉ có hiệu lực phục vụ đánh giá; việc nghiệm thu cần quy trình kiểm thử độc lập và sự phê duyệt chính thức từ chủ sở hữu.
 
 ---
 
-## 2. Hệ thống Tokens & Quyết định Thiết kế (Design Tokens & Decisions)
+## 2. Định Vị Người Dùng & Nguyên Tắc Thị Giác
 
-### 2.1. Bảng màu Sky-Blue chủ đạo (Color Palette)
-Theo yêu cầu trực tiếp từ chủ sở hữu dự án, tông màu **Sky-Blue (Xanh da trời tươi sáng)** được lựa chọn làm màu nhận diện chủ đạo, tạo cảm giác học tập thanh thoát, tích cực, sáng sủa và phù hợp tâm lý học sinh THCS lứa tuổi 11–15 tuổi:
+### 2.1. Đối Tượng Người Dùng Mục Tiêu
+- **Học sinh THCS (Lớp 6 đến Lớp 9, độ tuổi từ 11 đến 15 tuổi):**
+  - Giao diện cần trực quan, khích lệ tinh thần học tập, thân thiện nhưng trưởng thành.
+  - **Không** sử dụng phong cách hoạt hình mầm non/mẫu giáo (preschool cartoon) gây cảm giác trẻ con.
+  - **Không** sử dụng giao diện phần mềm doanh nghiệp (generic SaaS) khô khan, xám xịt hoặc đơn điệu.
+  - Ngôn ngữ giao diện và hướng dẫn hoàn toàn bằng Tiếng Việt chuẩn mực, hỗ trợ ngắt dòng tự nhiên cho các câu văn bản dài.
 
-- **Primary Brand / Action Tokens**:
-  - `var(--color-sky-500)`: `#0ea5e9` (Sky sáng, điểm nhấn thứ cấp)
-  - `var(--color-sky-600)`: `#0284c7` (Sky chuẩn, đường viền và icon)
-  - `var(--color-sky-700)`: `#0369a1` (Sky đậm, nút bấm chính Primary Actions đạt độ tương phản chữ trắng >= 4.5:1, tiêu đề)
-  - `var(--color-sky-800)`: `#075985` (Sky sâu, heading cấp cao, text nhấn mạnh)
-- **Surfaces & Backgrounds (Nền & Bề mặt)**:
-  - `var(--color-surface-bg)`: `#f8fafc` (Nền trang xám phấn siêu nhẹ, giảm mỏi mắt)
-  - `var(--color-surface-card)`: `#ffffff` (Nền thẻ bài tập & card nội dung)
-  - `var(--color-surface-alt)`: `#f0f7fd` (Nền đoạn văn đọc hiểu Reading passage)
-  - `var(--color-sky-50)`: `#f0f9ff` / `var(--color-sky-100)`: `#e0f2fe` (Nền banner hero, chip tag, reviewer bar)
-- **Typography & Status Colors (Văn bản & Trạng thái)**:
-  - `var(--color-text-main)`: `#0f172a` (Màu chữ chính - tương phản cao trên nền trắng)
-  - `var(--color-text-secondary)`: `#334155` (Màu nội dung phụ, mô tả đề thi)
-  - `var(--color-text-muted)`: `#64748b` (Ghi chú thời gian, số câu)
-  - `var(--color-success)`: `#047857` (Trạng thái câu đúng, mục tiêu tương phản >= 4.5:1 cho chữ nhỏ, kết hợp icon tích V và chữ "Chính xác")
-  - `var(--color-error)`: `#dc2626` (Trạng thái câu sai, kết hợp icon chéo X và chữ "Chưa đúng")
-  - `var(--color-warning)`: `#b45309` (Cảnh báo rate-limit 429, mục tiêu tương phản >= 4.5:1 cho chữ nhỏ)
+### 2.2. Thương Hiệu & Bảng Màu (Bright Sky Blue Palette)
+- **Tên thương hiệu:** Đang trong giai đoạn cân nhắc, chưa chốt tên thương mại cố định. Sử dụng định danh trung tính: **"Góc tiếng Anh"** kèm nhãn hiển thị rõ ràng **"Tên tạm"**.
+- **Tông màu chủ đạo:** Màu xanh da trời tươi sáng (Bright Sky Blue) kết hợp nền trắng và bề mặt sáng tinh tế.
+  - **Màu nền chính (`--background`):** `hsl(204, 100%, 98%)` (Xanh thiên thanh nhạt, dịu mắt).
+  - **Màu văn bản (`--foreground`):** `hsl(215, 35%, 15%)` (Xanh đen đậm, tương phản cao trên nền sáng).
+  - **Màu thương hiệu / Nút chính (`--primary`):** `hsl(201, 96%, 32%)` (Xanh ngọc biển sâu, đảm bảo tỷ lệ tương phản chuẩn).
+  - **Màu phụ (`--secondary`):** `hsl(199, 89%, 94%)` kèm chữ `hsl(201, 90%, 22%)`.
+  - **Màu thẻ & hộp thoại (`--card` / `--popover`):** `hsl(0, 0%, 100%)` (Trắng thuần, viền phân cách mềm mại).
+  - **Màu viền (`--border`):** `hsl(201, 35%, 86%)`.
+  - **TUYỆT ĐỐI TRÁNH:** Không dùng bảng màu tím (purple) hoặc các tông xám/đen trắng mặc định của shadcn (slate/zinc monotone).
 
-### 2.2. Ghi nhận nghiên cứu UI/UX & Lý do loại trừ các trường phái khác
-Trong quá trình đối chiếu tri thức kỹ năng `ui-ux-pro-max`:
-1. **Loại trừ Claymorphism / Hoạt hình hoạt họa (Cartoon/Preschool)**: Nhóm học sinh lớp 6–9 (11–15 tuổi) đang trong giai đoạn chuyển tiếp tâm lý thiếu niên, rất nhạy cảm với các thiết kế mang hơi hướng "con nít / mẫu giáo".
-2. **Loại trừ Giao diện Quản trị viên (Admin Dashboard)**: Tránh cảm giác bảng biểu khô khan, ngột ngạt tạo áp lực thi cử.
-3. **Loại trừ tông màu Tím (Purple) & Giao diện tối mặc định (Dark Default)**: Bảng màu Sky-Blue được ưu tiên áp dụng để duy trì độ tương phản văn bản cao nhất khi học sinh đọc các đoạn văn dài dưới điều kiện ánh sáng phòng học.
-4. **Giữ lại các nguyên tắc cốt lõi**:
-   - Cấu trúc Feature-Card phân tầng rõ rệt.
-   - Khoảng cách chạm tối thiểu 44×44px cho mobile touch screen.
-   - Đường viền bo cong vừa phải (`border-radius: 12px` - 16px), đổ bóng kiềm chế nhẹ nhàng (`box-shadow: 0 4px 12px rgba(14, 165, 233, 0.08)`).
-
-### 2.3. Quy ước thương hiệu tạm thời (Temporary Wordmark)
-Dự án hiện chưa chốt nhận diện thương hiệu cuối cùng (không sử dụng thương hiệu MEnglish hoặc tự đặt thương hiệu mới). Bản thiết kế sử dụng wordmark trung tính:
-- Tiêu đề hiển thị: **"Anh Ngữ 6–9"** kèm nhãn phù hiệu rõ ràng: `[Tên tạm thời]` / `[Chờ duyệt]`.
-- Biểu tượng inline SVG cuốn sách mở trung tính, không chứa ký tự M hay liên hệ thương hiệu cũ.
+### 2.3. Phông Chữ & Tài Nguyên Ngoại Vi (Zero-Fetch Architecture)
+- Hoàn toàn **không nạp tài nguyên từ bên ngoài** (không Google Fonts, không external CDN, không API bên ngoài, không mã theo dõi quảng cáo/analytics).
+- Sử dụng phông chữ hệ thống ngoại tuyến (System Font Stack):
+  `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif`.
+- Kích thước chữ cơ sở: `16px` với chiều cao dòng tối thiểu `1.5` để văn bản tiếng Việt dễ đọc, không dính chữ.
+- Biểu tượng SVG thuần túy từ thư viện `lucide-react` (phiên bản 1.65.0), tất cả biểu tượng trang trí đều có thuộc tính `aria-hidden="true"`, các nút hành động chứa biểu tượng đều có nhãn phụ trợ tiếp cận (`aria-label`).
 
 ---
 
-## 3. Cấu trúc 4 Màn hình Trải nghiệm (Detailed Screen Specifications)
+## 3. Mục Tiêu Trải Nghiệm & Khả Năng Tiếp Cận (Accessibility & UX Goals)
 
-Giao diện xem trước tích hợp đầy đủ 4 màn hình chính trên một trang duy nhất, chuyển đổi linh hoạt qua URL Hash (`#home`, `#exercises`, `#quiz`, `#results`):
+> [!NOTE]
+> Các chỉ số dưới đây là **mục tiêu thiết kế giao diện** được áp dụng nghiêm ngặt trong mã nguồn CSS/JSX, **không phải là chứng nhận chính thức** (certified WCAG / performance audit) được cấp bởi đơn vị đo kiểm độc lập.
+
+1. **Độ tương phản màu sắc (Contrast Ratio):**
+   - Mọi văn bản kích thước thông thường đạt độ tương phản tối thiểu từ `4.5:1` trở lên so với màu nền.
+   - Các nhãn trạng thái (badge), cảnh báo (alert) đều sử dụng các cặp màu đã được tính toán kỹ lưỡng.
+2. **Kích thước vùng chạm cảm ứng (Touch Targets):**
+   - Mọi nút bấm (`button`), liên kết điều hướng, trường nhập liệu (`input`, `select`, `textarea`) đều có kích thước tương tác tối thiểu `44px x 44px`, hỗ trợ tốt cho học sinh sử dụng điện thoại màn hình nhỏ (390px) và máy tính bảng.
+3. **Chỉ báo tiêu điểm bàn phím (Visible Keyboard Focus):**
+   - Thiết lập toàn cục `:focus-visible` với viền đôi rõ ràng (`2px solid hsl(var(--ring))`, `outline-offset: 2px`). Không dựa vào trạng thái hover chuột để hiển thị các hành động cần thiết.
+4. **Xử lý ngắt dòng Tiếng Việt & Chống tràn trang:**
+   - Sử dụng `overflow-wrap: break-word` và `word-break: break-word` trên toàn bộ các khối nội dung, đoạn văn và tiêu đề tiếng Việt.
+   - Thiết kế đáp ứng từ màn hình di động `390px` đến màn hình máy tính để bàn `1440px`. Không để xảy ra hiện tượng thanh cuộn ngang toàn trang (no horizontal page overflow).
+   - Bảng dữ liệu quản trị (Table) được đặt trong vùng chứa có thanh cuộn riêng biệt và nhãn tiếp cận rõ ràng.
+5. **Hỗ trợ Giảm Chuyển Động (Reduced Motion):**
+   - Tích hợp truy vấn truyền thông `@media (prefers-reduced-motion: reduce)`, tự động triệt tiêu các hiệu ứng chuyển động và kéo thời gian hiệu ứng chuyển tiếp về `0.01ms` đối với người dùng bật chế độ giảm tải kích thích thị giác.
+
+---
+
+## 4. Kiến Trúc Kỹ Thuật Bản Xem Trước (Fixture v2)
+
+Bản xem trước được cô lập hoàn toàn tại thư mục `docs/previews/sky-blue-v2/` với các thành phần:
+- **Next.js 16.4.3 (App Router):** Cấu hình `output: 'export'` để xuất thành các tệp tĩnh thuần túy (`out/`).
+- **React 19.3.1 & TypeScript 5.9.3.**
+- **Tailwind CSS v4.3.3:** Khai báo cấu hình qua `@tailwindcss/postcss`, nạp `@import "tailwindcss";` và tùy biến biến chủ đề CSS qua `@theme inline`.
+- **15 UI Primitives Chuẩn Upstream shadcn/ui (New York Style):**
+  Được cài đặt trực tiếp qua câu lệnh chuẩn `npx --yes shadcn@4.23.0 add button card tabs badge progress dialog sheet select table input dropdown-menu skeleton alert label textarea --yes` vào thư mục `@/components/ui/`. Tuyệt đối không dùng component tự chế nhái giao diện.
+- **Cơ chế trạng thái trong bộ nhớ (In-memory State Only):**
+  - Mọi thao tác tương tác của học sinh và quản trị viên đều cập nhật vào `useState` nội bộ.
+  - Dữ liệu tự động quay về trạng thái ban đầu khi tải lại trang (reload).
+  - Không gửi bất kỳ yêu cầu mạng nào ngầm (no fetch/axios background calls).
+
+---
+
+## 5. Đặc Tả 11 Màn Hình & Tuyến Đường Điều Hướng (Hash Routes)
+
+Bản xem trước sử dụng hệ thống chuyển màn hình dựa trên URL Hash (`window.location.hash`), hỗ trợ trực tiếp 11 màn hình chức năng mà không phụ thuộc vào máy chủ định tuyến động:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│          Reviewer Meta Bar (Light Sky-Blue Theme)           │
-├─────────────────────────────────────────────────────────────┤
-│ Brand Logo [Tên tạm thời]     [Home] [Exercises] [Quiz] [Results] │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [Màn hình 1: Trang chủ]   [Màn hình 2: Danh sách đề]      │
-│  - Hero không cần login   - Bộ lọc Khối/Kỹ năng/Độ khó      │
-│  - Selector Lớp 6–9       - Thẻ bài tập + Thời gian + Nút   │
-│  - Thẻ 4 kỹ năng chính     - Khung dự phòng AdSlot tĩnh     │
-│  - Lộ trình 4 bước mẫu                                      │
-│                                                             │
-│  [Màn hình 3: Làm bài]     [Màn hình 4: Bảng kết quả]       │
-│  - Đoạn văn Reading        - Vòng tròn điểm số mẫu (8.0/10) │
-│  - Câu hỏi & Radio options- Thống kê Đúng/Sai/Thời gian     │
-│  - Đồng hồ demo đóng băng  - Lời giải chi tiết + dẫn chứng   │
-│  - Đánh dấu cờ (Flag)      - Nút làm lại đề / Sang đề mới   │
-│  - Modal Native Dialog                                      │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+[Khu vực Học sinh - Công khai, không đăng nhập]
+├── #home            : Trang chủ học sinh, giới thiệu bài đọc và nút làm bài nhanh
+├── #browser         : Kho duyệt bài đọc, bộ lọc lớp (6-9), chủ đề và độ khó
+├── #quiz            : Phòng thi làm bài đọc hiểu (3 câu hỏi trắc nghiệm MCQ)
+└── #results         : Kết quả làm bài, điểm số tức thì và giải thích đáp án
+
+[Khu vực Quản trị - MOCK duy nhất một chủ sở hữu]
+├── #admin-login     : Màn hình vào khu vực quản trị MOCK (nút bấm một chạm, không mật khẩu)
+├── #admin-overview  : Bảng điều khiển tổng quan quản trị mẫu (DEMO số liệu)
+├── #admin-bank      : Ngân hàng bài đọc & câu hỏi, quản lý trạng thái kiểm duyệt
+├── #admin-editor    : Trình soạn thảo bài đọc & câu hỏi kèm màn hình xem trước trực tiếp
+├── #admin-sources   : Quản lý nguồn tài liệu, bản quyền và tiến trình crawl kiểm dịch
+├── #admin-tests     : Bộ trộn đề (Mixer presets) và cấu hình đề thi theo ma trận
+└── #admin-reports   : Báo cáo học tập mẫu và danh sách phản hồi nội dung cần xử lý
 ```
 
-### 3.1. Màn hình 1: Trang chủ (Home View - `#home`)
-- **Điểm bắt đầu miễn phí**: Khẳng định thông điệp "Không cần đăng nhập / Không cần tài khoản", giúp học sinh tiếp cận kiến thức tức thì.
-- **Minh họa Hero SVG nguyên bản**: Đồ họa vector vẽ tay inline hình tượng trang sách mở, huy hiệu sao vàng và mục tiêu học tập, phối hợp hài hòa trên nền dải màu xanh da trời mát mắt.
-- **Bộ chọn khối lớp (Grade Selector 6–9)**: Phân tách rõ ràng chương trình 4 khối lớp từ Lớp 6 (khởi đầu) đến Lớp 9 (ôn thi vào 10).
-- **Thẻ 4 kỹ năng trọng tâm**:
-  1. *Đọc hiểu (Reading)*: Mô phỏng 12 chủ đề đọc hiểu đoạn văn ngắn, thông báo, biển báo.
-  2. *Ngữ pháp (Grammar)*: Mô phỏng 45 chuyên đề mẫu về thì, câu điều kiện, bị động, mệnh đề quan hệ.
-  3. *Từ vựng (Vocabulary)*: Mô phỏng từ vựng Unit mẫu (Word Form, Collocations, Phrasal Verbs).
-  4. *Viết trắc nghiệm (Writing MCQ)*: Mô phỏng dạng đề vào 10 (tìm lỗi sai, viết lại câu đồng nghĩa).
-- **Lộ trình học tập 4 bước**: Khảo sát đầu vào → Luyện chuyên đề → Phân tích lời giải → Thi thử áp lực giờ.
+### Chi tiết từng màn hình:
 
-### 3.2. Màn hình 2: Danh sách đề (Exercise List View - `#exercises`)
-- **Thanh lọc đa chiều (Filter Bar)**: Hỗ trợ lọc theo Khối lớp (Lớp 6, 7, 8, 9), Kỹ năng (Reading, Grammar, Writing), và Độ khó (Cơ bản, Vừa sức, Nâng cao).
-- **Thẻ bài tập rõ ràng**: Cung cấp đầy đủ thông tin: Tiêu đề đề thi, tóm tắt nội dung ngữ liệu, số lượng câu hỏi, thời gian ước tính (10–20 phút) và nút hành động "Làm bài ngay".
-- **Vị trí quảng cáo dự phòng**: Nằm độc lập bên ngoài màn hình làm bài (kích thước chuẩn 728×90), hiển thị nhãn minh họa rõ ràng và tuân thủ chế độ không cá nhân hóa thân thiện với trẻ em.
+1. **`#home` - Trang chủ học sinh:**
+   - Lời chào mừng học sinh trung học cơ sở ("Chào bạn, hôm nay cùng luyện đọc nhé!").
+   - Nút hành động nhanh ("Làm bài ngay") đưa trực tiếp vào bài đọc mẫu.
+   - Thẻ hiển thị các chủ đề nổi bật: Đời sống học đường, Khám phá khoa học, Văn hóa thế giới, Môi trường xanh.
+   - Nhắc nhở rõ ràng: Học sinh học tập hoàn toàn miễn phí, không yêu cầu tạo tài khoản hay đăng nhập.
 
-### 3.3. Màn hình 3: Giao diện làm bài tập (Quiz View - `#quiz`)
-- **Bố cục 2 cột (Desktop 1440px) / 1 cột xếp chồng (Mobile 390px)**:
-  - Cột chính: Khung bài đọc ngữ cảnh (Reading passage) nổi bật trên nền xanh nhạt, thân bài câu hỏi trắc nghiệm với các lựa chọn A, B, C, D có vùng bấm rộng rãi (tối thiểu 48px chiều cao).
-  - Cột bên: Đồng hồ đếm ngược (được gắn nhãn rõ ràng: *Thời gian cố định minh họa demo*), nút bật/tắt gắn cờ xem lại (Flag toggle), và lưới điều hướng nhanh số câu hỏi (1..5).
-- **Tuyệt đối không có quảng cáo trong khi làm bài**: Đảm bảo học sinh tập trung 100% vào việc tư duy và đọc hiểu.
-- **Hộp thoại nộp bài (Native `<dialog>`)**: Tận dụng thẻ HTML5 chuẩn với phương thức `showModal()`, hỗ trợ phím `Escape` để hủy, bẫy tiêu điểm (focus trap) tự nhiên, và nút xác nhận nộp bài.
+2. **`#browser` - Kho bài đọc & Lọc chủ đề:**
+   - Bộ lọc cục bộ đa tiêu chí: Khối lớp (Lớp 6, Lớp 7, Lớp 8, Lớp 9), Chủ đề và Cấp độ khó (Cơ bản, Vừa sức, Thử thách).
+   - Thẻ bài đọc hiển thị thông tin: Tiêu đề tiếng Anh, chủ đề tiếng Việt, thời gian đọc ước tính (ví dụ: 3 phút), số lượng câu hỏi (3 câu MCQ).
+   - Nút "Bắt đầu làm bài" dẫn tới màn hình thi tương ứng.
 
-### 3.4. Màn hình 4: Kết quả & Giải thích chi tiết (Results View - `#results`)
-- **Điểm số trực quan**: Hiển thị điểm số mẫu định trước (8.0/10) trên vòng tròn đồ họa nổi bật.
-- **Nguyên tắc tương phản WCAG (Không dựa vào màu sắc đơn thuần)**:
-  - Câu đúng: Sử dụng phù hiệu chữ **"Chính xác (Đúng)"** kết hợp icon dấu tích `✓`.
-  - Câu chưa đúng: Sử dụng phù hiệu chữ **"Chưa đúng (Sai)"** kết hợp icon dấu chéo `✗` và hiển thị phương án đúng kèm theo.
-- **Hộp giải thích chi tiết (Explanation Box)**: Phân tích cặn kẽ vì sao chọn đáp án đó, trích dẫn câu văn bằng chứng trong bài đọc, và phân tích ngữ pháp/từ vựng liên quan.
-- **Điều hướng tiếp diễn**: Cung cấp hai nút hành động rõ ràng: "Làm lại đề này" và "Luyện đề tiếp theo".
+3. **`#quiz` - Màn hình làm bài thi đọc hiểu:**
+   - Bố cục chia hai cột trên desktop (hoặc xếp chồng linh hoạt trên mobile): Cột bài đọc tiếng Anh mẫu nguyên bản và Cột câu hỏi trắc nghiệm.
+   - Thanh tiến trình trực quan (Progress component) thể hiện câu hỏi hiện tại (1/3, 2/3, 3/3).
+   - Đồng hồ đếm thời gian làm bài cục bộ.
+   - Các lựa chọn đáp án trắc nghiệm (A, B, C, D) với vùng bấm lớn (>44px), phản hồi trạng thái chọn tức thì.
+   - Hộp thoại xác nhận nộp bài (Dialog component) bảo vệ tránh nộp nhầm khi chưa chọn hết câu trả lời.
 
----
+4. **`#results` - Kết quả bài làm:**
+   - Hiển thị điểm số tính toán ngay trong bộ nhớ (ví dụ: 3/3 - Đạt 100%).
+   - Thông điệp khích lệ thân thiện phù hợp lứa tuổi học sinh THCS.
+   - Bảng phân tích chi tiết từng câu hỏi: Lựa chọn của học sinh, Đáp án chính xác và Lời giải thích chi tiết bằng tiếng Việt.
+   - Nút "Làm lại bài này" (reset state bài thi) hoặc "Khám phá bài đọc khác" quay về `#browser`.
 
-## 4. Đặc tả Trạng thái Biên (Edge States: Loading / Empty / Error / 429)
+5. **`#admin-login` - Đăng nhập Quản trị viên MOCK:**
+   - **Tuyệt đối không lưu trữ hay yêu cầu mật khẩu/token.**
+   - Giao diện cung cấp nút bấm tiện ích: `"Vào bảng điều khiển quản trị (MOCK)"`.
+   - Cảnh báo bảo mật nổi bật: Thông báo rõ đây là giao diện xem trước phục vụ thẩm mỹ, không áp dụng bất kỳ cơ chế xác thực nào; việc chuyển đổi hash route trên trình duyệt không phải là ranh giới bảo mật.
 
-Để chủ sở hữu có thể thẩm định toàn diện các trường hợp ngoại lệ trong vận hành thực tế, bản preview tích hợp sẵn thanh chọn trạng thái tại thanh Reviewer Bar ở đầu trang:
+6. **`#admin-overview` - Tổng quan Quản trị viên (DEMO):**
+   - Thiết kế chuyên biệt cho **duy nhất một chủ sở hữu (Single Owner)**.
+   - Thẻ thống kê mẫu: Tổng số bài đọc đã duyệt, Số bài đang chờ kiểm duyệt (Draft/Quarantine), Lượt làm bài demo trong ngày.
+   - Lối tắt nhanh tới các tác vụ thường xuyên: "Soạn bài đọc mới", "Kiểm tra nguồn thu nạp".
 
-1. **Trạng thái Đang tải (Loading Skeleton)**:
-   - Các khối mô phỏng vạch dữ liệu với hiệu ứng chuyển sắc động (shimmer animation), giữ nguyên khung bố cục (mục tiêu kỹ thuật thiết kế nhắm tới CLS < 0.1 trong môi trường triển khai thực tế, không phải số liệu đo kiểm sản xuất tại bản xem trước này).
-2. **Trạng thái Danh sách rỗng (Empty State)**:
-   - Minh họa khi bộ lọc không tìm thấy đề thi phù hợp; cung cấp thông điệp hướng dẫn học sinh đổi khối lớp hoặc nút "Đặt lại bộ lọc".
-3. **Trạng thái Lỗi máy chủ (500 Error State)**:
-   - Thông báo sự cố kỹ thuật nhẹ nhàng bằng tiếng Việt, có nút "Thử lại ngay" mà không gây hoang mang cho học sinh.
-4. **Trạng thái Giới hạn lượt gọi (429 Rate Limit State)**:
-   - Mô phỏng trường hợp học sinh bấm nút trộn đề ngẫu nhiên liên tục nhiều lần trong thời gian ngắn; hiển thị biểu tượng đồng hồ và khuyến nghị học sinh tạm dừng 30 giây để bảo vệ tài nguyên máy chủ.
+7. **`#admin-bank` - Ngân hàng bài đọc & Duyệt nội dung:**
+   - Bảng dữ liệu (Table) hiển thị danh sách bài đọc với đầy đủ cột thông tin: Tên bài, Khối lớp, Số câu hỏi, Nguồn cấp phép, Trạng thái kiểm duyệt.
+   - Huy hiệu trạng thái (Badge): `Đã xuất bản (Published)`, `Bản nháp (Draft)`, `Đang cách ly (Quarantine)`.
+   - Thao tác nhanh: Nút "Chuyển trạng thái" (thay đổi state trong bộ nhớ kèm nhãn `[MOCK]`), nút "Chỉnh sửa" mở `#admin-editor`.
 
----
+8. **`#admin-editor` - Trình biên tập & Xem trước bài đọc:**
+   - Biểu mẫu nhập liệu bài đọc: Tiêu đề tiếng Anh, Khối lớp mục tiêu, Chủ đề, Đoạn văn bản đọc hiểu tiếng Anh.
+   - Khu vực quản lý câu hỏi trắc nghiệm: Soạn nội dung câu hỏi, 4 phương án lựa chọn, chọn đáp án đúng và nhập giải thích tiếng Việt.
+   - Tab "Xem trước trực tiếp" (Live Preview) mô phỏng chính xác giao diện hiển thị cho học sinh để chủ sở hữu rà soát trước khi lưu.
+   - Nút hành động: "Lưu bản nháp [MOCK]" và "Phê duyệt phát hành [MOCK]".
 
-## 5. Khả năng truy cập (Accessibility - a11y) & Chuẩn SEO
+9. **`#admin-sources` - Quản lý nguồn thu nạp & Bản quyền:**
+   - Danh sách nguồn tài liệu được cấp phép rõ ràng (Creative Commons, Public Domain, Nguồn tự biên soạn).
+   - Bảng theo dõi tiến trình thu nạp thử nghiệm (Mock quarantine crawl jobs): Tên nguồn, Trạng thái thu nạp, Cảnh báo lỗi giả lập (để kiểm tra giao diện xử lý ngoại lệ).
+   - Luồng nghiệp vụ bắt buộc: Không bao giờ tự động xuất bản sau khi thu nạp; luôn chuyển vào hàng đợi kiểm dịch để chủ duyệt thủ công.
 
-### 5.1. Mục tiêu Khả năng tiếp cận (Accessibility Implementation Targets)
-*Lưu ý: Các thông số dưới đây là mục tiêu thiết kế và tính toán màu sắc trên mã nguồn xem trước, không cấu thành chứng nhận tuân thủ WCAG sản xuất đã qua kiểm toán bên thứ ba.*
+10. **`#admin-tests` - Bộ trộn đề thi (Mixer Presets):**
+    - Cấu hình ma trận đề kiểm tra mẫu theo từng khối lớp: Số lượng bài đọc, phân bổ câu hỏi nhận biết/thông hiểu/vận dụng.
+    - Nút tạo đề mẫu thử nghiệm ngẫu nhiên từ kho ngân hàng câu hỏi.
 
-- **Kích thước vùng bấm cảm ứng (Touch Targets)**: Toàn bộ nút bấm, ô chọn radio, thẻ khối lớp, ô chọn trạng thái (select), liên kết thương hiệu và phím điều hướng số câu đều được cấu hình đạt kích thước tối thiểu **44×44px** cùng khoảng cách đệm (spacing) tối thiểu **8px**.
-- **Mục tiêu tương phản màu sắc (Color Contrast Targets)**: Chữ trắng trên nền nút bấm chính `#0369a1` đạt tỷ lệ tương phản tính toán ~5.89:1 (vượt mức tối thiểu 4.5:1 cho văn bản thông thường); các trạng thái chữ nhỏ thành công (`#047857`) và cảnh báo (`#b45309`) đều nhắm tới ngưỡng >= 4.5:1. Các tông màu xanh da trời tươi sáng được duy trì tại bề mặt nền và đồ họa minh họa.
-- **Hỗ trợ bàn phím (Keyboard Navigation)**: Trạng thái `:focus-visible` với viền xanh 3px sắc nét, liên kết nhảy cóc (Skip to content) ở đầu trang dành cho người dùng dùng phím Tab.
-- **Hạn chế chuyển động (Reduced Motion)**: Tự động triệt tiêu hoạt cảnh chuyển động khi hệ điều hành kích hoạt `@media (prefers-reduced-motion: reduce)`.
-- **Ngắt dòng tiếng Việt (Vietnamese Typography Wrapping)**: Áp dụng `overflow-wrap: break-word` bảo đảm không phát sinh thanh cuộn ngang (horizontal scroll) ở màn hình 390px mà không cần ẩn thanh cuộn cưỡng bức bằng `overflow-x: hidden`.
-
-### 5.2. Đối chiếu Yêu cầu SEO Production vs. Giới hạn Bản Mockup
-- Trong môi trường sản xuất thật (Next.js): Toàn bộ trang nội dung sẽ được xuất bản dưới dạng **SSG + ISR (1 giờ)**, thẻ canonical tuyệt đối, Schema JSON-LD `Quiz` và `LearningResource`, sitemap.xml.
-- Trong bản duyệt sơ bộ này: Sử dụng `<meta name="robots" content="noindex, nofollow">` để tránh việc các công cụ tìm kiếm thu thập bản giao diện thử nghiệm.
+11. **`#admin-reports` - Báo cáo & Phản hồi nội dung:**
+    - Báo cáo thống kê câu hỏi học sinh hay làm sai để chủ sở hữu cân nhắc điều chỉnh nội dung bài học.
+    - Hòm thư phản hồi mẫu từ học sinh (báo lỗi chính tả, câu hỏi chưa rõ ý) kèm nút xử lý mẫu `[MOCK]`.
 
 ---
 
-## 6. Hướng dẫn Mở & Thẩm định Bản Giao diện (Review Instructions)
+## 6. Ranh Giới Bảo Mật & Khoảng Trống Kiến Trúc (Security Gap Analysis)
 
-Chủ sở hữu dự án có thể mở và tương tác trực tiếp với bản thiết kế bằng bất kỳ trình duyệt web hiện đại nào (Chrome, Safari, Edge, Firefox) thông qua giao thức tệp cục bộ (`file://`):
+Đối chiếu trực tiếp với tài liệu quy định an toàn tại `docs/security.md`, bản thiết kế v2 xác lập các ranh giới kiến trúc bất khả xâm phạm như sau:
 
-### 6.1. Đường dẫn tệp cục bộ
-```
-file:///home/menglish/wt-learning-ui-design/docs/previews/sky-blue/preview.html
-```
+> [!WARNING]
+> Bản xem trước `docs/previews/sky-blue-v2/` **chỉ là giao diện tĩnh (Static Export)**. Việc điều hướng bằng URL hash hoàn toàn không có khả năng bảo vệ dữ liệu. Mọi thành phần máy chủ thật sự nằm trong danh mục **khoảng trống kiến trúc (architectural gap)** cần chủ sở hữu phê duyệt triển khai ở các giai đoạn sau.
 
-### 6.2. Các liên kết điều hướng xem trước
-- Màn hình Trang chủ: `preview.html#home`
-- Màn hình Danh sách đề: `preview.html#exercises`
-- Màn hình Làm bài tập: `preview.html#quiz`
-- Màn hình Kết quả bài làm: `preview.html#results`
+### 6.1. Nguyên Tắc Phía Học Sinh
+- Giai đoạn 1 tuân thủ tuyệt đối: **Học sinh công khai hoàn toàn không có tài khoản, không đăng nhập**.
+- Không thu thập dữ liệu định danh cá nhân (PII), không lưu trữ tiến độ cá nhân gắn với danh tính, không có thanh toán hay giao dịch tài chính.
+- Tuân thủ quy định bảo vệ dữ liệu trẻ em (Nghị định 13/2023/NĐ-CP).
 
-### 6.3. Kịch bản kiểm thử tương tác
-1. **Kiểm tra độ co giãn (Responsive)**: Mở DevTools (F12) chuyển đổi giữa màn hình Desktop (1440px) và Mobile iPhone 14 / Android (390px). Xác nhận không bị vỡ bố cục hay tràn thanh cuộn ngang.
-2. **Kiểm tra lọc bài tập**: Tại màn hình Danh sách đề, chuyển đổi bộ lọc khối lớp hoặc bấm "Đặt lại bộ lọc".
-3. **Kiểm tra luồng nộp bài**: Tại màn hình Làm bài tập, bấm chọn đáp án A/B/C/D, bấm nút gắn cờ (Flag), sau đó bấm "Nộp bài thi" để kích hoạt Native Modal Dialog và bấm xác nhận để chuyển sang màn hình Kết quả.
-4. **Kiểm tra các trạng thái biên**: Sử dụng menu chọn trạng thái ở thanh điều khiển duyệt màu xanh nhạt (Reviewer Bar) để xem trước trạng thái Loading, Empty, 500 Error, và 429 Rate Limit.
+### 6.2. Yêu Cầu Bảo Mật Bắt Buộc Khi Triển Khai Backend Thật (Future Implementation)
+Khi chủ sở hữu phê duyệt triển khai mã nguồn phía máy chủ (Go/Gin và cơ sở dữ liệu), hệ thống thực tế bắt buộc phải có đầy đủ các tầng phòng thủ:
+1. **Xác thực phiên làm việc cho Duy Nhất Một Chủ Sở Hữu (Single-Owner Auth):**
+   - Đăng nhập và quản lý phiên (session) hoàn toàn phía máy chủ. Mật khẩu băm bằng thuật toán an toàn (Argon2id).
+   - Phiên làm việc lưu trữ qua Cookie an toàn: đầy đủ cờ `HttpOnly`, `Secure`, `SameSite=Lax/Strict`.
+   - Cơ chế phòng chống tấn công giả mạo yêu cầu chéo trang (CSRF Protection), cơ chế hủy phiên và xoay vòng định kỳ (session rotation).
+2. **Ủy quyền & Kiểm soát truy cập trên MỌI Endpoint Quản trị:**
+   - Kiểm tra quyền quản trị viên trên từng API endpoint phía máy chủ; **tuyệt đối không chỉ dựa vào việc ẩn nút bấm trên giao diện người dùng**.
+   - Ghi nhật ký kiểm toán (Audit Logs) cho mọi hành động quản trị: đăng bài, xóa nội dung, thay đổi cấu hình nguồn thu nạp, thử nghiệm crawl.
+3. **Phòng chống Tấn công SSRF (Server-Side Request Forgery) khi Thu Nạp Nguồn:**
+   - Không bao giờ cho phép người dùng hoặc quản trị viên gửi yêu cầu fetch tới URL tùy ý.
+   - Bắt buộc phải có danh sách trắng (Allowlist) tên miền và giao thức được phép.
+   - Kiểm tra phân giải tên miền (DNS Resolution check) và kiểm tra từng bước chuyển hướng (redirect): Chặn đứng mọi dải IP nội bộ, loopback (`127.0.0.1`), private networks (`10.0.0.0/8`, `192.168.0.0/16`), link-local và cloud metadata endpoints (`169.254.169.254`).
+   - Thiết lập giới hạn thời gian chờ (timeout) chặt chẽ, giới hạn kích thước tệp tải về tối đa và kiểm tra kiểu nội dung (`Content-Type`).
+4. **Quy Trình Kiểm Dịch Nguồn Bắt Buộc (Strict Quarantine Workflow):**
+   - Quy trình nạp liệu luôn tuân thủ tuần tự: **Quarantine / Draft (Cách ly / Bản nháp) → Chủ sở hữu rà soát nguồn, bản quyền và nội dung → Duyệt phát hành (Publish)**.
+   - Tuyệt đối không bao giờ tự động phát hành (auto-publish) bài đọc hoặc câu hỏi ngay sau khi hoàn tất crawl hoặc phân tích cú pháp.
+5. **Bảo Vệ Đáp Án & Chống Gian Lận Thi Cử:**
+   - API phân phối đề thi cho học sinh tuyệt đối không trả về cờ `is_correct` hoặc đáp án đúng trong gói tin JSON.
+   - Việc chấm điểm được thực hiện hoàn toàn tại máy chủ thông qua mã định danh nộp bài ký bảo mật (`attempt_token` HMAC-SHA256).
 
 ---
 
-## 7. Ranh giới Triển khai Tương lai (Future Production Boundaries)
+## 7. Trạng Thái Tiến Độ & Quy Trình Thẩm Định
 
-Khi bản thiết kế giao diện được chủ sở hữu phê duyệt chính thức, các bước triển khai kỹ thuật tiếp theo sẽ bao gồm:
-1. Chuyển đổi mã HTML/CSS thành các React Server Components (RSC) và Client Components trong thư mục `web/` (Next.js App Router).
-2. Tích hợp API trộn đề tất định từ backend Go (`POST /api/v1/tests/random` và `GET /api/v1/tests/{slug}`).
-3. Quản lý phiên làm bài và khóa bảo mật nộp bài (`attempt_token`) tại máy chủ nhằm bảo mật đáp án tuyệt đối.
-4. Cấu hình vị trí quảng cáo Google AdSense dành riêng cho nội dung học sinh (không cá nhân hóa và loại trừ hoàn toàn khỏi trang làm bài).
+- **Tiến độ thiết kế:** Phạm vi giao diện v2 đã hoàn thành trọn vẹn 11 màn hình theo đặc tả, sử dụng đầy đủ các component chuẩn của shadcn/ui, đáp ứng yêu cầu thẩm mỹ sáng sủa, thân thiện với lứa tuổi học sinh THCS.
+- **Quy trình nghiệm thu:**
+  1. Đội ngũ kiểm thử độc lập tiến hành thẩm định mã nguồn tĩnh và giao diện.
+  2. Bằng chứng kiểm tra kiểu (typecheck) và biên dịch (build) được lưu trữ riêng tại tệp `verification.md` sau khi chạy trên môi trường thực tế (không tự ý bịa đặt kết quả hay giả mạo ảnh chụp).
+  3. Trình nộp chủ sở hữu đánh giá thẩm mỹ và ra quyết định phê duyệt trước khi chuyển sang các giai đoạn tiếp theo.

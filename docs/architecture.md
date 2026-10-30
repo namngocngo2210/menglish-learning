@@ -1,7 +1,13 @@
 # Kiến trúc hệ thống
 
 Website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, tạm chạy ở `beta.meducation.vn`).
-Giai đoạn 1: trắc nghiệm **đọc + viết**, dùng miễn phí không cần đăng nhập, có quảng cáo. Nghe/nói làm sau.
+Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng miễn phí không cần đăng nhập, có quảng cáo. Nghe/nói làm sau. Chủ sở hữu duy nhất quản trị nội dung cần đăng nhập riêng phía server; không có đội biên tập hay nhiều vai trò.
+
+## Bổ sung thiết kế UI v2 — chưa triển khai
+
+Fixture `docs/previews/sky-blue-v2/` là Next.js static export riêng để duyệt giao diện, dùng shadcn/ui + Tailwind + Lucide, không phải ứng dụng `web/` hay CMS thật. Màn hình admin/login là mock, không bảo vệ route/API, không lưu credential/session; không có backend, crawl, analytics hay quảng cáo chạy thật.
+
+Thiết kế tương lai phải bổ sung server-side owner login/session, authorization mọi API admin, secure cookie/CSRF phù hợp, audit publish/delete/crawl/config, validation/rate limit và chống SSRF cho cấu hình nguồn (xem [security.md](security.md)). Luồng nội dung: **quarantine/draft → owner review → publish**, không tự xuất bản sau ingestion. Schema/API/session/worker thật cần phê duyệt riêng; PR thiết kế không thực hiện những thay đổi đó. Các phần kiến trúc bên dưới vẫn là kế hoạch tương lai, không phải năng lực đã có của preview.
 
 ## Sơ đồ
 

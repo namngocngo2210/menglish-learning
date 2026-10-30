@@ -2,6 +2,12 @@
 
 Migration bằng `goose` trong `db/migrations`, truy vấn sinh bằng `sqlc` từ `db/queries`.
 
+## Khoảng trống thiết kế CMS một chủ — chưa có migration
+
+Bản preview UI v2 không dùng database và không triển khai schema. Các bảng bên dưới là đề xuất ban đầu, **chưa đủ cho CMS**: `questions.status = active/hidden/reported` không mô tả vòng đời kiểm duyệt. Thiết kế tiếp theo cần phân biệt ingestion quarantine, draft, owner review và published; lưu giấy phép/ghi nguồn + lịch sử duyệt, crawl jobs/failure, preset và audit publish/delete/crawl/config. Chỉ nội dung đã được chủ kiểm tra mới có thể publish, không auto-publish. Một tài khoản owner/session phía server cần thiết kế bảo mật riêng, không trộn với tài khoản học sinh giai đoạn 2.
+
+Đây chỉ là ghi nhận khoảng trống; chưa chốt bảng/enum/API mới và không sửa SQL bên dưới thành schema đã duyệt. Auth/schema/API thực tế cần phê duyệt riêng của chủ sở hữu. Không có lời hứa bảo vệ dữ liệu từ bản static export.
+
 ## Bảng giai đoạn 1
 
 ```sql
