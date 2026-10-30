@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Bản xem trước giao diện - Nền tảng luyện tập Tiếng Anh 6–9</title>
+  <style>
+    :root {
+      --color-sky-50: #f0f9ff;
+      --color-sky-100: #e0f2fe;
+      --color-sky-200: #bae6fd;
+      --color-sky-500: #0ea5e9;
+      --color-sky-600: #0284c7;
+      --color-sky-700: #0369a1;
+      --color-sky-800: #075985;
+
+      --color-surface-bg: #f8fafc;
+      --color-surface-card: #ffffff;
+      --color-surface-alt: #f0f7fd;
+      --color-surface-subtle: #f1f5f9;
+
+      --color-text-main: #0f172a;
+      --color-text-secondary: #334155;
+      --color-text-muted: #64748b;
+      --color-text-inverse: #ffffff;
+
+      --color-border-subtle: #e2e8f0;
+      --color-border-focus: #0284c7;
+
+      --color-success: #047857;
+      --color-success-bg: #ecfdf5;
+      --color-success-border: #a7f3d0;
+      --color-error: #dc2626;
+      --color-error-bg: #fef2f2;
+      --color-error-border: #fecaca;
+      --color-warning: #b45309;
+      --color-warning-bg: #fffbeb;
+      --color-warning-border: #fde68a;
+
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px rgba(14, 165, 233, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 10px 24px rgba(14, 165, 233, 0.12), 0 3px 6px rgba(15, 23, 42, 0.04);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+      --touch-min: 44px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-stack);
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-text-main);
+      background-color: var(--color-surface-bg);
+      -webkit-font-smoothing: antialiased;
+      overflow-wrap: break-word;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--color-border-focus);
+      outline-offset: 2px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -60px;
+      left: 16px;
+      background: var(--color-sky-700);
+      color: var(--color-text-inverse);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      z-index: 1000;
+      text-decoration: none;
+      font-weight: 600;
+      transition: top 0.2s;
+    }
+    .skip-link:focus {
+      top: 12px;
+    }
+
+    /* Top Reviewer Meta Bar - Light Sky-Blue Theme */
+    .review-bar {
+      background: var(--color-sky-100);
+      color: var(--color-sky-800);
+      font-size: 13px;
+      padding: 8px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--color-sky-200);
+    }
+    .review-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--color-surface-card);
+      color: var(--color-sky-800);
+      padding: 4px 8px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1px solid var(--color-sky-200);
+    }
+    .review-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .state-select {
+      background: var(--color-surface-card);
+      color: var(--color-text-main);
+      border: 1px solid var(--color-sky-200);
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      min-height: var(--touch-min);
+      min-width: var(--touch-min);
+    }
+
+    /* Header & Navigation */
+    .app-header {
+      background: var(--color-surface-card);
+      border-bottom: 1px solid var(--color-border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      min-height: var(--touch-min);
+      min-width: var(--touch-min);
+    }
+    .brand-logo-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-sky-700);
+      letter-spacing: -0.3px;
+    }
+    .brand-temp-tag {
+      font-size: 11px;
+      background: var(--color-sky-100);
+      color: var(--color-sky-800);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      border: 1px solid var(--color-sky-200);
+    }
+
+    .main-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--touch-min);
+      min-width: var(--touch-min);
+      padding: 8px 14px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .nav-btn:hover {
+      background: var(--color-sky-50);
+      color: var(--color-sky-700);
+    }
+    .nav-btn[aria-current="page"] {
+      background: var(--color-sky-100);
+      color: var(--color-sky-800);
+      border-color: var(--color-sky-200);
+    }
+
+    /* Screen Container */
+    main.main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+      min-height: calc(100vh - 160px);
+    }
+    .screen-view {
+      display: none;
+    }
+    .screen-view.active {
+      display: block;
+    }
+
+    /* Screen Common Utilities */
+    .view-title-group {
+      margin-bottom: 24px;
+    }
+    .view-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--color-text-main);
+      line-height: 1.3;
+      letter-spacing: -0.5px;
+    }
+    .view-subtitle {
+      font-size: 15px;
+      color: var(--color-text-muted);
+      margin-top: 4px;
+    }
+
+    /* Screen 1: Home View */
+    .hero-banner {
+      background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+      border: 1px solid var(--color-sky-200);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow-sm);
+    }
+    .hero-text h1 {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-sky-800);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .hero-text p {
+      font-size: 16px;
+      color: var(--color-text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .hero-perks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .perk-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--color-surface-card);
+      color: var(--color-sky-700);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-sky-200);
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: var(--touch-min);
+      padding: 12px 24px;
+      background: var(--color-sky-700);
+      color: var(--color-text-inverse);
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: background 0.15s ease, transform 0.1s ease;
+    }
+    .btn-primary:hover {
+      background: var(--color-sky-800);
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: var(--touch-min);
+      padding: 12px 20px;
+      background: var(--color-surface-card);
+      color: var(--color-sky-700);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      border: 1px solid var(--color-sky-200);
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--color-sky-50);
+      border-color: var(--color-sky-500);
+    }
+
+    .hero-graphic {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    /* Grade Selector */
+    .grade-section {
+      margin-bottom: 36px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-main);
+    }
+    .grade-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .grade-card {
+      background: var(--color-surface-card);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      min-height: var(--touch-min);
+    }
+    .grade-card:hover {
+      border-color: var(--color-sky-500);
+      background: var(--color-sky-50);
+    }
+    .grade-card.active {
+      border-color: var(--color-sky-600);
+      background: var(--color-sky-50);
+      box-shadow: var(--shadow-sm);
+    }
+    .grade-card .grade-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--color-sky-700);
+    }
+    .grade-card .grade-desc {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    /* Skill Entry Cards */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .skill-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-sky-200);
+    }
+    .skill-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--color-sky-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--color-sky-700);
+    }
+    .skill-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      margin-bottom: 6px;
+    }
+    .skill-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      flex-grow: 1;
+      margin-bottom: 16px;
+    }
+    .skill-meta {
+      font-size: 12px;
+      color: var(--color-sky-800);
+      font-weight: 600;
+      background: var(--color-sky-50);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+      margin-bottom: 16px;
+      align-self: flex-start;
+    }
+
+    /* Learning Path Road */
+    .roadmap-section {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+    .roadmap-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+      position: relative;
+    }
+    .roadmap-step {
+      background: var(--color-surface-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      position: relative;
+    }
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      background: var(--color-sky-700);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .step-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    /* Screen 2: Exercise List */
+    .filter-bar {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .filter-select {
+      min-height: var(--touch-min);
+      padding: 6px 12px;
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--color-text-main);
+      background: var(--color-surface-bg);
+    }
+
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .exercise-item {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .exercise-info {
+      flex: 1 1 300px;
+    }
+    .exercise-badges {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+    }
+    .badge-grade {
+      background: var(--color-sky-100);
+      color: var(--color-sky-800);
+    }
+    .badge-diff-easy {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+    .badge-diff-med {
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .badge-time {
+      background: #f1f5f9;
+      color: #475569;
+    }
+    .exercise-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      margin-bottom: 4px;
+    }
+    .exercise-summary {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+    }
+    .exercise-action {
+      flex-shrink: 0;
+    }
+
+    /* Screen 3: Quiz Interface */
+    .quiz-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 24px;
+      align-items: start;
+    }
+    .quiz-main-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+    .quiz-passage-box {
+      background: var(--color-surface-alt);
+      border: 1px solid var(--color-sky-200);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 24px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+    }
+    .passage-title {
+      font-weight: 700;
+      color: var(--color-sky-800);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .question-block {
+      margin-bottom: 24px;
+    }
+    .question-stem {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-main);
+      margin-bottom: 16px;
+    }
+    .options-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      min-height: var(--touch-min);
+      background: var(--color-surface-bg);
+      border: 2px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+    .option-label:hover {
+      background: var(--color-sky-50);
+      border-color: var(--color-sky-500);
+    }
+    .option-label.selected {
+      background: #f0f9ff;
+      border-color: var(--color-sky-600);
+      color: var(--color-sky-800);
+      font-weight: 600;
+    }
+    .option-radio {
+      width: 20px;
+      height: 20px;
+      accent-color: var(--color-sky-600);
+    }
+
+    /* Quiz Sidebar */
+    .quiz-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 80px;
+    }
+    .sidebar-widget {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+    .timer-display {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .timer-val {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--color-sky-700);
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-note {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      display: inline-block;
+    }
+    .nav-grid-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--color-text-secondary);
+    }
+    .question-nav-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .q-btn {
+      width: 100%;
+      min-height: var(--touch-min);
+      min-width: var(--touch-min);
+      height: 44px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-subtle);
+      background: var(--color-surface-bg);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      position: relative;
+    }
+    .q-btn.current {
+      border: 2px solid var(--color-sky-600);
+      background: var(--color-sky-100);
+      color: var(--color-sky-800);
+    }
+    .q-btn.answered {
+      background: #e2e8f0;
+      color: #334155;
+    }
+    .q-btn.flagged::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 7px;
+      height: 7px;
+      background: #ea580c;
+      border-radius: 50%;
+    }
+
+    .flag-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: var(--touch-min);
+      border: 1px dashed var(--color-sky-500);
+      background: transparent;
+      color: var(--color-sky-700);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+    .flag-toggle-btn.is-flagged {
+      background: #fff7ed;
+      border-color: #ea580c;
+      color: #c2410c;
+    }
+
+    /* Screen 4: Results */
+    .results-hero {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--color-sky-50);
+      border: 4px solid var(--color-sky-500);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .score-value {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--color-sky-700);
+      line-height: 1;
+    }
+    .score-total {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+    .results-badge-wrap {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+    .results-summary-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .stat-box {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    .review-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 36px;
+    }
+    .review-card {
+      background: var(--color-surface-card);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--color-border-subtle);
+    }
+    .review-card.is-correct {
+      border-left: 6px solid var(--color-success);
+    }
+    .review-card.is-incorrect {
+      border-left: 6px solid var(--color-error);
+    }
+    .review-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .status-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+    }
+    .status-correct {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid var(--color-success-border);
+    }
+    .status-incorrect {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid var(--color-error-border);
+    }
+    .explanation-box {
+      margin-top: 14px;
+      background: var(--color-surface-bg);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .explanation-title {
+      font-weight: 700;
+      color: var(--color-sky-800);
+      margin-bottom: 4px;
+    }
+
+    /* Reserved Ad Slot (Outside Active Quiz) */
+    .ad-slot-reserved {
+      margin: 40px auto 10px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px;
+      max-width: 728px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .ad-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      color: #475569;
+    }
+
+    /* Native Modal Dialog */
+    dialog.app-dialog {
+      margin: auto;
+      border: none;
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      max-width: 440px;
+      width: 90%;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+      background: var(--color-surface-card);
+      color: var(--color-text-main);
+    }
+    dialog.app-dialog::backdrop {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(2px);
+    }
+    .dialog-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--color-sky-100);
+      color: var(--color-sky-600);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .dialog-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .dialog-desc {
+      font-size: 14px;
+      color: var(--color-text-secondary);
+      margin-bottom: 24px;
+    }
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Edge State Panels */
+    .state-panel {
+      display: none;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 48px 24px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .state-panel.active {
+      display: block;
+    }
+    .state-icon-wrap {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .state-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .state-msg {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      max-width: 460px;
+      margin: 0 auto 20px;
+    }
+
+    /* Loading Skeleton */
+    .skeleton-bar {
+      background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+      background-size: 200% 100%;
+      animation: pulse 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+    @keyframes pulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-banner {
+        grid-template-columns: 1fr;
+        padding: 24px 20px;
+      }
+      .quiz-layout {
+        grid-template-columns: 1fr;
+      }
+      .quiz-sidebar {
+        position: static;
+        order: 2;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .grade-tabs {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .results-summary-stats {
+        gap: 16px;
+      }
+      .view-title {
+        font-size: 22px;
+      }
+      .hero-text h1 {
+        font-size: 24px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="#content-anchor" class="skip-link">Chuyển đến nội dung chính</a>
+
+  <!-- Top Reviewer Bar -->
+  <div class="review-bar" role="region" aria-label="Bảng điều khiển duyệt giao diện">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="review-badge">Bản duyệt chủ sở hữu (Non-Production)</span>
+      <span>Học sinh THCS lớp 6–9 · Sky Blue Palette</span>
+    </div>
+    <div class="review-controls">
+      <label for="state-switcher" style="font-size: 12px;">Mô phỏng trạng thái tải:</label>
+      <select id="state-switcher" class="state-select" onchange="switchDemoState(this.value)">
+        <option value="normal">Bình thường</option>
+        <option value="loading">Đang tải</option>
+        <option value="empty">Danh sách rỗng</option>
+        <option value="error">Lỗi hệ thống</option>
+        <option value="rate_limit">Quá tải (429)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#home" class="brand-wrap" onclick="navigateTo('home'); return false;">
+        <svg class="brand-logo-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <rect width="40" height="40" rx="10" fill="#0369A1"/>
+          <path d="M11 15C13.5 13.5 17 13.5 20 15V27C17 25.5 13.5 25.5 11 27V15Z" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M29 15C26.5 13.5 23 13.5 20 15V27C23 25.5 26.5 25.5 29 27V15Z" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <span class="brand-title">Anh Ngữ 6–9</span>
+          <span class="brand-temp-tag">Tên tạm thời</span>
+        </div>
+      </a>
+
+      <!-- Screen Nav Tabs -->
+      <nav class="main-nav" aria-label="Điều hướng các màn hình xem trước">
+        <button type="button" class="nav-btn" id="nav-home" aria-current="page" onclick="navigateTo('home')">Trang chủ</button>
+        <button type="button" class="nav-btn" id="nav-exercises" onclick="navigateTo('exercises')">Danh sách đề</button>
+        <button type="button" class="nav-btn" id="nav-quiz" onclick="navigateTo('quiz')">Làm bài tập</button>
+        <button type="button" class="nav-btn" id="nav-results" onclick="navigateTo('results')">Kết quả bài làm</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content-anchor" class="main-content">
+
+    <!-- Demo Edge State Container (Hidden in normal mode) -->
+    <div id="state-view-container">
+      <div id="state-loading" class="state-panel">
+        <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+          <div class="skeleton-bar" style="height: 28px; width: 40%; margin-bottom: 16px;"></div>
+          <div class="skeleton-bar" style="height: 16px; width: 80%; margin-bottom: 24px;"></div>
+          <div class="skeleton-bar" style="height: 80px; width: 100%; margin-bottom: 16px;"></div>
+          <div class="skeleton-bar" style="height: 80px; width: 100%; margin-bottom: 16px;"></div>
+        </div>
+        <p style="margin-top: 16px; font-size: 13px; color: var(--color-text-muted);">Đang kết nối dữ liệu đề thi mô phỏng...</p>
+      </div>
+
+      <div id="state-empty" class="state-panel">
+        <div class="state-icon-wrap" style="background: var(--color-sky-100); color: var(--color-sky-600);">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <h3 class="state-title">Chưa có đề thi phù hợp</h3>
+        <p class="state-msg">Hiện chưa có chủ đề nào theo bộ lọc bạn vừa chọn. Hãy thử chọn lớp khác hoặc xóa bớt tiêu chí lọc.</p>
+        <button type="button" class="btn-secondary" onclick="switchDemoState('normal')">Quay lại trạng thái đầy đủ</button>
+      </div>
+
+      <div id="state-error" class="state-panel">
+        <div class="state-icon-wrap" style="background: var(--color-error-bg); color: var(--color-error);">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3 class="state-title">Không thể tải nội dung</h3>
+        <p class="state-msg">Đã xảy ra sự cố gián đoạn kết nối máy chủ dữ liệu. Bạn vui lòng thử tải lại trang.</p>
+        <button type="button" class="btn-primary" onclick="switchDemoState('normal')">Thử lại ngay</button>
+      </div>
+
+      <div id="state-rate_limit" class="state-panel">
+        <div class="state-icon-wrap" style="background: var(--color-warning-bg); color: var(--color-warning);">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3 class="state-title">Thao tác quá nhanh (Mã lỗi 429)</h3>
+        <p class="state-msg">Bạn vừa gửi yêu cầu trộn đề liên tục. Để bảo đảm hệ thống cho mọi học sinh, vui lòng chờ 30 giây trước khi tiếp tục.</p>
+        <button type="button" class="btn-secondary" onclick="switchDemoState('normal')">Đã hiểu, quay lại</button>
+      </div>
+    </div>
+
+    <!-- Normal Screens Container -->
+    <div id="normal-content-view">
+
+      <!-- SCREEN 1: HOME -->
+      <section id="view-home" class="screen-view active" aria-labelledby="home-h1">
+        <div class="hero-banner">
+          <div class="hero-text">
+            <h1 id="home-h1">Luyện tiếng Anh THCS chuẩn kiến thức, vững tương lai</h1>
+            <p>Hệ thống bài tập trắc nghiệm đọc hiểu, ngữ pháp và từ vựng bám sát chương trình mới lớp 6–9. Ôn tập hiệu quả, hoàn toàn miễn phí và không yêu cầu đăng nhập tài khoản.</p>
+            <div class="hero-perks">
+              <span class="perk-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Không cần tạo tài khoản
+              </span>
+              <span class="perk-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Lời giải & dịch nghĩa chi tiết
+              </span>
+              <span class="perk-tag">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Trọng tâm thi vào 10
+              </span>
+            </div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button type="button" class="btn-primary" onclick="navigateTo('exercises')">
+                Luyện tập ngay
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+              <button type="button" class="btn-secondary" onclick="navigateTo('quiz')">Thử làm 1 câu mẫu</button>
+            </div>
+          </div>
+
+          <!-- Hero Illustration (Sophisticated Inline SVG) -->
+          <div class="hero-illustration-container">
+            <svg class="hero-graphic" viewBox="0 0 400 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minh họa học sinh đọc sách học tập cùng lộ trình tri thức">
+              <rect x="20" y="20" width="360" height="280" rx="16" fill="#F0F9FF" stroke="#BAE6FD" stroke-width="2"/>
+              <circle cx="200" cy="140" r="90" fill="#E0F2FE"/>
+              <!-- Book Base -->
+              <path d="M110 240C140 230 180 232 200 244C220 232 260 230 290 240V140C260 130 220 132 200 144C180 132 140 130 110 140V240Z" fill="#FFFFFF" stroke="#0284C7" stroke-width="3" stroke-linejoin="round"/>
+              <path d="M200 144V244" stroke="#0284C7" stroke-width="3"/>
+              <!-- Book details -->
+              <line x1="130" y1="165" x2="180" y2="165" stroke="#BAE6FD" stroke-width="3" stroke-linecap="round"/>
+              <line x1="130" y1="185" x2="180" y2="185" stroke="#BAE6FD" stroke-width="3" stroke-linecap="round"/>
+              <line x1="130" y1="205" x2="170" y2="205" stroke="#BAE6FD" stroke-width="3" stroke-linecap="round"/>
+              <line x1="220" y1="165" x2="270" y2="165" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round"/>
+              <line x1="220" y1="185" x2="270" y2="185" stroke="#BAE6FD" stroke-width="3" stroke-linecap="round"/>
+              <line x1="220" y1="205" x2="260" y2="205" stroke="#BAE6FD" stroke-width="3" stroke-linecap="round"/>
+              <!-- Badge & Star floating -->
+              <g transform="translate(260, 70)">
+                <circle cx="24" cy="24" r="22" fill="#0284C7" stroke="#FFFFFF" stroke-width="2"/>
+                <path d="M24 14L27 20L34 21L29 26L30 33L24 29L18 33L19 26L14 21L21 20L24 14Z" fill="#FEF08A"/>
+              </g>
+              <!-- Target Icon floating -->
+              <g transform="translate(80, 80)">
+                <rect width="40" height="40" rx="8" fill="#FFFFFF" stroke="#38BDF8" stroke-width="2"/>
+                <path d="M12 20L18 26L28 14" stroke="#0EA5E9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Grade Selector -->
+        <div class="grade-section">
+          <div class="section-header">
+            <h2 class="section-title">1. Chọn khối lớp học tập</h2>
+            <span style="font-size: 13px; color: var(--color-text-muted);">Chương trình tiếng Anh THCS</span>
+          </div>
+          <div class="grade-tabs" role="tablist" aria-label="Khối lớp">
+            <button type="button" class="grade-card active" role="tab" aria-selected="true" onclick="selectGrade(this, 'lop-6')">
+              <div class="grade-name">Lớp 6</div>
+              <div class="grade-desc">Làm quen ngữ pháp THCS</div>
+            </button>
+            <button type="button" class="grade-card" role="tab" aria-selected="false" onclick="selectGrade(this, 'lop-7')">
+              <div class="grade-name">Lớp 7</div>
+              <div class="grade-desc">Mở rộng cấu trúc & thì</div>
+            </button>
+            <button type="button" class="grade-card" role="tab" aria-selected="false" onclick="selectGrade(this, 'lop-8')">
+              <div class="grade-name">Lớp 8</div>
+              <div class="grade-desc">Đọc hiểu & từ vựng sâu</div>
+            </button>
+            <button type="button" class="grade-card" role="tab" aria-selected="false" onclick="selectGrade(this, 'lop-9')">
+              <div class="grade-name">Lớp 9 / Vào 10</div>
+              <div class="grade-desc">Luyện đề thi tuyển sinh</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Skill Cards Grid -->
+        <div style="margin-bottom: 36px;">
+          <div class="section-header">
+            <h2 class="section-title">2. Lựa chọn kỹ năng trọng tâm</h2>
+            <span style="font-size: 13px; color: var(--color-text-muted);">Trắc nghiệm chuẩn hóa</span>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-card">
+              <div class="skill-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
+              <h3 class="skill-title">Đọc hiểu (Reading)</h3>
+              <p class="skill-desc">Đoạn văn ngắn, biển báo, thông báo thường nhật và câu hỏi suy luận ý chính theo ngữ cảnh.</p>
+              <span class="skill-meta">Mô phỏng 12 chủ đề đọc</span>
+              <button type="button" class="btn-secondary" onclick="navigateTo('exercises')">Vào luyện đọc</button>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              </div>
+              <h3 class="skill-title">Ngữ pháp (Grammar)</h3>
+              <p class="skill-desc">Hệ thống thì động từ, câu điều kiện, mệnh đề quan hệ, dạng so sánh và liên từ thường gặp.</p>
+              <span class="skill-meta">Mô phỏng 45 chuyên đề mẫu</span>
+              <button type="button" class="btn-secondary" onclick="navigateTo('exercises')">Vào ôn ngữ pháp</button>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <h3 class="skill-title">Từ vựng (Vocabulary)</h3>
+              <p class="skill-desc">Từ đồng nghĩa, trái nghĩa, từ loại (Word Form) và cụm động từ (Phrasal Verbs) theo chủ điểm.</p>
+              <span class="skill-meta">Mô phỏng từ vựng Unit mẫu</span>
+              <button type="button" class="btn-secondary" onclick="navigateTo('exercises')">Trau dồi từ vựng</button>
+            </div>
+
+            <div class="skill-card">
+              <div class="skill-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              </div>
+              <h3 class="skill-title">Viết trắc nghiệm (Writing MCQ)</h3>
+              <p class="skill-desc">Dạng bài tìm lỗi sai, viết lại câu giữ nguyên nghĩa và sắp xếp trật tự từ hoàn chỉnh.</p>
+              <span class="skill-meta">Mô phỏng dạng đề vào 10</span>
+              <button type="button" class="btn-secondary" onclick="navigateTo('exercises')">Luyện viết MCQ</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Learning Path Road -->
+        <div class="roadmap-section">
+          <h2 class="section-title">Lộ trình học tập đề xuất</h2>
+          <p style="font-size: 14px; color: var(--color-text-muted); margin-top: 4px;">4 bước làm chủ bài thi mà không bị áp lực</p>
+          <div class="roadmap-steps">
+            <div class="roadmap-step">
+              <div class="step-number">1</div>
+              <div class="step-title">Kiểm tra đầu vào</div>
+              <div class="step-desc">Làm thử 1 đề ngắn 10 phút để nắm được điểm mạnh và điểm cần cải thiện.</div>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-number">2</div>
+              <div class="step-title">Luyện theo chuyên đề</div>
+              <div class="step-desc">Ôn vững từng mảng ngữ pháp và từ vựng của khối lớp hiện tại.</div>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-number">3</div>
+              <div class="step-title">Luyện giải thích chi tiết</div>
+              <div class="step-desc">Đọc kĩ phần giải nghĩa từng câu sai để ghi nhớ quy tắc và cấu trúc.</div>
+            </div>
+            <div class="roadmap-step">
+              <div class="step-number">4</div>
+              <div class="step-title">Thi thử áp lực giờ</div>
+              <div class="step-desc">Thực hiện các đề thi tổng hợp định kỳ để nâng cao phản xạ tốc độ.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: EXERCISES LIST -->
+      <section id="view-exercises" class="screen-view" aria-labelledby="exercises-h1">
+        <div class="view-title-group">
+          <h1 id="exercises-h1" class="view-title">Kho đề luyện tập chọn lọc</h1>
+          <p class="view-subtitle">Lựa chọn bộ đề trắc nghiệm phù hợp để bắt đầu làm bài ngay (Dữ liệu mẫu demo minh họa)</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar" role="search" aria-label="Bộ lọc đề thi">
+          <div class="filter-group">
+            <label for="filter-grade">Khối lớp:</label>
+            <select id="filter-grade" class="filter-select" onchange="filterExercises()">
+              <option value="all">Tất cả các lớp (6–9)</option>
+              <option value="lop-6">Lớp 6</option>
+              <option value="lop-7">Lớp 7</option>
+              <option value="lop-8">Lớp 8</option>
+              <option value="lop-9" selected>Lớp 9 & Thi vào 10</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-skill">Kỹ năng:</label>
+            <select id="filter-skill" class="filter-select" onchange="filterExercises()">
+              <option value="all">Tất cả kỹ năng</option>
+              <option value="reading">Đọc hiểu (Reading)</option>
+              <option value="grammar">Ngữ pháp (Grammar)</option>
+              <option value="writing">Viết trắc nghiệm</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label for="filter-diff">Độ khó:</label>
+            <select id="filter-diff" class="filter-select" onchange="filterExercises()">
+              <option value="all">Mọi cấp độ</option>
+              <option value="easy">Cơ bản</option>
+              <option value="med">Vừa sức</option>
+              <option value="hard">Nâng cao</option>
+            </select>
+          </div>
+
+          <div style="margin-left: auto;">
+            <button type="button" class="btn-secondary" onclick="resetFilters()">Đặt lại bộ lọc</button>
+          </div>
+        </div>
+
+        <!-- Exercises List Items -->
+        <div class="exercise-list">
+          <!-- Item 1 -->
+          <article class="exercise-item" data-grade="lop-9" data-skill="reading" data-diff="med">
+            <div class="exercise-info">
+              <div class="exercise-badges">
+                <span class="badge badge-grade">Lớp 9</span>
+                <span class="badge badge-diff-med">Vừa sức</span>
+                <span class="badge badge-time">⏱ 15 phút · 10 câu</span>
+              </div>
+              <h2 class="exercise-title">Đề 01: Đọc hiểu chủ đề Bảo vệ môi trường (Green Living)</h2>
+              <p class="exercise-summary">Bài đọc phân tích các biện pháp giảm rác thải nhựa và năng lượng tái tạo, rèn luyện kỹ năng tìm đại từ thay thế và suy luận từ vựng.</p>
+            </div>
+            <div class="exercise-action">
+              <button type="button" class="btn-primary" onclick="navigateTo('quiz')">
+                Làm bài ngay
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
+            </div>
+          </article>
+
+          <!-- Item 2 -->
+          <article class="exercise-item" data-grade="lop-9" data-skill="grammar" data-diff="med">
+            <div class="exercise-info">
+              <div class="exercise-badges">
+                <span class="badge badge-grade">Lớp 9</span>
+                <span class="badge badge-diff-med">Vừa sức</span>
+                <span class="badge badge-time">⏱ 20 phút · 15 câu</span>
+              </div>
+              <h2 class="exercise-title">Đề 02: Mệnh đề quan hệ xác định & không xác định (Relative Clauses)</h2>
+              <p class="exercise-summary">Phân biệt who, whom, which, that, whose và lược bỏ đại từ quan hệ trong đề thi tuyển sinh lớp 10.</p>
+            </div>
+            <div class="exercise-action">
+              <button type="button" class="btn-primary" onclick="navigateTo('quiz')">Làm bài ngay</button>
+            </div>
+          </article>
+
+          <!-- Item 3 -->
+          <article class="exercise-item" data-grade="lop-8" data-skill="grammar" data-diff="easy">
+            <div class="exercise-info">
+              <div class="exercise-badges">
+                <span class="badge badge-grade">Lớp 8</span>
+                <span class="badge badge-diff-easy">Cơ bản</span>
+                <span class="badge badge-time">⏱ 10 phút · 10 câu</span>
+              </div>
+              <h2 class="exercise-title">Đề 03: Câu bị động với các thì hiện tại & quá khứ đơn</h2>
+              <p class="exercise-summary">Nắm vững biến đổi chủ ngữ - tân ngữ và bảng động từ bất quy tắc dạng V3/ed trong bài kiểm tra 1 tiết.</p>
+            </div>
+            <div class="exercise-action">
+              <button type="button" class="btn-primary" onclick="navigateTo('quiz')">Làm bài ngay</button>
+            </div>
+          </article>
+
+          <!-- Item 4 -->
+          <article class="exercise-item" data-grade="lop-6" data-skill="writing" data-diff="easy">
+            <div class="exercise-info">
+              <div class="exercise-badges">
+                <span class="badge badge-grade">Lớp 6</span>
+                <span class="badge badge-diff-easy">Cơ bản</span>
+                <span class="badge badge-time">⏱ 15 phút · 10 câu</span>
+              </div>
+              <h2 class="exercise-title">Đề 04: Viết lại câu thì hiện tại đơn & trạng từ chỉ tần suất</h2>
+              <p class="exercise-summary">Rèn luyện trật tự câu miêu tả thói quen sinh hoạt hàng ngày theo chương trình sách giáo khoa mới.</p>
+            </div>
+            <div class="exercise-action">
+              <button type="button" class="btn-primary" onclick="navigateTo('quiz')">Làm bài ngay</button>
+            </div>
+          </article>
+
+          <!-- Filter Empty Feedback (Displayed when 0 matches found) -->
+          <div id="exercise-no-results" style="display: none; background: var(--color-surface-card); border: 1px dashed var(--color-sky-500); border-radius: var(--radius-md); padding: 32px 20px; text-align: center;" role="status" aria-live="polite">
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--color-sky-800); margin-bottom: 8px;">Không tìm thấy đề thi phù hợp</h3>
+            <p style="font-size: 14px; color: var(--color-text-secondary); max-width: 480px; margin: 0 auto 16px;">
+              Hiện chưa có đề thi mẫu khớp với bộ lọc đã chọn. Do đây là bản xem trước giao diện (demo), kho đề mẫu chỉ gồm các bài minh họa giới hạn cho Lớp 6, 8 và 9.
+            </p>
+            <button type="button" class="btn-secondary" onclick="resetFilters()">Đặt lại bộ lọc</button>
+          </div>
+        </div>
+
+        <!-- Optional Ad Slot Reserved Outside Active Quiz -->
+        <div class="ad-slot-reserved" aria-label="Khu vực quảng cáo mẫu">
+          <span class="ad-tag">Vị trí quảng cáo dự phòng (Ngoài màn hình làm bài)</span>
+          <span>Khung kích thước chuẩn 728×90 (Leaderboard) · Đặt chế độ không cá nhân hóa thân thiện học sinh</span>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: QUIZ INTERFACE -->
+      <section id="view-quiz" class="screen-view" aria-labelledby="quiz-h1">
+        <div class="view-title-group" style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+          <div>
+            <h1 id="quiz-h1" class="view-title">Đề 01: Đọc hiểu chủ đề Bảo vệ môi trường</h1>
+            <p class="view-subtitle">Câu hỏi 1 trên 5 · Trắc nghiệm 4 phương án A-B-C-D</p>
+          </div>
+          <span style="font-size: 13px; color: var(--color-sky-700); background: var(--color-sky-50); padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid var(--color-sky-200);">
+            Hoàn toàn không có quảng cáo trong khi làm bài
+          </span>
+        </div>
+
+        <div class="quiz-layout">
+          <!-- Quiz Main Column -->
+          <div class="quiz-main-card">
+            <!-- Passage -->
+            <div class="quiz-passage-box">
+              <div class="passage-title">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                Đoạn văn đọc hiểu (Reading Passage)
+              </div>
+              <p>Every year, millions of tons of plastic waste enter our oceans, threatening marine life and polluting coastlines. Many secondary schools across Vietnam have started "Green Campus" campaigns to raise awareness among students. Instead of buying single-use bottles, students are encouraged to bring reusable water containers and bamboo straws. Furthermore, local recycling clubs collect used paper and cartons every Friday afternoon. Small daily actions from young teenagers can create substantial positive changes for our planet's ecosystem.</p>
+            </div>
+
+            <!-- Visible Concept Preview Notice -->
+            <div id="quiz-concept-note" role="status" aria-live="polite" style="font-size: 13px; color: var(--color-sky-800); background: var(--color-sky-50); border: 1px solid var(--color-sky-200); padding: 8px 12px; border-radius: var(--radius-sm); margin-bottom: 20px;">
+              Đang xem câu 1. Lưu ý: Bản demo chỉ bao gồm nội dung câu 1; các số khác chỉ mô phỏng trạng thái điều hướng giao diện.
+            </div>
+
+            <!-- Current Question -->
+            <div class="question-block">
+              <h2 class="question-stem" id="q1-stem">Câu 1: What is the main idea of the reading passage?</h2>
+
+              <fieldset style="border: none; padding: 0; margin: 0;">
+                <legend class="sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0;">Lựa chọn đáp án cho câu 1</legend>
+                <div class="options-group">
+                  <label class="option-label" id="opt-label-a" onclick="selectQuizOption('a')">
+                    <input type="radio" name="quiz-answer" id="opt-a" value="A" class="option-radio">
+                    <span><strong>A.</strong> The devastating dangers of deep-sea marine exploration.</span>
+                  </label>
+
+                  <label class="option-label selected" id="opt-label-b" onclick="selectQuizOption('b')">
+                    <input type="radio" name="quiz-answer" id="opt-b" value="B" class="option-radio" checked>
+                    <span><strong>B.</strong> How secondary students can take practical actions to protect the environment.</span>
+                  </label>
+
+                  <label class="option-label" id="opt-label-c" onclick="selectQuizOption('c')">
+                    <input type="radio" name="quiz-answer" id="opt-c" value="C" class="option-radio">
+                    <span><strong>C.</strong> Why students should stop using paper notebooks entirely.</span>
+                  </label>
+
+                  <label class="option-label" id="opt-label-d" onclick="selectQuizOption('d')">
+                    <input type="radio" name="quiz-answer" id="opt-d" value="D" class="option-radio">
+                    <span><strong>D.</strong> The high financial cost of buying bamboo straws for schools.</span>
+                  </label>
+                </div>
+              </fieldset>
+            </div>
+
+            <!-- Bottom Question Controls -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--color-border-subtle); flex-wrap: wrap; gap: 12px;">
+              <button type="button" id="quiz-prev-btn" class="btn-secondary" onclick="prevQuestionPreview()" disabled style="opacity: 0.5; cursor: not-allowed;">
+                ← Câu trước
+              </button>
+              <div style="display: flex; gap: 12px;">
+                <button type="button" class="btn-secondary" onclick="nextQuestionPreview()">
+                  Câu tiếp theo →
+                </button>
+                <button type="button" class="btn-primary" onclick="openSubmitModal()">
+                  Nộp bài thi
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Sidebar -->
+          <aside class="quiz-sidebar" aria-label="Bảng theo dõi tiến độ bài làm">
+            <div class="sidebar-widget">
+              <div class="timer-display">
+                <div style="font-size: 12px; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">Thời gian còn lại</div>
+                <div class="timer-val" aria-live="off">13:45</div>
+                <span class="timer-note">Thời gian cố định minh họa demo</span>
+              </div>
+
+              <button type="button" id="flag-btn" class="flag-toggle-btn" aria-pressed="false" onclick="toggleFlag()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                <span id="flag-text">Đánh dấu xem lại câu này</span>
+              </button>
+
+              <div class="nav-grid-title">Bảng câu hỏi (5 câu mẫu)</div>
+              <div class="question-nav-grid">
+                <button type="button" class="q-btn current" id="q-nav-1" aria-current="step" aria-label="Câu 1 (Đang làm)" onclick="selectQuestionPreview(1)">1</button>
+                <button type="button" class="q-btn answered" id="q-nav-2" aria-label="Câu 2 (Đã chọn)" onclick="selectQuestionPreview(2)">2</button>
+                <button type="button" class="q-btn answered" id="q-nav-3" aria-label="Câu 3 (Đã chọn)" onclick="selectQuestionPreview(3)">3</button>
+                <button type="button" class="q-btn" id="q-nav-4" aria-label="Câu 4 (Chưa làm)" onclick="selectQuestionPreview(4)">4</button>
+                <button type="button" class="q-btn" id="q-nav-5" aria-label="Câu 5 (Chưa làm)" onclick="selectQuestionPreview(5)">5</button>
+              </div>
+
+              <div style="font-size: 12px; color: var(--color-text-muted); line-height: 1.5;">
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                  <span style="display: inline-block; width: 10px; height: 10px; background: var(--color-sky-100); border: 2px solid var(--color-sky-600); border-radius: 2px;"></span> Đang chọn
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                  <span style="display: inline-block; width: 10px; height: 10px; background: #e2e8f0; border-radius: 2px;"></span> Đã trả lời
+                </div>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                  <span style="display: inline-block; width: 8px; height: 8px; background: #ea580c; border-radius: 50%;"></span> Có gắn cờ chú ý
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- SCREEN 4: RESULTS -->
+      <section id="view-results" class="screen-view" aria-labelledby="results-h1">
+        <div class="results-hero">
+          <div class="results-badge-wrap">
+            <span class="badge" style="background: var(--color-sky-100); color: var(--color-sky-800); font-size: 13px; padding: 4px 12px;">
+              Điểm số mô phỏng mẫu định trước
+            </span>
+          </div>
+          <div class="score-circle">
+            <span class="score-value">8.0</span>
+            <span class="score-total">trên 10</span>
+          </div>
+          <h1 id="results-h1" class="view-title" style="margin-bottom: 6px;">Hoàn thành xuất sắc bài đọc hiểu!</h1>
+          <p style="font-size: 15px; color: var(--color-text-secondary); max-width: 520px; margin: 0 auto;">
+            Em đã nắm vững nội dung chính và cấu trúc câu hỏi. Hãy xem lại lời giải chi tiết bên dưới để hoàn thiện các câu còn băn khoăn.
+          </p>
+
+          <div class="results-summary-stats">
+            <div class="stat-box">
+              <div class="stat-num" style="color: var(--color-success);">4 / 5</div>
+              <div class="stat-label">Số câu đúng</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" style="color: var(--color-error);">1 / 5</div>
+              <div class="stat-label">Số câu chưa đúng</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num" style="color: var(--color-sky-700);">08:15</div>
+              <div class="stat-label">Thời gian làm bài</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+          <h2 class="section-title">Chi tiết lời giải từng câu</h2>
+          <div style="display: flex; gap: 10px;">
+            <button type="button" class="btn-secondary" onclick="resetAndRestartQuiz()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              Làm lại đề này
+            </button>
+            <button type="button" class="btn-primary" onclick="navigateTo('exercises')">
+              Luyện đề tiếp theo
+            </button>
+          </div>
+        </div>
+
+        <!-- Detailed Explanations -->
+        <div class="review-details">
+          <!-- Question 1 Result -->
+          <article class="review-card is-correct">
+            <div class="review-header">
+              <span style="font-weight: 700; font-size: 16px;">Câu 1: What is the main idea of the reading passage?</span>
+              <span class="status-indicator status-correct">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                Chính xác (Đúng)
+              </span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 8px;"><strong>Phương án đã chọn:</strong> B. How secondary students can take practical actions to protect the environment.</p>
+            <div class="explanation-box">
+              <div class="explanation-title">Giải thích chi tiết & Dẫn chứng ngữ liệu:</div>
+              <p>Đoạn văn giới thiệu các chiến dịch "Green Campus", việc học sinh mang bình nước tái sử dụng và câu lạc bộ thu gom giấy vào thứ Sáu. Toàn bài nhấn mạnh hành động thực tế của lứa tuổi học sinh, do đó đáp án B là ý chính toàn diện nhất.</p>
+            </div>
+          </article>
+
+          <!-- Question 2 Result -->
+          <article class="review-card is-incorrect">
+            <div class="review-header">
+              <span style="font-weight: 700; font-size: 16px;">Câu 2: The word "substantial" in the last sentence is closest in meaning to:</span>
+              <span class="status-indicator status-incorrect">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Chưa đúng (Sai)
+              </span>
+            </div>
+            <p style="font-size: 14px; margin-bottom: 4px;"><strong>Phương án đã chọn:</strong> A. tiny (nhỏ bé)</p>
+            <p style="font-size: 14px; margin-bottom: 8px; color: var(--color-success); font-weight: 600;"><strong>Đáp án đúng:</strong> C. significant (đáng kể / to lớn)</p>
+            <div class="explanation-box">
+              <div class="explanation-title">Giải thích chi tiết & Phân tích từ vựng:</div>
+              <p>Từ <em>substantial</em> có nghĩa là lớn lao, đáng kể (synonym: <em>significant</em>, <em>considerable</em>). Ngữ cảnh "Small daily actions can create substantial changes" thể hiện phép đối lập tương phản giữa hành động nhỏ (small) và kết quả to lớn (substantial).</p>
+            </div>
+          </article>
+        </div>
+
+        <!-- Optional Ad Slot Reserved Outside Active Quiz -->
+        <div class="ad-slot-reserved" aria-label="Khu vực quảng cáo mẫu">
+          <span class="ad-tag">Vị trí quảng cáo chân trang kết quả</span>
+          <span>Không làm gián đoạn dòng phân tích lời giải học sinh</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Submit Confirmation Dialog (Native HTML5 <dialog>) -->
+  <dialog id="submitModal" class="app-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-desc">
+    <div class="dialog-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+    </div>
+    <h2 id="dialog-title" class="dialog-title">Xác nhận nộp bài thi?</h2>
+    <p id="dialog-desc" class="dialog-desc">
+      Em đã trả lời 4/5 câu hỏi trong đề. Khi bấm xác nhận, hệ thống sẽ kết thúc bài làm và chuyển thẳng đến bảng điểm kèm lời giải chi tiết.
+    </p>
+    <div class="dialog-actions">
+      <button type="button" class="btn-secondary" onclick="closeSubmitModal()">Tiếp tục làm bài</button>
+      <button type="button" class="btn-primary" onclick="confirmSubmitQuiz()">Xác nhận nộp bài</button>
+    </div>
+  </dialog>
+
+  <!-- Interactive Demo Script -->
+  <script>
+    // Screen Navigation Controller
+    const screens = ['home', 'exercises', 'quiz', 'results'];
+
+    function navigateTo(screenId) {
+      if (!screens.includes(screenId)) screenId = 'home';
+
+      // Update screens visibility
+      screens.forEach(id => {
+        const el = document.getElementById('view-' + id);
+        const navBtn = document.getElementById('nav-' + id);
+        if (el) {
+          if (id === screenId) {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        }
+        if (navBtn) {
+          if (id === screenId) {
+            navBtn.setAttribute('aria-current', 'page');
+          } else {
+            navBtn.removeAttribute('aria-current');
+          }
+        }
+      });
+
+      // Update URL hash without reload
+      if (window.location.hash !== '#' + screenId) {
+        history.pushState(null, '', '#' + screenId);
+      }
+
+      // Reset edge state switcher back to normal
+      const stateSwitcher = document.getElementById('state-switcher');
+      if (stateSwitcher && stateSwitcher.value !== 'normal') {
+        stateSwitcher.value = 'normal';
+        switchDemoState('normal');
+      }
+
+      // Instant scroll meets reduced-motion and prevents blank/faded screenshot artifacts
+      window.scrollTo(0, 0);
+    }
+
+    // Hashchange handler for browser Back/Forward
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (screens.includes(hash)) {
+        navigateTo(hash);
+      }
+    });
+
+    // Initial load hash checker
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (screens.includes(hash)) {
+        navigateTo(hash);
+      }
+    });
+
+    // Grade Selection Tab Interaction (Carries grade into exercise list filter)
+    function selectGrade(btn, gradeCode) {
+      document.querySelectorAll('.grade-card').forEach(c => {
+        c.classList.remove('active');
+        c.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const filterGrade = document.getElementById('filter-grade');
+      if (filterGrade && gradeCode) {
+        filterGrade.value = gradeCode;
+        filterExercises();
+      }
+    }
+
+    // Exercise Filtering with honest empty state feedback
+    function filterExercises() {
+      const grade = document.getElementById('filter-grade').value;
+      const skill = document.getElementById('filter-skill').value;
+      const diff = document.getElementById('filter-diff').value;
+
+      const items = document.querySelectorAll('.exercise-item');
+      let visibleCount = 0;
+      items.forEach(item => {
+        const matchGrade = (grade === 'all' || item.dataset.grade === grade);
+        const matchSkill = (skill === 'all' || item.dataset.skill === skill);
+        const matchDiff = (diff === 'all' || item.dataset.diff === diff);
+        if (matchGrade && matchSkill && matchDiff) {
+          item.style.display = 'flex';
+          visibleCount++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+
+      const noResults = document.getElementById('exercise-no-results');
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    function resetFilters() {
+      document.getElementById('filter-grade').value = 'all';
+      document.getElementById('filter-skill').value = 'all';
+      document.getElementById('filter-diff').value = 'all';
+      filterExercises();
+    }
+
+    // Quiz Radio Option Selection
+    function selectQuizOption(optKey) {
+      document.querySelectorAll('.option-label').forEach(lbl => lbl.classList.remove('selected'));
+      const chosen = document.getElementById('opt-label-' + optKey);
+      if (chosen) {
+        chosen.classList.add('selected');
+        const radio = document.getElementById('opt-' + optKey);
+        if (radio) radio.checked = true;
+      }
+    }
+
+    // Flag Question Toggle with aria-pressed synchronization
+    let isFlagged = false;
+    function toggleFlag() {
+      isFlagged = !isFlagged;
+      const btn = document.getElementById('flag-btn');
+      const text = document.getElementById('flag-text');
+      const qNav = document.getElementById('q-nav-1');
+      if (btn) {
+        btn.setAttribute('aria-pressed', isFlagged ? 'true' : 'false');
+        if (isFlagged) {
+          btn.classList.add('is-flagged');
+          text.innerText = 'Đã gắn cờ câu hỏi này';
+        } else {
+          btn.classList.remove('is-flagged');
+          text.innerText = 'Đánh dấu xem lại câu này';
+        }
+      }
+      if (qNav) {
+        if (isFlagged) {
+          qNav.classList.add('flagged');
+        } else {
+          qNav.classList.remove('flagged');
+        }
+      }
+    }
+
+    // Honest Question Navigator Concept Controls (Preview only - no fabricated content)
+    let currentQuestionIndex = 1;
+    function selectQuestionPreview(index) {
+      currentQuestionIndex = index;
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById('q-nav-' + i);
+        if (btn) {
+          if (i === index) {
+            btn.classList.add('current');
+            btn.setAttribute('aria-current', 'step');
+          } else {
+            btn.classList.remove('current');
+            btn.removeAttribute('aria-current');
+          }
+        }
+      }
+
+      const note = document.getElementById('quiz-concept-note');
+      if (note) {
+        note.textContent = 'Đang xem câu ' + index + '. Lưu ý: Bản demo chỉ bao gồm nội dung câu 1; các số khác chỉ mô phỏng trạng thái điều hướng giao diện.';
+      }
+
+      const prevBtn = document.getElementById('quiz-prev-btn');
+      if (prevBtn) {
+        if (index > 1) {
+          prevBtn.removeAttribute('disabled');
+          prevBtn.style.opacity = '1';
+          prevBtn.style.cursor = 'pointer';
+        } else {
+          prevBtn.setAttribute('disabled', 'true');
+          prevBtn.style.opacity = '0.5';
+          prevBtn.style.cursor = 'not-allowed';
+        }
+      }
+    }
+
+    function nextQuestionPreview() {
+      const nextIdx = currentQuestionIndex < 5 ? currentQuestionIndex + 1 : 1;
+      selectQuestionPreview(nextIdx);
+    }
+
+    function prevQuestionPreview() {
+      if (currentQuestionIndex > 1) {
+        selectQuestionPreview(currentQuestionIndex - 1);
+      }
+    }
+
+    // Reset Quiz State on Retry
+    function resetAndRestartQuiz() {
+      selectQuizOption('b');
+      if (isFlagged) {
+        toggleFlag();
+      }
+      selectQuestionPreview(1);
+      navigateTo('quiz');
+    }
+
+    // Native Dialog Controls
+    const submitModal = document.getElementById('submitModal');
+    function openSubmitModal() {
+      if (submitModal && typeof submitModal.showModal === 'function') {
+        submitModal.showModal();
+      } else {
+        if (confirm("Xác nhận nộp bài thi? Điểm mẫu demo sẽ được hiển thị.")) {
+          confirmSubmitQuiz();
+        }
+      }
+    }
+
+    function closeSubmitModal() {
+      if (submitModal && submitModal.open) {
+        submitModal.close();
+      }
+    }
+
+    function confirmSubmitQuiz() {
+      closeSubmitModal();
+      navigateTo('results');
+    }
+
+    // Switcher for edge state simulations
+    function switchDemoState(state) {
+      const normalContent = document.getElementById('normal-content-view');
+      const statePanels = document.querySelectorAll('.state-panel');
+
+      statePanels.forEach(p => p.classList.remove('active'));
+
+      if (state === 'normal') {
+        normalContent.style.display = 'block';
+      } else {
+        normalContent.style.display = 'none';
+        const activePanel = document.getElementById('state-' + state);
+        if (activePanel) {
+          activePanel.classList.add('active');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
