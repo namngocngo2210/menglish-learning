@@ -69,10 +69,10 @@ Thống kê cơ bản và báo cáo câu sai tính từ `attempts` và `question
 ```sql
 sources (
   id            bigserial PK,
-  name          text NOT NULL,          -- "Tatoeba", "Sở GD&ĐT Hà Nội", "VOA Learning English"
+  name          text NOT NULL,          -- "Sở GD&ĐT Hà Nội", "VOA Learning English"
   base_url      text NOT NULL,
-  license       text NOT NULL,          -- "CC BY 2.0 FR", "CC BY-SA 4.0", "Public domain (US Gov)", "Văn bản chính thức"
-  attribution   text NOT NULL           -- dòng ghi nguồn hiển thị trên trang
+  license       text NOT NULL,          -- "Public domain (US Gov)", "Văn bản chính thức"
+  attribution   text NOT NULL           -- ghi công lưu trong dữ liệu; trang nguồn chung sẽ tạo sau
 )
 
 raw_documents (                          -- file gốc đã crawl
@@ -118,7 +118,7 @@ questions (
   explanation   text NULL,
   source_id     bigint FK sources NOT NULL,
   source_url    text NOT NULL,
-  source_ref    text NULL,              -- năm/tỉnh/mã đề/câu số, id câu Tatoeba...
+  source_ref    text NULL,              -- năm/tỉnh/mã đề/câu số hoặc ID bài VOA
   stem_hash     text UNIQUE NOT NULL,   -- chống trùng (stem chuẩn hóa)
   status        text NOT NULL DEFAULT 'active',  -- bản đầu; sẽ thay bằng review_status (xem trên)
   created_at    timestamptz NOT NULL DEFAULT now()
@@ -175,3 +175,5 @@ Thống kê độ khó thực tế (tỉ lệ đúng) tính định kỳ từ `a
 
 - Volume riêng cho Postgres và thư mục `raw` của crawler.
 - `pg_dump` hằng ngày, giữ 14 bản; ops theo dõi tuổi bản backup như MEnglish.
+
+Crawler thực tế chỉ dùng VOA Learning English và PDF Bộ/Sở GD&ĐT đã xác minh. Metadata source_url/source_name/license/crawled_at được lưu trong JSON (camelCase); không thêm UI trên trang bài tập. Mục tiêu 2.000 câu là best-effort, báo số thực qua crawler report.

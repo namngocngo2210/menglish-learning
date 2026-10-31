@@ -1,0 +1,17 @@
+{
+  "name": "menglish-question-bank-crawler",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "crawl": "tsx src/cli.ts crawl",
+    "build": "tsx src/cli.ts build",
+    "build-bank": "tsx src/cli.ts build",
+    "report": "tsx src/cli.ts report",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": { "cheerio": "1.0.0", "pdfjs-dist": "4.10.38" },
+  "devDependencies": { "typescript": "^5.9.3", "tsx": "^4.20.6", "vitest": "^3.2.4", "@types/node": "^22.19.0" }
+}

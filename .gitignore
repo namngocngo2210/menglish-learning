@@ -1,0 +1,5 @@
+data/
+node_modules/
+crawler/node_modules/
+crawler/dist/
+.npm-cache/
