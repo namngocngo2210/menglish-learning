@@ -15,7 +15,8 @@ export const revalidate = 3600;
 export function generateStaticParams() { return getEntranceTests().map(t => parseEntranceSlug(t.slug)!); }
 export async function generateMetadata({ params }: { params: Promise<{ test: string }> }) {
  const p = await params; const t = getEntranceTestWithQuestions(`thi-vao-lop-10/${p.test}`); if (!t) return {};
- return buildMetadata({ title: `${t.title} - Thi vào lớp 10`, description: `Ôn tiếng Anh vào lớp 10, ${p.test}: ${t.questions.length} câu tổng hợp lớp 8–9 có đáp án và giải thích tiếng Việt.`, path: `/${t.slug}`, type: "article" });
+ const official = p.test.startsWith("de-chinh-thuc-");
+ return buildMetadata({ title: `${t.title} - Thi vào lớp 10`, description: official ? `${t.title}: ${t.questions.length} câu trắc nghiệm có đáp án, làm online miễn phí, không cần đăng nhập.` : `Ôn tiếng Anh vào lớp 10, ${p.test}: ${t.questions.length} câu tổng hợp lớp 8–9 có đáp án và giải thích tiếng Việt.`, path: `/${t.slug}`, type: "article" });
 }
 export default async function EntranceTestPage({ params }: { params: Promise<{ test: string }> }) {
  const p = await params; const t = getEntranceTestWithQuestions(`thi-vao-lop-10/${p.test}`); if (!t) notFound();
@@ -25,7 +26,7 @@ export default async function EntranceTestPage({ params }: { params: Promise<{ t
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Thi vào lớp 10", path: "/thi-vao-lop-10" }, { name: t.title, path: `/${t.slug}` }])}/>
   <JsonLd data={quizJsonLd({ name: t.title, description: "Ôn thi tiếng Anh vào lớp 10 từ ngân hàng lớp 8–9.", path: `/${t.slug}`, grade: 9, skillName: "Tiếng Anh tổng hợp", topicName: "Thi vào lớp 10", questionCount: t.questions.length, datePublished: t.publishedAt })}/>
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Thi vào lớp 10", href: "/thi-vao-lop-10" }, { label: t.title }]}/>
-  <p>Ôn thi tiếng Anh vào lớp 10, tổng hợp kỹ năng và chủ đề lớp 8–9 với {t.questions.length} câu hỏi. Chọn đáp án, kiểm tra từng câu để đọc giải thích, rồi nộp bài để xem kết quả. Không giới hạn thời gian.</p>
+  <p>{p.test.startsWith("de-chinh-thuc-") ? `Đề thi tiếng Anh vào lớp 10 (Sở GD&ĐT Hà Nội) với ${t.questions.length} câu hỏi theo thứ tự đề gốc, không gồm các câu có hình minh họa.` : `Ôn thi tiếng Anh vào lớp 10, tổng hợp kỹ năng và chủ đề lớp 8–9 với ${t.questions.length} câu hỏi.`} Chọn đáp án, kiểm tra từng câu để đọc giải thích, rồi nộp bài để xem kết quả. Không giới hạn thời gian.</p>
   <PreviousResult slug={t.slug}/>
   <RandomQuiz poolUrl="/pool/thi-vao-lop-10" size={40} afterResult={<AdSlot slot="footer"/>}><Quiz questions={quiz.questions.map(({ id, stem, options, correctKey, explanation, passageId }) => ({ id, stem, options, correctKey, explanation, passageId }))} passages={quiz.passages} progressKey={t.slug} afterResult={<AdSlot slot="footer"/>}/></RandomQuiz>
   <nav aria-label="Đề ôn thi liên quan"><h2 className="text-xl font-bold">Tiếp tục ôn thi</h2><ul className="grid gap-3 sm:grid-cols-2">{tests.filter(test => test.slug !== t.slug).map(test => <li key={test.slug}><Link className="inline-flex min-h-11 items-center" href={`/${test.slug}`}>{tests.indexOf(test) === index-1 ? "Đề trước: " : tests.indexOf(test) === index+1 ? "Đề tiếp theo: " : ""}{test.title}</Link></li>)}</ul><Link className="inline-flex min-h-11 items-center" href="/thi-vao-lop-10">Về danh sách đề thi vào lớp 10</Link></nav>

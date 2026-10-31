@@ -19,8 +19,8 @@ it("preserves real bank provenance and strict fields", () => {
 it("retains source, license and crawl provenance on every promoted question", async () => {
  const { loadBundle } = await import("@/lib/content/load");
  for (const q of loadBundle().questions) {
-  expect(q.sourceUrl).toMatch(/^https:\/\//); expect(q.sourceName).toBe("VOA Learning English");
-  expect(q.license).toMatch(/Public domain/i); expect(Number.isNaN(Date.parse(q.crawledAt!))).toBe(false);
+  expect(q.sourceUrl).toMatch(/^https:\/\//); expect(["VOA Learning English", "Sở/Bộ GD&ĐT – Hà Nội"]).toContain(q.sourceName);
+  expect(q.license).toMatch(/Public domain|Văn bản chính thức/i); expect(Number.isNaN(Date.parse(q.crawledAt!))).toBe(false);
  }
 });
 

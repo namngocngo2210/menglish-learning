@@ -18,7 +18,7 @@ it("centralizes published source credits and per-grade counts", () => {
  const html = renderToStaticMarkup(createElement(Credits));
  expect(html).toContain("VOA Learning English"); expect(html).toContain("Public domain"); expect(html).toContain("không dùng AI");
  for (const source of loadBundle().sources) expect(html).toContain(`href="${source.baseUrl}"`);
- for (const grade of [6, 7, 8, 9]) expect(html).toContain(String(loadBundle().questions.filter(q => q.grade === grade).length));
+ for (const grade of [6, 7, 8, 9]) expect(html).toContain(String(loadBundle().questions.filter(q => q.grade === grade && q.sourceName === "VOA Learning English").length));
  expect(html).toContain("BreadcrumbList");
 });
 it("renders fixed entrance quiz questions without source attribution or ad nodes", async () => {
