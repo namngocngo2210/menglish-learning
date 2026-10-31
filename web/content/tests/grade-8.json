@@ -1,0 +1,308 @@
+{
+  "sources": [
+    {
+      "id": "sample-8",
+      "name": "Nội dung mẫu (tự soạn)",
+      "baseUrl": "https://example.invalid",
+      "license": "Original sample content - not for production",
+      "attribution": "Nội dung mẫu tự soạn để kiểm thử giao diện"
+    }
+  ],
+  "passages": [],
+  "topics": [
+    {
+      "grade": 8,
+      "skill": "tu-vung",
+      "slug": "cuoc-song-quanh-em",
+      "name": "Cuộc sống quanh em",
+      "description": "Chủ đề mẫu tự soạn: cuộc sống quanh em."
+    }
+  ],
+  "questions": [
+    {
+      "id": "g8-q1",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 1,
+      "stem": "We put old paper in the ___ bin so it can be used again.",
+      "options": [
+        {
+          "key": "A",
+          "text": "cooking"
+        },
+        {
+          "key": "B",
+          "text": "recycling"
+        },
+        {
+          "key": "C",
+          "text": "sleeping"
+        },
+        {
+          "key": "D",
+          "text": "swimming"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Recycling nghĩa là tái chế, phù hợp với việc dùng lại giấy cũ.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 1",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q2",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 1,
+      "stem": "Please ___ the lights when you leave the empty room.",
+      "options": [
+        {
+          "key": "A",
+          "text": "look after"
+        },
+        {
+          "key": "B",
+          "text": "grow up"
+        },
+        {
+          "key": "C",
+          "text": "turn off"
+        },
+        {
+          "key": "D",
+          "text": "pick up"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Turn off là tắt thiết bị, ở đây là tắt đèn.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 2",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q3",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 1,
+      "stem": "A ___ carries people across a river on the water.",
+      "options": [
+        {
+          "key": "A",
+          "text": "bicycle"
+        },
+        {
+          "key": "B",
+          "text": "helicopter"
+        },
+        {
+          "key": "C",
+          "text": "train"
+        },
+        {
+          "key": "D",
+          "text": "boat"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Boat là thuyền, phương tiện đi trên mặt nước.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 3",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q4",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 2,
+      "stem": "Choose the opposite of \"noisy\".",
+      "options": [
+        {
+          "key": "A",
+          "text": "quiet"
+        },
+        {
+          "key": "B",
+          "text": "crowded"
+        },
+        {
+          "key": "C",
+          "text": "loud"
+        },
+        {
+          "key": "D",
+          "text": "busy"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Quiet nghĩa là yên tĩnh, trái nghĩa với noisy là ồn ào.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 4",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q5",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 2,
+      "stem": "A person who grows vegetables on a farm is a ___.",
+      "options": [
+        {
+          "key": "A",
+          "text": "dentist"
+        },
+        {
+          "key": "B",
+          "text": "farmer"
+        },
+        {
+          "key": "C",
+          "text": "pilot"
+        },
+        {
+          "key": "D",
+          "text": "singer"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Farmer là nông dân, người trồng trọt hoặc chăn nuôi.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 5",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q6",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 2,
+      "stem": "Choose the word closest in meaning to \"enormous\".",
+      "options": [
+        {
+          "key": "A",
+          "text": "tiny"
+        },
+        {
+          "key": "B",
+          "text": "empty"
+        },
+        {
+          "key": "C",
+          "text": "huge"
+        },
+        {
+          "key": "D",
+          "text": "narrow"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Huge và enormous đều chỉ kích thước rất lớn.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 6",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q7",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 2,
+      "stem": "Please bring an umbrella; the weather forecast says it will be ___.",
+      "options": [
+        {
+          "key": "A",
+          "text": "rainy"
+        },
+        {
+          "key": "B",
+          "text": "dry"
+        },
+        {
+          "key": "C",
+          "text": "sunny"
+        },
+        {
+          "key": "D",
+          "text": "clear"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Rainy nghĩa là có mưa, nên cần mang ô.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 7",
+      "reviewStatus": "published"
+    },
+    {
+      "id": "g8-q8",
+      "type": "mcq",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "difficulty": 2,
+      "stem": "We should ___ water by taking shorter showers.",
+      "options": [
+        {
+          "key": "A",
+          "text": "waste"
+        },
+        {
+          "key": "B",
+          "text": "spill"
+        },
+        {
+          "key": "C",
+          "text": "pollute"
+        },
+        {
+          "key": "D",
+          "text": "save"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Save water nghĩa là tiết kiệm nước; tắm nhanh hơn giúp tiết kiệm nước.",
+      "sourceId": "sample-8",
+      "sourceUrl": "https://example.invalid",
+      "sourceRef": "Mẫu tự soạn, lớp 8, câu 8",
+      "reviewStatus": "published"
+    }
+  ],
+  "tests": [
+    {
+      "slug": "lop-8/tu-vung/cuoc-song-quanh-em/de-1",
+      "grade": 8,
+      "skill": "tu-vung",
+      "topicSlug": "cuoc-song-quanh-em",
+      "kind": "topic",
+      "title": "[Mẫu] Cuộc sống quanh em — Đề 1",
+      "questionIds": [
+        "g8-q1",
+        "g8-q2",
+        "g8-q3",
+        "g8-q4",
+        "g8-q5",
+        "g8-q6",
+        "g8-q7",
+        "g8-q8"
+      ],
+      "publishedAt": "2026-10-31T00:00:00Z"
+    }
+  ]
+}
