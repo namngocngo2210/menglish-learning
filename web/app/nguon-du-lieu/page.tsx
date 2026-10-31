@@ -21,7 +21,7 @@ export default function CreditsPage() {
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Nguồn dữ liệu và giấy phép" }]}/>
   <p>Câu hỏi được tạo tự động bằng thuật toán và quy tắc từ văn bản gốc của các nguồn dưới đây, không dùng AI. Nội dung có giải thích tiếng Việt và đã được chủ sở hữu duyệt xuất bản.</p>
   <p>Thống kê tính các câu hỏi đã xuất bản và bài đọc được dùng theo từng lớp. Một bài đọc có thể được dùng ở nhiều lớp; mỗi bài chỉ được tính một lần trong mỗi lớp.</p>
-  {bank.sources.map(source => <section key={source.id} className="space-y-4 rounded-md border border-navy-soft/20 p-5 sm:p-7">
+  {bank.sources.map(source => <section key={source.id} className="space-y-4 rounded-xl border border-navy-soft/20 p-5 sm:p-7">
    <h2 className="text-xl font-bold"><a className="inline-flex min-h-11 items-center" href={source.baseUrl}>{source.name}</a></h2>
    <p>Giấy phép: {source.license}</p><p>{source.attribution}</p>
    <table className="w-full text-left"><caption className="mb-3 text-left font-semibold">Nội dung đã xuất bản từ {source.name}</caption><thead><tr><th scope="col" className="p-2">Lớp</th><th scope="col" className="p-2">Câu hỏi</th><th scope="col" className="p-2">Bài đọc</th></tr></thead><tbody>{GRADES.map(grade => {
@@ -30,7 +30,7 @@ export default function CreditsPage() {
     return <tr key={grade} className="border-t border-navy-soft/20"><th scope="row" className="p-2">{grade}</th><td className="p-2">{questions.length}</td><td className="p-2">{bank.passages.filter(p => p.sourceId === source.id && passageIds.has(p.id)).length}</td></tr>;
    })}</tbody></table>
   </section>)}
-  <section className="space-y-4 rounded-md border border-navy-soft/20 p-5 sm:p-7">
+  <section className="space-y-4 rounded-xl border border-navy-soft/20 p-5 sm:p-7">
    <h2 className="text-xl font-bold">Đề chính thức Bộ/Sở GD&ĐT</h2>
    <p>Câu hỏi từ đề chính thức được giữ trong kho chờ duyệt cho đến khi chủ sở hữu kiểm tra và duyệt xuất bản. Với đề scan, AI chỉ chép lại chữ từ ảnh (không viết lại, không giải); đáp án chỉ lấy từ file đáp án chính thức, và câu chỉ được giữ khi hai lượt chép độc lập khớp nhau.</p>
    {!officialExamsReport.seeds.some(seed => seed.status === "imported" || seed.status === "ocr-transcribed") && <p>Chưa có câu hỏi nào từ các đề chính thức được nhập vào kho chờ duyệt.</p>}

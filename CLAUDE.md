@@ -14,7 +14,7 @@ English practice site for Vietnamese students, grades 6-9. Phase 1: reading + gr
 
 ## Conventions
 - Vietnamese UI, `lang="vi"`, no-accent slugs, e.g. `/lop-6/ngu-phap/thi-hien-tai-don/de-1`.
-- Orange/navy theme (CTA #c2410c, navy #111a2b, light #f9f9ff). Be Vietnam Pro served locally, no CDN. Brand name is a placeholder in one config constant.
+- BeeJunior yellow/sky-blue/ink theme: CTA yellow #ffc001 with ink #291e1c text, primary blue #0a6590, surface #fffdf5 (see docs/brand.md). Be Vietnam Pro served locally, no CDN. Brand name constant: SITE.name.
 - Touch targets >= 44px, visible focus, respect reduced motion.
 - No AI-generated or copied question content. Sample tests are original and labelled. Crawled content only via the quarantine -> owner review -> publish flow (docs/content-sources.md).
 - Ad slot: placeholder without AdSense id, non-personalized, never inside the question area while answering.

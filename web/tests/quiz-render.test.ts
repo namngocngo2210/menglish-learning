@@ -19,4 +19,5 @@ it("renders native questions and passages without exposing explanations or ads b
  expect(html).not.toContain("Lời giải riêng");
  expect(html).not.toContain("Đáp án đúng");
  expect(html).not.toContain("Vị trí quảng cáo");
+ expect(html).not.toContain("/brand/mascot.webp");
 });

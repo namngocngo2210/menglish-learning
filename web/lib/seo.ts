@@ -16,8 +16,8 @@ export function buildMetadata({ title, description, path, type = "website" }: {
 }, env: SeoEnv = process.env): Metadata {
  return {
   title, description, alternates: { canonical: absoluteUrl(path) },
-  openGraph: { title, description, url: absoluteUrl(path), siteName: SITE.name, locale: "vi_VN", type },
-  twitter: { card: "summary", title, description },
+  openGraph: { title, description, url: absoluteUrl(path), siteName: SITE.name, locale: "vi_VN", type, images: [{ url: absoluteUrl(SITE.logo.ogImage), width: 1200, height: 630, alt: SITE.name }] },
+  twitter: { card: "summary_large_image", title, description, images: [{ url: absoluteUrl(SITE.logo.ogImage), width: 1200, height: 630, alt: SITE.name }] },
   robots: { index: !isNoindex(env), follow: !isNoindex(env) },
  };
 }
@@ -53,7 +53,7 @@ export function breadcrumbJsonLd(items: { name: string; path?: string }[]) {
 export function quizJsonLd({ name, description, path, grade, skillName, topicName, questionCount, datePublished }: {
  name: string; description: string; path: string; grade: number; skillName: string; topicName: string; questionCount: number; datePublished: string;
 }) {
- const organization = { "@type": "Organization", name: SITE.name, url: absoluteUrl("/") };
+ const organization = organizationJsonLd();
  return {
   "@context": context, "@type": ["LearningResource", "Quiz"], name,
   description: `${description} ${questionCount} câu · ${skillName}.`, url: absoluteUrl(path),
@@ -71,4 +71,8 @@ export function faqJsonLd(items: { question: string; answer: string }[]) {
 
 export function websiteJsonLd() {
  return { "@context": context, "@type": "WebSite", name: SITE.name, description: SITE.description, url: absoluteUrl("/"), inLanguage: "vi" };
+}
+
+export function organizationJsonLd() {
+ return { "@context": context, "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), logo: absoluteUrl(SITE.logo.full) };
 }

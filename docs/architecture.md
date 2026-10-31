@@ -1,11 +1,11 @@
 # Kiến trúc hệ thống
 
-Website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, chạy ở `beejunior.meducation.vn`; `beta.meducation.vn` được Caddy 301-redirect sang).
+BeeJunior — website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, chạy ở `beejunior.meducation.vn`; `beta.meducation.vn` được Caddy 301-redirect sang).
 Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng miễn phí không cần đăng nhập, có quảng cáo. Nghe/nói làm sau. Chủ sở hữu duy nhất quản trị nội dung cần đăng nhập riêng phía server; không có đội biên tập hay nhiều vai trò.
 
 ## Thiết kế giao diện và admin — chưa triển khai
 
-- Hướng thị giác: họ màu cam/navy MEnglish, Be Vietnam Pro; xanh da trời chỉ là lịch sử. Chi tiết và trạng thái duyệt: [ui-design.md](ui-design.md).
+- Hướng thị giác: BeeJunior vàng/xanh da trời/mực, Be Vietnam Pro cục bộ; bảng màu và tương phản: [brand.md](brand.md). Chi tiết: [ui-design.md](ui-design.md).
 - Toolchain `web/` (thiết kế): Next.js + Tailwind CSS + shadcn/ui + Lucide; giao diện do Claude thiết kế, Codex hiện thực. Fixture `docs/previews/sky-blue-v2/` chỉ để duyệt thiết kế (static export, mock, không bảo vệ route/API, không credential/session), không phải `web/` hay CMS thật.
 - **Admin một chủ** (không nhân viên/vai trò) thuộc cùng `web` + `api`, tách hoàn toàn khỏi học sinh (học sinh không đăng nhập). Cần: server-side login/session, authorization mọi API admin (`/api/v1/admin/*` thiết kế), secure cookie/CSRF, audit publish/delete/crawl/config, validation/rate limit, chống SSRF cho cấu hình nguồn ([security.md](security.md)).
 - Luồng nội dung: **crawler → quarantine/draft → chủ duyệt → publish**, không tự xuất bản. Crawler chỉ ghi trạng thái quarantine; chỉ hành động của chủ mới chuyển sang published. Bảng dữ liệu: [data-model.md](data-model.md).

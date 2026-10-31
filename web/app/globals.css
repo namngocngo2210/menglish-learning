@@ -2,15 +2,18 @@
 @import "tw-animate-css";
 
 @theme {
-  /* Decorative only: never text or white-text button bg. */
-  --color-brand: #f5691a;
-  --color-cta: #c2410c;
-  --color-primary: #a23f00;
-  --color-navy: #111a2b;
-  --color-navy-soft: #1b2a4a;
-  --color-surface: #f9f9ff;
-  --color-warm: #fff7ed;
-  --color-warm-2: #fff3eb;
+  /* Yellow CTAs use ink text; sky is decorative on light surfaces. */
+  --color-brand: #ffc001;
+  --color-cta-hover: #e6ac00;
+  --color-sky: #10b7eb;
+  --color-sky-soft: #e8f7fd;
+  --color-cta: #ffc001;
+  --color-primary: #0a6590;
+  --color-navy: #291e1c;
+  --color-navy-soft: #4a3f3a;
+  --color-surface: #fffdf5;
+  --color-warm: #fff6d6;
+  --color-warm-2: #ffedaa;
 }
 @theme inline {
   --font-sans: var(--font-be-vietnamese), var(--font-be-latin-ext), var(--font-be-latin), sans-serif;

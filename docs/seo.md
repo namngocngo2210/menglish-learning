@@ -27,7 +27,8 @@ Tiếng Việt không dấu, chữ thường, gạch nối, không đuôi `/`:
 ## Metadata (Next.js Metadata API)
 
 - `title` (≤ 60 ký tự, duy nhất), `description` (≤ 155 ký tự, duy nhất), `canonical` tuyệt đối.
-- Open Graph + Twitter card; ảnh OG sinh động theo trang.
+- Thương hiệu **BeeJunior** lấy từ `SITE.name`; tiêu đề theo mẫu `<trang> | BeeJunior` qua template gốc.
+- Open Graph + Twitter `summary_large_image`: mặc định `/brand/og-image.png` (1200×630, alt "BeeJunior"), URL tuyệt đối.
 - `<html lang="vi">`, một `h1` mỗi trang, heading có thứ bậc.
 
 ## Dữ liệu có cấu trúc (JSON-LD)
@@ -35,7 +36,7 @@ Tiếng Việt không dấu, chữ thường, gạch nối, không đuôi `/`:
 - `BreadcrumbList`: mọi trang.
 - `Quiz` / `LearningResource` (`educationalLevel`, `teaches`, `numberOfQuestions`): trang đề.
 - `FAQPage`: trang chủ đề có mục hỏi đáp.
-- `Organization` + `WebSite` (có `SearchAction` khi có tìm kiếm): trang chủ.
+- `Organization` + `WebSite` tên **BeeJunior**: trang chủ. Organization có URL website và logo tuyệt đối `/brand/logo-full.webp`; chỉ thêm `SearchAction` khi có tìm kiếm.
 
 ## Sitemap, robots
 

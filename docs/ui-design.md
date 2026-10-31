@@ -1,26 +1,26 @@
 # Thiết kế giao diện (UI design)
 
-> **Trạng thái: THIẾT KẾ, chưa triển khai website.** Chủ sở hữu chưa duyệt thẩm mỹ. Tài liệu này không khẳng định bất kỳ tính năng production nào đã có.
+> **Thương hiệu hiện hành: BeeJunior.** Website trong `web/` theo [đặc tả thương hiệu](brand.md); các bản xem trước bên dưới được giữ làm lịch sử.
 
-## 0. Hướng thị giác hiện hành (thay thế sky-blue)
+## 0. Hướng thị giác hiện hành — BeeJunior
 
-Chủ sở hữu chọn **họ màu MEnglish (cam/navy)** thay cho xanh da trời. Chỉ dùng họ màu, **không dùng tên hay logo MEnglish**; tên/logo thương hiệu vẫn **chưa quyết định** ("Góc tiếng Anh" chỉ là tên tạm).
+BeeJunior dùng vàng, xanh da trời và mực; tên thương hiệu lấy từ `SITE.name`. [brand.md](brand.md) là nguồn chuẩn cho logo, tài sản, bảng màu và tỷ lệ tương phản.
 
 | Vai trò | Giá trị |
 |---------|---------|
-| Cam thương hiệu (chỉ trang trí) | `#f5691a` |
-| Nút CTA (chữ trắng) | `#c2410c` |
-| Chữ/viền nhấn cam (đủ tương phản) | `#a23f00` |
-| Navy | `#111a2b`, `#1b2a4a` |
-| Nền sáng | `#f9f9ff`, trắng |
-| Bề mặt ấm | `#fff7ed`, `#fff3eb` |
-| Font | **Be Vietnam Pro**, đóng gói cục bộ (`@fontsource/be-vietnam-pro`), không gọi font ngoài |
+| Thương hiệu và CTA (chữ mực) | `#ffc001`, hover `#e6ac00` |
+| Liên kết, viền nhấn, focus | `#0a6590` |
+| Xanh trang trí / nền xanh nhạt | `#10b7eb`, `#e8f7fd` |
+| Mực / chữ phụ | `#291e1c`, `#4a3f3a` |
+| Nền kem | `#fffdf5` |
+| Bề mặt ấm | `#fff6d6`, `#ffedaa` |
+| Font | **Be Vietnam Pro**, phục vụ cục bộ, không CDN |
 
-- Palette tham chiếu đọc từ `menglish-main/tailwind.config.js` (chỉ đọc); không import mã giao diện ERP.
-- Cam `#f5691a` không dùng làm màu chữ hay nền nút chữ trắng (không đủ tương phản); dùng `#c2410c`/`#a23f00`.
-- Không dùng tím, không dùng xám đơn sắc mặc định của shadcn.
+- Nút vàng dùng chữ mực đậm; không dùng chữ trắng trên vàng, chữ vàng hay xanh trang trí trên nền sáng.
+- Thẻ và nút bo `rounded-xl`/`rounded-2xl`; vùng chạm tối thiểu 44px, focus xanh trên nền sáng và vàng ở footer nền mực.
+- Header dùng logo lockup, dải vàng 4px; mascot chỉ ở hero, 404, trạng thái trống và kết quả, không trong vùng câu hỏi.
 
-### Phạm vi bàn giao để duyệt
+### Phạm vi bàn giao bản xem trước (lịch sử)
 
 - Chỉ **4 ảnh PNG tĩnh**: trang chủ học sinh và màn admin một chủ, mỗi màn ở 1440px (desktop) và 390px (mobile). **Không yêu cầu demo bấm thử.**
 - Mã nguồn đại diện: `previews/sky-blue-v2/app/direction/page.tsx` (home) và `previews/sky-blue-v2/app/direction/admin/page.tsx` (admin). Ảnh PNG đi kèm card/ZIP bàn giao, không commit trong repo.
@@ -63,8 +63,8 @@ Học sinh công khai **không cần đăng nhập**.
   - Ngôn ngữ giao diện và hướng dẫn hoàn toàn bằng Tiếng Việt chuẩn mực, hỗ trợ ngắt dòng tự nhiên cho các câu văn bản dài.
 
 ### 2.2. Thương hiệu và bảng màu
-- Tên thương hiệu chưa chốt; "Góc tiếng Anh" là tên tạm kèm nhãn "Tên tạm".
-- Bảng màu bản xanh trước đó (HSL xanh da trời) là lịch sử. Palette hiện hành: xem mục 0 (cam/navy).
+- Tên thương hiệu là **BeeJunior**, dùng thống nhất qua `SITE.name`; xem [brand.md](brand.md).
+- Bảng màu bản xanh trước đó (HSL xanh da trời) là lịch sử. Palette BeeJunior hiện hành: xem mục 0 và [brand.md](brand.md).
 
 ### 2.3. Phông chữ và tài nguyên ngoại vi (zero-fetch)
 - Không nạp tài nguyên ngoài: không Google Fonts, CDN, API ngoài, analytics/quảng cáo trong bản thiết kế.
@@ -84,7 +84,7 @@ Học sinh công khai **không cần đăng nhập**.
 2. **Kích thước vùng chạm cảm ứng (Touch Targets):**
    - Mọi nút bấm (`button`), liên kết điều hướng, trường nhập liệu (`input`, `select`, `textarea`) đều có kích thước tương tác tối thiểu `44px x 44px`, hỗ trợ tốt cho học sinh sử dụng điện thoại màn hình nhỏ (390px) và máy tính bảng.
 3. **Chỉ báo tiêu điểm bàn phím (Visible Keyboard Focus):**
-   - Thiết lập toàn cục `:focus-visible` với viền đôi rõ ràng (`2px solid hsl(var(--ring))`, `outline-offset: 2px`). Không dựa vào trạng thái hover chuột để hiển thị các hành động cần thiết.
+   - Thiết lập toàn cục `:focus-visible` với viền đôi rõ ràng (`2px solid var(--color-primary)`, `outline-offset: 3px`). Không dựa vào trạng thái hover chuột để hiển thị các hành động cần thiết.
 4. **Xử lý ngắt dòng Tiếng Việt & Chống tràn trang:**
    - Sử dụng `overflow-wrap: break-word` và `word-break: break-word` trên toàn bộ các khối nội dung, đoạn văn và tiêu đề tiếng Việt.
    - Thiết kế đáp ứng từ màn hình di động `390px` đến màn hình máy tính để bàn `1440px`. Không để xảy ra hiện tượng thanh cuộn ngang toàn trang (no horizontal page overflow).
