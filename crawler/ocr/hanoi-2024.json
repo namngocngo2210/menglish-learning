@@ -1,0 +1,1195 @@
+{
+  "schema": 1,
+  "seed": {
+    "url": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+    "answerKeyUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_dapananh_136202413.pdf",
+    "year": 2024,
+    "province": "Hà Nội",
+    "grade": 9,
+    "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen"
+  },
+  "examCode": "101",
+  "keyCode": "101",
+  "header": "KY THI TUYEN SINH VAO LOP 10 THPT NAM HOC 2024 - 2025, Mon thi: TIENG ANH, Ngay thi: 08/6/2024",
+  "pages": {
+    "exam": 4,
+    "key": 1
+  },
+  "crawledAt": "2026-10-31T14:00:43.148Z",
+  "passA": {
+    "method": "ocr-transcribed",
+    "model": "claude-vision (sonnet)",
+    "items": [
+      {
+        "number": 1,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) OPPOSITE in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "The city council has decided to <u>pull down</u> a number of unsafe old buildings in the centre.",
+        "options": [
+          "give up",
+          "cheer up",
+          "set up",
+          "turn up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) OPPOSITE in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Lien was <u>over the moon</u> when she became the leader of her school DIY club.",
+        "options": [
+          "surprised",
+          "delighted",
+          "satisfied",
+          "depressed"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "pr<u>o</u>blem",
+          "p<u>o</u>pular",
+          "c<u>o</u>mfortable",
+          "h<u>o</u>liday"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "purpo<u>se</u>",
+          "surpri<u>se</u>",
+          "cour<u>se</u>",
+          "practi<u>se</u>"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+        "stem": "What is the main topic of the forum discussion?",
+        "options": [
+          "Some effects of electronic devices on teens.",
+          "Several benefits of social media for teenagers.",
+          "Different ways to contact friends and family members.",
+          "Different ways to improve computer skills."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+        "stem": "Why does Dan@14 believe it's good for teens to have electronic devices?",
+        "options": [
+          "Because he can stay connected with friends and relatives and better his computer skills.",
+          "Because he can play video games on the screen all the time.",
+          "Because he can improve his social skills by making friends with new people.",
+          "Because he can gain weight and finish his homework."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+        "stem": "Where does Dan@14 share photos and send messages?",
+        "options": [
+          "On a games console.",
+          "On a messaging app.",
+          "On a computer website.",
+          "On TeenTech forum."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+        "stem": "How does Harrison@008 change his habits of using electronic devices?",
+        "options": [
+          "He spends most of his time playing video games on social media.",
+          "He starts using more types of electronic devices.",
+          "He only uses his smartphone after finishing his homework.",
+          "He completely stops using electronic devices."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+        "stem": "The phrase 'attention span' in the text probably means _______.",
+        "options": [
+          "the ability someone can remember",
+          "the period of time someone can focus",
+          "the learning method someone can use",
+          "the learning style someone can choose"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the most suitable response to complete each of the following exchanges.",
+        "passage": null,
+        "stem": "Mike: “I've just got awarded a scholarship!” Chi: “____________________”",
+        "options": [
+          "My pleasure.",
+          "No worries. Everything will be alright.",
+          "Thanks for your advice.",
+          "How cool! Congratulations!"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the most suitable response to complete each of the following exchanges.",
+        "passage": null,
+        "stem": "Thanh: “What does this sign say, Emma?” Emma: “____________________”",
+        "options": [
+          "Kids need to keep a close watch on their parents.",
+          "Adults should watch their kids carefully at the playground.",
+          "You can let your kids play on their own at the playground.",
+          "You can relax while your kids are playing at the playground."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 12,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "If he ______ a few years younger, I'm sure he would get the job.",
+        "options": [
+          "is",
+          "will be",
+          "were",
+          "would be"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "The tour guide asked the tourists ______ heavy bags when hiking in the mountain.",
+        "options": [
+          "didn't bring",
+          "not brought",
+          "not bringing",
+          "not to bring"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "I wish I ______ a chance to take a photography class next school year.",
+        "options": [
+          "having",
+          "have had",
+          "could have",
+          "had had"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "It's the first time our children ______ their own pottery in a workshop.",
+        "options": [
+          "have made",
+          "had made",
+          "made",
+          "to make"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 16,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Do you think flashcards can help us learn English ______?",
+        "options": [
+          "more effectively",
+          "so effective",
+          "as effectively",
+          "more effective"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 17,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Wellington, ______ is the capital city of New Zealand, is famous for its stunning natural landscapes and beautiful harbour views.",
+        "options": [
+          "that",
+          "where",
+          "what",
+          "which"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "The students are looking forward ______ a break after their exams.",
+        "options": [
+          "will have",
+          "to have",
+          "to having",
+          "having"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "In my opinion, stories about faraway lands are always ______.",
+        "options": [
+          "amazing",
+          "amazingly",
+          "amazed",
+          "amaze"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Last weekend, their family enjoyed a picnic lunch ______ the river bank.",
+        "options": [
+          "next",
+          "between",
+          "in",
+          "on"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "There's ______ of information available on the internet about the IELTS tests.",
+        "options": [
+          "a lot",
+          "no",
+          "many",
+          "few"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "emotional",
+          "activity",
+          "environment",
+          "limitation"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "unlucky",
+          "pollution",
+          "volunteer",
+          "historic"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) CLOSEST in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Some children get a lot of <u>pleasure</u> from doing jigsaw puzzles.",
+        "options": [
+          "participation",
+          "improvement",
+          "experience",
+          "fun"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) CLOSEST in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Sitting around can get boring. <u>To begin with</u>, let's explore some fun hobbies we can try!",
+        "options": [
+          "First of all",
+          "To give advice",
+          "In the end",
+          "In fact"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 26,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+        "stem": "(26)",
+        "options": [
+          "work",
+          "make",
+          "run",
+          "finish"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 27,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+        "stem": "(27)",
+        "options": [
+          "15 hours",
+          "15-hour",
+          "15-hours",
+          "15's hour"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+        "stem": "(28)",
+        "options": [
+          "all",
+          "none",
+          "both",
+          "each"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+        "stem": "(29)",
+        "options": [
+          "along",
+          "under",
+          "in",
+          "up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+        "stem": "(30)",
+        "options": [
+          "abilities",
+          "activities",
+          "possibilities",
+          "difficulties"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Minh made more spelling mistakes than I did.",
+        "options": [
+          "I made less spelling mistakes than Minh did.",
+          "I didn't make more spelling mistakes as Minh did.",
+          "I didn't make as many spelling mistakes as Minh did.",
+          "I didn't make as much spelling mistakes as Minh did."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Unless people take action to protect the environment, climate change will be worse.",
+        "options": [
+          "If people didn't take action to protect the environment, climate change would have worse.",
+          "If people don't take action to protect the environment, climate change will be worse.",
+          "If people don't take action to protect the environment, climate change would be worse.",
+          "If people took action to protect the environment, climate change were worse."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Her son said he was in the school canteen then.",
+        "options": [
+          "“He was in the school canteen now”, her son said.",
+          "“I'm in the school canteen then”, her son said.",
+          "“I'm in the school canteen now”, her son said.",
+          "“He is in the school canteen then”, her son said."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "People think that reading can improve our imagination and creativity.",
+        "options": [
+          "It is thought that reading can improve our imagination and creativity.",
+          "Reading is thought improving our imagination and creativity.",
+          "Reading is thought that can improve our imagination and creativity.",
+          "It is thought that reading to improve our imagination and creativity."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the underlined part that needs correction in each of the following questions.",
+        "passage": null,
+        "stem": "Thu Hien <u>has</u> played <u>a saxophone</u> <u>since</u> she <u>was</u> only 10 years old.",
+        "options": [
+          "was",
+          "has",
+          "a saxophone",
+          "since"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the underlined part that needs correction in each of the following questions.",
+        "passage": null,
+        "stem": "I haven't made <u>in</u> my mind <u>yet</u> on how <u>to celebrate</u> <u>my parents'</u> wedding anniversary.",
+        "options": [
+          "yet",
+          "to celebrate",
+          "in",
+          "my parents'"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "It/ nice/ you/ give/ useful/ advice.",
+        "options": [
+          "It is nice of you to give me such useful advice.",
+          "It is nice of you giving me an useful advice.",
+          "It is nice of you to give me a useful advice.",
+          "It is nice of you giving me such useful advice."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "You/ should/ go/ bus/ instead/ car/ because/ its environmental benefits.",
+        "options": [
+          "You should go by bus instead of by car because its environmental benefits.",
+          "You should go by bus instead of by car because of its environmental benefits.",
+          "You should to go by bus instead of by car because of its environmental benefits.",
+          "You should going by bus instead by car because of its environmental benefits."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Khanh/ have/ take/ a course/ improve/ English?",
+        "options": [
+          "Khanh had to take a course to improve her English, didn't she?",
+          "Khanh had to take a course to improve of her English, wouldn't she?",
+          "Khanh had to take a course improving her English, wasn't she?",
+          "Khanh had to take a course to improve her English, hadn't she?"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Most/ our classmates/ find/ TV game shows / enjoyable/ interesting.",
+        "options": [
+          "Most of our classmates finds these TV game shows are enjoyable and interesting.",
+          "Most in our classmates find these TV game shows enjoyable and interesting.",
+          "Most in our classmates find these TV game shows enjoyable but interesting.",
+          "Most of our classmates find these TV game shows enjoyable and interesting."
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "C",
+      "2": "D",
+      "3": "C",
+      "4": "B",
+      "5": "A",
+      "6": "A",
+      "7": "B",
+      "8": "C",
+      "9": "B",
+      "10": "D",
+      "11": "B",
+      "12": "C",
+      "13": "D",
+      "14": "C",
+      "15": "A",
+      "16": "A",
+      "17": "D",
+      "18": "C",
+      "19": "A",
+      "20": "D",
+      "21": "A",
+      "22": "D",
+      "23": "C",
+      "24": "D",
+      "25": "A",
+      "26": "B",
+      "27": "B",
+      "28": "D",
+      "29": "C",
+      "30": "B",
+      "31": "C",
+      "32": "B",
+      "33": "C",
+      "34": "A",
+      "35": "C",
+      "36": "C",
+      "37": "A",
+      "38": "B",
+      "39": "A",
+      "40": "D"
+    }
+  },
+  "passB": {
+    "method": "ocr-transcribed",
+    "model": "codex-vision (gpt-6.1-sol)",
+    "items": [
+      {
+        "number": 1,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) OPPOSITE in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "The city council has decided to <u>pull down</u> a number of unsafe old buildings in the centre.",
+        "options": [
+          "give up",
+          "cheer up",
+          "set up",
+          "turn up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) OPPOSITE in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Lien was <u>over the moon</u> when she became the leader of her school DIY club.",
+        "options": [
+          "surprised",
+          "delighted",
+          "satisfied",
+          "depressed"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "pr<u>o</u>blem",
+          "p<u>o</u>pular",
+          "c<u>o</u>mfortable",
+          "h<u>o</u>liday"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "purpo<u>s</u>e",
+          "surpri<u>s</u>e",
+          "cour<u>s</u>e",
+          "practi<u>s</u>e"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "page": 1,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\n\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don’t see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I’m glad I stopped wasting so much time on electronic devices.",
+        "stem": "What is the main topic of the forum discussion?",
+        "options": [
+          "Some effects of electronic devices on teens.",
+          "Several benefits of social media for teenagers.",
+          "Different ways to contact friends and family members.",
+          "Different ways to improve computer skills."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "page": 1,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\n\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don’t see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I’m glad I stopped wasting so much time on electronic devices.",
+        "stem": "Why does Dan@14 believe it's good for teens to have electronic devices?",
+        "options": [
+          "Because he can stay connected with friends and relatives and better his computer skills.",
+          "Because he can play video games on the screen all the time.",
+          "Because he can improve his social skills by making friends with new people.",
+          "Because he can gain weight and finish his homework."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "page": 2,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\n\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don’t see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I’m glad I stopped wasting so much time on electronic devices.",
+        "stem": "Where does Dan@14 share photos and send messages?",
+        "options": [
+          "On a games console.",
+          "On a messaging app.",
+          "On a computer website.",
+          "On TeenTech forum."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "page": 2,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\n\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don’t see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I’m glad I stopped wasting so much time on electronic devices.",
+        "stem": "How does Harrison@008 change his habits of using electronic devices?",
+        "options": [
+          "He spends most of his time playing video games on social media.",
+          "He starts using more types of electronic devices.",
+          "He only uses his smartphone after finishing his homework.",
+          "He completely stops using electronic devices."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "page": 2,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": "TEENTECH Forum\n\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don’t see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I’m glad I stopped wasting so much time on electronic devices.",
+        "stem": "The phrase ‘attention span’ in the text probably means ______.",
+        "options": [
+          "the ability someone can remember",
+          "the period of time someone can focus",
+          "the learning method someone can use",
+          "the learning style someone can choose"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the most suitable response to complete each of the following exchanges.",
+        "passage": null,
+        "stem": "Mike: “I’ve just got awarded a scholarship!”\nChi: “____________________”",
+        "options": [
+          "My pleasure.",
+          "No worries. Everything will be alright.",
+          "Thanks for your advice.",
+          "How cool! Congratulations!"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the most suitable response to complete each of the following exchanges.",
+        "passage": "AT THE PLAYGROUND\nKEEP A CLOSE WATCH\nON YOUR KIDS",
+        "stem": "Thanh: “What does this sign say, Emma?”\nEmma: “____________________”",
+        "options": [
+          "Kids need to keep a close watch on their parents.",
+          "Adults should watch their kids carefully at the playground.",
+          "You can let your kids play on their own at the playground.",
+          "You can relax while your kids are playing at the playground."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 12,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "If he ______ a few years younger, I’m sure he would get the job.",
+        "options": [
+          "is",
+          "will be",
+          "were",
+          "would be"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "The tour guide asked the tourists ______ heavy bags when hiking in the mountain.",
+        "options": [
+          "didn’t bring",
+          "not brought",
+          "not bringing",
+          "not to bring"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "I wish I ______ a chance to take a photography class next school year.",
+        "options": [
+          "having",
+          "have had",
+          "could have",
+          "had had"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "It's the first time our children ______ their own pottery in a workshop.",
+        "options": [
+          "have made",
+          "had made",
+          "made",
+          "to make"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 16,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Do you think flashcards can help us learn English ______?",
+        "options": [
+          "more effectively",
+          "so effective",
+          "as effectively",
+          "more effective"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 17,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Wellington, ______ is the capital city of New Zealand, is famous for its stunning natural landscapes and beautiful harbour views.",
+        "options": [
+          "that",
+          "where",
+          "what",
+          "which"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "The students are looking forward ______ a break after their exams.",
+        "options": [
+          "will have",
+          "to have",
+          "to having",
+          "having"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "In my opinion, stories about faraway lands are always ______.",
+        "options": [
+          "amazing",
+          "amazingly",
+          "amazed",
+          "amaze"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "Last weekend, their family enjoyed a picnic lunch ______ the river bank.",
+        "options": [
+          "next",
+          "between",
+          "in",
+          "on"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the best answer to each of the following questions.",
+        "passage": null,
+        "stem": "There’s ______ of information available on the internet about the IELTS tests.",
+        "options": [
+          "a lot",
+          "no",
+          "many",
+          "few"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "emotional",
+          "activity",
+          "environment",
+          "limitation"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "unlucky",
+          "pollution",
+          "volunteer",
+          "historic"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) CLOSEST in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Some children get a lot of <u>pleasure</u> from doing jigsaw puzzles.",
+        "options": [
+          "participation",
+          "improvement",
+          "experience",
+          "fun"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the word(s) CLOSEST in meaning to the underlined word(s) in each of the following questions.",
+        "passage": null,
+        "stem": "Sitting around can get boring. <u>To begin with</u>, let's explore some fun hobbies we can try!",
+        "options": [
+          "First of all",
+          "To give advice",
+          "In the end",
+          "In fact"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 26,
+        "page": 3,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)______ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)______ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)______ student’s individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)______ small groups\n* A variety of indoor and outdoor (30)______\n* Two excursions per week",
+        "stem": "",
+        "options": [
+          "work",
+          "make",
+          "run",
+          "finish"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 27,
+        "page": 3,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)______ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)______ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)______ student’s individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)______ small groups\n* A variety of indoor and outdoor (30)______\n* Two excursions per week",
+        "stem": "",
+        "options": [
+          "15 hours",
+          "15-hour",
+          "15-hours",
+          "15’s hour"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "page": 3,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)______ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)______ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)______ student’s individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)______ small groups\n* A variety of indoor and outdoor (30)______\n* Two excursions per week",
+        "stem": "",
+        "options": [
+          "all",
+          "none",
+          "both",
+          "each"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "page": 3,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)______ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)______ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)______ student’s individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)______ small groups\n* A variety of indoor and outdoor (30)______\n* Two excursions per week",
+        "stem": "",
+        "options": [
+          "along",
+          "under",
+          "in",
+          "up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "page": 3,
+        "instruction": "Read the following text and mark the letter A, B, C or D on your answer sheet to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        "passage": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)______ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)______ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)______ student’s individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)______ small groups\n* A variety of indoor and outdoor (30)______\n* Two excursions per week",
+        "stem": "",
+        "options": [
+          "abilities",
+          "activities",
+          "possibilities",
+          "difficulties"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Minh made more spelling mistakes than I did.",
+        "options": [
+          "I made less spelling mistakes than Minh did.",
+          "I didn’t make more spelling mistakes as Minh did.",
+          "I didn’t make as many spelling mistakes as Minh did.",
+          "I didn’t make as much spelling mistakes as Minh did."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Unless people take action to protect the environment, climate change will be worse.",
+        "options": [
+          "If people didn’t take action to protect the environment, climate change would have worse.",
+          "If people don’t take action to protect the environment, climate change will be worse.",
+          "If people don’t take action to protect the environment, climate change would be worse.",
+          "If people took action to protect the environment, climate change were worse."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Her son said he was in the school canteen then.",
+        "options": [
+          "“He was in the school canteen now”, her son said.",
+          "“I’m in the school canteen then”, her son said.",
+          "“I’m in the school canteen now”, her son said.",
+          "“He is in the school canteen then”, her son said."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "People think that reading can improve our imagination and creativity.",
+        "options": [
+          "It is thought that reading can improve our imagination and creativity.",
+          "Reading is thought improving our imagination and creativity.",
+          "Reading is thought that can improve our imagination and creativity.",
+          "It is thought that reading to improve our imagination and creativity."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the underlined part that needs correction in each of the following questions.",
+        "passage": null,
+        "stem": "Thu Hien <u>has</u> played <u>a saxophone</u> <u>since</u> she <u>was</u> only 10 years old.",
+        "options": [
+          "was",
+          "has",
+          "a saxophone",
+          "since"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the underlined part that needs correction in each of the following questions.",
+        "passage": null,
+        "stem": "I haven't made <u>in</u> my mind <u>yet</u> on how <u>to celebrate</u> <u>my parents’</u> wedding anniversary.",
+        "options": [
+          "yet",
+          "to celebrate",
+          "in",
+          "my parents’"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "It/ nice/ you/ give/ useful/ advice.",
+        "options": [
+          "It is nice of you to give me such useful advice.",
+          "It is nice of you giving me an useful advice.",
+          "It is nice of you to give me a useful advice.",
+          "It is nice of you giving me such useful advice."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "You/ should/ go/ bus/ instead/ car/ because/ its environmental benefits.",
+        "options": [
+          "You should go by bus instead of by car because its environmental benefits.",
+          "You should go by bus instead of by car because of its environmental benefits.",
+          "You should to go by bus instead of by car because of its environmental benefits.",
+          "You should going by bus instead by car because of its environmental benefits."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Khanh/ have/ take/ a course/ improve/ English?",
+        "options": [
+          "Khanh had to take a course to improve her English, didn’t she?",
+          "Khanh had to take a course to improve of her English, wouldn’t she?",
+          "Khanh had to take a course improving her English, wasn’t she?",
+          "Khanh had to take a course to improve her English, hadn’t she?"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C or D on your answer sheet to indicate the sentence that is best written from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Most/ our classmates/ find/ TV game shows / enjoyable/ interesting.",
+        "options": [
+          "Most of our classmates finds these TV game shows are enjoyable and interesting.",
+          "Most in our classmates find these TV game shows enjoyable and interesting.",
+          "Most in our classmates find these TV game shows enjoyable but interesting.",
+          "Most of our classmates find these TV game shows enjoyable and interesting."
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "C",
+      "2": "C",
+      "3": "C",
+      "4": "B",
+      "5": "A",
+      "6": "A",
+      "7": "B",
+      "8": "C",
+      "9": "B",
+      "10": "D",
+      "11": "B",
+      "12": "C",
+      "13": "D",
+      "14": "C",
+      "15": "A",
+      "16": "A",
+      "17": "D",
+      "18": "C",
+      "19": "A",
+      "20": "D",
+      "21": "A",
+      "22": "D",
+      "23": "C",
+      "24": "D",
+      "25": "A",
+      "26": "B",
+      "27": "B",
+      "28": "D",
+      "29": "C",
+      "30": "B",
+      "31": "C",
+      "32": "B",
+      "33": "C",
+      "34": "A",
+      "35": "C",
+      "36": "C",
+      "37": "A",
+      "38": "B",
+      "39": "A",
+      "40": "D"
+    }
+  }
+}

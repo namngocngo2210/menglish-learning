@@ -1,6 +1,6 @@
 # Question bank report
 
-Total quarantined questions: 2589
+Total quarantined questions: 2700
 
 ## Grade
 
@@ -9,16 +9,16 @@ Total quarantined questions: 2589
 | 6 | 893 |
 | 7 | 1084 |
 | 8 | 386 |
-| 9 | 226 |
+| 9 | 337 |
 
 ## Skill
 
 | Value | Count |
 | --- | ---: |
-| doc-hieu | 871 |
-| ngu-phap | 421 |
-| tu-vung | 1254 |
-| viet-cau | 43 |
+| doc-hieu | 924 |
+| ngu-phap | 436 |
+| tu-vung | 1286 |
+| viet-cau | 54 |
 
 ## Type / kind
 
@@ -27,6 +27,10 @@ Total quarantined questions: 2589
 | agreement | 29 |
 | content-cloze | 1250 |
 | definition | 52 |
+| exam-mcq | 36 |
+| exam-pronunciation | 11 |
+| exam-reading | 53 |
+| exam-transformation | 11 |
 | function-word | 9 |
 | reading-cloze | 819 |
 | verb-form | 383 |
@@ -37,6 +41,7 @@ Total quarantined questions: 2589
 
 | Value | Count |
 | --- | ---: |
+| gov-bf84254d | 111 |
 | voa-learning-english | 2589 |
 
 ## Rejection reason
