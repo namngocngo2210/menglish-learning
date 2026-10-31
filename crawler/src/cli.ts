@@ -3,7 +3,7 @@ import { resolve, join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { HttpClient, readCache, type Meta } from './http.js';
 import { articleUrl, crawlVoa, parseVoa, VOA_HOST } from './sources/voa.js';
-import { allowedGovUrl, crawlGov, extractPdf, govItems, loadSeeds } from './sources/gov.js';
+import { allowedGovUrl, crawlGov, extractPdf, govItems, hasTextLayer, loadSeeds, seedStatus, type GovSeedOutcome } from './sources/gov.js';
 import { grammarItems, readingItems, vocabularyItems, wordOrderItems } from './build/index.js';
 import { corpusStats } from './classify.js';
 import { assemble, writeBank } from './bank.js';
@@ -18,15 +18,19 @@ async function build(){
  for(const meta of (await cachedMetas(raw)).sort((a,b)=>a.url.localeCompare(b.url))){if(meta.status!==200||!articleUrl(meta.url))continue;try{const cached=await readCache(raw,meta.url);if(!cached)continue;const article=parseVoa(cached.body.toString(),meta.url,meta.fetchedAt);if(article)articles.push(article);else count(errors,'voa-source-policy-or-parse');}catch{count(errors,'cache-parse');}}
  const corpus=corpusStats(articles.map(a=>a.paragraphs.join('\n')));const items:Candidate[]=[];
  for(const article of articles)for(const builder of [grammarItems,readingItems,vocabularyItems,wordOrderItems])items.push(...builder(article,corpus));
+ const outcomes:GovSeedOutcome[]=[];
  for(const seed of await loadSeeds()){
+ const outcome:GovSeedOutcome={url:seed.url,answerKeyUrl:seed.answerKeyUrl,pageUrl:seed.pageUrl,year:seed.year,province:seed.province,grade:seed.grade,kind:seed.kind,status:'cache-missing',items:0};
  try{const document=await readCache(raw,seed.url);if(!document||document.meta.status!==200){count(errors,'gov-cache-missing');continue;}const key=seed.answerKeyUrl?await readCache(raw,seed.answerKeyUrl):document;if(!key||key.meta.status!==200){count(errors,'gov-key-cache-missing');continue;}
- const text=await extractPdf(document.body);const keyText=key===document?text:await extractPdf(key.body);const parsed=govItems(text,keyText,seed,document.meta.fetchedAt);if(!parsed.length)count(errors,'gov-no-keyed-items');items.push(...parsed);
- }catch{count(errors,'gov-pdf-parse');}}
+ const text=await extractPdf(document.body);const keyText=key===document?text:await extractPdf(key.body);
+ if(!hasTextLayer(text)||!hasTextLayer(keyText)){outcome.status=seedStatus(text,keyText,0);count(errors,'gov-scanned-no-text-layer');continue;}
+ const parsed=govItems(text,keyText,seed,document.meta.fetchedAt);outcome.status=seedStatus(text,keyText,parsed.length);outcome.items=parsed.length;if(!parsed.length)count(errors,'gov-no-keyed-items');items.push(...parsed);
+ }catch{outcome.status='parse-error';count(errors,'gov-pdf-parse');}finally{outcomes.push(outcome);}}
  const bank=assemble(items,corpus);for(const [reason,n] of Object.entries(errors))bank.report.rejections[reason]=(bank.report.rejections[reason]??0)+n;
  const out=resolve(option('out',join(root,'web/content/quarantine')));const allowed=join(root,'web/content/quarantine');
- // This importer never writes to public content or outside its quarantine sink.
+ // Question content is written only to the quarantine sink.
  if(out!==allowed&&!out.startsWith(allowed+sep))throw new Error('Output must be web/content/quarantine or a subdirectory');
- await writeBank(bank,out);await mkdir(join(root,'data'),{recursive:true});await writeFile(join(root,'data/bank-report.json'),stableJson(bank.report));await writeFile(join(root,'crawler/REPORT.md'),markdown(bank.report));process.stdout.write(markdown(bank.report));
+ await writeBank(bank,out);await writeFile(join(root,'web/content/official-exams-report.json'),stableJson({seeds:outcomes.sort((a,b)=>a.url.localeCompare(b.url))}));await mkdir(join(root,'data'),{recursive:true});await writeFile(join(root,'data/bank-report.json'),stableJson(bank.report));await writeFile(join(root,'crawler/REPORT.md'),markdown(bank.report));process.stdout.write(markdown(bank.report));
 }
 async function main(){
  const command=process.argv[2];if(command==='build')return build();

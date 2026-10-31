@@ -11,6 +11,20 @@ Nguyên tắc: **không dùng AI/LLM sinh câu hỏi**. Chỉ dùng văn bản �
 
 Seed PDF nằm trong `crawler/config/gov-seeds.json`, mặc định rỗng. Host nằm trong `crawler/config/gov-hosts.json`; không cho phép chung mọi `*.edu.vn`. Chỉ nhập câu có đúng một đáp án chính thức. Không OCR hay đoán đáp án.
 
+## Kết quả nhập đề chính thức (31/10/2026)
+
+Seed đã xác minh (trang công bố của Sở GD&ĐT Hà Nội trên `hanoi.edu.vn`, robots.txt cho phép, 1 request/giây): đề + đáp án môn Ngoại ngữ không chuyên kỳ thi vào lớp 10 các năm 2024, 2025 và 2026 (6 PDF, ghi trong `crawler/config/gov-seeds.json` kèm `pageUrl`).
+
+**Kết quả thực: 0 câu được nhập.** Cả 6 PDF là ảnh scan (pdfjs trích 0 ký tự văn bản), nên bị bỏ qua theo quy tắc “không OCR, không đoán đáp án”; build ghi lý do `gov-scanned-no-text-layer` và trạng thái từng seed vào `web/content/official-exams-report.json` (hiển thị ở `/nguon-du-lieu`).
+
+Đã tìm nhưng không dùng được:
+- `quantridongda.hanoi.edu.vn`, `file2.hanoi.edu.vn`: robots.txt `Disallow: /` — không tải.
+- Bản đề TP.HCM đăng lại trên site trường `*.hcm.edu.vn`: tệp nằm dưới `/tai/` (bị robots.txt chặn) và là bản đăng lại của trường, không phải kênh công bố của Sở.
+- Trang tin của Sở Đồng Nai (2025): chỉ có “gợi ý đáp án” do giáo viên cung cấp, không phải đáp án chính thức.
+- Mọi kết quả còn lại là trang tổng hợp (bị cấm).
+
+Muốn có câu hỏi từ nguồn này cần owner duyệt thêm hướng đi (ví dụ OCR có người kiểm tra từng câu, hoặc nguồn có bản văn bản gốc); chưa thêm nguồn nào ngoài danh sách đã duyệt.
+
 ## Nguồn bị cấm
 
 VnDoc, Hoc247, Loigiaihay, Tuyensinh247, Thư viện học liệu, Study4, langgo.edu.vn, navi.edu.vn, dethi.edu.vn, mọi website tổng hợp đề, nội dung SGK, Cambridge, OUP và nhà xuất bản khác. Denylist ưu tiên hơn allowlist. Không có nguồn thứ ba.

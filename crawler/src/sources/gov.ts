@@ -5,7 +5,15 @@ import type { Candidate, Source } from '../model.js';
 import { hash, words } from '../util.js';
 import { extractPdf, parseAnswerKey, parseExam } from '../parse/exam.js';
 import { examTopic } from '../classify.js';
-export interface GovSeed {url:string;year:number;province:string;grade:number;kind:string;answerKeyUrl?:string}
+export interface GovSeed {url:string;year:number;province:string;grade:number;kind:string;answerKeyUrl?:string;pageUrl?:string}
+export type GovSeedStatus='imported'|'scanned-no-text-layer'|'no-keyed-items'|'cache-missing'|'parse-error';
+export interface GovSeedOutcome extends GovSeed {status:GovSeedStatus;items:number}
+export const MIN_TEXT_LAYER_CHARACTERS=200;
+export function hasTextLayer(text:string):boolean{return text.replace(/\s/g,'').length>=MIN_TEXT_LAYER_CHARACTERS;}
+export function seedStatus(text:string,keyText:string,items:number):GovSeedStatus{
+ if(!hasTextLayer(text)||!hasTextLayer(keyText))return 'scanned-no-text-layer';
+ return items>0?'imported':'no-keyed-items';
+}
 export function allowedGovUrl(url:string):boolean{try{const u=new URL(url);const host=u.hostname.toLowerCase();return u.protocol==='https:'&&!u.port&&!u.username&&!u.password&&!hosts.forbidden.some(part=>host.includes(part))&&hosts.allowed.some(pattern=>pattern.startsWith('*.')?host.endsWith('.'+pattern.slice(2)):host===pattern);}catch{return false;}}
 export async function loadSeeds(path:URL|string=new URL('../../config/gov-seeds.json',import.meta.url)):Promise<GovSeed[]>{
  const seeds:unknown=JSON.parse(await readFile(path,'utf8'));if(!Array.isArray(seeds))throw new Error('Seeds must be an array');
