@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { GRADES, SKILLS, isSlug, parseTestSlug } from "@/lib/routes";
+import { GRADES, SKILLS, isSlug, parseEntranceSlug, parseTestSlug } from "@/lib/routes";
 const text = z.string().trim().min(1);
 const slug = text.refine(isSlug, "Expected an ASCII kebab-case slug");
 export const GradeSchema = z.union(GRADES.map(g => z.literal(g)));
@@ -13,15 +13,20 @@ export const QuestionSchema = z.strictObject({
  id: text, type: z.literal("mcq"), grade: GradeSchema, skill: SkillSchema, topicSlug: slug,
  difficulty: z.number().int().min(1).max(3), passageId: text.optional(), stem: text,
  options: z.array(z.strictObject({ key: OptionKeySchema, text })).length(4), correctKey: OptionKeySchema,
- explanation: text, sourceId: text, sourceUrl: z.url(), sourceRef: text.optional(), sourceName: text.optional(), license: text.optional(), crawledAt: z.iso.datetime().optional(), reviewStatus: ReviewStatusSchema,
+ explanation: text, sourceId: text, sourceUrl: z.url(), sourceRef: text.optional(), sourceName: text.optional(), license: text.optional(), crawledAt: z.iso.datetime().optional(), reviewStatus: ReviewStatusSchema, reviewNote: text.optional(), reviewedAt: z.iso.datetime().optional(),
 }).superRefine((q, ctx) => {
  if (new Set(q.options.map(o => o.key)).size !== 4) ctx.addIssue({ code: "custom", message: "Option keys must be unique", path: ["options"] });
- if (new Set(q.options.map(o => o.text.toLowerCase())).size !== 4) ctx.addIssue({ code: "custom", message: "Option texts must be unique", path: ["options"] });
+ if (q.reviewStatus !== "quarantine" && new Set(q.options.map(o => o.text.toLowerCase())).size !== 4) ctx.addIssue({ code: "custom", message: "Option texts must be unique", path: ["options"] });
  if (!q.options.some(o => o.key === q.correctKey)) ctx.addIssue({ code: "custom", message: "Missing correct option", path: ["correctKey"] });
 });
-export const TestSchema = z.strictObject({ slug: text, grade: GradeSchema, skill: SkillSchema, topicSlug: slug, kind: z.enum(["topic", "mixed", "entrance10"]), title: text, questionIds: z.array(text).min(1), publishedAt: z.iso.datetime() }).superRefine((test, ctx) => {
- const route = parseTestSlug(test.slug);
- if (!route || route.grade !== test.grade || route.skill !== test.skill || route.topic !== test.topicSlug) ctx.addIssue({ code: "custom", message: "Test slug disagrees with grade, skill or topic", path: ["slug"] });
+export const TestSchema = z.strictObject({ slug: text, grade: GradeSchema, skill: SkillSchema.optional(), topicSlug: slug.optional(), kind: z.enum(["topic", "mixed", "entrance10"]), title: text, questionIds: z.array(text).min(1), publishedAt: z.iso.datetime(), seed: text.optional(), optionOrder: z.record(text, z.string().regex(/^(?!.*(.).*\1)[ABCD]{4}$/)).optional() }).superRefine((test, ctx) => {
+ if (test.kind === "entrance10") {
+  if (!parseEntranceSlug(test.slug) || test.grade !== 9 || test.skill !== undefined || test.topicSlug !== undefined) ctx.addIssue({ code: "custom", message: "Entrance tests require grade 9, an entrance slug and no skill or topic", path: ["slug"] });
+ } else {
+  const route = parseTestSlug(test.slug);
+  if (!route || !test.skill || !test.topicSlug || route.grade !== test.grade || route.skill !== test.skill || route.topic !== test.topicSlug) ctx.addIssue({ code: "custom", message: "Test slug disagrees with grade, skill or topic", path: ["slug"] });
+ }
+ if (test.optionOrder && Object.keys(test.optionOrder).some(id => !test.questionIds.includes(id))) ctx.addIssue({ code: "custom", message: "Option order references a question outside the test", path: ["optionOrder"] });
  if (new Set(test.questionIds).size !== test.questionIds.length) ctx.addIssue({ code: "custom", message: "Duplicate question ids", path: ["questionIds"] });
 });
 export const ContentBundleSchema = z.strictObject({ sources: z.array(SourceSchema), passages: z.array(PassageSchema), topics: z.array(TopicSchema), questions: z.array(QuestionSchema), tests: z.array(TestSchema) });

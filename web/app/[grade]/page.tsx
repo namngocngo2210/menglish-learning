@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
@@ -14,5 +15,5 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
 }
 export default async function GradePage({ params }: { params: Promise<{ grade: string }> }) {
  const grade = parseGradeSlug((await params).grade); if (!grade) notFound();
- return <PageShell title={`Tiếng Anh lớp ${grade}`}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }])}/><Breadcrumbs items={[{ label: "Trang chủ", href: homePath() }, { label: `Lớp ${grade}` }]}/><p>Chọn kỹ năng em muốn luyện. Mỗi bài đều có lời giải để em tự xem lại.</p><LinkCardList items={getSkills(grade).map(skill => ({ label: SKILL_NAMES[skill], skill, description: SKILL_DESCRIPTIONS[skill], href: skillPath(grade, skill) }))}/><AdSlot slot="footer"/></PageShell>;
+ return <PageShell title={`Tiếng Anh lớp ${grade}`}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }])}/><Breadcrumbs items={[{ label: "Trang chủ", href: homePath() }, { label: `Lớp ${grade}` }]}/><p>Chọn kỹ năng em muốn luyện. Mỗi bài đều có lời giải để em tự xem lại.</p><LinkCardList items={getSkills(grade).map(skill => ({ label: SKILL_NAMES[skill], skill, description: SKILL_DESCRIPTIONS[skill], href: skillPath(grade, skill) }))}/>{grade >= 8 && <Link className="inline-flex min-h-11 items-center rounded-md border border-primary p-4 font-semibold" href="/thi-vao-lop-10">Ôn thi vào lớp 10</Link>}<AdSlot slot="footer"/></PageShell>;
 }

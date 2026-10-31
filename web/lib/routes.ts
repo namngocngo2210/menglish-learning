@@ -26,3 +26,13 @@ export function parseTestSlug(slug: string): { grade: Grade; skill: Skill; topic
  const grade = parseGradeSlug(g); const skill = parseSkill(s);
  return grade && skill && isSlug(topic) && isSlug(test) ? { grade, skill, topic, test } : null;
 }
+
+export const ENTRANCE_PATH = "/thi-vao-lop-10";
+export function entranceTestPath(k: number): string {
+ if (!Number.isSafeInteger(k) || k < 1) throw new Error("Invalid entrance test number");
+ return `${ENTRANCE_PATH}/de-${k}`;
+}
+export function parseEntranceSlug(slug: string): { test: string } | null {
+ const match = /^thi-vao-lop-10\/(de-[1-9][0-9]*)$/.exec(slug);
+ return match ? { test: match[1] } : null;
+}

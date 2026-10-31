@@ -1,3 +1,6 @@
+import * as entrancePage from "@/app/thi-vao-lop-10/[test]/page";
+import { metadata as entrance } from "@/app/thi-vao-lop-10/page";
+import { metadata as credits } from "@/app/nguon-du-lieu/page";
 import { expect, it } from "vitest";
 import * as gradePage from "@/app/[grade]/page";
 import * as skillPage from "@/app/[grade]/[skill]/page";
@@ -11,12 +14,13 @@ import { absoluteUrl, getAllRoutes } from "@/lib/seo";
 
 it("matches static page params exactly and gives every route unique metadata", async () => {
  const generated = await Promise.all([
+  ...entrancePage.generateStaticParams().map(p => entrancePage.generateMetadata({params:Promise.resolve(p)})),
   ...gradePage.generateStaticParams().map(p => gradePage.generateMetadata({params:Promise.resolve(p)})),
   ...skillPage.generateStaticParams().map(p => skillPage.generateMetadata({params:Promise.resolve(p)})),
   ...topicPage.generateStaticParams().map(p => topicPage.generateMetadata({params:Promise.resolve(p)})),
   ...testPage.generateStaticParams().map(p => testPage.generateMetadata({params:Promise.resolve(p)})),
  ]);
- const metadata = [home, about, privacy, contact, ...generated];
+ const metadata = [home, about, privacy, contact, entrance, credits, ...generated];
  expect(metadata.map(m => m.alternates?.canonical).sort()).toEqual(getAllRoutes().map(r => absoluteUrl(r.path)).sort());
  expect(new Set(metadata.map(m=>m.title)).size).toBe(metadata.length);
  expect(new Set(metadata.map(m=>m.description)).size).toBe(metadata.length);

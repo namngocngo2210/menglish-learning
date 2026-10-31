@@ -4,6 +4,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { ContentBundleSchema, type ContentBundle } from "./types";
+import { applyOptionOrder } from "@/lib/mixer";
 import { GRADES, type Grade, type Skill, SKILLS } from "@/lib/routes";
 const cache = new Map<string, ContentBundle>();
 export function loadBundle(directory?: string): ContentBundle {
@@ -39,15 +40,17 @@ export function loadBundle(directory?: string): ContentBundle {
  const passages = new Map(bundle.passages.map(p => [p.id, p]));
  const topics = new Set(bundle.topics.map(t => `${t.grade}/${t.skill}/${t.slug}`));
  const questions = new Map(bundle.questions.map(q => [q.id, q]));
+ // Mixed/entrance items retain their bank classification even when that topic has no public tests.
+ const mixedItems = new Set(bundle.tests.filter(t => t.kind !== "topic").flatMap(t => t.questionIds));
  for (const p of bundle.passages) if (!sources.has(p.sourceId)) fail(`passages:${p.id}`, `passage ${p.id}: unknown source ${p.sourceId}`);
  for (const q of bundle.questions) {
-  if (!sources.has(q.sourceId) || (q.passageId && !passages.has(q.passageId)) || !topics.has(`${q.grade}/${q.skill}/${q.topicSlug}`)) fail(`questions:${q.id}`, `question ${q.id}: invalid source, passage or topic reference`);
+  if (!sources.has(q.sourceId) || (q.passageId && !passages.has(q.passageId)) || (!topics.has(`${q.grade}/${q.skill}/${q.topicSlug}`) && !mixedItems.has(q.id))) fail(`questions:${q.id}`, `question ${q.id}: invalid source, passage or topic reference`);
  }
  for (const t of bundle.tests) {
-  if (!topics.has(`${t.grade}/${t.skill}/${t.topicSlug}`)) fail(`tests:${t.slug}`, `test ${t.slug}: unknown topic`);
+  if (t.kind !== "entrance10" && !topics.has(`${t.grade}/${t.skill}/${t.topicSlug}`)) fail(`tests:${t.slug}`, `test ${t.slug}: unknown topic`);
   for (const id of t.questionIds) {
    const q = questions.get(id);
-   if (!q || q.grade !== t.grade || q.skill !== t.skill || (t.kind === "topic" && q.topicSlug !== t.topicSlug)) fail(`tests:${t.slug}`, `test ${t.slug}: question ${id} missing or mismatched`);
+   if (!q || (t.kind === "entrance10" ? q.grade !== 8 && q.grade !== 9 : q.grade !== t.grade || q.skill !== t.skill || (t.kind === "topic" && q.topicSlug !== t.topicSlug))) fail(`tests:${t.slug}`, `test ${t.slug}: question ${id} missing or mismatched`);
   }
  }
  bundle.questions = bundle.questions.filter(q => q.reviewStatus === "published");
@@ -62,15 +65,23 @@ export function loadBundle(directory?: string): ContentBundle {
  cache.set(dir, bundle); return bundle;
 }
 export function getGrades(): readonly Grade[] { return GRADES; }
-export function getSkills(grade: Grade): Skill[] { return SKILLS.filter(skill => loadBundle().tests.some(t => t.grade === grade && t.skill === skill)); }
+export function getSkills(grade: Grade): Skill[] { return GRADES.includes(grade) ? [...SKILLS] : []; }
 export function getTopics(grade: Grade, skill: Skill) { return loadBundle().topics.filter(t => t.grade === grade && t.skill === skill); }
 export function getTest(slug: string) { return loadBundle().tests.find(t => t.slug === slug); }
 export function getTestsForTopic(grade: Grade, skill: Skill, topicSlug: string) { return loadBundle().tests.filter(t => t.grade === grade && t.skill === skill && t.topicSlug === topicSlug); }
 export function getTestWithQuestions(slug: string) {
  const test = getTest(slug); if (!test) return undefined;
  const bundle = loadBundle(); const byId = new Map(bundle.questions.map(q => [q.id, q]));
- const questions = test.questionIds.map(id => byId.get(id)!);
+ const questions = test.questionIds.map(id => {
+  const question = byId.get(id)!; const order = test.optionOrder?.[id];
+  return order ? applyOptionOrder(question, order) : question;
+ });
  const passageIds = new Set(questions.map(q => q.passageId));
  return { ...test, questions, passages: bundle.passages.filter(p => passageIds.has(p.id)), sources: bundle.sources.filter(s => questions.some(q => q.sourceId === s.id) || bundle.passages.some(p => passageIds.has(p.id) && p.sourceId === s.id)) };
 }
 export function getAllTestSlugs(): string[] { return loadBundle().tests.map(t => t.slug); }
+
+export function getEntranceTests() { return loadBundle().tests.filter(t => t.kind === "entrance10"); }
+export function getEntranceTestWithQuestions(slug: string) {
+ return getTest(slug)?.kind === "entrance10" ? getTestWithQuestions(slug) : undefined;
+}

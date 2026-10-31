@@ -177,3 +177,13 @@ Thống kê độ khó thực tế (tỉ lệ đúng) tính định kỳ từ `a
 - `pg_dump` hằng ngày, giữ 14 bản; ops theo dõi tuổi bản backup như MEnglish.
 
 Crawler thực tế chỉ dùng VOA Learning English và PDF Bộ/Sở GD&ĐT đã xác minh. Metadata source_url/source_name/license/crawled_at được lưu trong JSON (camelCase); không thêm UI trên trang bài tập. Mục tiêu 2.000 câu là best-effort, báo số thực qua crawler report.
+
+
+## Reviewed bank promotion (Phase A)
+
+Run `npm run build:tests` inside `web/` after owner review to explicitly promote the checked-in VOA quarantine bank. The crawler remains quarantine-only. The generator merges all fragments, writes published copies into `content/tests/bank-grade-{6..9}.json` plus tests-only `bank-entrance.json`, and never modifies quarantine. Unused resources and topics without tests are pruned; shared references resolve after merging output files.
+
+Tests use fixed string seeds and publication date `2026-10-31T00:00:00.000Z`. Ordered `questionIds` and per-question `optionOrder` ABCD permutations reproduce both question and option order; the loader remaps the correct answer. Topic/mixed sets and the entrance set each avoid repeated question IDs. Entrance tests (`thi-vao-lop-10/de-K`) are grade 9, omit skill/topic metadata, and may reference grade 8/9 questions of any skill. The generator is the explicit reviewed promotion command, not an automatic crawler publishing path.
+
+
+The strict web `QuestionSchema` also accepts optional `reviewNote` (trimmed nonempty text) and `reviewedAt` (ISO datetime). The owner-approved VOA promotion on 2026-10-31 records `reviewNote: "owner-approved-bulk 2026-10-31"`, `reviewedAt: "2026-10-31T00:00:00.000Z"`, and `reviewStatus: "published"` on copies, retaining all original source/crawl fields. Deterministic guards run before partitioning; see [Guards](content-sources.md#guards) for rules and audited counts. Quarantine parsing permits duplicate option text so the promotion guard can count and exclude it; public question validation still requires unique option text. Unknown fields remain rejected in every status.

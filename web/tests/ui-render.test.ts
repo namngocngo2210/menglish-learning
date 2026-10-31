@@ -15,7 +15,6 @@ it("renders shared navigation and the accessible content destination without cli
  expect(html).toContain('id="noi-dung"');
  expect(html).toContain(SITE.wordmark);
  for (const grade of GRADES) expect(html).toContain(`href="${gradePath(grade)}"`);
- expect(html).toContain("Nội dung mẫu tự soạn, chưa phải tài liệu học tập chính thức");
 });
 it("marks the final breadcrumb as current and provides an empty card state", () => {
  const html = renderToStaticMarkup(createElement(Breadcrumbs,{items:[{label:"Trang chủ",href:"/"},{label:"Lớp 6",href:"/lop-6"}]}));
@@ -41,4 +40,19 @@ it("renders configured ad markup without loading or requesting ads", () => {
  expect(html).toContain("adsbygoogle");
  expect(html).toContain("min-height:120px");
  expect(html).not.toContain("<script");
+});
+it("keeps source and license provenance off test pages", async () => {
+ const { getAllTestSlugs, getTestWithQuestions } = await import("@/lib/content/load");
+ const { parseTestSlug, gradeSlug } = await import("@/lib/routes");
+ const { default: TestPage } = await import("@/app/[grade]/[skill]/[topic]/[test]/page");
+ const slug = getAllTestSlugs().find(slug => parseTestSlug(slug))!;
+ const route = parseTestSlug(slug)!; const test = getTestWithQuestions(slug)!;
+ const html = renderToStaticMarkup(await TestPage({ params: Promise.resolve({ grade: gradeSlug(route.grade), skill: route.skill, topic: route.topic, test: route.test }) }));
+ expect(html).not.toContain("Nguồn nội dung");
+ expect(html).not.toContain("license");
+ expect(html).not.toContain("Vị trí quảng cáo");
+ for (const question of test.questions) expect(html).not.toContain(question.sourceUrl);
+ for (const source of test.sources) { expect(html).not.toContain(source.license); }
+ expect(html).not.toContain("Nội dung mẫu nguyên bản");
+ expect(html).not.toContain("Đề mẫu tự soạn");
 });

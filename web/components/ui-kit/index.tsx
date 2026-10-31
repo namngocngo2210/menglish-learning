@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PreviousResult } from "@/components/quiz/PreviousResult";
 import { ArrowUpRight, BookOpen, ChevronRight, Languages, LibraryBig, PenLine } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Question } from "@/lib/content/types";
@@ -7,7 +8,7 @@ import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { type Skill } from "@/lib/routes";
 
 export interface NavigationItem { label: string; href?: string; }
-export interface LinkCard { label: string; href: string; description?: string; skill?: Skill; }
+export interface LinkCard { label: string; href: string; description?: string; skill?: Skill; progressKey?: string; }
 export const SKILL_DESCRIPTIONS: Record<Skill, string> = {
  "doc-hieu": "Đọc bài, tìm thông tin và hiểu ý nghĩa trong ngữ cảnh.",
  "ngu-phap": "Ôn cấu trúc và chọn cách dùng câu phù hợp.",
@@ -34,7 +35,7 @@ export function LinkCardList({ items, emptyMessage = "Nội dung đang được 
  if (!items.length) return <p className="rounded-md border border-dashed border-navy-soft/30 bg-warm p-6">{emptyMessage}</p>;
  return <ul className="grid gap-4 md:grid-cols-2">{items.map(item => {
  const Icon = item.skill ? skillIcons[item.skill] : BookOpen;
- return <li key={item.href} className="min-w-0"><Link href={item.href} className="group flex h-full min-h-11 items-start gap-4 rounded-md border border-navy-soft/20 bg-surface p-5 text-navy! no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm sm:p-6"><span className="rounded-md bg-warm-2 p-3 text-primary"><Icon aria-hidden="true" className="size-5"/></span><div className="min-w-0 flex-1"><h2 className="text-lg font-bold">{item.label}</h2>{item.description && <p className="mt-2 text-sm leading-relaxed text-navy-soft">{item.description}</p>}</div><ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-primary"/></Link></li>;
+ return <li key={item.href} className="min-w-0"><Link href={item.href} className="group flex h-full min-h-11 items-start gap-4 rounded-md border border-navy-soft/20 bg-surface p-5 text-navy! no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm sm:p-6"><span className="rounded-md bg-warm-2 p-3 text-primary"><Icon aria-hidden="true" className="size-5"/></span><div className="min-w-0 flex-1"><h2 className="text-lg font-bold">{item.label}</h2>{item.description && <p className="mt-2 text-sm leading-relaxed text-navy-soft">{item.description}</p>}{item.progressKey && <PreviousResult slug={item.progressKey}/>}</div><ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-primary"/></Link></li>;
  })}</ul>;
 }
 export { PassageBlock } from "./PassageBlock";

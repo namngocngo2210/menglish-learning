@@ -1,3 +1,4 @@
+import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
@@ -18,5 +19,5 @@ export default async function TopicPage({ params }: { params: Promise<{ grade: s
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) notFound();
  const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();
- return <PageShell title={topic.name}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name}]}/><p>{topic.description}</p><LinkCardList emptyMessage="Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé." items={getTestsForTopic(grade,skill,topic.slug).map(test=>({label:test.title,description:`${test.questionIds.length} câu hỏi · Có giải thích đáp án`,href:testPath(grade,skill,topic.slug,parseTestSlug(test.slug)!.test)}))}/><AdSlot slot="footer"/></PageShell>;
+ return <PageShell title={topic.name}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name}]}/><p>{topic.description}</p><RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}/><LinkCardList emptyMessage="Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé." items={getTestsForTopic(grade,skill,topic.slug).map(test=>({label:test.title,progressKey:test.slug,description:`${test.questionIds.length} câu hỏi · Có giải thích đáp án`,href:testPath(grade,skill,topic.slug,parseTestSlug(test.slug)!.test)}))}/><AdSlot slot="footer"/></PageShell>;
 }
