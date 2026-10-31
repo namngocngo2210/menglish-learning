@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
-import { getGrades, getSkills, getTopics, getTestsForTopic } from "@/lib/content/load";
+import { getGrades, getSkills, getTopics, getTestsForTopic, getEntranceTests } from "@/lib/content/load";
 import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath } from "@/lib/routes";
 
 export function absoluteUrl(path: string): string {
@@ -37,7 +37,9 @@ export function getAllRoutes(): PublicRoute[] {
    }
   }
  }
- routes.push(...[aboutPath(), privacyPath(), contactPath()].map(path => ({ path, changeFrequency: "yearly" as const, priority: 0.3 })));
+ routes.push({ path: "/thi-vao-lop-10", changeFrequency: "weekly", priority: 0.8 });
+ routes.push(...getEntranceTests().map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
+ routes.push(...["/nguon-du-lieu", aboutPath(), privacyPath(), contactPath()].map(path => ({ path, changeFrequency: "yearly" as const, priority: 0.3 })));
  return routes;
 }
 
@@ -55,7 +57,7 @@ export function quizJsonLd({ name, description, path, grade, skillName, topicNam
  return {
   "@context": context, "@type": ["LearningResource", "Quiz"], name,
   description: `${description} ${questionCount} câu · ${skillName}.`, url: absoluteUrl(path),
-  inLanguage: "vi", isAccessibleForFree: true, educationalLevel: `Lớp ${grade}`, learningResourceType: "Bài luyện tập",
+  inLanguage: "vi", isAccessibleForFree: true, educationalLevel: `Lớp ${grade}`, learningResourceType: "Bài luyện tập", teaches: skillName,
   about: { "@type": "Thing", name: topicName }, datePublished, isPartOf: { "@type": "WebSite", name: SITE.name, url: absoluteUrl("/") }, publisher: organization,
  };
 }

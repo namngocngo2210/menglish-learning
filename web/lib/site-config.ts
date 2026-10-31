@@ -2,7 +2,7 @@
 export const SITE = {
  name: "Luyện Tiếng Anh THCS",
  wordmark: "Luyện Tiếng Anh THCS",
- description: "Nội dung mẫu luyện tiếng Anh cho học sinh lớp 6 đến lớp 9.",
+ description: "Luyện tiếng Anh lớp 6–9 với câu hỏi từ bài đọc VOA Learning English và giải thích tiếng Việt.",
  tagline: "Cùng học tiếng Anh mỗi ngày",
  baseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://beta.meducation.vn",
 } as const;

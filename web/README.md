@@ -12,11 +12,11 @@ npm run build
 npm start
 ```
 
-`app/` contains Vietnamese App Router server pages with SSG and hourly ISR. `lib/routes.ts` owns every path and slug; `lib/content/` owns Zod validation, publication filtering, references, caching, and the future importer contract. `lib/scoring.ts` is pure and is not wired into this static answer preview. `tests/` covers routes, scoring and content. `content/tests/` holds four original synthetic samples; see [content format](content/README.md).
+`app/` contains Vietnamese App Router server pages with SSG and hourly ISR. `lib/routes.ts` owns every path and slug; `lib/content/` owns Zod validation, publication filtering, references, caching, and the future importer contract. `lib/scoring.ts` powers interactive client quizzes. `tests/` covers routes, scoring, mixing, progress, rendering and content. `content/tests/` holds the published reviewed bank; see [content format](content/README.md).
 
-`app/globals.css` defines orange/navy tokens: brand is decorative only, cta supports white button text, primary is for accent text, navy/navy-soft for text and structure, surface/warm/warm-2 for backgrounds. No default shadcn gray theme is loaded. Be Vietnam Pro is bundled locally in three unicode-range subsets and four weights through `next/font/local`; no font CDN is used.
+`app/globals.css` defines orange/navy tokens: brand is decorative only, cta supports white button text, primary is for accent text, navy/navy-soft for text and structure, surface/warm/warm-2 for backgrounds. No default shadcn gray theme is loaded. Be Vietnam Pro is bundled locally in three unicode-range subsets and two weights (400 and 700) through `next/font/local`; no font CDN is used.
 
-The later UI task restyles [typed UI slots](components/ui-kit/README.md) and installs real upstream shadcn primitives into `components/ui/`. Pages keep content/routing responsibilities. The future importer writes quarantine through a host-controlled sink and requires separate owner review to publish. No crawler, admin, API, interactive quiz, is implemented. Answers intentionally remain in server HTML for this static sample.
+Pages keep content/routing responsibilities and reuse [typed UI slots](components/ui-kit/README.md). The importer writes quarantine through a host-controlled sink and requires owner review to publish. Quizzes score locally, so answer keys are present in client data; this is a practice site, not a secure exam service.
 
 `SITE` in `lib/site-config.ts` is a placeholder brand. Set `NEXT_PUBLIC_SITE_URL` to override the default base URL. No deployment or Docker is needed for local verification.
 
@@ -33,3 +33,20 @@ Set `NEXT_PUBLIC_SITE_URL` to the production origin for absolute canonical, soci
 `app/icon.svg` is the source for the navy/orange open-book placeholder mark (also used inline in `components/chrome/BrandMark.tsx`; keep them in sync). Regenerate the PNGs and multi-size PNG-in-ICO favicon from `web/` with `node scripts/generate-icons.mjs`. This uses `sharp`, already supplied by Next.js, with no additional dependency. The Apple icon is opaque; the 192/512 icons have maskable-safe padding.
 
 Next.js metadata file conventions expose `app/manifest.ts` at `/manifest.webmanifest` and automatically link the favicon, SVG, Apple icon and manifest. Manifest names come from `SITE`; these assets do not establish a final brand.
+
+### Optional AdSense configuration
+
+Copy `.env.example` to configure public IDs (no secrets). `NEXT_PUBLIC_ADSENSE_CLIENT`
+enables the async `lazyOnload` AdSense script. `NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT`,
+`NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR`, and `NEXT_PUBLIC_ADSENSE_SLOT_FOOTER` select units.
+Without a client or unit ID, slots render reserved 120px placeholders.
+`NEXT_PUBLIC_ADSENSE_CHILD_DIRECTED` defaults to enabled; only the literal `false`
+omits the script's `data-tag-for-child-directed-treatment="1"` attribute.
+The queue sets `requestNonPersonalizedAds = 1` before script loading or unit requests.
+List pages reserve ad space; quizzes request ads only after submission, outside
+all question and passage areas, including random mode.
+
+Random quizzes fetch static `/pool/…` JSON only on interaction and keep the URL
+unchanged. Fixed quiz progress stays on the device under `ml:progress:v1`;
+storage failures do not prevent practice. Published source credits are centralized
+on `/nguon-du-lieu`.

@@ -1,30 +1,44 @@
+import { toQuizPool } from "@/lib/random-quiz";
 import { AdSlot } from "@/components/ads/AdSlot";
+import Link from "next/link";
+import { RandomQuiz } from "@/components/quiz/RandomQuiz";
+import { PreviousResult } from "@/components/quiz/PreviousResult";
 import { Quiz } from "@/components/quiz/Quiz";
 import { JsonLd } from "@/components/json-ld";
 import { buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { PageShell, Breadcrumbs, PassageBlock } from "@/components/ui-kit";
-import { getAllTestSlugs, getTestWithQuestions, getTopics } from "@/lib/content/load";
+import { PageShell, Breadcrumbs } from "@/components/ui-kit";
+import { getAllTestSlugs, getTestWithQuestions, getTopics, getTestsForTopic } from "@/lib/content/load";
 import { isSlug, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, testPath, homePath, gradePath, skillPath, topicPath, SKILL_NAMES } from "@/lib/routes";
 export const dynamicParams = false;
 export const revalidate = 3600;
-export function generateStaticParams() { return getAllTestSlugs().map(slug => { const p = parseTestSlug(slug)!; return {grade:gradeSlug(p.grade),skill:p.skill,topic:p.topic,test:p.test}; }); }
+export function generateStaticParams() { return getAllTestSlugs().flatMap(slug => { const p = parseTestSlug(slug); if (!p) return []; return {grade:gradeSlug(p.grade),skill:p.skill,topic:p.topic,test:p.test}; }); }
 export async function generateMetadata({ params }: { params: Promise<{ grade: string; skill: string; topic: string; test: string }> }) {
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill || !isSlug(p.test)) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
  const test = getTestWithQuestions(testPath(grade, skill, topic.slug, p.test).slice(1)); if (!test) return {};
- return buildMetadata({ title: `${test.title} - Lớp ${grade}`, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}: ${test.questions.length} câu có đáp án và giải thích.`, path: testPath(grade, skill, topic.slug, p.test), type: "article" });
+ return buildMetadata({ title: `${test.title} - ${SKILL_NAMES[skill]} - Lớp ${grade}`, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}, ${p.test}: ${test.questions.length} câu có đáp án và giải thích.`, path: testPath(grade, skill, topic.slug, p.test), type: "article" });
 }
 export default async function TestPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string; test: string }> }) {
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill || !isSlug(p.test)) notFound();
  const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();
  const test = getTestWithQuestions(testPath(grade,skill,topic.slug,p.test).slice(1)); if (!test) notFound();
+ const quiz = toQuizPool(test);
  return <PageShell title={test.title}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }, { name: test.title, path: testPath(grade, skill, topic.slug, p.test) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name,href:topicPath(grade,skill,topic.slug)},{label:test.title}]}/>
  <JsonLd data={quizJsonLd({ name: test.title, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}.`, path: testPath(grade, skill, topic.slug, p.test), grade, skillName: SKILL_NAMES[skill], topicName: topic.name, questionCount: test.questions.length, datePublished: test.publishedAt })}/>
- <p>Đề mẫu tự soạn · {test.questions.length} câu hỏi · Không giới hạn thời gian</p>
- <Quiz questions={test.questions} passageContent={test.passages.length ? <>{test.passages.map(passage => <PassageBlock key={passage.id} passage={passage}/>)}</> : undefined} afterResult={<AdSlot slot="footer"/>}/>
- <section aria-labelledby="sources-heading" className="space-y-4 rounded-md border border-navy-soft/20 bg-warm p-5 text-sm sm:p-6"><h2 id="sources-heading" className="text-lg font-bold">Nguồn nội dung</h2>{test.sources.map(source => <div key={source.id} className="max-w-prose space-y-2"><h3 className="font-semibold">{source.name}</h3><p>{source.attribution}</p><p>Giấy phép: Nội dung mẫu nguyên bản, không dùng cho sản phẩm chính thức.</p></div>)}</section>
+ <p>Luyện tiếng Anh lớp {grade}, kỹ năng {SKILL_NAMES[skill].toLowerCase()}, chủ đề {topic.name}: {test.questions.length} câu hỏi. Chọn đáp án, bấm “Kiểm tra” để xem giải thích từng câu, rồi “Nộp bài” để xem kết quả. Không giới hạn thời gian.</p>
+ <PreviousResult slug={test.slug}/>
+ <RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}>
+  <Quiz questions={quiz.questions.map(({ id, stem, options, correctKey, explanation, passageId }) => ({ id, stem, options, correctKey, explanation, passageId }))} passages={quiz.passages} progressKey={test.slug} afterResult={<AdSlot slot="footer"/>}/>
+ </RandomQuiz>
+ <nav aria-label="Bài luyện liên quan" className="space-y-4"><h2 className="text-xl font-bold">Tiếp tục luyện tập</h2>
+ <ul className="grid gap-3 sm:grid-cols-2">{getTestsForTopic(grade,skill,topic.slug).filter(t => t.slug !== test.slug).map(t => {
+  const tests = getTestsForTopic(grade,skill,topic.slug); const index = tests.findIndex(t => t.slug === test.slug); const offset = tests.indexOf(t) - index;
+  return <li key={t.slug}><Link className="inline-flex min-h-11 items-center" href={`/${t.slug}`}>{offset === -1 ? "Đề trước: " : offset === 1 ? "Đề tiếp theo: " : ""}{t.title}</Link></li>;
+ })}</ul>
+ <Link className="mr-5 inline-flex min-h-11 items-center" href={topicPath(grade,skill,topic.slug)}>Về chủ đề {topic.name}</Link>
+ <Link className="inline-flex min-h-11 items-center" href={skillPath(grade,skill)}>Về kỹ năng {SKILL_NAMES[skill]}</Link></nav>
  </PageShell>;
 }

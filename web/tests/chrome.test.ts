@@ -35,6 +35,5 @@ it("renders footer navigation with only known public routes and all published sk
  }
  for (const href of ["/gioi-thieu", "/chinh-sach-bao-mat", "/lien-he"]) expect(links).toContain(href);
  expect(html).toContain(SITE.tagline);
- expect(html).toContain("Nội dung mẫu tự soạn, chưa phải tài liệu học tập chính thức");
  expect(html).toContain(`© ${new Date().getFullYear()} ${SITE.name}. Tên thương hiệu tạm thời.`);
 });

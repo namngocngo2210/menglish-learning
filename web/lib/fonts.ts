@@ -4,9 +4,7 @@ import localFont from "next/font/local";
 export const latinFont = localFont({
  src: [
   { path: "../fonts/be-vietnam-pro-latin-400-normal.woff2", weight: "400", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-latin-600-normal.woff2", weight: "600", style: "normal" },
   { path: "../fonts/be-vietnam-pro-latin-700-normal.woff2", weight: "700", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-latin-800-normal.woff2", weight: "800", style: "normal" },
  ],
  variable: "--font-be-latin",
  display: "swap",
@@ -18,11 +16,11 @@ export const latinFont = localFont({
 export const latinExtFont = localFont({
  src: [
   { path: "../fonts/be-vietnam-pro-latin-ext-400-normal.woff2", weight: "400", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-latin-ext-600-normal.woff2", weight: "600", style: "normal" },
   { path: "../fonts/be-vietnam-pro-latin-ext-700-normal.woff2", weight: "700", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-latin-ext-800-normal.woff2", weight: "800", style: "normal" },
  ],
  variable: "--font-be-latin-ext",
+ // Vietnamese and Latin subsets cover the site text; load extended glyphs on demand.
+ preload: false,
  display: "swap",
  // Keep fallback fonts after all three subsets in the combined CSS stack.
  adjustFontFallback: false,
@@ -32,9 +30,7 @@ export const latinExtFont = localFont({
 export const vietnameseFont = localFont({
  src: [
   { path: "../fonts/be-vietnam-pro-vietnamese-400-normal.woff2", weight: "400", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-vietnamese-600-normal.woff2", weight: "600", style: "normal" },
   { path: "../fonts/be-vietnam-pro-vietnamese-700-normal.woff2", weight: "700", style: "normal" },
-  { path: "../fonts/be-vietnam-pro-vietnamese-800-normal.woff2", weight: "800", style: "normal" },
  ],
  variable: "--font-be-vietnamese",
  display: "swap",

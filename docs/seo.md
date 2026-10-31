@@ -67,3 +67,17 @@ Lớp → kỹ năng → chủ đề → đề; mỗi đề liên kết đề tr
 | Best Practices | ≥ 95 |
 
 Chạy trên: trang chủ, trang lớp, trang chủ đề, trang đề.
+
+## Phase B implementation (2026-10-31)
+
+- Source attribution is centralized at `/nguon-du-lieu`, an indexable page with
+  source links, licenses, attribution and published question/passage counts by grade.
+  Test pages retain provenance in the bank without displaying it.
+- Entrance list/tests are static pages under `/thi-vao-lop-10`; all fixed tests
+  and credits appear in `getAllRoutes()` and the sitemap.
+- Random quizzes use in-page client state and lazy static `/pool/…` JSON;
+  they create no crawlable URL or sitemap entry.
+- Public AdSense environment variables and reserved-slot behavior are documented
+  in `web/README.md` and `web/.env.example`. The optional loader is lazy, configures
+  non-personalized requests first, and defaults child-directed treatment to ON.
+  Quiz ads mount only in submitted results, outside question/passage areas.
