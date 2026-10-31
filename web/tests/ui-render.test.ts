@@ -6,6 +6,8 @@ import { Breadcrumbs, LinkCardList, PageShell } from "@/components/ui-kit";
 import { GRADES, gradePath } from "@/lib/routes";
 import { SITE } from "@/lib/site-config";
 
+vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
+
 afterEach(() => vi.unstubAllEnvs());
 it("renders shared navigation and the accessible content destination without client JavaScript", () => {
  const html = renderToStaticMarkup(PageShell({title:"Bài luyện",children:"Nội dung"}));

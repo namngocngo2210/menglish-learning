@@ -4,7 +4,7 @@ import { useEffect, useReducer, useRef, type ReactNode } from "react";
 import { CheckCircle2, CircleHelp, RotateCcw, XCircle } from "lucide-react";
 import type { Passage, Question } from "@/lib/content/types";
 import { scoreTest, scoreOutOf10 } from "@/lib/scoring";
-import { PassageBlock } from "@/components/ui-kit";
+import { PassageBlock } from "@/components/ui-kit/PassageBlock";
 import { initialQuizState, quizReducer } from "./state";
 
 type QuizQuestion = Pick<Question, "id" | "stem" | "options" | "correctKey" | "explanation">;

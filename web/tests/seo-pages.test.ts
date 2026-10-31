@@ -5,6 +5,7 @@ import * as topicPage from "@/app/[grade]/[skill]/[topic]/page";
 import * as testPage from "@/app/[grade]/[skill]/[topic]/[test]/page";
 import { metadata as home } from "@/app/page";
 import { metadata as about } from "@/app/gioi-thieu/page";
+import { metadata as contact } from "@/app/lien-he/page";
 import { metadata as privacy } from "@/app/chinh-sach-bao-mat/page";
 import { absoluteUrl, getAllRoutes } from "@/lib/seo";
 
@@ -15,7 +16,7 @@ it("matches static page params exactly and gives every route unique metadata", a
   ...topicPage.generateStaticParams().map(p => topicPage.generateMetadata({params:Promise.resolve(p)})),
   ...testPage.generateStaticParams().map(p => testPage.generateMetadata({params:Promise.resolve(p)})),
  ]);
- const metadata = [home, about, privacy, ...generated];
+ const metadata = [home, about, privacy, contact, ...generated];
  expect(metadata.map(m => m.alternates?.canonical).sort()).toEqual(getAllRoutes().map(r => absoluteUrl(r.path)).sort());
  expect(new Set(metadata.map(m=>m.title)).size).toBe(metadata.length);
  expect(new Set(metadata.map(m=>m.description)).size).toBe(metadata.length);

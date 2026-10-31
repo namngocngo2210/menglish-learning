@@ -8,7 +8,7 @@ describe("routes", () => {
  expect(r.topicPath(6,"ngu-phap","thi-hien-tai-don")).toBe("/lop-6/ngu-phap/thi-hien-tai-don");
  const path = r.testPath(6,"ngu-phap","thi-hien-tai-don","de-1");
  expect(path).toBe("/lop-6/ngu-phap/thi-hien-tai-don/de-1"); expect(r.parseTestSlug(path.slice(1))).toEqual({grade:6,skill:"ngu-phap",topic:"thi-hien-tai-don",test:"de-1"});
- expect(r.aboutPath()).toBe("/gioi-thieu"); expect(r.privacyPath()).toBe("/chinh-sach-bao-mat");
+ expect(r.contactPath()).toBe("/lien-he"); expect(r.aboutPath()).toBe("/gioi-thieu"); expect(r.privacyPath()).toBe("/chinh-sach-bao-mat");
  expect(r.parseTestSlug("lop-6/no/topic/de-1")).toBeNull(); expect(r.parseSkill("viet-cau")).toBe("viet-cau"); expect(r.isSlug("../x")).toBe(false);
  expect(() => r.topicPath(6,"ngu-phap","../x")).toThrow();
  });

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
 import { getGrades, getSkills, getTopics, getTestsForTopic } from "@/lib/content/load";
-import { gradePath, skillPath, topicPath, aboutPath, privacyPath } from "@/lib/routes";
+import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath } from "@/lib/routes";
 
 export function absoluteUrl(path: string): string {
  if (!path.startsWith("/")) throw new Error("SEO paths must start with /");
@@ -37,7 +37,7 @@ export function getAllRoutes(): PublicRoute[] {
    }
   }
  }
- routes.push(...[aboutPath(), privacyPath()].map(path => ({ path, changeFrequency: "yearly" as const, priority: 0.3 })));
+ routes.push(...[aboutPath(), privacyPath(), contactPath()].map(path => ({ path, changeFrequency: "yearly" as const, priority: 0.3 })));
  return routes;
 }
 
