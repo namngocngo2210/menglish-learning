@@ -2,7 +2,7 @@
 
 `index.tsx` exposes server-compatible, typed components. Existing exports and props remain supported:
 
-- `PageShell({ title, children, hero? })`: skip link, static wrapping grade navigation, a single `SITE.wordmark` brand, main landmark, title band and footer. An optional server-rendered hero replaces the title band and must provide the page H1.
+- `PageShell({ title, children, hero? })`: skip link, shared responsive grade navigation, a single `SITE.wordmark` brand, main landmark, title band and footer. `PageShell` imports server-only footer content; client components must import `PassageBlock` directly from `./PassageBlock`, not this barrel. An optional server-rendered hero replaces the title band and must provide the page H1.
 - `Breadcrumbs({ items })`: chevron separators, safe truncation, current-page semantics on the last item.
 - `LinkCardList({ items, emptyMessage? })`: responsive linked cards with optional description and skill icon. `SKILL_DESCRIPTIONS` provides Vietnamese skill descriptions.
 - `PassageBlock({ passage })`: readable English passage, word count and sample-content note.

@@ -16,6 +16,7 @@ export const gradePath = (grade: Grade) => `/${gradeSlug(grade)}`;
 export function skillPath(grade: Grade, skill: Skill): string { if (!parseSkill(skill)) throw new Error("Invalid skill"); return `${gradePath(grade)}/${skill}`; }
 export const topicPath = (grade: Grade, skill: Skill, topic: string) => `${skillPath(grade, skill)}/${segment(topic)}`;
 export const testPath = (grade: Grade, skill: Skill, topic: string, test: string) => `${topicPath(grade, skill, topic)}/${segment(test)}`;
+export const contactPath = () => "/lien-he";
 export const aboutPath = () => "/gioi-thieu";
 export const privacyPath = () => "/chinh-sach-bao-mat";
 export function parseTestSlug(slug: string): { grade: Grade; skill: Skill; topic: string; test: string } | null {

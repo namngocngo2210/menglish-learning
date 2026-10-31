@@ -27,3 +27,9 @@ Every public page has Vietnamese metadata, a canonical URL, Open Graph and Twitt
 `/sitemap.xml` includes all public content routes and test publication dates. `/robots.txt` allows crawling and links to the sitemap by default. Both are generated statically during build.
 
 Set `NEXT_PUBLIC_SITE_URL` to the production origin for absolute canonical, social, sitemap and JSON-LD URLs. `SEO_NOINDEX=true` is the only beta-only noindex switch: it disables metadata indexing and crawling and removes the sitemap reference from robots. Unset means indexable; it must stay unset in production. Rebuild after changing these environment variables.
+
+### Placeholder icons
+
+`app/icon.svg` is the source for the navy/orange open-book placeholder mark (also used inline in `components/chrome/BrandMark.tsx`; keep them in sync). Regenerate the PNGs and multi-size PNG-in-ICO favicon from `web/` with `node scripts/generate-icons.mjs`. This uses `sharp`, already supplied by Next.js, with no additional dependency. The Apple icon is opaque; the 192/512 icons have maskable-safe padding.
+
+Next.js metadata file conventions expose `app/manifest.ts` at `/manifest.webmanifest` and automatically link the favicon, SVG, Apple icon and manifest. Manifest names come from `SITE`; these assets do not establish a final brand.
