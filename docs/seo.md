@@ -89,3 +89,14 @@ Chạy trên: trang chủ, trang lớp, trang chủ đề, trang đề.
 - Trang chủ đề có kiến thức, ví dụ, số câu và liên kết cùng kỹ năng hoặc cùng chủ đề ở lớp khác. Tổng hợp luôn đứng cuối và vẫn lấy toàn bộ câu của kỹ năng.
 - `web/content/legacy-redirects.json` được sinh từ danh sách đường dẫn cũ; Next.js đọc để chuyển hướng vĩnh viễn sang Tổng hợp cùng lớp/kỹ năng. Không đưa đường dẫn đã bỏ vào sitemap.
 - Số liệu, luật và tỷ lệ chưa phân loại: [Báo cáo chủ đề](topic-classification.md), sinh cùng `npm run build:tests`.
+
+## SEO content hardening
+
+- Tiêu đề trang lớp/kỹ năng/chủ đề/đề dùng `fitTitle`/`TITLE_MAX` để `<tiêu đề> | BeeJunior` ≤ 60 ký tự; mô tả chứa số liệu thật (số câu, đề, chủ đề) nên duy nhất theo trang.
+- Mọi trang có `hreflang="vi"` (cùng canonical) qua `buildMetadata`.
+- Trang lớp và kỹ năng có đoạn giới thiệu viết tay (`lib/seo-content.ts`), số liệu tính từ nội dung, danh sách chủ đề nổi bật.
+- Lớp, kỹ năng, chủ đề có mục “Câu hỏi thường gặp” hiển thị trên trang; `FAQPage` JSON-LD sinh từ cùng một mảng (`components/faq-section.tsx`) nên khớp nội dung hiển thị.
+- Sitemap: mọi URL có `lastmod` (trang trung tâm = ngày xuất bản đề mới nhất bên dưới; trang tĩnh = `STATIC_PAGES_LASTMOD`).
+- `robots.txt` chặn `/api/` và `/pool/`; trang 404 có liên kết về trang chủ, các lớp, thi vào lớp 10.
+- Test `web/tests/structured-data.test.ts` kiểm tra JSON-LD, độ dài/duy nhất metadata, hreflang, lastmod và không có `noindex`.
+- Hướng dẫn Search Console cho chủ site: [seo-launch.md](seo-launch.md).

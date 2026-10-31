@@ -1,11 +1,13 @@
 import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
-import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { fitTitle, buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, LinkCardList } from "@/components/ui-kit";
 import { getGrades, getSkills, getTopics, getTestsForTopic, loadBundle } from "@/lib/content/load";
 import { topicPath, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES } from "@/lib/routes";
+import { FaqSection } from "@/components/faq-section";
+import { buildTopicFaq } from "@/lib/seo-content";
 import { getTopicDef } from "@/lib/topics/registry";
 export const dynamicParams = false;
 export const revalidate = 3600;
@@ -14,7 +16,7 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
- return buildMetadata({ title: `${topic.name} lớp ${grade}`, description: topic.description, path: topicPath(grade, skill, topic.slug) });
+ return buildMetadata({ title: fitTitle(`${topic.name} lớp ${grade}`, ": bài tập có đáp án", ": bài tập"), description: `${getTopicDef(skill, topic.slug)?.summary ?? topic.description} Bài tập ${SKILL_NAMES[skill].toLowerCase()} lớp ${grade} có đáp án và giải thích.`, path: topicPath(grade, skill, topic.slug) });
 }
 export default async function TopicPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
@@ -33,5 +35,5 @@ export default async function TopicPage({ params }: { params: Promise<{ grade: s
  <LinkCardList emptyMessage="Chưa có chủ đề khác cho lớp này." items={getTopics(grade, skill).filter(t => t.slug !== topic.slug).map(t => ({ label: t.name, description: t.description, href: topicPath(grade, skill, t.slug) }))}/></section>
  {otherGrades.length > 0 && <section className="space-y-4"><h2 className="text-xl font-bold">Chủ đề này ở lớp khác</h2>
  <LinkCardList items={otherGrades.map(t => ({ label: `${t.name} lớp ${t.grade}`, description: t.description, href: topicPath(t.grade, skill, t.slug) }))}/></section>}
- <AdSlot slot="footer"/></PageShell>;
+ <FaqSection items={buildTopicFaq(grade, skill, topic.slug, topic.name, questionCount, tests.length)}/><AdSlot slot="footer"/></PageShell>;
 }
