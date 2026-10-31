@@ -21,3 +21,12 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--color-primary)
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Shared keyboard treatment includes native quiz controls and buttons. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+:where([id]) { scroll-margin-top: 1.5rem; }
+button:not(:disabled), label:has(input:not(:disabled)) { cursor: pointer; }
+button:disabled { cursor: not-allowed; }

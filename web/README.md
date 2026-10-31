@@ -16,6 +16,14 @@ npm start
 
 `app/globals.css` defines orange/navy tokens: brand is decorative only, cta supports white button text, primary is for accent text, navy/navy-soft for text and structure, surface/warm/warm-2 for backgrounds. No default shadcn gray theme is loaded. Be Vietnam Pro is bundled locally in three unicode-range subsets and four weights through `next/font/local`; no font CDN is used.
 
-The later UI task restyles [typed UI slots](components/ui-kit/README.md) and installs real upstream shadcn primitives into `components/ui/`. Pages keep content/routing responsibilities. The future importer writes quarantine through a host-controlled sink and requires separate owner review to publish. No crawler, admin, API, interactive quiz, or full SEO is implemented. Answers intentionally remain in server HTML for this static sample.
+The later UI task restyles [typed UI slots](components/ui-kit/README.md) and installs real upstream shadcn primitives into `components/ui/`. Pages keep content/routing responsibilities. The future importer writes quarantine through a host-controlled sink and requires separate owner review to publish. No crawler, admin, API, interactive quiz, is implemented. Answers intentionally remain in server HTML for this static sample.
 
 `SITE` in `lib/site-config.ts` is a placeholder brand. Set `NEXT_PUBLIC_SITE_URL` to override the default base URL. No deployment or Docker is needed for local verification.
+
+## SEO
+
+Every public page has Vietnamese metadata, a canonical URL, Open Graph and Twitter summary metadata, and breadcrumb JSON-LD. The home page also describes the website; test pages describe a free Vietnamese learning quiz. FAQ JSON-LD is available only for future visible FAQ content. JSON-LD serialization escapes script delimiters.
+
+`/sitemap.xml` includes all public content routes and test publication dates. `/robots.txt` allows crawling and links to the sitemap by default. Both are generated statically during build.
+
+Set `NEXT_PUBLIC_SITE_URL` to the production origin for absolute canonical, social, sitemap and JSON-LD URLs. `SEO_NOINDEX=true` is the only beta-only noindex switch: it disables metadata indexing and crawling and removes the sitemap reference from robots. Unset means indexable; it must stay unset in production. Rebuild after changing these environment variables.
