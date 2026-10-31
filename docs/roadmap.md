@@ -4,7 +4,7 @@ Chú thích: **[Thiết kế]** = đã có tài liệu/bản xem trước, chưa
 
 ## Giai đoạn 0 — Thiết kế giao diện (PR #2)
 
-1. **[Thiết kế] Hướng thị giác cam/navy** (họ màu MEnglish, Be Vietnam Pro) thay bản xanh da trời; 4 ảnh PNG tĩnh (home, admin × 1440/390). **Chờ chủ duyệt thẩm mỹ**; tên/logo chưa quyết định. Xem [ui-design.md](ui-design.md).
+1. **Thương hiệu BeeJunior:** vàng/xanh da trời/mực, Be Vietnam Pro cục bộ, logo và mascot đã có. Website theo [brand.md](brand.md); bản xem trước cũ giữ làm lịch sử trong [ui-design.md](ui-design.md).
 2. **[Chưa làm] Hoàn thiện các màn còn lại** sau khi chủ duyệt hướng.
 3. Toolchain UI: Next.js + Tailwind + shadcn/ui + Lucide; giao diện do Claude thiết kế, Codex hiện thực.
 

@@ -1,6 +1,6 @@
-# menglish-learning
+# BeeJunior
 
-Website luyện tiếng Anh cho học sinh lớp 6–9: trắc nghiệm đọc + viết theo lớp, chủ đề và luyện thi vào lớp 10. Miễn phí, chuẩn SEO.
+BeeJunior — website luyện tiếng Anh cho học sinh lớp 6–9: trắc nghiệm đọc + viết theo lớp, chủ đề và luyện thi vào lớp 10. Miễn phí, chuẩn SEO.
 
 **Stack (thiết kế)**: Next.js + Tailwind CSS + shadcn/ui + Lucide (FE) · Go + Gin (BE) · PostgreSQL · Redis · Docker.
 
@@ -13,9 +13,10 @@ Website luyện tiếng Anh cho học sinh lớp 6–9: trắc nghiệm đọc +
 - [Nguồn nội dung và crawler](docs/content-sources.md)
 - [SEO](docs/seo.md)
 - [Bảo mật và rate limit](docs/security.md)
-- [Thiết kế giao diện (cam/navy, toolchain, admin)](docs/ui-design.md)
+- [Thương hiệu, tài sản và bảng màu](docs/brand.md)
+- [Thiết kế giao diện BeeJunior (toolchain, admin)](docs/ui-design.md)
 - [Lộ trình](docs/roadmap.md)
 
 ## Trạng thái
 
-Đang ở bước **thiết kế**; chưa có website, backend, cơ sở dữ liệu hay admin thật. Hướng giao diện hiện tại là họ màu cam/navy (thay bản xanh da trời), đang chờ chủ duyệt thẩm mỹ; tên/logo thương hiệu chưa quyết định. Mã trong `docs/previews/` chỉ là fixture thiết kế/lịch sử, không phải sản phẩm.
+Website Next.js nằm trong `web/`, mang thương hiệu **BeeJunior** với bảng màu vàng/xanh da trời/mực, logo và mascot theo [đặc tả thương hiệu](docs/brand.md). Mã trong `docs/previews/` chỉ là fixture thiết kế/lịch sử, không phải sản phẩm.
