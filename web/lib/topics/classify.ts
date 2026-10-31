@@ -62,15 +62,21 @@ function vocabulary(q: ClassifyInput, passage?: { title: string; body: string })
  const correct = q.options.find(o => o.key === q.correctKey)?.text ?? "";
  const scores = TOPIC_REGISTRY["tu-vung"].map((topic, order) => {
   const lexicon = VOCAB_LEXICON[topic.slug];
-  const own = lexicalScore(q.stem, lexicon) + lexicalScore(q.options.map(o => o.text).join(" "), lexicon) + 3 * lexicalScore(correct, lexicon);
-  // Body evidence is distinct by lexicon entry and capped so long articles cannot swamp the question.
-  const context = passage ? 3 * Math.min(4, lexicalScore(passage.title, lexicon)) + Math.min(8, lexicalScore(passage.body, lexicon)) : 0;
-  return { topic: topic.slug, own, score: own + context, order };
+  // Distractor options are never evidence: only the stem and the correct answer, counted as distinct strong keywords.
+  const own = lexicalScore(`${q.stem} ${correct}`, lexicon);
+  const inAnswer = lexicalScore(correct, lexicon);
+  // Passage evidence is a category cue only: distinct keywords, capped, and it can never decide alone.
+  const context = passage ? Math.min(4, lexicalScore(passage.title, lexicon)) + Math.min(6, lexicalScore(passage.body, lexicon)) : 0;
+  return { topic: topic.slug, own, inAnswer, context, score: own * 10 + context, order };
  }).sort((a, b) => b.score - a.score || a.order - b.order);
  const [best, runnerUp] = scores;
- // The item's own words must carry the topic; passage context only reinforces, never decides alone.
- if (best.own < 1 || best.score < 5 || (best.own < 2 && best.score < 9) || best.score - runnerUp.score < 2 || best.own < runnerUp.own) return none("vocab-insufficient-evidence");
- return result(best.topic, "vocab-lexicon");
+ // Accept only with >= 2 distinct strong keywords from stem + correct answer and a clear margin over the runner-up,
+ // or one strong keyword that IS the correct answer plus a passage category cue (>= 4 distinct passage keywords).
+ // The tested word itself (the correct answer) must be a topic keyword: topic nouns in a stem around a generic verb are not topic vocabulary.
+ const strong = best.inAnswer >= 1 && best.own >= 2 && best.own - runnerUp.own >= 1;
+ const cued = best.own === 1 && best.inAnswer === 1 && runnerUp.own === 0 && best.context >= 4 && best.context - runnerUp.context >= 2;
+ if (!strong && !cued) return none("vocab-insufficient-evidence");
+ return result(best.topic, strong ? "vocab-lexicon" : "vocab-lexicon-cue");
 }
 /** Ordered first-match rules; crawler topicSlug is deliberately never consulted. */
 export function classifyQuestion(q: ClassifyInput, passage?: { title: string; body: string }): Classification {

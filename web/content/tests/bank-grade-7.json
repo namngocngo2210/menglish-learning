@@ -60,37 +60,9 @@
     {
       "grade": 7,
       "skill": "tu-vung",
-      "slug": "cong-viec",
-      "name": "Công việc và kinh doanh",
-      "description": "Làm quen với nghề nghiệp, nơi làm việc, tiền bạc và hoạt động mua bán. Lớp 7."
-    },
-    {
-      "grade": 7,
-      "skill": "tu-vung",
-      "slug": "dong-vat",
-      "name": "Động vật",
-      "description": "Nhận biết từ về thú nuôi, động vật hoang dã, đặc điểm và môi trường sống. Lớp 7."
-    },
-    {
-      "grade": 7,
-      "skill": "tu-vung",
-      "slug": "moi-truong",
-      "name": "Môi trường và thiên nhiên",
-      "description": "Tìm hiểu từ về thiên nhiên, thời tiết, tài nguyên và bảo vệ môi trường. Lớp 7."
-    },
-    {
-      "grade": 7,
-      "skill": "tu-vung",
       "slug": "tong-hop",
       "name": "Tổng hợp Từ vựng",
       "description": "Bài luyện từ vựng tổng hợp lớp 7."
-    },
-    {
-      "grade": 7,
-      "skill": "tu-vung",
-      "slug": "truong-hoc",
-      "name": "Trường học và giáo dục",
-      "description": "Mở rộng vốn từ về lớp học, môn học, dụng cụ và hoạt động học tập. Lớp 7."
     },
     {
       "grade": 7,
@@ -113,7 +85,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Learning when to use certain ___ can be a long, difficult process.",
       "options": [
@@ -496,7 +468,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Their life among the poorest people provided the subject matter for many of the ___ she later wrote.",
       "options": [
@@ -1185,7 +1157,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Yellowstone is on a high plateau with an average height of 2,400 ___ above sea level.",
       "options": [
@@ -1993,7 +1965,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Margaret Smither-Kopperl is a botanist, a scientist who studies ___.",
       "options": [
@@ -2609,7 +2581,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Orville made successful ___ in the United States at the time Wilbur was in France.",
       "options": [
@@ -2647,7 +2619,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "If you are a teacher, the easiest ___ is probably in a classroom or another room in the school building.",
       "options": [
@@ -3034,7 +3006,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Most of those ___ are now covered with plants and young trees.",
       "options": [
@@ -3916,7 +3888,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "At first, she ___ organizations raise money for research.",
       "options": [
@@ -4298,7 +4270,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The Yellowstone River runs through it and drops 93 ___ in the Lower Falls.",
       "options": [
@@ -4375,7 +4347,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "A reporter ___ Edison in 1917 which of his many inventions he enjoyed the most.",
       "options": [
@@ -5219,7 +5191,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "She uses word maps in the classroom only after she has already ___ a subject and shown pictures.",
       "options": [
@@ -5716,7 +5688,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "And in 1963, The Mary Kay Cosmetics company ___ operating in Dallas, Texas.",
       "options": [
@@ -6713,7 +6685,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Let's study these ___ in greater detail.",
       "options": [
@@ -7903,7 +7875,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Club members ___ straight from school or work will also have a chance to eat or drink something.",
       "options": [
@@ -8401,7 +8373,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "So, in a way, every rocket that flies today could be ___ a Goddard rocket.",
       "options": [
@@ -8785,7 +8757,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "am-thuc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "There are many food ___ for hungry visitors.",
       "options": [
@@ -8899,7 +8871,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "These pollinators ___ material from one plant to another.",
       "options": [
@@ -10968,7 +10940,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Prizes for high sales marks included special paid ___ and jewelry.",
       "options": [
@@ -11083,7 +11055,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The top of each wave was a hill, from which the men could see, for a brief period, a wide area of ___ sea.",
       "options": [
@@ -11813,7 +11785,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "For example, Baltimore, Maryland is an East Coast ___ even though it is several kilometers from the Atlantic Ocean.",
       "options": [
@@ -12042,7 +12014,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "And, if the members of your club are mostly students, it can help them ___ teamwork and leadership skills.",
       "options": [
@@ -12234,7 +12206,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "He had to invent the job of ___ president for all future presidents.",
       "options": [
@@ -12311,7 +12283,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "It ___ to have sales offices and representatives in many different countries.",
       "options": [
@@ -14767,7 +14739,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "A training regimen, for example, can include ___ people can do to help them get the results they want.",
       "options": [
@@ -14805,7 +14777,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "In summer of 1988, forest fires burned large ___ of the park.",
       "options": [
@@ -15875,7 +15847,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "For example, a doctor might tell a patient to ___ a certain medicine two times a day for two weeks.",
       "options": [
@@ -15913,7 +15885,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "They also let ___ practice English in more real-life situations.",
       "options": [
@@ -17758,7 +17730,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "He gave ___ flights at heights of 90 meters.",
       "options": [
@@ -18141,7 +18113,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Recently, our readers and listeners wrote many lovely messages about their ___.",
       "options": [
@@ -18217,7 +18189,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "It sits on top of an ancient super volcano, ___ as the Yellowstone Caldera.",
       "options": [
@@ -19060,7 +19032,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Today, on Everyday Grammar, we will learn to describe our ___.",
       "options": [
@@ -19482,7 +19454,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In that report, Goddard also suggested the ___ of a rocket someday reaching the moon.",
       "options": [
@@ -20054,7 +20026,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "By 1965, the company was ___ almost one million dollars in products.",
       "options": [
@@ -21744,7 +21716,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Club ___ is one of the most important parts of starting an English club.",
       "options": [
@@ -22283,7 +22255,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "When we want to say how old we are, we can use the present or future verb tenses depending on when our ___ are.",
       "options": [
@@ -22551,7 +22523,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The two women also urge farmers to put plants that bees like in ___ where crops are not planted.",
       "options": [
@@ -22932,7 +22904,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "By the autumn of 1903, Wilbur and Orville had designed and ___ an airplane powered by a gasoline engine.",
       "options": [
@@ -23581,7 +23553,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "There are many reasons why English clubs can help learners of all ___ and levels improve their English.",
       "options": [
@@ -24120,7 +24092,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "On clear days, the bridge provides excellent views of San Francisco, ships down below and ___ all around.",
       "options": [
@@ -24311,7 +24283,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The next year, he successfully ___ the world's first liquid-fuel rocket.",
       "options": [
@@ -24691,7 +24663,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In today’s Education Tips, we discuss how English ___ can be helpful to your language-learning process.",
       "options": [
@@ -25613,7 +25585,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The United States War Department ___ to buy a Wright brothers' plane.",
       "options": [
@@ -25689,7 +25661,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "That means every individual is trying to ___ their own sales records.",
       "options": [
@@ -26570,7 +26542,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "You will ___ to recognize this pattern, and you will learn how you can use it in your own writing.",
       "options": [
@@ -27531,7 +27503,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Some data also came from exploring vehicles, ___ rovers, operating on Mars.",
       "options": [
@@ -27873,7 +27845,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "She says farmers provide the bees with food that does not give them what they need when crops are not ___.",
       "options": [
@@ -28794,7 +28766,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "To improve your speaking skills, you need to be ___ to practice with other English learners or English speakers.",
       "options": [
@@ -28832,7 +28804,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Mary Kay ___ to grow sales based on the idea that it is best to compete against yourself.",
       "options": [
@@ -29102,7 +29074,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "A ___ I could not stop filled my body, and fear without reason caught my heart.",
       "options": [
@@ -29178,7 +29150,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "And the white foam on the waves looked like ___ snow.",
       "options": [
@@ -30637,7 +30609,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "A French company ___ to begin making the Wright brothers' flying machine.",
       "options": [
@@ -31135,7 +31107,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Some ___ bloom in a very noticeable way but that is not the case with grass.",
       "options": [
@@ -32665,7 +32637,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In 1938, Buck became the first American woman to be ___ the Nobel Prize in Literature.",
       "options": [
@@ -32817,7 +32789,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Many learners find them more fun than usual English ___.",
       "options": [
@@ -33546,7 +33518,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Academic writers often use the noun + a that clause structure to ___ certainty.",
       "options": [
@@ -34004,7 +33976,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She says honeybees raised by farmers also face ___.",
       "options": [
@@ -34806,7 +34778,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Today rocket launches and space ___ are common.",
       "options": [
@@ -35766,7 +35738,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "On December 14, 1799, he ___ in his bed, surrounded by his wife, enslaved maids, and friends.",
       "options": [
@@ -35919,7 +35891,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In 2024, park officials estimated the bison population to be about 4,500 ___.",
       "options": [
@@ -36072,7 +36044,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "He was a ___ worker who studied agriculture.",
       "options": [
@@ -36879,7 +36851,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "She also wrote short stories, poetry, plays, essays, and children’s ___.",
       "options": [
@@ -36917,7 +36889,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "They say that using a language in ___ situations is very important for learners.",
       "options": [
@@ -37874,7 +37846,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "He ___ a telegraph machine and, at the age of 16, he went to work as a telegraph operator.",
       "options": [
@@ -38795,7 +38767,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Mary Kay Cosmetics is an ___ company that sells beauty products.",
       "options": [
@@ -39297,7 +39269,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The coast of California ___ over 1,300 kilometers.",
       "options": [
@@ -40605,7 +40577,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The cook said the men were lucky because the wind was ___ toward the shore.",
       "options": [
@@ -41064,7 +41036,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "They returned to Dayton where they continued to improve their ___.",
       "options": [
@@ -41179,7 +41151,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "They proved that flight without the aid of gas-___ balloons was possible.",
       "options": [
@@ -41217,7 +41189,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "But most people remember Pearl Buck for her ___ about China.",
       "options": [
@@ -41601,7 +41573,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "One night, Mary Kay was ___ products at the home of Ova Heath Spoonemore.",
       "options": [
@@ -41639,7 +41611,7 @@
       "type": "mcq",
       "grade": 7,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Yellowstone is home to the largest group of wild ___ in the lower 48 United States.",
       "options": [
@@ -44639,122 +44611,6 @@
       "publishedAt": "2026-10-31T00:00:00.000Z"
     },
     {
-      "slug": "lop-7/tu-vung/cong-viec/de-1",
-      "grade": 7,
-      "skill": "tu-vung",
-      "topicSlug": "cong-viec",
-      "kind": "topic",
-      "title": "Công việc và kinh doanh - Đề 1",
-      "seed": "7/tu-vung/cong-viec/de-1",
-      "questionIds": [
-        "voa-149ffa1f",
-        "voa-1e5280a8",
-        "voa-ad9d25cf",
-        "voa-ff91d182",
-        "voa-05a31ce5",
-        "voa-eed3a46b",
-        "voa-9c157d4c",
-        "voa-46908e26",
-        "voa-6a40771b",
-        "voa-75ef267b",
-        "voa-3e76651d"
-      ],
-      "optionOrder": {
-        "voa-149ffa1f": "DBAC",
-        "voa-1e5280a8": "CDBA",
-        "voa-ad9d25cf": "CDBA",
-        "voa-ff91d182": "ACDB",
-        "voa-05a31ce5": "CADB",
-        "voa-eed3a46b": "BCAD",
-        "voa-9c157d4c": "ABCD",
-        "voa-46908e26": "CADB",
-        "voa-6a40771b": "CBDA",
-        "voa-75ef267b": "BDAC",
-        "voa-3e76651d": "BACD"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-7/tu-vung/dong-vat/de-1",
-      "grade": 7,
-      "skill": "tu-vung",
-      "topicSlug": "dong-vat",
-      "kind": "topic",
-      "title": "Động vật - Đề 1",
-      "seed": "7/tu-vung/dong-vat/de-1",
-      "questionIds": [
-        "voa-f7a73377",
-        "voa-4610098e",
-        "voa-a7bfe1a0",
-        "voa-ce6ae179",
-        "voa-877f7e5b",
-        "voa-2ac315ac",
-        "voa-96004c5e",
-        "voa-87fb718d",
-        "voa-915da900",
-        "voa-ffa2897c",
-        "voa-da348c3a",
-        "voa-31f107f8",
-        "voa-0aac0323",
-        "voa-16ac42e7"
-      ],
-      "optionOrder": {
-        "voa-f7a73377": "ABCD",
-        "voa-4610098e": "ABCD",
-        "voa-a7bfe1a0": "DCBA",
-        "voa-ce6ae179": "ABDC",
-        "voa-877f7e5b": "CBAD",
-        "voa-2ac315ac": "ABCD",
-        "voa-96004c5e": "DCAB",
-        "voa-87fb718d": "ABDC",
-        "voa-915da900": "BDAC",
-        "voa-ffa2897c": "BCAD",
-        "voa-da348c3a": "DABC",
-        "voa-31f107f8": "DCAB",
-        "voa-0aac0323": "DABC",
-        "voa-16ac42e7": "CADB"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-7/tu-vung/moi-truong/de-1",
-      "grade": 7,
-      "skill": "tu-vung",
-      "topicSlug": "moi-truong",
-      "kind": "topic",
-      "title": "Môi trường và thiên nhiên - Đề 1",
-      "seed": "7/tu-vung/moi-truong/de-1",
-      "questionIds": [
-        "voa-f1502d7b",
-        "voa-f7499278",
-        "voa-0f99ad1e",
-        "voa-05a6d89f",
-        "voa-578f739f",
-        "voa-1651340b",
-        "voa-bd92ff68",
-        "voa-af7981ad",
-        "voa-27f305bd",
-        "voa-6a3cb360",
-        "voa-3eacb282",
-        "voa-432a1269"
-      ],
-      "optionOrder": {
-        "voa-f1502d7b": "DACB",
-        "voa-f7499278": "CABD",
-        "voa-0f99ad1e": "DACB",
-        "voa-05a6d89f": "BCDA",
-        "voa-578f739f": "CADB",
-        "voa-1651340b": "BDCA",
-        "voa-bd92ff68": "BDAC",
-        "voa-af7981ad": "DCBA",
-        "voa-27f305bd": "ABCD",
-        "voa-6a3cb360": "ABDC",
-        "voa-3eacb282": "DACB",
-        "voa-432a1269": "CABD"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
       "slug": "lop-7/tu-vung/tong-hop/de-1",
       "grade": 7,
       "skill": "tu-vung",
@@ -46527,62 +46383,6 @@
         "voa-ec54c4ac": "DCAB",
         "voa-e345c7d4": "CBAD",
         "voa-2ac315ac": "BADC"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-7/tu-vung/truong-hoc/de-1",
-      "grade": 7,
-      "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
-      "kind": "topic",
-      "title": "Trường học và giáo dục - Đề 1",
-      "seed": "7/tu-vung/truong-hoc/de-1",
-      "questionIds": [
-        "voa-233ae8b5",
-        "voa-c7483fad",
-        "voa-e21c2341",
-        "voa-8c536401",
-        "voa-e17c2f6d",
-        "voa-02cc1cd6",
-        "voa-5e5733b4",
-        "voa-c61862d8",
-        "voa-44f12bbe",
-        "voa-a058cfc8",
-        "voa-dad0985a",
-        "voa-ad6f1da6",
-        "voa-1b39efc3",
-        "voa-81126a64",
-        "voa-97513e00",
-        "voa-cb433cd4",
-        "voa-00231ed2",
-        "voa-0da94c44",
-        "voa-48cfc797",
-        "voa-fd287222",
-        "voa-2a1b7168"
-      ],
-      "optionOrder": {
-        "voa-233ae8b5": "BCDA",
-        "voa-c7483fad": "DCBA",
-        "voa-e21c2341": "ABDC",
-        "voa-8c536401": "DBCA",
-        "voa-e17c2f6d": "CBAD",
-        "voa-02cc1cd6": "ABDC",
-        "voa-5e5733b4": "BADC",
-        "voa-c61862d8": "ADBC",
-        "voa-44f12bbe": "ADCB",
-        "voa-a058cfc8": "DACB",
-        "voa-dad0985a": "BACD",
-        "voa-ad6f1da6": "ACDB",
-        "voa-1b39efc3": "ADBC",
-        "voa-81126a64": "CBAD",
-        "voa-97513e00": "ADBC",
-        "voa-cb433cd4": "CADB",
-        "voa-00231ed2": "DBAC",
-        "voa-0da94c44": "BCAD",
-        "voa-48cfc797": "ABDC",
-        "voa-fd287222": "BDAC",
-        "voa-2a1b7168": "DCAB"
       },
       "publishedAt": "2026-10-31T00:00:00.000Z"
     },

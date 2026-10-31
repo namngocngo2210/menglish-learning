@@ -1,5 +1,5 @@
 /** Curated school-level vocabulary roots, matched only with common suffixes. */
-export const VOCAB_LEXICON: Record<string, readonly string[]> = {
+const RAW_LEXICON: Record<string, readonly string[]> = {
  "gia-dinh-ban-be": "family mother father parent sister brother cousin aunt uncle grandmother grandfather grandparent daughter son husband wife marry marriage wedding relative sibling friend friendship neighbour neighbor childhood baby toddler teenager niece nephew grandson granddaughter twin household widow bride groom reunion grandchild stepfather stepmother boyfriend girlfriend relationship orphan birthday togetherness".split(" "),
  "truong-hoc": "school classroom teacher teach student pupil study learn lesson subject homework library notebook timetable exam examination dictionary education educate college university campus scholarship textbook pencil ruler eraser blackboard whiteboard desk curriculum alphabet pronounce pronunciation spelling mathematics maths math geography biology chemistry physics literature graduate lecture tuition semester revise revision quiz essay worksheet academic comprehension".split(" "),
  "am-thuc": "food drink cook meal breakfast lunch dinner supper rice bread vegetable fruit milk soup boil bake oven ingredient kitchen recipe chef restaurant eat ate eaten taste tasty delicious meat beef pork chicken fish egg cheese butter flour sugar salt onion potato tomato carrot bean apple banana lemon cake cookie biscuit sandwich salad noodle pasta pizza juice coffee tea fry grill roast steam hungry thirst snack dessert spoon fork knife plate bowl pan pot stove dough yeast cucumber cereal wheat corn honey".split(" "),
@@ -11,3 +11,17 @@ export const VOCAB_LEXICON: Record<string, readonly string[]> = {
  "cong-viec": "job worker employee employer company office customer salary sell sold buy bought business money earn bill career profession professional occupation manager factory shop store supermarket bank banking accountant coin currency profit loss trading product industry industrial client consumer purchase sale discount budget economy economic finance financial income tax invest investment investor entrepreneur enterprise startup hire hiring staff wage deadline colleague secretary lawyer police firefighter farmer builder plumber electrician carpenter mechanic shopkeeper merchant cashier waiter waitress".split(" "),
  "dong-vat": "animal pet wildlife cat dog rabbit elephant tiger whale bird bee wing tail nest sheep mouse mice cow horse pig goat duck chicken hen rooster goose geese fish lion leopard cheetah bear wolf wolves fox deer monkey gorilla giraffe zebra hippo hippopotamus rhino rhinoceros dolphin shark seal turtle tortoise crocodile alligator snake frog lizard insect butterfly ant spider mosquito beetle feather fur paw claw beak hoof herd flock swarm cub kitten puppy calf hatch zoo zookeeper veterinarian mammal reptile amphibian predator prey endangered species eagle owl penguin parrot bat buffalo donkey camel kangaroo panda koala octopus crab lobster coral worm chirp meow hive honeybee pesticide mite nectar pollinator pollen colony pollination".split(" "),
 };
+
+/**
+ * Generic or polysemous words that occur in every kind of text. They never count as topic evidence even
+ * when a topic list above mentions them (e.g. "bought" in a sentence about a company or a trip).
+ */
+export const GENERIC_WORDS: ReadonlySet<string> = new Set((
+ "have has had go went gone good well like love want need make made take took give gave get got come came see saw know knew say said tell told think thought use used find found put keep kept let begin began start show call asked look feel bring brought turn become became work play run walk talk live life people thing time year day way part place point area side kind group number case fact change move help try " +
+ "learn study teach eat ate eaten drink buy bought sell sold money bill earn loss visit visitor arrive arrival depart departure holiday vacation season wind light mercury venus nature natural weather temperature energy machine device online research discover discovery treat treatment exercise physical mental stress match goal score team court pool pitch ball hobby music film movie birthday friend baby fish chicken wing tree flower garden plane speaker tablet charger charge app lab lecture quiz essay marry marriage wedding relative grandchild read write book page paper test class club office store shop product sale client staff hire tax profit income"
+).split(" "));
+
+/** Strong, topic-specific keywords only (the raw lists minus generic words). */
+export const VOCAB_LEXICON: Record<string, readonly string[]> = Object.fromEntries(
+ Object.entries(RAW_LEXICON).map(([slug, roots]) => [slug, roots.filter(root => !GENERIC_WORDS.has(root))]),
+);

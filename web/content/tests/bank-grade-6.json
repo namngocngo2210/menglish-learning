@@ -493,30 +493,9 @@
     {
       "grade": 6,
       "skill": "tu-vung",
-      "slug": "dong-vat",
-      "name": "Động vật",
-      "description": "Nhận biết từ về thú nuôi, động vật hoang dã, đặc điểm và môi trường sống. Lớp 6."
-    },
-    {
-      "grade": 6,
-      "skill": "tu-vung",
-      "slug": "moi-truong",
-      "name": "Môi trường và thiên nhiên",
-      "description": "Tìm hiểu từ về thiên nhiên, thời tiết, tài nguyên và bảo vệ môi trường. Lớp 6."
-    },
-    {
-      "grade": 6,
-      "skill": "tu-vung",
       "slug": "tong-hop",
       "name": "Tổng hợp Từ vựng",
       "description": "Bài luyện từ vựng tổng hợp lớp 6."
-    },
-    {
-      "grade": 6,
-      "skill": "tu-vung",
-      "slug": "truong-hoc",
-      "name": "Trường học và giáo dục",
-      "description": "Mở rộng vốn từ về lớp học, môn học, dụng cụ và hoạt động học tập. Lớp 6."
     },
     {
       "grade": 6,
@@ -615,7 +594,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Let’s look at two English ___.",
       "options": [
@@ -2301,7 +2280,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "But, we ___ this lesson to a close with the belief that you will succeed!",
       "options": [
@@ -2952,7 +2931,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "He learned from ___, and he experimented.",
       "options": [
@@ -2990,7 +2969,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "No one ___ me happy birthday, except my younger sister.",
       "options": [
@@ -4406,7 +4385,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "In health care, it is a systematic plan to ___ a person’s health.",
       "options": [
@@ -5364,7 +5343,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Mary Kay ___ for a job so she could support her children.",
       "options": [
@@ -5478,7 +5457,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She ___ the rights to Heath’s skin care products and started her own company.",
       "options": [
@@ -6166,7 +6145,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "From it he could see a large garden that had many plants and ___.",
       "options": [
@@ -9119,7 +9098,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Mary Kay tried the skin care products and ___ them.",
       "options": [
@@ -11536,7 +11515,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "About 4,000 wild bee species are ___ to North America.",
       "options": [
@@ -12838,7 +12817,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "It shows that the writer does not ___ the point to be a subject of debate.",
       "options": [
@@ -13296,7 +13275,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "English ___ often meet after school or work hours.",
       "options": [
@@ -13448,7 +13427,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Farmers became dependent on this bee ___.",
       "options": [
@@ -14708,7 +14687,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "You can also pass around a sign-up sheet in ___.",
       "options": [
@@ -14901,7 +14880,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She says that damages the health of the ___.",
       "options": [
@@ -15667,7 +15646,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The predicate shows what is ___ about the subject.",
       "options": [
@@ -15781,7 +15760,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "But you could also ___ to shore at a port with no beach in sight.",
       "options": [
@@ -16012,7 +15991,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Galvão says not every student will ___ through a word map.",
       "options": [
@@ -16892,7 +16871,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The new rule ___ to all employees in the company.",
       "options": [
@@ -17046,7 +17025,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Eagles, ___, and owls can see their prey from very far away.",
       "options": [
@@ -20145,7 +20124,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "This can ___ a learner’s desire to practice and learn on their own.",
       "options": [
@@ -21029,7 +21008,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Soon, they needed a place to test their ___ about flight.",
       "options": [
@@ -21106,7 +21085,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Second, it is important to ___ a location that is safe.",
       "options": [
@@ -21682,7 +21661,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "It ___ in the Atlantic Ocean, off the coast of Florida.",
       "options": [
@@ -22643,7 +22622,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "In my birthday no one ___ me except my younger sister.",
       "options": [
@@ -22758,7 +22737,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Her husband ___ her jewelry for her birthday.",
       "options": [
@@ -22951,7 +22930,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "gia-dinh-ban-be",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Some of you do not get to celebrate your ___.",
       "options": [
@@ -23103,7 +23082,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Do you ___ to spend time at the coast?",
       "options": [
@@ -23179,7 +23158,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "am-thuc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Now, to dish up something ___ to put food on a dish for someone to eat.",
       "options": [
@@ -23332,7 +23311,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "In ___, you will learn about the times you might not want to use it.",
       "options": [
@@ -23563,7 +23542,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She ___ selling different kinds of products.",
       "options": [
@@ -24757,7 +24736,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "These two plant substance ___ up 100 percent of a bee’s food.",
       "options": [
@@ -24834,7 +24813,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "And it can ___ their desire to learn.",
       "options": [
@@ -25101,7 +25080,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "English ___ are less formal than a classroom setting.",
       "options": [
@@ -25216,7 +25195,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "For example, you might swim to shore and ___ out of the water onto a beach.",
       "options": [
@@ -25254,7 +25233,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She ___ the country and its people very well.",
       "options": [
@@ -25445,7 +25424,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The caldera remains an ___ volcano.",
       "options": [
@@ -27016,7 +26995,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "tong-hop",
+      "topicSlug": "dong-vat",
       "difficulty": 1,
       "stem": "He could not forget how the little lizard and the ___ had died.",
       "options": [
@@ -27517,7 +27496,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She paid $500 for the ___ rights to the products.",
       "options": [
@@ -27940,7 +27919,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "It ___ in June of that year.",
       "options": [
@@ -28936,7 +28915,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Pearl’s education ___ at home.",
       "options": [
@@ -29012,7 +28991,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "A lake of hot liquid rock is about six kilometers under the ___.",
       "options": [
@@ -29892,7 +29871,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "It’s like watching grass ___.",
       "options": [
@@ -30314,7 +30293,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "She worked in her ___ until she suffered a stroke in 1996.",
       "options": [
@@ -31002,7 +30981,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The important ___ is that it has a subject and a predicate.",
       "options": [
@@ -31230,7 +31209,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "The plane had wings 12 ___ across.",
       "options": [
@@ -31841,7 +31820,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Their ___ must have shone in strange ways as they looked out at the sea.",
       "options": [
@@ -32723,7 +32702,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Many of Goddard’s ideas are still used in rocket ___.",
       "options": [
@@ -32799,7 +32778,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Experts say this lake is under huge ___ of pressure.",
       "options": [
@@ -32914,7 +32893,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "am-thuc",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "People from all over the country ___ to eat, drink and dance.",
       "options": [
@@ -33492,7 +33471,7 @@
       "type": "mcq",
       "grade": 6,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 1,
       "stem": "Bees play an important part in the growth of ___.",
       "options": [
@@ -37111,76 +37090,6 @@
       "publishedAt": "2026-10-31T00:00:00.000Z"
     },
     {
-      "slug": "lop-6/tu-vung/dong-vat/de-1",
-      "grade": 6,
-      "skill": "tu-vung",
-      "topicSlug": "dong-vat",
-      "kind": "topic",
-      "title": "Động vật - Đề 1",
-      "seed": "6/tu-vung/dong-vat/de-1",
-      "questionIds": [
-        "voa-ba62fdc5",
-        "voa-2582afc7",
-        "voa-e81292a5",
-        "voa-95f7a51e",
-        "voa-632c1dc2",
-        "voa-d10a89f4",
-        "voa-f773f3cf",
-        "voa-7e572029",
-        "voa-53d645b5",
-        "voa-6f947026"
-      ],
-      "optionOrder": {
-        "voa-ba62fdc5": "BACD",
-        "voa-2582afc7": "ABDC",
-        "voa-e81292a5": "CABD",
-        "voa-95f7a51e": "BCDA",
-        "voa-632c1dc2": "BCAD",
-        "voa-d10a89f4": "BDCA",
-        "voa-f773f3cf": "CDAB",
-        "voa-7e572029": "ADBC",
-        "voa-53d645b5": "DCBA",
-        "voa-6f947026": "DCAB"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-6/tu-vung/moi-truong/de-1",
-      "grade": 6,
-      "skill": "tu-vung",
-      "topicSlug": "moi-truong",
-      "kind": "topic",
-      "title": "Môi trường và thiên nhiên - Đề 1",
-      "seed": "6/tu-vung/moi-truong/de-1",
-      "questionIds": [
-        "voa-aee37849",
-        "voa-f13be0f5",
-        "voa-bdaf89f6",
-        "voa-db84f4af",
-        "voa-e8ef9baa",
-        "voa-8a3d694f",
-        "voa-7579dbf2",
-        "voa-bf539ee9",
-        "voa-279acba6",
-        "voa-d49ee9a6",
-        "voa-a3c76a37"
-      ],
-      "optionOrder": {
-        "voa-aee37849": "ABDC",
-        "voa-f13be0f5": "BDAC",
-        "voa-bdaf89f6": "CBDA",
-        "voa-db84f4af": "BADC",
-        "voa-e8ef9baa": "ADCB",
-        "voa-8a3d694f": "CBDA",
-        "voa-7579dbf2": "ACDB",
-        "voa-bf539ee9": "BDAC",
-        "voa-279acba6": "BDCA",
-        "voa-d49ee9a6": "DABC",
-        "voa-a3c76a37": "CABD"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
       "slug": "lop-6/tu-vung/tong-hop/de-1",
       "grade": 6,
       "skill": "tu-vung",
@@ -38735,56 +38644,6 @@
         "voa-3f295924": "BCAD",
         "voa-86220f71": "CDAB",
         "voa-0c5bf71c": "CADB"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-6/tu-vung/truong-hoc/de-1",
-      "grade": 6,
-      "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
-      "kind": "topic",
-      "title": "Trường học và giáo dục - Đề 1",
-      "seed": "6/tu-vung/truong-hoc/de-1",
-      "questionIds": [
-        "voa-e4aea8d7",
-        "voa-00945b6c",
-        "voa-a0906fe7",
-        "voa-74b01236",
-        "voa-0c377a3d",
-        "voa-1b6ea923",
-        "voa-219f67bb",
-        "voa-6da6176e",
-        "voa-718ae842",
-        "voa-62a642c0",
-        "voa-bd556f18",
-        "voa-bad164fd",
-        "voa-98b480de",
-        "voa-bdd846b3",
-        "voa-5e2d8ac3",
-        "voa-b06a545d",
-        "voa-d49cf9db",
-        "voa-7747fd07"
-      ],
-      "optionOrder": {
-        "voa-e4aea8d7": "CDAB",
-        "voa-00945b6c": "CBAD",
-        "voa-a0906fe7": "DABC",
-        "voa-74b01236": "CDAB",
-        "voa-0c377a3d": "CBAD",
-        "voa-1b6ea923": "ADCB",
-        "voa-219f67bb": "ACDB",
-        "voa-6da6176e": "ACBD",
-        "voa-718ae842": "BACD",
-        "voa-62a642c0": "CABD",
-        "voa-bd556f18": "DACB",
-        "voa-bad164fd": "ABCD",
-        "voa-98b480de": "BDCA",
-        "voa-bdd846b3": "DABC",
-        "voa-5e2d8ac3": "ABCD",
-        "voa-b06a545d": "DCAB",
-        "voa-d49cf9db": "ADCB",
-        "voa-7747fd07": "DCBA"
       },
       "publishedAt": "2026-10-31T00:00:00.000Z"
     },

@@ -47,30 +47,9 @@
     {
       "grade": 8,
       "skill": "tu-vung",
-      "slug": "cong-viec",
-      "name": "Công việc và kinh doanh",
-      "description": "Làm quen với nghề nghiệp, nơi làm việc, tiền bạc và hoạt động mua bán. Lớp 8."
-    },
-    {
-      "grade": 8,
-      "skill": "tu-vung",
-      "slug": "khoa-hoc-cong-nghe",
-      "name": "Khoa học và công nghệ",
-      "description": "Khám phá vốn từ về máy tính, mạng, phát minh và nghiên cứu khoa học. Lớp 8."
-    },
-    {
-      "grade": 8,
-      "skill": "tu-vung",
       "slug": "tong-hop",
       "name": "Tổng hợp Từ vựng",
       "description": "Bài luyện từ vựng tổng hợp lớp 8."
-    },
-    {
-      "grade": 8,
-      "skill": "tu-vung",
-      "slug": "truong-hoc",
-      "name": "Trường học và giáo dục",
-      "description": "Mở rộng vốn từ về lớp học, môn học, dụng cụ và hoạt động học tập. Lớp 8."
     }
   ],
   "questions": [
@@ -117,7 +96,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In 1910, Pearl went back to the United States to ___ philosophy at Randolph-Macon Woman’s College in Lynchburg, Virginia.",
       "options": [
@@ -309,7 +288,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Bonnie Norton and Ernst Von Glasersfeld are learning theory ___.",
       "options": [
@@ -923,7 +902,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "She expressed her opinions on war, politics, religion, ___ rights for all people and many other subjects.",
       "options": [
@@ -1075,7 +1054,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Mary Kay Cosmetics ___ one of the most successful direct sellers of skin care products in America.",
       "options": [
@@ -1654,7 +1633,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "If you are a teacher creating the club for your students, then the easiest way is to put up signs in classrooms ___ the club’s first meeting.",
       "options": [
@@ -1730,7 +1709,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "There are more ___ and hot springs in Yellowstone than any other place on Earth.",
       "options": [
@@ -1844,7 +1823,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Her mother taught her many of the things she would ___ learned in an American school.",
       "options": [
@@ -2305,7 +2284,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "In 2001, the company and foundation ___ their goals to help prevent violence against women.",
       "options": [
@@ -2613,7 +2592,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The most important reason is that they offer learners a chance to practice English by ___ speaking it.",
       "options": [
@@ -2766,7 +2745,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "It stood firm during a ___ storm, Hurricane Sandy, which struck the East Coast in October of 2012.",
       "options": [
@@ -3498,7 +3477,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "tong-hop",
+      "topicSlug": "dong-vat",
       "difficulty": 2,
       "stem": "He walked carefully among the plants, as if he were walking among wild ___ or poisonous snakes.",
       "options": [
@@ -3614,7 +3593,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "My exercise regimen ___ of strength training two days a week and running or walking most other days.",
       "options": [
@@ -3652,7 +3631,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "People worldwide have had easier and more ___ lives because of his inventions.",
       "options": [
@@ -3883,7 +3862,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The researchers noted that scientists have long wondered about the exact substance that ___ Mars – which is also known as the Red Planet – its deep red color.",
       "options": [
@@ -3999,7 +3978,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "It weighed about 340 kilograms, ___ the pilot.",
       "options": [
@@ -4536,7 +4515,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "She suggests learners make ___ dictionaries with pictures from the internet, for example.",
       "options": [
@@ -5458,7 +5437,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Valantinas recognized his team was not the first to consider ferrihydrite as a possible reason for the ___ of Mars.",
       "options": [
@@ -5688,7 +5667,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "More than 50 years ago, most Americans who earned money sewing ___ in a factory were women.",
       "options": [
@@ -5765,7 +5744,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "One of the most ___ people in the field of rocket science was American Robert Goddard.",
       "options": [
@@ -6032,7 +6011,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "After surviving the rough seas, the statue ___ in New York in more than 200 wooden boxes.",
       "options": [
@@ -6146,7 +6125,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "He ___ his work with electricity, making improved telegraph machines, and he invented an electrical voting machine.",
       "options": [
@@ -6222,7 +6201,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "But some expressions and idioms used by English speakers still ___ older technologies.",
       "options": [
@@ -6336,7 +6315,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "These ___ the Mars Reconnaissance Orbiter, operated by the American space agency NASA.",
       "options": [
@@ -6452,7 +6431,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "This makes the weather very cold in winter, with January temperatures ___ between -18 degrees and -7 degrees Celsius.",
       "options": [
@@ -6680,7 +6659,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Later, she started the Mary Kay Ash Charitable Foundation, a nonprofit group that provides money to support research on cancers ___ women.",
       "options": [
@@ -6718,7 +6697,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Adomas Valantinas ___ works as a researcher at Brown University’s Department of Earth, Environment & Planetary Sciences.",
       "options": [
@@ -6794,7 +6773,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Cruz ___ a more serious threat to honeybees is colony collapse disorder.",
       "options": [
@@ -7025,7 +7004,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "am-thuc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "My signature dish is sweet potato rosemary dinner ___.",
       "options": [
@@ -7063,7 +7042,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The idea was to sell skin care products through ___ in homes and offices.",
       "options": [
@@ -7449,7 +7428,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "I was visiting an old friend of mine, Roderick Usher, in his old stone house, his palace, where a ___ of death hung on the air.",
       "options": [
@@ -7872,7 +7851,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Since the winter of 2006, many honeybees have ___.",
       "options": [
@@ -8180,7 +8159,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "More than one hundred years ago, Goddard ___ out studies and tests of rocket engines.",
       "options": [
@@ -8450,7 +8429,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "It includes ___ mountains, deep canyons, lakes and rivers.",
       "options": [
@@ -8794,7 +8773,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "They ___ the United States government for patents to protect more than one hundred devices or inventions each year.",
       "options": [
@@ -9292,7 +9271,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "The hardest invention to ___, he said, was the electric light.",
       "options": [
@@ -9560,7 +9539,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Independent sales representatives ___ beauty products from the company and sold them at higher prices.",
       "options": [
@@ -9675,7 +9654,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Goddard's work proved that ___ could travel outside of Earth's atmosphere and into space.",
       "options": [
@@ -10255,7 +10234,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "For many English ___, speaking is the most difficult part of the language to master.",
       "options": [
@@ -10832,7 +10811,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "New data collected on Mars through several methods suggests the substance, called ferrihydrite, is likely found in dust and rock material across wide ___ of the planet.",
       "options": [
@@ -11023,7 +11002,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "It ___ how he developed the mathematical theories for rocket flight.",
       "options": [
@@ -11291,7 +11270,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "In their examinations, the researchers also used manmade, or synthetic, material ___ to look and feel similar to real Martian dust.",
       "options": [
@@ -11445,7 +11424,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "That way, ___ sales representatives would be willing to train new ones.",
       "options": [
@@ -11635,7 +11614,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "But for the past 40 years, the native bee population has ___ decreasing.",
       "options": [
@@ -11750,7 +11729,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "On December 17th, 1903, they ___ the world's first flight in a machine that was heavier than air and powered by an engine.",
       "options": [
@@ -11826,7 +11805,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Sales representatives say Mary Kay ___ a way for women to earn money and still spend time with their families.",
       "options": [
@@ -13783,7 +13762,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "These include equipment and vehicle storage ___ and areas next to roads and fields.",
       "options": [
@@ -14012,7 +13991,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Mary Kay decided that each representative who ___ other saleswomen into the company would receive part of the new person’s earnings.",
       "options": [
@@ -14127,7 +14106,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Her mother has ___ on the coast for 30 years.",
       "options": [
@@ -14203,7 +14182,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "The scientists said discovering large ___ of it on Mars adds to existing evidence that the planet might have held a large supply of liquid water in the past.",
       "options": [
@@ -14434,7 +14413,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "cong-viec",
+      "topicSlug": "tong-hop",
       "difficulty": 2,
       "stem": "Spoonemore ___ giving her guests some homemade skin care products.",
       "options": [
@@ -14510,7 +14489,7 @@
       "type": "mcq",
       "grade": 8,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "She says growth in agriculture industries and the growth of cities have left bees too few natural ___ where they seek their food: Pollen and nectar.",
       "options": [
@@ -16069,90 +16048,6 @@
       "publishedAt": "2026-10-31T00:00:00.000Z"
     },
     {
-      "slug": "lop-8/tu-vung/cong-viec/de-1",
-      "grade": 8,
-      "skill": "tu-vung",
-      "topicSlug": "cong-viec",
-      "kind": "topic",
-      "title": "Công việc và kinh doanh - Đề 1",
-      "seed": "8/tu-vung/cong-viec/de-1",
-      "questionIds": [
-        "voa-7adc2fc4",
-        "voa-74fc1ad3",
-        "voa-c8d6ef2d",
-        "voa-ee88f8fc",
-        "voa-c106edfb",
-        "voa-9fb7cb41",
-        "voa-f5bd0e04",
-        "voa-2e3b74f9",
-        "voa-1819bedc",
-        "voa-6ae1ec56"
-      ],
-      "optionOrder": {
-        "voa-7adc2fc4": "CBAD",
-        "voa-74fc1ad3": "BCAD",
-        "voa-c8d6ef2d": "ADCB",
-        "voa-ee88f8fc": "CADB",
-        "voa-c106edfb": "CABD",
-        "voa-9fb7cb41": "BACD",
-        "voa-f5bd0e04": "BCDA",
-        "voa-2e3b74f9": "CADB",
-        "voa-1819bedc": "CDAB",
-        "voa-6ae1ec56": "DACB"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-8/tu-vung/khoa-hoc-cong-nghe/de-1",
-      "grade": 8,
-      "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
-      "kind": "topic",
-      "title": "Khoa học và công nghệ - Đề 1",
-      "seed": "8/tu-vung/khoa-hoc-cong-nghe/de-1",
-      "questionIds": [
-        "voa-6630dd20",
-        "voa-704fab7d",
-        "voa-d0ec5691",
-        "voa-43261f8c",
-        "voa-8cfdc295",
-        "voa-6b61a84f",
-        "voa-96338d6a",
-        "voa-bad733e6",
-        "voa-b65dd26a",
-        "voa-9c37ee53",
-        "voa-70161ab0",
-        "voa-f0d46a76",
-        "voa-70c06840",
-        "voa-2f0bd302",
-        "voa-a06b0e4d",
-        "voa-472f7122",
-        "voa-75747d0d",
-        "voa-c055caa4"
-      ],
-      "optionOrder": {
-        "voa-6630dd20": "ADCB",
-        "voa-704fab7d": "CDBA",
-        "voa-d0ec5691": "DCAB",
-        "voa-43261f8c": "ACDB",
-        "voa-8cfdc295": "BCDA",
-        "voa-6b61a84f": "CDBA",
-        "voa-96338d6a": "ADBC",
-        "voa-bad733e6": "BACD",
-        "voa-b65dd26a": "BCDA",
-        "voa-9c37ee53": "BCAD",
-        "voa-70161ab0": "DABC",
-        "voa-f0d46a76": "DBAC",
-        "voa-70c06840": "BDCA",
-        "voa-2f0bd302": "ADCB",
-        "voa-a06b0e4d": "ACDB",
-        "voa-472f7122": "CBAD",
-        "voa-75747d0d": "DBCA",
-        "voa-c055caa4": "ACDB"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
       "slug": "lop-8/tu-vung/tong-hop/de-1",
       "grade": 8,
       "skill": "tu-vung",
@@ -16737,44 +16632,6 @@
         "voa-86a88526": "CABD",
         "voa-6e92353c": "DCAB",
         "voa-7ab073bc": "DCBA"
-      },
-      "publishedAt": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "slug": "lop-8/tu-vung/truong-hoc/de-1",
-      "grade": 8,
-      "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
-      "kind": "topic",
-      "title": "Trường học và giáo dục - Đề 1",
-      "seed": "8/tu-vung/truong-hoc/de-1",
-      "questionIds": [
-        "voa-30b9d05f",
-        "voa-04ccccaf",
-        "voa-2630a895",
-        "voa-0115ec14",
-        "voa-2468aefc",
-        "voa-94ea3ece",
-        "voa-13c440a4",
-        "voa-a9286d4a",
-        "voa-56785112",
-        "voa-ad02ab46",
-        "voa-54417c7e",
-        "voa-272ffc05"
-      ],
-      "optionOrder": {
-        "voa-30b9d05f": "ABCD",
-        "voa-04ccccaf": "CBDA",
-        "voa-2630a895": "DACB",
-        "voa-0115ec14": "DBAC",
-        "voa-2468aefc": "DBAC",
-        "voa-94ea3ece": "ACBD",
-        "voa-13c440a4": "BDAC",
-        "voa-a9286d4a": "DBCA",
-        "voa-56785112": "BDCA",
-        "voa-ad02ab46": "DACB",
-        "voa-54417c7e": "ADBC",
-        "voa-272ffc05": "BACD"
       },
       "publishedAt": "2026-10-31T00:00:00.000Z"
     }

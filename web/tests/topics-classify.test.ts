@@ -50,35 +50,62 @@ it.each(cases)("classifies %s", (stem, opts, explanation, topic) => {
  expect(classifyQuestion({ ...q, topicSlug: "unreliable" })).toEqual(classifyQuestion(q));
  expect(classifyQuestion(structuredClone(q))).toEqual(classifyQuestion(q));
 });
-const vocab: [string,string,string][] = [
- ["gia-dinh-ban-be","My sister is my closest ___ at home.","friend"],
- ["truong-hoc","Our teacher collects the ___ after class.","homework"],
- ["am-thuc","We bake bread in the ___ for dinner.","oven"],
- ["du-lich","The tourist booked a ___ near the airport.","hotel"],
- ["moi-truong","The forest needs ___ to grow in summer.","rain"],
- ["suc-khoe","The doctor treats a ___ at the hospital.","patient"],
- ["khoa-hoc-cong-nghe","Connect your computer to the ___.","internet"],
- ["the-thao","Our team won the ___ on the football field.","match"],
- ["cong-viec","The company pays each ___ a salary.","employee"],
- ["dong-vat","The zoo feeds each ___ every morning.","tiger"],
+const vocab: [string, string, string][] = [
+ ["gia-dinh-ban-be", "My sister and my ___ visit our grandmother.", "cousin"],
+ ["truong-hoc", "Our teacher collects the ___ after class.", "homework"],
+ ["am-thuc", "We bake bread in the ___ for dinner.", "oven"],
+ ["du-lich", "The tourist booked a ___ near the airport.", "hotel"],
+ ["moi-truong", "The forest and the river need ___ in summer.", "rain"],
+ ["suc-khoe", "The doctor treats a ___ at the hospital.", "patient"],
+ ["khoa-hoc-cong-nghe", "Connect your computer to the ___.", "internet"],
+ ["cong-viec", "The company pays each ___ a salary.", "employee"],
+ ["dong-vat", "The zoo feeds each ___ every morning.", "tiger"],
 ];
 it.each(vocab)("recognizes vocabulary %s", (topic, stem, correct) => {
- expect(classifyQuestion(input(stem, [correct,"thing","very","seem"], "Từ trong bài gốc phù hợp với ngữ cảnh", "tu-vung")).topic).toBe(topic);
+ expect(classifyQuestion(input(stem, [correct, "thing", "very", "seem"], "", "tu-vung")).topic).toBe(topic);
 });
-it("rejects non-target skills, word families, weak and ambiguous evidence", () => {
- const q = input("The ___ is here.", ["thing","seem","very","also"], "", "tu-vung");
- expect(classifyQuestion(q).topic).toBeNull();
- expect(classifyQuestion(input("The forest and the oven are ___.", ["nearby","seem","very","also"], "", "tu-vung")).topic).toBeNull();
+const vocabInput = (stem: string, correct: string, distractors: string[]) => input(stem, [correct, ...distractors], "", "tu-vung");
+// Regression: items the tester/reviewer found misclassified because distractors or generic words were counted.
+const rejected: [string, string, string[]][] = [
+ ["Farmers became dependent on this bee ___.", "activity", ["ability", "location", "ship"]],
+ ["Second, it is important to ___ a location that is safe.", "find", ["study", "known", "knew"]],
+ ["Do you ___ to spend time at the coast?", "like", ["use", "make", "had"]],
+ ["Her husband ___ her jewelry for her birthday.", "gave", ["reach", "include", "keep"]],
+ ["She ___ the rights to Heath’s skin care products and started her own company.", "bought", ["continue", "flew", "taught"]],
+ ["It ___ in June of that year.", "arrived", ["jumped", "changed", "continued"]],
+ ["People from all over the country ___ to eat, drink and dance.", "come", ["remember", "increase", "continue"]],
+ ["Galvão says not every student will ___ through a word map.", "learn", ["report", "mean", "close"]],
+ ["A French company ___ to begin making the Wright brothers' flying machine.", "agreed", ["visited", "considered", "tuned"]],
+ ["The new rule ___ to all employees in the company.", "extends", ["provides", "sailors", "messages"]],
+ ["Top ___ made from bird feathers can stand a meter tall.", "hats", ["powers", "sentences", "lives"]],
+ ["This ___ is for a family of teachers and students.", "place", ["school", "teacher", "hospital"]],
+];
+it.each(rejected)("does not classify generic or distractor-driven item: %s", (stem, correct, distractors) => {
+ expect(classifyQuestion(vocabInput(stem, correct, distractors)).topic).toBeNull();
+});
+it("never counts distractor options as evidence", () => {
+ expect(classifyQuestion(vocabInput("The ___ is here.", "thing", ["teacher", "student", "classroom"])).topic).toBeNull();
+ expect(classifyQuestion(vocabInput("We ___ here.", "seem", ["oven", "bread", "rice"])).topic).toBeNull();
+});
+it("matches whole words only", () => {
+ expect(classifyQuestion(vocabInput("The ant is on the hotelier's coat.", "tiger", ["thing", "very", "seem"])).topic).toBe("dong-vat");
+ expect(classifyQuestion(vocabInput("A planetary mood about hospitality.", "hotelier", ["thing", "very", "seem"])).topic).toBeNull();
+});
+it("requires the correct answer to be a topic keyword", () => {
+ expect(classifyQuestion(vocabInput("The doctor gave the patient some good ___.", "advice", ["thing", "very", "seem"])).topic).toBeNull();
+ expect(classifyQuestion(vocabInput("The doctor gave the patient some ___.", "medicine", ["thing", "very", "seem"])).topic).toBe("suc-khoe");
+});
+it("one keyword needs a passage category cue and never decides from the passage alone", () => {
+ const bees = { title: "Bees and pollinators", body: "The bee has wings; honeybees visit flowers. Butterflies, birds and animals also carry pollen to plants." };
+ expect(classifyQuestion(vocabInput("Life is not easy for ___.", "bees", ["ideas", "meters", "express"])).topic).toBeNull();
+ expect(classifyQuestion(vocabInput("Life is not easy for ___.", "bees", ["ideas", "meters", "express"]), bees).topic).toBe("dong-vat");
+ expect(classifyQuestion(vocabInput("The ___ is here.", "thing", ["very", "seem", "also"]), bees).topic).toBeNull();
+});
+it("rejects non-target skills and word families", () => {
+ const q = input("The ___ is here.", ["thing", "seem", "very", "also"], "", "tu-vung");
  expect(classifyQuestion({ ...q, explanation: "Vị trí trong câu cần trạng từ trong họ từ này." }).topic).toBeNull();
- for (const skill of ["doc-hieu","viet-cau"] as const) expect(classifyQuestion({ ...q, skill }).topic).toBeNull();
- expect(classifyQuestion(q, { title: "A story", body: "oven bread" }).topic).toBeNull();
- expect(classifyQuestion(q, { title: "Cooking meals", body: "oven bread rice kitchen dinner soup bake" }).topic).toBeNull() // passage context alone never decides;
- expect(classifyQuestion(input("We ___ here.", ["teach","thing","very","also"], "", "tu-vung"), { title: "", body: "teacher teaching classroom homework" }).topic).toBe("truong-hoc");
+ for (const skill of ["doc-hieu", "viet-cau"] as const) expect(classifyQuestion({ ...q, skill }).topic).toBeNull();
 });
 it("counts overlapping word-family roots as one piece of evidence", () => {
- const q = input("The ___ is here.", ["thing","seem","very","also"], "", "tu-vung");
- expect(classifyQuestion(q, { title: "Breathing", body: "" }).topic).toBeNull();
- expect(classifyQuestion(q, { title: "Breathing", body: "breathing" }).topic).toBeNull();
- expect(classifyQuestion(q, { title: "Teacher", body: "teachers teaching teacher" }).topic).toBeNull();
- expect(classifyQuestion(q, { title: "", body: "oven ".repeat(100) }).topic).toBeNull();
+ expect(classifyQuestion(vocabInput("The teaching ___ is here.", "teacher", ["thing", "very", "seem"])).topic).toBeNull();
 });

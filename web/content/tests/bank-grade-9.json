@@ -941,7 +941,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "truong-hoc",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Cristiane Galvão has used ___ to teach vocabulary to students of every level, from grade school to the university level.",
       "options": [
@@ -1289,7 +1289,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Scientists say they might have identified the mineral on Mars that is responsible for making the planet ___ red.",
       "options": [
@@ -2359,7 +2359,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Many people thought he was foolish for suggesting something that seemed so ___.",
       "options": [
@@ -5997,7 +5997,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "moi-truong",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Beach, shore and coast are related words, but they have some important ___.",
       "options": [
@@ -6073,7 +6073,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Valantinas noted the discovery of widespread ferrihydrite suggests Mars once held liquid water that would have made it possible for the planet to support some ___ of life.",
       "options": [
@@ -6227,7 +6227,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "suc-khoe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "As I placed my hand on his shoulder, I felt that his whole body was ___; a sickly smile touched his lips; he spoke in a low, quick, and nervous voice as if he did not know I was there.",
       "options": [
@@ -7142,7 +7142,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "In ___, information was captured by instruments aboard the European Space Agency’s (ESA's) Mars Express and Trace Gas orbiters.",
       "options": [
@@ -7409,7 +7409,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "The research was ___ out by an international team led by America’s Brown University and the University of Bern in Switzerland.",
       "options": [
@@ -7523,7 +7523,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "am-thuc",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "They are made of thin pieces of meat ___ with cheese.",
       "options": [
@@ -7830,7 +7830,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "du-lich",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "The world has changed a lot since Wilbur and Orville Wright ___ the modern age of flight over one hundred years ago.",
       "options": [
@@ -7945,7 +7945,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "khoa-hoc-cong-nghe",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "The study is ___ on Martian data collected by several spacecraft.",
       "options": [
@@ -8523,7 +8523,7 @@
       "type": "mcq",
       "grade": 9,
       "skill": "tu-vung",
-      "topicSlug": "dong-vat",
+      "topicSlug": "tong-hop",
       "difficulty": 3,
       "stem": "Other bee species on the continent were ___ from Europe to produce honey.",
       "options": [
