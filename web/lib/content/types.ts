@@ -7,13 +7,13 @@ export const SkillSchema = z.enum(SKILLS);
 export const OptionKeySchema = z.enum(["A", "B", "C", "D"]);
 export const ReviewStatusSchema = z.enum(["quarantine", "draft", "in_review", "published", "rejected", "archived"]);
 export const SourceSchema = z.strictObject({ id: text, name: text, baseUrl: z.url(), license: text, attribution: text });
-export const PassageSchema = z.strictObject({ id: text, sourceId: text, title: text, body: text, wordCount: z.number().int().positive(), level: z.number().int().min(1).max(5) });
+export const PassageSchema = z.strictObject({ id: text, sourceId: text, title: text, body: text, sourceUrl: z.url().optional(), sourceName: text.optional(), license: text.optional(), crawledAt: z.iso.datetime().optional(), wordCount: z.number().int().positive(), level: z.number().int().min(1).max(5) });
 export const TopicSchema = z.strictObject({ grade: GradeSchema, skill: SkillSchema, slug, name: text, description: text });
 export const QuestionSchema = z.strictObject({
  id: text, type: z.literal("mcq"), grade: GradeSchema, skill: SkillSchema, topicSlug: slug,
  difficulty: z.number().int().min(1).max(3), passageId: text.optional(), stem: text,
  options: z.array(z.strictObject({ key: OptionKeySchema, text })).length(4), correctKey: OptionKeySchema,
- explanation: text, sourceId: text, sourceUrl: z.url(), sourceRef: text.optional(), reviewStatus: ReviewStatusSchema,
+ explanation: text, sourceId: text, sourceUrl: z.url(), sourceRef: text.optional(), sourceName: text.optional(), license: text.optional(), crawledAt: z.iso.datetime().optional(), reviewStatus: ReviewStatusSchema,
 }).superRefine((q, ctx) => {
  if (new Set(q.options.map(o => o.key)).size !== 4) ctx.addIssue({ code: "custom", message: "Option keys must be unique", path: ["options"] });
  if (new Set(q.options.map(o => o.text.toLowerCase())).size !== 4) ctx.addIssue({ code: "custom", message: "Option texts must be unique", path: ["options"] });

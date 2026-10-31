@@ -1,0 +1,9 @@
+{
+ "families": [
+ ["decide","decision","decisive","decisively"], ["create","creation","creative","creatively"],
+ ["act","action","active","actively"], ["protect","protection","protective","protectively"],
+ ["inform","information","informative","informatively"], ["attract","attraction","attractive","attractively"],
+ ["compete","competition","competitive","competitively"], ["succeed","success","successful","successfully"]
+ ],
+ "categories": {"adverb":"ly$","adjective":"(?:ful|less|ous|ive|able|ible|al|ic)$","noun":"(?:tion|sion|ment|ness|ity|ship)$","verb":"(?:ize|ise|ify|ate)$"}
+}

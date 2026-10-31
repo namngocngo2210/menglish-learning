@@ -1,0 +1,9 @@
+{
+ "prepositions": ["in", "on", "at", "by", "for", "from", "with", "to", "of"],
+ "articles": ["a", "an", "the", "some"],
+ "auxiliaries": ["do", "does", "did", "doing"],
+ "modals": ["can", "could", "may", "might", "must", "should", "will", "would"],
+ "pronouns": ["he", "him", "his", "himself", "she", "her", "hers", "herself", "they", "them", "their", "themselves"],
+ "conjunctions": ["and", "but", "or", "because", "although"],
+ "wh-words": ["who", "what", "where", "when", "why", "how"]
+}

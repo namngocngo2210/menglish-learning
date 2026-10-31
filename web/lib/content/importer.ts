@@ -1,7 +1,7 @@
 import type { ContentBundle, Question } from "./types";
 /** Importers may write only quarantine bundles to content/quarantine/.
  * Publication is a separate owner-reviewed action; never write content/tests/.
- * No network fetching or crawler implementation is included here.
+ * The standalone crawler package follows this contract through its CLI sink.
  */
 export interface ContentImporter {
  name: string;

@@ -1,0 +1,1136 @@
+{
+  "arise": {
+    "past": "arose",
+    "participle": "arisen",
+    "s": "arises",
+    "ing": "arising"
+  },
+  "awake": {
+    "past": "awoke",
+    "participle": "awoken",
+    "s": "awakes",
+    "ing": "awaking"
+  },
+  "be": {
+    "past": "was",
+    "participle": "been",
+    "s": "bes",
+    "ing": "being"
+  },
+  "bear": {
+    "past": "bore",
+    "participle": "borne",
+    "s": "bears",
+    "ing": "bearing"
+  },
+  "beat": {
+    "past": "beat",
+    "participle": "beaten",
+    "s": "beats",
+    "ing": "beating"
+  },
+  "become": {
+    "past": "became",
+    "participle": "become",
+    "s": "becomes",
+    "ing": "becoming"
+  },
+  "begin": {
+    "past": "began",
+    "participle": "begun",
+    "s": "begins",
+    "ing": "beginning"
+  },
+  "bend": {
+    "past": "bent",
+    "participle": "bent",
+    "s": "bends",
+    "ing": "bending"
+  },
+  "bet": {
+    "past": "bet",
+    "participle": "bet",
+    "s": "bets",
+    "ing": "betting"
+  },
+  "bind": {
+    "past": "bound",
+    "participle": "bound",
+    "s": "binds",
+    "ing": "binding"
+  },
+  "bite": {
+    "past": "bit",
+    "participle": "bitten",
+    "s": "bites",
+    "ing": "biting"
+  },
+  "bleed": {
+    "past": "bled",
+    "participle": "bled",
+    "s": "bleeds",
+    "ing": "bleeding"
+  },
+  "blow": {
+    "past": "blew",
+    "participle": "blown",
+    "s": "blows",
+    "ing": "blowing"
+  },
+  "break": {
+    "past": "broke",
+    "participle": "broken",
+    "s": "breaks",
+    "ing": "breaking"
+  },
+  "breed": {
+    "past": "bred",
+    "participle": "bred",
+    "s": "breeds",
+    "ing": "breeding"
+  },
+  "bring": {
+    "past": "brought",
+    "participle": "brought",
+    "s": "brings",
+    "ing": "bringing"
+  },
+  "broadcast": {
+    "past": "broadcast",
+    "participle": "broadcast",
+    "s": "broadcasts",
+    "ing": "broadcasting"
+  },
+  "build": {
+    "past": "built",
+    "participle": "built",
+    "s": "builds",
+    "ing": "building"
+  },
+  "burn": {
+    "past": "burnt",
+    "participle": "burnt",
+    "s": "burns",
+    "ing": "burning"
+  },
+  "burst": {
+    "past": "burst",
+    "participle": "burst",
+    "s": "bursts",
+    "ing": "bursting"
+  },
+  "buy": {
+    "past": "bought",
+    "participle": "bought",
+    "s": "buys",
+    "ing": "buying"
+  },
+  "cast": {
+    "past": "cast",
+    "participle": "cast",
+    "s": "casts",
+    "ing": "casting"
+  },
+  "catch": {
+    "past": "caught",
+    "participle": "caught",
+    "s": "catches",
+    "ing": "catching"
+  },
+  "choose": {
+    "past": "chose",
+    "participle": "chosen",
+    "s": "chooses",
+    "ing": "choosing"
+  },
+  "cling": {
+    "past": "clung",
+    "participle": "clung",
+    "s": "clings",
+    "ing": "clinging"
+  },
+  "come": {
+    "past": "came",
+    "participle": "come",
+    "s": "comes",
+    "ing": "coming"
+  },
+  "cost": {
+    "past": "cost",
+    "participle": "cost",
+    "s": "costs",
+    "ing": "costing"
+  },
+  "creep": {
+    "past": "crept",
+    "participle": "crept",
+    "s": "creeps",
+    "ing": "creeping"
+  },
+  "cut": {
+    "past": "cut",
+    "participle": "cut",
+    "s": "cuts",
+    "ing": "cuting"
+  },
+  "deal": {
+    "past": "dealt",
+    "participle": "dealt",
+    "s": "deals",
+    "ing": "dealing"
+  },
+  "dig": {
+    "past": "dug",
+    "participle": "dug",
+    "s": "digs",
+    "ing": "digging"
+  },
+  "do": {
+    "past": "did",
+    "participle": "done",
+    "s": "does",
+    "ing": "doing"
+  },
+  "draw": {
+    "past": "drew",
+    "participle": "drawn",
+    "s": "draws",
+    "ing": "drawing"
+  },
+  "dream": {
+    "past": "dreamt",
+    "participle": "dreamt",
+    "s": "dreams",
+    "ing": "dreaming"
+  },
+  "drink": {
+    "past": "drank",
+    "participle": "drunk",
+    "s": "drinks",
+    "ing": "drinking"
+  },
+  "drive": {
+    "past": "drove",
+    "participle": "driven",
+    "s": "drives",
+    "ing": "driving"
+  },
+  "eat": {
+    "past": "ate",
+    "participle": "eaten",
+    "s": "eats",
+    "ing": "eating"
+  },
+  "fall": {
+    "past": "fell",
+    "participle": "fallen",
+    "s": "falls",
+    "ing": "falling"
+  },
+  "feed": {
+    "past": "fed",
+    "participle": "fed",
+    "s": "feeds",
+    "ing": "feeding"
+  },
+  "feel": {
+    "past": "felt",
+    "participle": "felt",
+    "s": "feels",
+    "ing": "feeling"
+  },
+  "fight": {
+    "past": "fought",
+    "participle": "fought",
+    "s": "fights",
+    "ing": "fighting"
+  },
+  "find": {
+    "past": "found",
+    "participle": "found",
+    "s": "finds",
+    "ing": "finding"
+  },
+  "flee": {
+    "past": "fled",
+    "participle": "fled",
+    "s": "flees",
+    "ing": "fleeing"
+  },
+  "fly": {
+    "past": "flew",
+    "participle": "flown",
+    "s": "flies",
+    "ing": "flying"
+  },
+  "forbid": {
+    "past": "forbade",
+    "participle": "forbidden",
+    "s": "forbids",
+    "ing": "forbidding"
+  },
+  "forget": {
+    "past": "forgot",
+    "participle": "forgotten",
+    "s": "forgets",
+    "ing": "forgetting"
+  },
+  "forgive": {
+    "past": "forgave",
+    "participle": "forgiven",
+    "s": "forgives",
+    "ing": "forgiving"
+  },
+  "freeze": {
+    "past": "froze",
+    "participle": "frozen",
+    "s": "freezes",
+    "ing": "freezing"
+  },
+  "get": {
+    "past": "got",
+    "participle": "gotten",
+    "s": "gets",
+    "ing": "getting"
+  },
+  "give": {
+    "past": "gave",
+    "participle": "given",
+    "s": "gives",
+    "ing": "giving"
+  },
+  "go": {
+    "past": "went",
+    "participle": "gone",
+    "s": "goes",
+    "ing": "going"
+  },
+  "grow": {
+    "past": "grew",
+    "participle": "grown",
+    "s": "grows",
+    "ing": "growing"
+  },
+  "hang": {
+    "past": "hung",
+    "participle": "hung",
+    "s": "hangs",
+    "ing": "hanging"
+  },
+  "have": {
+    "past": "had",
+    "participle": "had",
+    "s": "has",
+    "ing": "having"
+  },
+  "hear": {
+    "past": "heard",
+    "participle": "heard",
+    "s": "hears",
+    "ing": "hearing"
+  },
+  "hide": {
+    "past": "hid",
+    "participle": "hidden",
+    "s": "hides",
+    "ing": "hiding"
+  },
+  "hit": {
+    "past": "hit",
+    "participle": "hit",
+    "s": "hits",
+    "ing": "hitting"
+  },
+  "hold": {
+    "past": "held",
+    "participle": "held",
+    "s": "holds",
+    "ing": "holding"
+  },
+  "hurt": {
+    "past": "hurt",
+    "participle": "hurt",
+    "s": "hurts",
+    "ing": "hurting"
+  },
+  "keep": {
+    "past": "kept",
+    "participle": "kept",
+    "s": "keeps",
+    "ing": "keeping"
+  },
+  "kneel": {
+    "past": "knelt",
+    "participle": "knelt",
+    "s": "kneels",
+    "ing": "kneeling"
+  },
+  "know": {
+    "past": "knew",
+    "participle": "known",
+    "s": "knows",
+    "ing": "knowing"
+  },
+  "lay": {
+    "past": "laid",
+    "participle": "laid",
+    "s": "lays",
+    "ing": "laying"
+  },
+  "lead": {
+    "past": "led",
+    "participle": "led",
+    "s": "leads",
+    "ing": "leading"
+  },
+  "lean": {
+    "past": "leant",
+    "participle": "leant",
+    "s": "leans",
+    "ing": "leaning"
+  },
+  "leap": {
+    "past": "leapt",
+    "participle": "leapt",
+    "s": "leaps",
+    "ing": "leaping"
+  },
+  "learn": {
+    "past": "learnt",
+    "participle": "learnt",
+    "s": "learns",
+    "ing": "learning"
+  },
+  "leave": {
+    "past": "left",
+    "participle": "left",
+    "s": "leaves",
+    "ing": "leaving"
+  },
+  "lend": {
+    "past": "lent",
+    "participle": "lent",
+    "s": "lends",
+    "ing": "lending"
+  },
+  "let": {
+    "past": "let",
+    "participle": "let",
+    "s": "lets",
+    "ing": "letting"
+  },
+  "lie": {
+    "past": "lay",
+    "participle": "lain",
+    "s": "lies",
+    "ing": "lying"
+  },
+  "light": {
+    "past": "lit",
+    "participle": "lit",
+    "s": "lights",
+    "ing": "lighting"
+  },
+  "lose": {
+    "past": "lost",
+    "participle": "lost",
+    "s": "loses",
+    "ing": "losing"
+  },
+  "make": {
+    "past": "made",
+    "participle": "made",
+    "s": "makes",
+    "ing": "making"
+  },
+  "mean": {
+    "past": "meant",
+    "participle": "meant",
+    "s": "means",
+    "ing": "meaning"
+  },
+  "meet": {
+    "past": "met",
+    "participle": "met",
+    "s": "meets",
+    "ing": "meeting"
+  },
+  "pay": {
+    "past": "paid",
+    "participle": "paid",
+    "s": "pays",
+    "ing": "paying"
+  },
+  "put": {
+    "past": "put",
+    "participle": "put",
+    "s": "puts",
+    "ing": "putting"
+  },
+  "quit": {
+    "past": "quit",
+    "participle": "quit",
+    "s": "quits",
+    "ing": "quitting"
+  },
+  "read": {
+    "past": "read",
+    "participle": "read",
+    "s": "reads",
+    "ing": "reading"
+  },
+  "ride": {
+    "past": "rode",
+    "participle": "ridden",
+    "s": "rides",
+    "ing": "riding"
+  },
+  "ring": {
+    "past": "rang",
+    "participle": "rung",
+    "s": "rings",
+    "ing": "ringing"
+  },
+  "rise": {
+    "past": "rose",
+    "participle": "risen",
+    "s": "rises",
+    "ing": "rising"
+  },
+  "run": {
+    "past": "ran",
+    "participle": "run",
+    "s": "runs",
+    "ing": "running"
+  },
+  "say": {
+    "past": "said",
+    "participle": "said",
+    "s": "says",
+    "ing": "saying"
+  },
+  "see": {
+    "past": "saw",
+    "participle": "seen",
+    "s": "sees",
+    "ing": "seeing"
+  },
+  "seek": {
+    "past": "sought",
+    "participle": "sought",
+    "s": "seeks",
+    "ing": "seeking"
+  },
+  "sell": {
+    "past": "sold",
+    "participle": "sold",
+    "s": "sells",
+    "ing": "selling"
+  },
+  "send": {
+    "past": "sent",
+    "participle": "sent",
+    "s": "sends",
+    "ing": "sending"
+  },
+  "set": {
+    "past": "set",
+    "participle": "set",
+    "s": "sets",
+    "ing": "setting"
+  },
+  "sew": {
+    "past": "sewed",
+    "participle": "sewn",
+    "s": "sews",
+    "ing": "sewing"
+  },
+  "shake": {
+    "past": "shook",
+    "participle": "shaken",
+    "s": "shakes",
+    "ing": "shaking"
+  },
+  "shine": {
+    "past": "shone",
+    "participle": "shone",
+    "s": "shines",
+    "ing": "shining"
+  },
+  "shoot": {
+    "past": "shot",
+    "participle": "shot",
+    "s": "shoots",
+    "ing": "shooting"
+  },
+  "show": {
+    "past": "showed",
+    "participle": "shown",
+    "s": "shows",
+    "ing": "showing"
+  },
+  "shrink": {
+    "past": "shrank",
+    "participle": "shrunk",
+    "s": "shrinks",
+    "ing": "shrinking"
+  },
+  "shut": {
+    "past": "shut",
+    "participle": "shut",
+    "s": "shuts",
+    "ing": "shutting"
+  },
+  "sing": {
+    "past": "sang",
+    "participle": "sung",
+    "s": "sings",
+    "ing": "singing"
+  },
+  "sink": {
+    "past": "sank",
+    "participle": "sunk",
+    "s": "sinks",
+    "ing": "sinking"
+  },
+  "sit": {
+    "past": "sat",
+    "participle": "sat",
+    "s": "sits",
+    "ing": "sitting"
+  },
+  "sleep": {
+    "past": "slept",
+    "participle": "slept",
+    "s": "sleeps",
+    "ing": "sleeping"
+  },
+  "slide": {
+    "past": "slid",
+    "participle": "slid",
+    "s": "slides",
+    "ing": "sliding"
+  },
+  "smell": {
+    "past": "smelt",
+    "participle": "smelt",
+    "s": "smells",
+    "ing": "smelling"
+  },
+  "speak": {
+    "past": "spoke",
+    "participle": "spoken",
+    "s": "speaks",
+    "ing": "speaking"
+  },
+  "spell": {
+    "past": "spelt",
+    "participle": "spelt",
+    "s": "spells",
+    "ing": "spelling"
+  },
+  "spend": {
+    "past": "spent",
+    "participle": "spent",
+    "s": "spends",
+    "ing": "spending"
+  },
+  "spill": {
+    "past": "spilt",
+    "participle": "spilt",
+    "s": "spills",
+    "ing": "spilling"
+  },
+  "spin": {
+    "past": "spun",
+    "participle": "spun",
+    "s": "spins",
+    "ing": "spinning"
+  },
+  "spit": {
+    "past": "spat",
+    "participle": "spat",
+    "s": "spits",
+    "ing": "spitting"
+  },
+  "split": {
+    "past": "split",
+    "participle": "split",
+    "s": "splits",
+    "ing": "splitting"
+  },
+  "spoil": {
+    "past": "spoilt",
+    "participle": "spoilt",
+    "s": "spoils",
+    "ing": "spoiling"
+  },
+  "spread": {
+    "past": "spread",
+    "participle": "spread",
+    "s": "spreads",
+    "ing": "spreading"
+  },
+  "spring": {
+    "past": "sprang",
+    "participle": "sprung",
+    "s": "springs",
+    "ing": "springing"
+  },
+  "stand": {
+    "past": "stood",
+    "participle": "stood",
+    "s": "stands",
+    "ing": "standing"
+  },
+  "steal": {
+    "past": "stole",
+    "participle": "stolen",
+    "s": "steals",
+    "ing": "stealing"
+  },
+  "stick": {
+    "past": "stuck",
+    "participle": "stuck",
+    "s": "sticks",
+    "ing": "sticking"
+  },
+  "sting": {
+    "past": "stung",
+    "participle": "stung",
+    "s": "stings",
+    "ing": "stinging"
+  },
+  "stink": {
+    "past": "stank",
+    "participle": "stunk",
+    "s": "stinks",
+    "ing": "stinking"
+  },
+  "strike": {
+    "past": "struck",
+    "participle": "struck",
+    "s": "strikes",
+    "ing": "striking"
+  },
+  "swear": {
+    "past": "swore",
+    "participle": "sworn",
+    "s": "swears",
+    "ing": "swearing"
+  },
+  "sweep": {
+    "past": "swept",
+    "participle": "swept",
+    "s": "sweeps",
+    "ing": "sweeping"
+  },
+  "swim": {
+    "past": "swam",
+    "participle": "swum",
+    "s": "swims",
+    "ing": "swimming"
+  },
+  "swing": {
+    "past": "swung",
+    "participle": "swung",
+    "s": "swings",
+    "ing": "swinging"
+  },
+  "take": {
+    "past": "took",
+    "participle": "taken",
+    "s": "takes",
+    "ing": "taking"
+  },
+  "teach": {
+    "past": "taught",
+    "participle": "taught",
+    "s": "teaches",
+    "ing": "teaching"
+  },
+  "tear": {
+    "past": "tore",
+    "participle": "torn",
+    "s": "tears",
+    "ing": "tearing"
+  },
+  "tell": {
+    "past": "told",
+    "participle": "told",
+    "s": "tells",
+    "ing": "telling"
+  },
+  "think": {
+    "past": "thought",
+    "participle": "thought",
+    "s": "thinks",
+    "ing": "thinking"
+  },
+  "throw": {
+    "past": "threw",
+    "participle": "thrown",
+    "s": "throws",
+    "ing": "throwing"
+  },
+  "understand": {
+    "past": "understood",
+    "participle": "understood",
+    "s": "understands",
+    "ing": "understanding"
+  },
+  "wake": {
+    "past": "woke",
+    "participle": "woken",
+    "s": "wakes",
+    "ing": "waking"
+  },
+  "wear": {
+    "past": "wore",
+    "participle": "worn",
+    "s": "wears",
+    "ing": "wearing"
+  },
+  "weep": {
+    "past": "wept",
+    "participle": "wept",
+    "s": "weeps",
+    "ing": "weeping"
+  },
+  "win": {
+    "past": "won",
+    "participle": "won",
+    "s": "wins",
+    "ing": "winning"
+  },
+  "wind": {
+    "past": "wound",
+    "participle": "wound",
+    "s": "winds",
+    "ing": "winding"
+  },
+  "withdraw": {
+    "past": "withdrew",
+    "participle": "withdrawn",
+    "s": "withdraws",
+    "ing": "withdrawing"
+  },
+  "write": {
+    "past": "wrote",
+    "participle": "written",
+    "s": "writes",
+    "ing": "writing"
+  },
+  "wring": {
+    "past": "wrung",
+    "participle": "wrung",
+    "s": "wrings",
+    "ing": "wringing"
+  },
+  "withstand": {
+    "past": "withstood",
+    "participle": "withstood",
+    "s": "withstands",
+    "ing": "withstanding"
+  },
+  "undergo": {
+    "past": "underwent",
+    "participle": "undergone",
+    "s": "undergoes",
+    "ing": "undergoing"
+  },
+  "undertake": {
+    "past": "undertook",
+    "participle": "undertaken",
+    "s": "undertakes",
+    "ing": "undertaking"
+  },
+  "undo": {
+    "past": "undid",
+    "participle": "undone",
+    "s": "undoes",
+    "ing": "undoing"
+  },
+  "upset": {
+    "past": "upset",
+    "participle": "upset",
+    "s": "upsets",
+    "ing": "upsetting"
+  },
+  "outgrow": {
+    "past": "outgrew",
+    "participle": "outgrown",
+    "s": "outgrows",
+    "ing": "outgrowing"
+  },
+  "overcome": {
+    "past": "overcame",
+    "participle": "overcome",
+    "s": "overcomes",
+    "ing": "overcoming"
+  },
+  "overdo": {
+    "past": "overdid",
+    "participle": "overdone",
+    "s": "overdoes",
+    "ing": "overdoing"
+  },
+  "overhear": {
+    "past": "overheard",
+    "participle": "overheard",
+    "s": "overhears",
+    "ing": "overhearing"
+  },
+  "overtake": {
+    "past": "overtook",
+    "participle": "overtaken",
+    "s": "overtakes",
+    "ing": "overtaking"
+  },
+  "prove": {
+    "past": "proved",
+    "participle": "proven",
+    "s": "proves",
+    "ing": "proving"
+  },
+  "rebuild": {
+    "past": "rebuilt",
+    "participle": "rebuilt",
+    "s": "rebuilds",
+    "ing": "rebuilding"
+  },
+  "redo": {
+    "past": "redid",
+    "participle": "redone",
+    "s": "redoes",
+    "ing": "redoing"
+  },
+  "repay": {
+    "past": "repaid",
+    "participle": "repaid",
+    "s": "repays",
+    "ing": "repaying"
+  },
+  "reread": {
+    "past": "reread",
+    "participle": "reread",
+    "s": "rereads",
+    "ing": "rereading"
+  },
+  "resell": {
+    "past": "resold",
+    "participle": "resold",
+    "s": "resells",
+    "ing": "reselling"
+  },
+  "retell": {
+    "past": "retold",
+    "participle": "retold",
+    "s": "retells",
+    "ing": "retelling"
+  },
+  "rewrite": {
+    "past": "rewrote",
+    "participle": "rewritten",
+    "s": "rewrites",
+    "ing": "rewriting"
+  },
+  "saw": {
+    "past": "sawed",
+    "participle": "sawn",
+    "s": "saws",
+    "ing": "sawing"
+  },
+  "shave": {
+    "past": "shaved",
+    "participle": "shaven",
+    "s": "shaves",
+    "ing": "shaving"
+  },
+  "sow": {
+    "past": "sowed",
+    "participle": "sown",
+    "s": "sows",
+    "ing": "sowing"
+  },
+  "speed": {
+    "past": "sped",
+    "participle": "sped",
+    "s": "speeds",
+    "ing": "speeding"
+  },
+  "stride": {
+    "past": "strode",
+    "participle": "stridden",
+    "s": "strides",
+    "ing": "striding"
+  },
+  "strive": {
+    "past": "strove",
+    "participle": "striven",
+    "s": "strives",
+    "ing": "striving"
+  },
+  "swell": {
+    "past": "swelled",
+    "participle": "swollen",
+    "s": "swells",
+    "ing": "swelling"
+  },
+  "tread": {
+    "past": "trod",
+    "participle": "trodden",
+    "s": "treads",
+    "ing": "treading"
+  },
+  "weave": {
+    "past": "wove",
+    "participle": "woven",
+    "s": "weaves",
+    "ing": "weaving"
+  },
+  "wet": {
+    "past": "wet",
+    "participle": "wet",
+    "s": "wets",
+    "ing": "wetting"
+  },
+  "mislead": {
+    "past": "misled",
+    "participle": "misled",
+    "s": "misleads",
+    "ing": "misleading"
+  },
+  "mistake": {
+    "past": "mistook",
+    "participle": "mistaken",
+    "s": "mistakes",
+    "ing": "mistaking"
+  },
+  "forecast": {
+    "past": "forecast",
+    "participle": "forecast",
+    "s": "forecasts",
+    "ing": "forecasting"
+  },
+  "foresee": {
+    "past": "foresaw",
+    "participle": "foreseen",
+    "s": "foresees",
+    "ing": "foreseeing"
+  },
+  "forsake": {
+    "past": "forsook",
+    "participle": "forsaken",
+    "s": "forsakes",
+    "ing": "forsaking"
+  },
+  "befall": {
+    "past": "befell",
+    "participle": "befallen",
+    "s": "befalls",
+    "ing": "befalling"
+  },
+  "behold": {
+    "past": "beheld",
+    "participle": "beheld",
+    "s": "beholds",
+    "ing": "beholding"
+  },
+  "beset": {
+    "past": "beset",
+    "participle": "beset",
+    "s": "besets",
+    "ing": "beseting"
+  },
+  "bid": {
+    "past": "bid",
+    "participle": "bid",
+    "s": "bids",
+    "ing": "bidding"
+  },
+  "clothe": {
+    "past": "clothed",
+    "participle": "clothed",
+    "s": "clothes",
+    "ing": "clothing"
+  },
+  "forgo": {
+    "past": "forwent",
+    "participle": "forgone",
+    "s": "forgoes",
+    "ing": "forgoing"
+  },
+  "outdo": {
+    "past": "outdid",
+    "participle": "outdone",
+    "s": "outdoes",
+    "ing": "outdoing"
+  },
+  "outshine": {
+    "past": "outshone",
+    "participle": "outshone",
+    "s": "outshines",
+    "ing": "outshining"
+  },
+  "oversleep": {
+    "past": "overslept",
+    "participle": "overslept",
+    "s": "oversleeps",
+    "ing": "oversleeping"
+  },
+  "partake": {
+    "past": "partook",
+    "participle": "partaken",
+    "s": "partakes",
+    "ing": "partaking"
+  },
+  "preset": {
+    "past": "preset",
+    "participle": "preset",
+    "s": "presets",
+    "ing": "preseting"
+  },
+  "rid": {
+    "past": "rid",
+    "participle": "rid",
+    "s": "rids",
+    "ing": "riding"
+  },
+  "slay": {
+    "past": "slew",
+    "participle": "slain",
+    "s": "slays",
+    "ing": "slaying"
+  },
+  "slink": {
+    "past": "slunk",
+    "participle": "slunk",
+    "s": "slinks",
+    "ing": "slinking"
+  },
+  "thrust": {
+    "past": "thrust",
+    "participle": "thrust",
+    "s": "thrusts",
+    "ing": "thrusting"
+  },
+  "unbind": {
+    "past": "unbound",
+    "participle": "unbound",
+    "s": "unbinds",
+    "ing": "unbinding"
+  },
+  "unwind": {
+    "past": "unwound",
+    "participle": "unwound",
+    "s": "unwinds",
+    "ing": "unwinding"
+  },
+  "withhold": {
+    "past": "withheld",
+    "participle": "withheld",
+    "s": "withholds",
+    "ing": "withholding"
+  }
+}

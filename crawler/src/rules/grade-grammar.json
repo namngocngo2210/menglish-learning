@@ -1,0 +1,10 @@
+[
+ {"grade":9,"slug":"cau-dieu-kien","name":"Câu điều kiện","pattern":"\\bif\\b.{0,90}\\b(?:would|had)\\b"},
+ {"grade":9,"slug":"cau-tuong-thuat","name":"Câu tường thuật","pattern":"\\b(?:said|told)\\b.{0,60}\\b(?:that|would|had)\\b"},
+ {"grade":9,"slug":"cau-bi-dong","name":"Câu bị động","pattern":"\\b(?:is|are|was|were|been)\\s+(?:\\w+ed|written|built|made|taken|given|seen)\\b"},
+ {"grade":8,"slug":"thi-hien-tai-hoan-thanh","name":"Thì hiện tại hoàn thành","pattern":"\\b(?:have|has)\\s+(?:\\w+ed|written|been|gone|seen|done|made|taken)\\b"},
+ {"grade":7,"slug":"thi-qua-khu-don","name":"Thì quá khứ đơn","pattern":"\\b(?:yesterday|ago|last week|last year|did|was|were)\\b"},
+ {"grade":6,"slug":"thi-hien-tai-don","name":"Thì hiện tại đơn","pattern":"\\b(?:every day|every morning|usually|often|always|does)\\b"},
+ {"grade":6,"slug":"dong-tu-khuyet-thieu","name":"Động từ khuyết thiếu","pattern":"\\b(?:can|could|may|might|must|should|will|would)\\b"},
+ {"grade":7,"slug":"so-sanh","name":"So sánh","pattern":"\\b(?:more|most|better|best)\\b|\\b\\w+er than\\b"}
+]

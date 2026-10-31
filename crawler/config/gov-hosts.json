@@ -1,0 +1,4 @@
+{
+  "allowed": ["moet.gov.vn", "*.gov.vn", "hanoi.edu.vn", "*.hanoi.edu.vn", "hcm.edu.vn", "*.hcm.edu.vn"],
+  "forbidden": ["vndoc", "hoc247", "loigiaihay", "tuyensinh247", "thuvienhoclieu", "study4", "langgo.edu.vn", "navi.edu.vn", "dethi.edu.vn", "cambridge", "oup", "aggregator"]
+}

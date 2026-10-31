@@ -1,0 +1,10 @@
+{
+ "moi-truong":{"name":"Môi trường","words":["environment","forest","forests","climate","pollution","recycle","wildlife"]},
+ "suc-khoe":{"name":"Sức khỏe","words":["health","healthy","doctor","hospital","disease","medicine"]},
+ "giao-duc":{"name":"Giáo dục","words":["school","student","students","teacher","education","classroom"]},
+ "khoa-hoc-cong-nghe":{"name":"Khoa học và công nghệ","words":["science","technology","computer","robot","research","internet"]},
+ "the-thao":{"name":"Thể thao","words":["sport","sports","football","soccer","tennis","athlete"]},
+ "gia-dinh-ban-be":{"name":"Gia đình và bạn bè","words":["family","friend","friends","mother","father","sister","brother"]},
+ "du-lich":{"name":"Du lịch","words":["travel","tourist","tourism","hotel","airport","journey"]},
+ "am-thuc":{"name":"Ẩm thực","words":["food","cook","cooking","meal","rice","restaurant"]}
+}

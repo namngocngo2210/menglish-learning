@@ -1,47 +1,35 @@
 # Nguồn nội dung và crawler
 
-Nguyên tắc: **không dùng AI sinh câu hỏi**. Câu hỏi lấy từ nguồn được phép dùng lại, hoặc sinh tự động theo quy tắc từ dữ liệu có giấy phép mở. Mỗi câu lưu nguồn + giấy phép và hiển thị ghi nguồn trên trang.
+Nguyên tắc: **không dùng AI/LLM sinh câu hỏi**. Chỉ dùng văn bản được phép từ hai nguồn dưới đây; câu hỏi tự động dùng quy tắc, regex, bảng từ và thống kê corpus. Dữ liệu giữ `source_url`, `source_name`, `license`, `crawled_at` (trong JSON: camelCase). Không thêm UI nguồn/giấy phép vào trang bài tập; trang ghi công chung `/nguon-du-lieu` sẽ được tạo sau.
 
-## Nguồn được phép
+## Hai nguồn được phép
 
 | Nguồn | Dùng cho | Giấy phép | Cách lấy |
-|-------|----------|-----------|----------|
-| Website chính thức Bộ GD&ĐT, Sở GD&ĐT (`*.gov.vn`, `*.edu.vn` của Sở) | Đề chính thức lớp 6–9, đề tuyển sinh lớp 10 kèm đáp án | Văn bản chính thức (ghi rõ nguồn, năm, tỉnh) | Tải PDF/DOC, parse câu trắc nghiệm đọc/ngữ pháp/từ vựng/viết lại câu |
-| Tatoeba | Câu tiếng Anh (có bản dịch Việt) → câu điền từ, sắp xếp từ, tìm lỗi sai | CC BY 2.0 FR | File export chính thức (không cào trang) |
-| Wiktionary (bản trích xuất kaikki.org) | Từ vựng: nghĩa, từ loại, đồng/trái nghĩa, dạng từ, trọng âm, phiên âm | CC BY-SA | File JSON trích xuất |
-| VOA Learning English | Bài đọc trình độ THCS → câu cloze/từ vựng theo quy tắc | Tài sản công (chính phủ Mỹ) — **loại bài của AP, Reuters, bên thứ ba** | Crawl bài, kiểm tra dòng credit |
+| --- | --- | --- | --- |
+| VOA Learning English | Bài đọc, cloze, dạng từ, ngữ pháp, sắp xếp câu theo quy tắc | Public domain (work of the US Government) | Sitemap chính thức, bài từ 2015; loại AP, Reuters, AFP, bên thứ ba và credit không chắc chắn |
+| Bộ/Sở GD&ĐT chính thức | PDF đề lớp 6–9 hoặc tuyển sinh lớp 10 với đáp án xác định | Văn bản chính thức của cơ quan nhà nước | Seed đã xác minh trên host allowlist `*.gov.vn` hoặc host Sở `*.edu.vn` cụ thể; giữ nguyên văn, năm, tỉnh |
+
+Seed PDF nằm trong `crawler/config/gov-seeds.json`, mặc định rỗng. Host nằm trong `crawler/config/gov-hosts.json`; không cho phép chung mọi `*.edu.vn`. Chỉ nhập câu có đúng một đáp án chính thức. Không OCR hay đoán đáp án.
 
 ## Nguồn bị cấm
 
-VnDoc, Hoc247, Loigiaihay, Tuyensinh247, Thư viện học liệu, Study4, nội dung SGK và nhà xuất bản, Cambridge, OUP, các site tổng hợp đề. Lý do: bản quyền + Google coi là nội dung trùng lặp.
+VnDoc, Hoc247, Loigiaihay, Tuyensinh247, Thư viện học liệu, Study4, langgo.edu.vn, navi.edu.vn, dethi.edu.vn, mọi website tổng hợp đề, nội dung SGK, Cambridge, OUP và nhà xuất bản khác. Denylist ưu tiên hơn allowlist. Không có nguồn thứ ba.
 
-## Quy tắc crawl
+## Crawl và lưu trữ
 
-- Tôn trọng `robots.txt`; tối đa 1 request/giây mỗi host; User-Agent ghi rõ tên dự án + liên hệ.
-- Lưu file gốc vào volume (`raw_documents`), có `content_hash`; chạy lại không tải trùng.
-- Parse lỗi → đánh dấu `failed`, không làm dừng cả job; báo cáo cuối job.
+- Tôn trọng robots.txt theo UA hoặc `*`; tối đa một request/giây mỗi host, timeout 20 giây, tối đa hai lần retry với backoff.
+- UA: `MEnglishLearningBot/0.1 (+https://github.com/namngocngo2210/menglish-learning)`.
+- Cache mọi response tại `data/raw/<host>/<sha1-url>.<ext>` kèm metadata URL, fetchedAt, status, contentHash. Không tải lại trừ `--refresh`.
+- Build chỉ đọc cache; crawledAt lấy từ fetchedAt, thứ tự và ID ổn định. Lỗi parse và lý do loại câu có thống kê, không tự xuất bản.
 
-## Sinh câu theo quy tắc (không AI)
+## Sinh câu, phân loại và kiểm soát chất lượng
 
-| Dạng | Cách sinh | Phương án nhiễu |
-|------|-----------|-----------------|
-| Điền từ (cloze) | Che 1 từ trong câu Tatoeba / bài VOA | Cùng từ loại, tần suất gần, cùng lớp |
-| Chọn dạng từ | Che từ có họ từ trong Wiktionary | Các dạng khác của cùng gốc từ |
-| Thì động từ | Câu chứa động từ chia thì, nhận diện bằng quy tắc | Các thì khác của cùng động từ |
-| Sắp xếp câu | Đảo trật tự cụm từ | Các thứ tự sai hợp lệ về từ |
-| Tìm lỗi sai | Thay 1 thành phần bằng dạng sai theo bảng lỗi phổ biến | Các phần đúng của câu |
-| Đồng/trái nghĩa | Wiktionary | Từ cùng chủ đề, cùng từ loại |
-| Trọng âm/phát âm (dạng viết) | Phiên âm IPA Wiktionary | Từ cùng số âm tiết |
+Cloze nội dung dùng phương án cùng nhóm từ/dạng biến đổi/tần suất; ngữ pháp chỉ dùng tín hiệu rõ ràng và bảng động từ. Dạng từ cần bốn thành viên họ từ có trong corpus. Định nghĩa chỉ lấy từ “Words in This Story” của chính bài VOA. Không tự sinh đồng/trái nghĩa, trọng âm hay phát âm; câu loại này chỉ được nhập nguyên văn từ đề chính thức có đáp án.
 
-## Phân loại
+Lớp/độ khó dùng độ dài từ, độ dài câu, tần suất trong corpus đã crawl, mẫu ngữ pháp và nhãn level VOA; điều chỉnh theo tứ phân vị khi quá tập trung vào một lớp. Chủ đề theo keyword/regex, không đủ tự tin dùng `chung`. Công thức, giới hạn và lệnh chạy ở [crawler/README.md](../crawler/README.md).
 
-- Lớp và độ khó: danh sách từ vựng theo cấp độ (CEFR A1–B1), độ dài câu, tần suất từ.
-- Chủ đề / điểm ngữ pháp: bảng từ khóa và mẫu câu (quy tắc), lưu trong `crawler/rules/`.
-- Câu không đủ tự tin phân loại → `status = hidden`, chờ giáo viên duyệt.
+Mỗi câu có bốn phương án khác nhau và đúng một khóa đáp án; cloze có một blank, kiểm tra tái tạo câu gốc và đáp án thay thế trong corpus. Chống trùng bằng stem chuẩn hóa, thêm passageId cho cloze có bài đọc. Các bộ lọc xác định không thay thế việc giáo viên kiểm tra tính duy nhất về nghĩa.
 
-## Kiểm soát chất lượng
+Chỉ ghi ContentBundle vào quarantine, `tests: []`, `reviewStatus: quarantine`; không đưa vào loader công khai. Chủ sở hữu phải kiểm tra nguồn/giấy phép, wording, đáp án, bài đọc và chất lượng trước luồng draft → in_review → published.
 
-- Chống trùng bằng `stem_hash` (chuẩn hóa chữ thường, bỏ dấu câu, khoảng trắng).
-- Mỗi câu phải có đúng 1 đáp án đúng, 3–4 phương án, không phương án trùng.
-- Nút "Báo câu sai" trên trang → `question_reports` → câu bị báo nhiều tự ẩn chờ duyệt.
-- Mục tiêu giai đoạn 1: ≥ 2.000 câu hoạt động, rải đều lớp 6–9.
+Mục tiêu **2.000 câu là best-effort**, không phải cam kết sản lượng. `npm run report` báo số thực giữ lại theo lớp/kỹ năng/loại/nguồn và lý do loại.
