@@ -34,6 +34,6 @@ export function RandomQuiz({ poolUrl, size = 20, children, afterResult }: { pool
  return <div ref={region} className="space-y-6">
   <div className="flex flex-col gap-3 sm:flex-row"><button ref={trigger} type="button" disabled={loading} aria-busy={loading} className={buttonClass} onClick={start}>{quiz ? "Làm đề ngẫu nhiên khác" : "Làm đề ngẫu nhiên"}</button>{quiz && <button type="button" className="min-h-11 w-full rounded-xl border border-primary bg-surface px-5 py-3 font-bold text-primary hover:bg-sky-soft sm:w-auto" onClick={() => { setActive(null); trigger.current?.focus(); }}>Quay lại đề cố định</button>}</div>
   <p role="status" aria-live="polite">{loading ? "Đang tải và trộn đề…" : error}</p>
-  {active ? <><p className="font-bold text-primary">Đề ngẫu nhiên · {active.quiz.questions.length} câu</p><active.Quiz key={active.quiz.seed} questions={active.quiz.questions} passages={active.quiz.passages} afterResult={afterResult}/></> : children}
+  {active ? <><p className="font-bold text-primary">Đề ngẫu nhiên · {active.quiz.questions.length} câu</p><active.Quiz key={active.quiz.seed} questions={active.quiz.questions} passages={active.quiz.passages} storageKey={`random:${active.quiz.seed}`} afterResult={afterResult}/></> : children}
  </div>;
 }
