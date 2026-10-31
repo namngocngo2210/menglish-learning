@@ -1,0 +1,29 @@
+services:
+  menglish-learning:
+    image: menglish-learning:latest
+    build:
+      context: ./web
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://beta.meducation.vn}
+        NEXT_PUBLIC_ADSENSE_CLIENT: ${NEXT_PUBLIC_ADSENSE_CLIENT:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT: ${NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR: ${NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
+        SEO_NOINDEX: ${SEO_NOINDEX:-false}
+    container_name: menglish-learning
+    restart: unless-stopped
+    expose:
+      - "3000"
+    mem_limit: 512m
+    cpus: 1
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - menglish-proxy
+
+networks:
+  menglish-proxy:
+    external: true
