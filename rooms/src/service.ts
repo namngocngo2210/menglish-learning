@@ -16,10 +16,19 @@ export interface ServiceDependencies {
  crypto?:{hex:(bytes:number)=>string;token:()=>string;playerId:()=>string;randomInt:(max:number)=>number};
 }
 const difficultyWeights={balanced:{1:.4,2:.4,3:.2},easy:{1:.6,2:.3,3:.1},medium:{1:.2,2:.6,3:.2},hard:{1:.2,2:.4,3:.4}};
+type Listener=(room:Room,name:string,data:Record<string,unknown>)=>void;
+const LIVENESS_MS=15_000;
+const iso=(n:number|null)=>n===null?null:new Date(n).toISOString();
 export class RoomService {
  readonly bank:QuestionStore;readonly config:Config;readonly store:RoomStore;readonly now:()=>number;
  readonly crypto:NonNullable<ServiceDependencies['crypto']>;
  draining=false;
+ private readonly listeners:Listener[]=[];
+ on(listener:Listener){this.listeners.push(listener);}
+ private emit(room:Room,name:string,data:Record<string,unknown>={}){for(const l of this.listeners)l(room,name,data);}
+ private closeRoom(room:Room,reason:string){if(room.state==='closed'||room.closing)return;room.closing=true;this.emit(room,'room_closed',{reason});this.store.close(room,this.now(),reason);}
+ /** Close every live room (graceful shutdown) so clients see room_closed{maintenance}. */
+ shutdownAll(){for(const room of [...this.store.rooms.values()])this.closeRoom(room,'maintenance');}
  constructor(deps:ServiceDependencies) {
   this.bank=deps.bank;this.config=deps.config;this.now=deps.now??Date.now;this.store=deps.store??new MemoryRoomStore();
   this.crypto=deps.crypto??{hex:n=>randomBytes(n).toString('hex'),token:issueToken,playerId:issuePlayerId,randomInt};
@@ -58,7 +67,8 @@ export class RoomService {
  private addPlayer(room:Room,name:string) {
   if([...room.players.values()].some(p=>p.status!=='left'&&nameIdentity(p.name)===nameIdentity(name)))fail('name_taken');
   const token=this.crypto.token();const player:Player={playerId:this.crypto.playerId(),name,joinedOrder:room.nextJoinOrder++,tokenHash:hashToken(token),connected:true,lastSeenAt:this.now(),disconnectedAt:null,status:'joined',answers:new Map(),submittedAt:null};
-  room.players.set(player.playerId,player);room.noConnectionsSince=null;this.bump(room);return {player,token};
+  room.players.set(player.playerId,player);room.noConnectionsSince=null;this.bump(room);
+  this.emit(room,'player_joined',{player:{playerId:player.playerId,name:player.name,isHost:false,status:player.status,connected:true}});return {player,token};
  }
  getRoom(input:string):Room {
   this.enabled();const code=normalizeCode(input);const room=code?this.store.rooms.get(code):undefined;
@@ -69,6 +79,7 @@ export class RoomService {
  join(code:string,input:string,token?:string) {
   const room=this.getRoom(code);
   if(token&&room.blockedTokens.has(hashToken(token).toString('hex')))fail('no_session',401);
+  if(token&&[...room.players.values()].some(p=>p.status!=='left'&&tokenMatches(p.tokenHash,token)))fail('already_joined');
   if(room.state!=='lobby'||room.settings.locked)fail('room_not_joinable');
   if(room.players.size>=room.settings.maxPlayers)fail('room_full');
   return {room,...this.addPlayer(room,validateName(input))};
@@ -77,17 +88,17 @@ export class RoomService {
   if(!token||room.state==='closed'||room.blockedTokens.has(hashToken(token).toString('hex')))fail('no_session',401);
   const player=[...room.players.values()].find(p=>p.status!=='left'&&tokenMatches(p.tokenHash,token));
   if(!player)fail('no_session',401);
-  if(!player.connected){player.connected=true;player.disconnectedAt=null;this.bump(room);}
+  if(!player.connected)this.markConnection(room,player,true);
   player.lastSeenAt=this.now();room.lastActiveAt=this.now();room.noConnectionsSince=null;return player;
  }
+ markConnection(room:Room,player:Player,connected:boolean,at=this.now()) {
+  if(player.status==='left'||room.closing)return;
+  if(player.connected!==connected){player.connected=connected;player.disconnectedAt=connected?null:at;this.bump(room);this.emit(room,'player_connection',{playerId:player.playerId,connected});}
+  if(connected){player.lastSeenAt=this.now();room.noConnectionsSince=null;}
+  else if(![...room.players.values()].some(p=>p.connected&&p.status!=='left'))room.noConnectionsSince??=this.now();
+ }
  setConnected(playerId:string,connected:boolean) {
-  for(const room of this.store.rooms.values()) {
-   const player=room.players.get(playerId);if(!player||player.status==='left')continue;
-   if(player.connected!==connected){player.connected=connected;player.disconnectedAt=connected?null:this.now();this.bump(room);}
-   if(connected){player.lastSeenAt=this.now();room.noConnectionsSince=null;}
-   else if(![...room.players.values()].some(p=>p.connected&&p.status!=='left'))room.noConnectionsSince??=this.now();
-   return;
-  }
+  for(const room of this.store.rooms.values()) {const player=room.players.get(playerId);if(player){this.markConnection(room,player,connected);return;}}
  }
  updateSettings(room:Room,player:Player,input:z.input<typeof SettingsSchema>) {
   this.host(room,player);this.state(room,'lobby');const parsed=SettingsSchema.safeParse(input);if(!parsed.success)fail('invalid_input',400);const data=parsed.data;
@@ -97,12 +108,12 @@ export class RoomService {
   if(data.timeLimitMinutes!==undefined)room.settings.timeLimitMinutes=data.timeLimitMinutes;
   if(data.locked!==undefined)room.settings.locked=data.locked;
   if(test&&data.test){room.seed=seed;room.testSpec=data.test;room.questionIds=test.questionIds;room.passageIds=test.passageIds;room.settings.test=test.summary;}
-  this.bump(room);
+  this.bump(room);this.emit(room,'settings_changed',{settings:room.settings});
  }
  start(room:Room,player:Player) {
   this.host(room,player);this.state(room,'lobby');if([...room.players.values()].filter(p=>p.connected).length<2)fail('bad_state');
   room.state='playing';room.startedAt=this.now();room.deadlineAt=this.now()+(room.settings.timeLimitMinutes??60)*60_000;
-  for(const p of room.players.values())p.status='playing';this.bump(room);
+  for(const p of room.players.values())p.status='playing';this.bump(room);this.emit(room,'game_started',{startedAt:iso(room.startedAt),deadlineAt:iso(room.deadlineAt)});
  }
  answer(room:Room,player:Player,input:z.input<typeof AnswerSchema>) {
   this.state(room,'playing');if(player.status!=='playing'||this.now()>=room.deadlineAt!)fail('bad_state');
@@ -114,34 +125,38 @@ export class RoomService {
  private finalizePlayer(player:Player) {if(player.status==='playing'){player.status='submitted';player.submittedAt=this.now();}}
  submit(room:Room,player:Player) {
   this.state(room,'playing');if(player.status!=='playing'||this.now()>=room.deadlineAt!)fail('bad_state');
-  this.finalizePlayer(player);this.bump(room);this.maybeResults(room);return {status:'submitted' as const};
+  this.finalizePlayer(player);this.bump(room);this.progress(room);this.maybeResults(room);return {status:'submitted' as const};
+ }
+ private progress(room:Room) {
+  const players=[...room.players.values()].filter(p=>p.status!=='left');
+  this.emit(room,'progress',{submittedCount:players.filter(p=>p.status==='submitted').length,playerStatuses:players.map(p=>({playerId:p.playerId,status:p.status}))});
  }
  private maybeResults(room:Room) {
   if(room.state!=='playing')return;
   const active=[...room.players.values()].filter(p=>p.status!=='left');
-  if(!active.length){this.store.close(room,this.now(),'empty');return;}
+  if(!active.length){this.closeRoom(room,'empty');return;}
   if(active.every(p=>p.status==='submitted')) {
    const questions=room.questionIds.map(id=>this.bank.questions.get(id)!);
    for(const p of active)p.correct=scoreTest(questions,Object.fromEntries(p.answers)).score;
-   room.state='results';this.bump(room);
+   room.state='results';this.bump(room);this.emit(room,'results_ready',{});
   }
  }
- finish(room:Room,player:Player) {this.host(room,player);this.state(room,'playing');for(const p of room.players.values())this.finalizePlayer(p);this.maybeResults(room);}
+ finish(room:Room,player:Player) {this.host(room,player);this.state(room,'playing');for(const p of room.players.values())this.finalizePlayer(p);this.bump(room);this.progress(room);this.maybeResults(room);}
  private transferHost(room:Room) {
   const next=[...room.players.values()].filter(p=>p.connected&&p.status!=='left').sort((a,b)=>a.joinedOrder-b.joinedOrder)[0];
-  if(next&&next.playerId!==room.hostId){room.hostId=next.playerId;this.bump(room);}return next;
+  if(next&&next.playerId!==room.hostId){room.hostId=next.playerId;this.bump(room);this.emit(room,'host_changed',{hostId:next.playerId});}return next;
  }
  leave(room:Room,player:Player) {
   const wasHost=room.hostId===player.playerId;
   room.blockedTokens.add(player.tokenHash.toString('hex'));
-  if(room.settings.maxPlayers===2&&room.state==='lobby'){this.store.close(room,this.now(),'match_cancelled');return;}
+  if(room.settings.maxPlayers===2&&room.state==='lobby'){this.closeRoom(room,'match_cancelled');return;}
   if(room.state==='playing') {
    player.status='left';player.name='';player.answers.clear();player.connected=false;player.forfeited=true;delete player.correct;
    if(room.settings.maxPlayers===2)room.forfeit=true;
   } else {player.answers.clear();player.name='';room.players.delete(player.playerId);}
-  this.bump(room);
-  if(wasHost&&!this.transferHost(room)){this.store.close(room,this.now(),'empty');return;}
-  if(!room.players.size){this.store.close(room,this.now(),'empty');return;}
+  this.bump(room);this.emit(room,'player_left',{playerId:player.playerId});
+  if(wasHost&&!this.transferHost(room)){this.closeRoom(room,'empty');return;}
+  if(!room.players.size){this.closeRoom(room,'empty');return;}
   if(![...room.players.values()].some(p=>p.connected&&p.status!=='left'))room.noConnectionsSince??=this.now();
   this.maybeResults(room);
  }
@@ -150,30 +165,31 @@ export class RoomService {
   const target=room.players.get(playerId);if(!target)fail('invalid_input',400);
   room.blockedTokens.add(target.tokenHash.toString('hex'));target.name='';target.answers.clear();
   room.players.delete(playerId);if(room.settings.maxPlayers===2&&room.state==='playing')room.forfeit=true;
-  this.bump(room);this.maybeResults(room);
+  this.bump(room);this.emit(room,'player_kicked',{playerId});this.maybeResults(room);
  }
  rematch(room:Room,player:Player) {
   this.host(room,player);this.state(room,'results');
   const seed=this.crypto.hex(32);const test=this.selectTest(room.testSpec,seed);
   room.seed=seed;room.permKey=this.crypto.hex(32);room.questionIds=test.questionIds;room.passageIds=test.passageIds;room.settings.test=test.summary;
   for(const [id,p] of room.players) {
-   if(!p.connected||p.status==='left'){room.blockedTokens.add(p.tokenHash.toString('hex'));p.name='';p.answers.clear();room.players.delete(id);continue;}
+   if((!p.connected&&p.playerId!==player.playerId)||p.status==='left'){room.blockedTokens.add(p.tokenHash.toString('hex'));p.name='';p.answers.clear();room.players.delete(id);continue;}
    p.status='joined';p.answers.clear();p.submittedAt=null;delete p.correct;delete p.forfeited;
   }
-  room.state='lobby';room.startedAt=null;room.deadlineAt=null;room.forfeit=false;room.noConnectionsSince=null;this.bump(room);
+  room.state='lobby';room.startedAt=null;room.deadlineAt=null;room.forfeit=false;room.noConnectionsSince=null;this.bump(room);this.emit(room,'rematch',{});
  }
- close(room:Room,player:Player) {this.host(room,player);this.store.close(room,this.now(),'host_closed');}
+ close(room:Room,player:Player) {this.host(room,player);this.closeRoom(room,'host_closed');}
  report(room:Room,reason:keyof Room['reports']) {room.reports[reason]=Math.min(Number.MAX_SAFE_INTEGER,room.reports[reason]+1);}
  private tickRoom(room:Room) {
   const now=this.now();
-  if(now-room.createdAt>=10_800_000){this.store.close(room,now,'expired');return;}
-  if((room.state==='lobby'&&now-room.lastActiveAt>=1_800_000)||(room.state==='results'&&now-room.lastActiveAt>=600_000)||(room.state==='playing'&&room.noConnectionsSince!==null&&now-room.noConnectionsSince>=300_000)) {this.store.close(room,now,'idle');return;}
+  if(now-room.createdAt>=10_800_000){this.closeRoom(room,'expired');return;}
+  if((room.state==='lobby'&&now-room.lastActiveAt>=1_800_000)||(room.state==='results'&&now-room.lastActiveAt>=600_000)||(room.state==='playing'&&room.noConnectionsSince!==null&&now-room.noConnectionsSince>=300_000)) {this.closeRoom(room,'idle');return;}
+  for(const p of room.players.values())if(p.connected&&p.status!=='left'&&!p.streams&&now-p.lastSeenAt>LIVENESS_MS)this.markConnection(room,p,false,p.lastSeenAt);
   const host=room.players.get(room.hostId);
   if(host&&!host.connected&&host.disconnectedAt!==null&&now-host.disconnectedAt>60_000)this.transferHost(room);
   if(room.state==='playing') {
    let changed=false;
    for(const p of room.players.values())if(p.status==='playing'&&(now>=room.deadlineAt!||(!p.connected&&p.disconnectedAt!==null&&now-p.disconnectedAt>120_000))){this.finalizePlayer(p);changed=true;}
-   if(changed)this.bump(room);this.maybeResults(room);
+   if(changed){this.bump(room);this.progress(room);}this.maybeResults(room);
   }
  }
  tick() {for(const room of this.store.rooms.values())this.tickRoom(room);this.store.sweep(this.now());}

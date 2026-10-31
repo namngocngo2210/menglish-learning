@@ -1,9 +1,9 @@
 import type { TestSpec } from './schemas';
 import type { Key } from './perm';
 export type RoomState='lobby'|'playing'|'results'|'closed';
-export interface Player {playerId:string;name:string;joinedOrder:number;tokenHash:Buffer;connected:boolean;lastSeenAt:number;disconnectedAt:number|null;status:'joined'|'playing'|'submitted'|'left';answers:Map<string,Key>;submittedAt:number|null;correct?:number;forfeited?:boolean}
+export interface Player {playerId:string;name:string;joinedOrder:number;tokenHash:Buffer;connected:boolean;lastSeenAt:number;disconnectedAt:number|null;status:'joined'|'playing'|'submitted'|'left';answers:Map<string,Key>;submittedAt:number|null;streams?:number;correct?:number;forfeited?:boolean}
 export interface TestSummary {title:string;grade:number;skills:string[];size:number;kind:'fixed'|'mix'}
-export interface Room {code:string;state:RoomState;createdAt:number;hostId:string;settings:{maxPlayers:number;timeLimitMinutes:null|15|30;locked:boolean;test:TestSummary};testSpec:TestSpec;seed:string;permKey:string;questionIds:string[];passageIds:string[];startedAt:number|null;deadlineAt:number|null;lastActiveAt:number;noConnectionsSince:number|null;version:number;players:Map<string,Player>;blockedTokens:Set<string>;nextJoinOrder:number;reports:{ten_khong_phu_hop:number;noi_dung_sai:number;khac:number};forfeit:boolean;closeReason?:string}
+export interface Room {code:string;state:RoomState;createdAt:number;hostId:string;settings:{maxPlayers:number;timeLimitMinutes:null|15|30;locked:boolean;test:TestSummary};testSpec:TestSpec;seed:string;permKey:string;questionIds:string[];passageIds:string[];startedAt:number|null;deadlineAt:number|null;lastActiveAt:number;noConnectionsSince:number|null;version:number;players:Map<string,Player>;blockedTokens:Set<string>;nextJoinOrder:number;reports:{ten_khong_phu_hop:number;noi_dung_sai:number;khac:number};forfeit:boolean;closeReason?:string;closing?:boolean}
 export interface RoomStore {rooms:Map<string,Room>;tombstones:Map<string,number>;occupied(code:string):boolean;close(room:Room,now:number,reason:string):void;sweep(now:number):void;counts():Record<RoomState,number>}
 export class MemoryRoomStore implements RoomStore {
  readonly rooms=new Map<string,Room>(); readonly tombstones=new Map<string,number>();

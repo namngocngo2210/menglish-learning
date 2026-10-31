@@ -44,7 +44,7 @@ describe('state machine',()=>{
  });
  it('transfers host on leave and after 60 seconds disconnected',()=>{
   const {service,advance,host,second,room}=party();const c=service.join(room.code,'Minh');
-  service.setConnected(host.player.playerId,false);advance(60_001);service.tick();expect(room.hostId).toBe(second.player.playerId);
+  service.setConnected(host.player.playerId,false);advance(60_001);service.markConnection(room,second.player,true);service.markConnection(room,c.player,true);service.tick();expect(room.hostId).toBe(second.player.playerId);
   service.leave(room,second.player);expect(room.hostId).toBe(c.player.playerId);expect(room.players.has(second.player.playerId)).toBe(false);
  });
  it.each([null,15,30] as const)('auto submits at deadline %s',timeLimitMinutes=>{
@@ -55,7 +55,7 @@ describe('state machine',()=>{
  });
  it('auto submits disconnected players after two minutes and does not block completion',()=>{
   const {service,advance,host,second,room}=party();service.start(room,host.player);
-  service.setConnected(second.player.playerId,false);advance(120_001);service.tick();expect(second.player.status).toBe('submitted');
+  service.setConnected(second.player.playerId,false);advance(120_001);service.markConnection(room,host.player,true);service.tick();expect(second.player.status).toBe('submitted');
   service.submit(room,host.player);expect(room.state).toBe('results');
  });
  it.each(['lobby','results','playing','hard'] as const)('expires %s and retains only a ten minute tombstone',state=>{

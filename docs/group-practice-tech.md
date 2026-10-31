@@ -1,6 +1,6 @@
 # Luyện tập nhóm — thiết kế kỹ thuật, đánh đổi, khuyến nghị
 
-> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (Sprint S1) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/SSE/deploy.** Luồng/quy tắc người dùng: [group-practice.md](group-practice.md). Hợp đồng API: [group-practice-api.md](group-practice-api.md). Mọi con số công suất/bộ nhớ là **ước tính** dựa trên kích thước dữ liệu thật của repo, phải kiểm chứng bằng test tải ở Sprint 2.
+> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (S1) và lớp thời gian thực/độ bền/an toàn (S2: SSE, giới hạn tốc độ, drain, healthz, CSP) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/deploy.** Luồng/quy tắc người dùng: [group-practice.md](group-practice.md). Hợp đồng API: [group-practice-api.md](group-practice-api.md). Mọi con số công suất/bộ nhớ là **ước tính** dựa trên kích thước dữ liệu thật của repo, phải kiểm chứng bằng test tải ở Sprint 2.
 
 ## 0. Hiện trạng ảnh hưởng thiết kế
 
