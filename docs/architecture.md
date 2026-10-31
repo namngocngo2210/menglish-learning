@@ -1,6 +1,6 @@
 # Kiến trúc hệ thống
 
-Website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, tạm chạy ở `beta.meducation.vn`).
+Website luyện tiếng Anh cho học sinh lớp 6–9 (thương hiệu riêng, chạy ở `beejunior.meducation.vn`; `beta.meducation.vn` được Caddy 301-redirect sang).
 Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng miễn phí không cần đăng nhập, có quảng cáo. Nghe/nói làm sau. Chủ sở hữu duy nhất quản trị nội dung cần đăng nhập riêng phía server; không có đội biên tập hay nhiều vai trò.
 
 ## Thiết kế giao diện và admin — chưa triển khai
@@ -14,7 +14,7 @@ Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng
 ## Sơ đồ
 
 ```
-Người dùng ──► Caddy (HTTPS, beta.meducation.vn) ──┬──► web  : Next.js  :3000   (FE, SSG/ISR)
+Người dùng ──► Caddy (HTTPS, beejunior.meducation.vn) ──┬──► web  : Next.js  :3000   (FE, SSG/ISR)
                                                    └──► /api/* ─► api : Go + Gin :8080
                                                                     ├──► postgres : PostgreSQL 16
                                                                     └──► redis    : Redis 7 (rate limit, cache)
