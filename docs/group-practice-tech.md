@@ -1,6 +1,6 @@
 # Luyện tập nhóm — thiết kế kỹ thuật, đánh đổi, khuyến nghị
 
-> **THIẾT KẾ, chưa triển khai.** Luồng/quy tắc người dùng: [group-practice.md](group-practice.md). Hợp đồng API: [group-practice-api.md](group-practice-api.md). Mọi con số công suất/bộ nhớ là **ước tính** dựa trên kích thước dữ liệu thật của repo, phải kiểm chứng bằng test tải ở Sprint 2.
+> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (Sprint S1) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/SSE/deploy.** Luồng/quy tắc người dùng: [group-practice.md](group-practice.md). Hợp đồng API: [group-practice-api.md](group-practice-api.md). Mọi con số công suất/bộ nhớ là **ước tính** dựa trên kích thước dữ liệu thật của repo, phải kiểm chứng bằng test tải ở Sprint 2.
 
 ## 0. Hiện trạng ảnh hưởng thiết kế
 
@@ -93,7 +93,7 @@ Port sang Go (C) chỉ nên làm khi (a) kiến trúc Go `api` đã có, và (b)
 | Tạo phòng | 10/giờ và 3 phòng đang sống mỗi IP; 300 phòng sống toàn hệ thống (đủ → "Hệ thống đang bận, thử lại sau") |
 | Tra/vào phòng sai mã | 20/phút, 60/giờ mỗi IP |
 | Vào phòng (thành công) | 120/phút mỗi IP |
-| Người chơi mỗi phòng | ≤ 30; kết nối SSE ≤ 2 mỗi token, ≤ 60 mỗi IP; ≤ 2.000 toàn hệ thống |
+| Người chơi mỗi phòng | ≤ 45 (mặc định 10); kết nối SSE ≤ 2 mỗi token, ≤ 60 mỗi IP; ≤ 2.000 toàn hệ thống |
 | `PUT /answers` | 120/phút mỗi người chơi |
 | Các POST khác (start, kick…) | 30/phút mỗi người chơi |
 | Thân request | ≤ 4 KB, JSON, thư viện parse chặt (schema zod strict) |

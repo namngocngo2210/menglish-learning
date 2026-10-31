@@ -1,6 +1,6 @@
 # Luyện tập nhóm — hợp đồng API và dữ liệu (phác thảo)
 
-> **THIẾT KẾ, chưa triển khai; không phải mã.** Tên trường có thể chỉnh khi hiện thực. Quy tắc: [group-practice.md](group-practice.md). Lý do chọn SSE + POST, token, giới hạn: [group-practice-tech.md](group-practice-tech.md).
+> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (Sprint S1) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/SSE/deploy.** Tên trường có thể chỉnh khi hiện thực. Quy tắc: [group-practice.md](group-practice.md). Lý do chọn SSE + POST, token, giới hạn: [group-practice-tech.md](group-practice-tech.md).
 
 Quy ước: tiền tố `/rt` (Caddy chuyển tới service `rooms`); JSON UTF-8; lỗi `{ "error": { "code", "message" } }` như [architecture.md](architecture.md); xác thực người chơi bằng cookie token `HttpOnly` theo phòng ([tech §5](group-practice-tech.md#5-token-vào-lại-và-phiên)); mọi POST/PUT kiểm tra `Origin` + `Content-Type: application/json`; thân ≤ 4 KB.
 
@@ -35,7 +35,7 @@ Mã lỗi: `400 invalid_input`, `401 no_session`, `403 not_host`, `404 room_not_
 ```jsonc
 {
   "name": "An (mẫu)",
-  "maxPlayers": 10,                 // 2..30; 2 = đấu đôi
+  "maxPlayers": 10,                 // 2..45 (D11, mặc định 10); 2 = đấu đôi
   "timeLimitMinutes": null,          // null | 15 | 30
   "test": { "mode": "fixed", "slug": "lop-7/ngu-phap/thi-hien-tai-don/de-1" }
   // hoặc: { "mode": "mix", "grade": 7, "skills": ["ngu-phap","tu-vung"], "topicSlug": "thi-hien-tai-don" | null,

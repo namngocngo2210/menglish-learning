@@ -1,6 +1,6 @@
 # Luyện tập nhóm — kế hoạch triển khai
 
-> **THIẾT KẾ, chưa triển khai.** Chỉ bắt đầu sau khi chủ sở hữu duyệt thiết kế và trả lời mục 6. Tài liệu: [group-practice.md](group-practice.md) · [kỹ thuật](group-practice-tech.md) · [API](group-practice-api.md).
+> **Thiết kế ĐÃ ĐƯỢC CHỦ DUYỆT (31/10): chủ chọn theo toàn bộ khuyến nghị ở mục 6 (D1–D14).** Sprint S1 (lõi phòng, package `rooms/`) triển khai sau cờ `ROOMS_ENABLED` (mặc định tắt). Tài liệu: [group-practice.md](group-practice.md) · [kỹ thuật](group-practice-tech.md) · [API](group-practice-api.md).
 
 ## 1. Phương án đã khuyến nghị
 
@@ -52,21 +52,21 @@ Tổng dev ≈ **22–30 ngày công** (≈ 5–6 tuần lịch có review/test)
 - Phụ thuộc: PR #6/#8 (mixer, chủ đề) đã/đang vào `main`; hạ tầng Caddy; cập nhật thương hiệu BeeJunior (card riêng) — thiết kế đã dùng thương hiệu BeeJunior.
 - Ngoài phạm vi: tài khoản, chat/emoji, bảng điểm trực tiếp từng câu, đua tốc độ, lưu lịch sử bền vững, giải/phần thưởng, nghe/nói, ứng dụng di động.
 
-## 6. Quyết định cần chủ sở hữu
+## 6. Quyết định của chủ sở hữu
 
-| # | Câu hỏi | Khuyến nghị |
-|---|---------|-------------|
-| D1 | Duyệt thẩm mỹ 10 màn × 2 kích thước (BeeJunior)? | Duyệt/ghi chú chỉnh |
-| D2 | Kiến trúc: container `rooms` Node/TS, RAM, SSE + POST (thay vì chờ Go `api`+Redis)? | **Có** |
-| D3 | Hẹn giờ: mặc định "Không giới hạn" (trần 60 phút), tùy chọn 15/30 phút? | Có |
-| D4 | Xử lý hòa điểm: cùng hạng, thứ tự trong hạng theo thứ tự vào phòng (không theo tốc độ)? Hay hòa thì xét thời gian nộp? | Cùng hạng (đúng yêu cầu "không đua tốc độ") |
-| D5 | Đáp án đề công khai hiện nằm trong dữ liệu trang (tra tay được): chấp nhận cho luyện tập, hay làm PR riêng chuyển chấm điểm server-side toàn site? | Chấp nhận pha 1 |
-| D6 | Thứ tự phương án: hoán vị riêng từng người (chống chép khi ngồi cạnh nhau) hay chung cả phòng? | Riêng từng người |
-| D7 | 1v1: người rời trước khi nộp → đối thủ thắng hay "Hủy ván"? | Hủy ván nếu rời ở phòng chờ; thắng nếu rời khi đang làm |
-| D8 | Nút "Báo cáo" (chỉ lý do chọn sẵn, ẩn danh) có làm ở pha 1 không? | Có, tối giản |
-| D9 | Quảng cáo: chỉ landing, hay cả màn kết quả (ngoài lúc làm bài)? | Chỉ landing ở pha 1 |
-| D10 | Xác nhận pháp lý NĐ 13: "tên hiển thị tạm trong RAM" + cookie token chức năng có cần cơ chế đồng ý của phụ huynh không? Ai soạn Chính sách? | Cần chủ xác nhận trước khi mở |
-| D11 | Số người tối đa 30 và trần mặc định 10 có phù hợp lớp học (40 học sinh)? | Cho phép tăng lên 45 nếu dùng ở lớp (RAM vẫn nhỏ) |
-| D12 | Blocklist từ cấm: chủ cung cấp/duyệt danh sách? | Dev dựng bản đầu, chủ duyệt |
-| D13 | Tên miền/đường dẫn: `/luyen-tap-nhom` và mã 6 ký tự; chủ có muốn mã 4–5 ký tự dễ đọc hơn? | 6 ký tự (an toàn hơn) |
-| D14 | Cho phép chủ phòng chọn đề từ trang chủ đề (nút "Tạo phòng từ đề này" trên trang đề) ở pha 1? | Có, ở S3 nếu đủ thời gian |
+| # | Câu hỏi | Khuyến nghị | Quyết định của chủ (31/10) |
+|---|---------|-------------|----------------------------|
+| D1 | Duyệt thẩm mỹ 10 màn × 2 kích thước (BeeJunior)? | Duyệt/ghi chú chỉnh | Duyệt (mockup BeeJunior; chỉnh sau theo ghi chú của chủ) |
+| D2 | Kiến trúc: container `rooms` Node/TS, RAM, SSE + POST (thay vì chờ Go `api`+Redis)? | **Có** | Đã chọn: container `rooms` Node/TS, RAM, SSE + POST, không DB/Redis/tài khoản |
+| D3 | Hẹn giờ: mặc định "Không giới hạn" (trần 60 phút), tùy chọn 15/30 phút? | Có | Đã chọn: mặc định không giới hạn (trần 60 phút), tùy chọn 15/30 phút |
+| D4 | Xử lý hòa điểm: cùng hạng, thứ tự trong hạng theo thứ tự vào phòng (không theo tốc độ)? Hay hòa thì xét thời gian nộp? | Cùng hạng (đúng yêu cầu "không đua tốc độ") | Đã chọn: hòa điểm cùng hạng, không xét tốc độ |
+| D5 | Đáp án đề công khai hiện nằm trong dữ liệu trang (tra tay được): chấp nhận cho luyện tập, hay làm PR riêng chuyển chấm điểm server-side toàn site? | Chấp nhận pha 1 | Đã chọn: chấp nhận ở pha 1 (PR riêng sau) |
+| D6 | Thứ tự phương án: hoán vị riêng từng người (chống chép khi ngồi cạnh nhau) hay chung cả phòng? | Riêng từng người | Đã chọn: hoán vị phương án riêng từng người |
+| D7 | 1v1: người rời trước khi nộp → đối thủ thắng hay "Hủy ván"? | Hủy ván nếu rời ở phòng chờ; thắng nếu rời khi đang làm | Đã chọn: rời ở phòng chờ → hủy ván; rời khi đang làm → đối thủ thắng |
+| D8 | Nút "Báo cáo" (chỉ lý do chọn sẵn, ẩn danh) có làm ở pha 1 không? | Có, tối giản | Đã chọn: có, nút báo cáo ẩn danh tối giản |
+| D9 | Quảng cáo: chỉ landing, hay cả màn kết quả (ngoài lúc làm bài)? | Chỉ landing ở pha 1 | Đã chọn: quảng cáo chỉ ở landing |
+| D10 | Xác nhận pháp lý NĐ 13: "tên hiển thị tạm trong RAM" + cookie token chức năng có cần cơ chế đồng ý của phụ huynh không? Ai soạn Chính sách? | Cần chủ xác nhận trước khi mở | Đã chọn: xây sau cờ `ROOMS_ENABLED` mặc định TẮT; chủ xác nhận pháp lý trước khi bật |
+| D11 | Số người tối đa 30 và trần mặc định 10 có phù hợp lớp học (40 học sinh)? | Cho phép tăng lên 45 nếu dùng ở lớp (RAM vẫn nhỏ) | Đã chọn: mặc định 10, tối đa 45 (lớp học) |
+| D12 | Blocklist từ cấm: chủ cung cấp/duyệt danh sách? | Dev dựng bản đầu, chủ duyệt | Đã chọn: dev dựng blocklist nháp (`rooms/src/blocklist.json`), chủ duyệt |
+| D13 | Tên miền/đường dẫn: `/luyen-tap-nhom` và mã 6 ký tự; chủ có muốn mã 4–5 ký tự dễ đọc hơn? | 6 ký tự (an toàn hơn) | Đã chọn: mã 6 ký tự |
+| D14 | Cho phép chủ phòng chọn đề từ trang chủ đề (nút "Tạo phòng từ đề này" trên trang đề) ở pha 1? | Có, ở S3 nếu đủ thời gian | Đã chọn: có, nút "Tạo phòng từ đề này" ở S3 nếu đủ thời gian |

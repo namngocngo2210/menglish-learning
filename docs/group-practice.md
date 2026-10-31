@@ -1,6 +1,6 @@
 # Luyện tập nhóm (phòng 1v1 / nhiều người)
 
-> **Trạng thái: THIẾT KẾ, chưa triển khai.** PR này chỉ có tài liệu và ảnh thiết kế tĩnh để chủ sở hữu duyệt. Không có mã chạy thật, không backend, không deploy. Mọi tên người chơi, điểm, mã phòng trong tài liệu và ảnh là **dữ liệu mẫu**.
+> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (Sprint S1) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/SSE/deploy.** Mọi tên người chơi, điểm, mã phòng trong tài liệu và ảnh là **dữ liệu mẫu**.
 >
 > Tài liệu liên quan: thiết kế kỹ thuật + đánh đổi + khuyến nghị: [group-practice-tech.md](group-practice-tech.md) · hợp đồng API/sự kiện: [group-practice-api.md](group-practice-api.md) · kế hoạch triển khai: [group-practice-plan.md](group-practice-plan.md) · ảnh thiết kế: [previews/group-practice/](previews/group-practice/index.html).
 
@@ -50,7 +50,7 @@ Trạng thái của từng người chơi: `joined` (trong phòng chờ) → `pl
 ## 4. Quy tắc
 
 ### 4.1. Số người
-- Tối thiểu **2** để bắt đầu (1v1 = `maxPlayers` 2). Tối đa **30**; chủ phòng chọn mức trần ≤ 30. Trần mặc định 10.
+- Tối thiểu **2** để bắt đầu (1v1 = `maxPlayers` 2). Tối đa **45** (D11, dùng cho lớp học); chủ phòng chọn mức trần ≤ 45. Trần mặc định 10.
 - Phòng đầy: người mới thấy màn "Phòng đã đủ người". Chỗ của người mất kết nối được **giữ** (xem 4.5) nên không bị người mới chiếm trong lúc làm bài.
 
 ### 4.2. Vào muộn
