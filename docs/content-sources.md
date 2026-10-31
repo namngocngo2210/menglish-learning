@@ -9,7 +9,55 @@ Nguyên tắc: **không dùng AI/LLM sinh câu hỏi**. Chỉ dùng văn bản �
 | VOA Learning English | Bài đọc, cloze, dạng từ, ngữ pháp, sắp xếp câu theo quy tắc | Public domain (work of the US Government) | Sitemap chính thức, bài từ 2015; loại AP, Reuters, AFP, bên thứ ba và credit không chắc chắn |
 | Bộ/Sở GD&ĐT chính thức | PDF đề lớp 6–9 hoặc tuyển sinh lớp 10 với đáp án xác định | Văn bản chính thức của cơ quan nhà nước | Seed đã xác minh trên host allowlist `*.gov.vn` hoặc host Sở `*.edu.vn` cụ thể; giữ nguyên văn, năm, tỉnh |
 
-Seed PDF nằm trong `crawler/config/gov-seeds.json`, mặc định rỗng. Host nằm trong `crawler/config/gov-hosts.json`; không cho phép chung mọi `*.edu.vn`. Chỉ nhập câu có đúng một đáp án chính thức. Không OCR hay đoán đáp án.
+Seed PDF nằm trong `crawler/config/gov-seeds.json`, mặc định rỗng. Host nằm trong `crawler/config/gov-hosts.json`; không cho phép chung mọi `*.edu.vn`. Chỉ nhập câu có đúng một đáp án chính thức. Không đoán đáp án. PDF scan chỉ được nhập qua quy trình OCR chép lại hai lượt bên dưới (owner duyệt 31/10/2026, chạy một lần).
+
+## Kết quả nhập đề chính thức (31/10/2026)
+
+Seed đã xác minh (trang công bố của Sở GD&ĐT Hà Nội trên `hanoi.edu.vn`, robots.txt cho phép, 1 request/giây): đề + đáp án môn Ngoại ngữ không chuyên kỳ thi vào lớp 10 các năm 2024, 2025 và 2026 (6 PDF, ghi trong `crawler/config/gov-seeds.json` kèm `pageUrl`).
+
+**Lần 1 (PR #7): 0 câu.** Cả 6 PDF là ảnh scan (pdfjs trích 0 ký tự văn bản) nên bị bỏ qua.
+
+### OCR chép lại hai lượt (owner duyệt 31/10/2026, chạy một lần)
+
+Phạm vi của AI: **chỉ chép chữ từ ảnh trang** (không viết lại, thêm, sửa, dịch hay giải). Không dùng Antigravity/Gemini.
+- Ảnh trang lấy trực tiếp từ luồng JPEG trong 6 PDF (15 trang: 3 đề × 4 trang + 3 đáp án × 1 trang), cache ở `data/raw/pages` (gitignored). Không cài thêm gói hệ thống; tesseract không có trên máy.
+- Hai lượt độc lập, hai mô hình khác nhau: lượt A = Claude vision, lượt B = Codex vision (gpt-6.1-sol), prompt khác nhau. Mỗi lượt chép từng câu (đề, đoạn văn, phương án, gạch chân `<u>…</u>`) và cột đáp án của đúng mã đề (đề 2024: mã 101; 2025 và 2026: mã 001).
+- **Đáp án chỉ lấy từ PDF đáp án chính thức**; câu không có ô đáp án khớp bị loại. Ô đáp án bị con dấu che (2024 câu 2) bị loại vì hai lượt đọc khác nhau.
+- Giữ câu khi và chỉ khi: cả hai lượt có câu đó, không cần hình, văn bản khớp (bỏ qua khác biệt trình bày: kiểu nháy, dấu gạch, khoảng trắng, độ dài chỗ trống, cách tách đoạn/stem và nhãn blank), phần gạch chân khớp, và hai lượt cùng đọc một đáp án A–D. Câu lệch bị loại và đếm theo lý do trong `official-exams-report.json`.
+- Ngân sách: 59 lượt xem ảnh/vùng cắt tổng cộng (cap ~60), gồm cả lượt kiểm tra mẫu; không chạy lặp.
+- Dữ liệu chép lưu ở `crawler/ocr/hanoi-<năm>.json` (hai lượt + khoá đáp án, không chứa ảnh); `npm run build-bank` chỉ đọc các file này nên kết quả xác định, không cần ảnh hay cache PDF. Logic gộp/kiểm tra: `crawler/src/ocr/merge.ts` (+ `crawler/test/ocr.test.ts`).
+- Mọi câu có `sourceRef` kết thúc bằng `ocr-transcribed`, `reviewStatus: quarantine`; script `build:tests` **không bao giờ** xuất bản chúng (`web/scripts/lib/build-bank.ts`) cho tới khi owner duyệt. Câu thi vào lớp 10 chỉ vào ngân hàng tuyển sinh sau khi duyệt.
+
+Kết quả thực (kho chờ duyệt, lớp 9, `tuyen-sinh-10-ngoai-ngu-khong-chuyen`):
+
+| Năm (mã đề) | Câu đọc được | Giữ lại | Loại | Lý do loại | Giữ theo phần |
+| --- | ---: | ---: | ---: | --- | --- |
+| 2024 (101) | 40 | 37 | 3 | câu 11 cần hình biển báo; câu 2 hai lượt đọc đáp án khác nhau (dấu che ô); câu 4 gạch chân phát âm khác nhau | trắc nghiệm 20, đọc/điền 10, phát âm/trọng âm 3, viết lại câu 4 |
+| 2025 (001) | 40 | 37 | 3 | câu 25, 26 cần hình thông báo/tin nhắn; câu 28 lượt B bỏ sót chữ “of” | trắc nghiệm 8, đọc/điền 22, phát âm/trọng âm 4, viết lại câu 3 |
+| 2026 (001) | 40 | 37 | 3 | câu 15, 16 cần hình biển; câu 2 lượt A gắn nhầm đoạn văn (lỗi của lượt A, hai lượt lệch) | trắc nghiệm 8, đọc/điền 21, phát âm/trọng âm 4, viết lại câu 4 |
+| **Tổng** | 120 | **111** | 9 | | trắc nghiệm 36, đọc/điền 53, phát âm/trọng âm 11, viết lại câu 11 |
+
+Ghi chú: “đọc/điền” gồm câu đọc hiểu, điền khuyết trong đoạn văn và câu chọn câu/đoạn bị bỏ; câu điền khuyết giữ stem là nhãn blank (ví dụ `(13)`) cùng đoạn văn gốc. Câu cần hình (6 câu) không nhập vì nội dung nằm trong ảnh.
+
+#### Kiểm tra mẫu (25 câu giữ lại, bốc ngẫu nhiên có seed `ocr-sample-2026-10-31`)
+
+So khớp với ảnh trang gốc (vùng cắt độ phân giải đầy đủ): **0/25 câu sai** ở văn bản/phương án; khoá đáp án của các câu mẫu khớp bảng đáp án (3 ô bị dấu che ở đề 2025 câu 1–3 đọc giống nhau ở cả hai lượt, câu 3 nằm trong mẫu). Chặn trên 95% (quy tắc ba): ≈ 12%, nên mẫu này chỉ cho thấy tỷ lệ lỗi thấp, không chứng minh bằng 0. 19 câu được so lại với vùng cắt mới, 6 câu (2025 c19, c38 và c40 phần phương án C–D; 2026 c14, c29, c37 phần phương án) được so lại với lượt xem ảnh đầu do giới hạn 60 ảnh.
+
+| Đề | Câu mẫu (trang) | Kết quả |
+| --- | --- | --- |
+| 2024 | 7 (tr.2), 12 (tr.2), 20 (tr.3), 25 (tr.3), 36 (tr.4), 38 (tr.4) | đúng |
+| 2025 | 3, 6, 7 (tr.1), 13, 15, 19 (tr.2), 23, 29 (tr.3), 35, 38, 40 (tr.4) | đúng |
+| 2026 | 6, 14 (tr.2), 21, 23, 24, 29 (tr.3), 35, 37 (tr.4) | đúng |
+
+Sai lệch thật đã bắt được nhờ hai lượt (nên bị loại, không vào kho): lượt A gắn đoạn văn nhầm ở 2026 câu 2; lượt B bỏ chữ “of” ở 2025 câu 28; hai lượt khác gạch chân ở 2024 câu 4. Quy trình này không đảm bảo bắt được lỗi mà cả hai mô hình cùng mắc; owner vẫn cần duyệt từng câu.
+
+Đã tìm nhưng không dùng được:
+- `quantridongda.hanoi.edu.vn`, `file2.hanoi.edu.vn`: robots.txt `Disallow: /` — không tải.
+- Bản đề TP.HCM đăng lại trên site trường `*.hcm.edu.vn`: tệp nằm dưới `/tai/` (bị robots.txt chặn) và là bản đăng lại của trường, không phải kênh công bố của Sở.
+- Trang tin của Sở Đồng Nai (2025): chỉ có “gợi ý đáp án” do giáo viên cung cấp, không phải đáp án chính thức.
+- Mọi kết quả còn lại là trang tổng hợp (bị cấm).
+
+Chưa thêm nguồn nào ngoài danh sách đã duyệt.
 
 ## Nguồn bị cấm
 

@@ -3,6 +3,15 @@ import { JsonLd } from "@/components/json-ld";
 import { loadBundle } from "@/lib/content/load";
 import { GRADES } from "@/lib/routes";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import officialExamsReport from "@/content/official-exams-report.json";
+const officialExamStatuses: Record<string, string> = {
+ "imported": "Đã nhập vào kho chờ duyệt",
+ "ocr-transcribed": "Bản scan, chép lại bằng OCR 2 lượt độc lập, đã nhập vào kho chờ duyệt",
+ "scanned-no-text-layer": "Bản scan, không có lớp văn bản — bỏ qua",
+ "no-keyed-items": "Không có câu hỏi kèm đáp án hợp lệ — bỏ qua",
+ "cache-missing": "Thiếu tệp trong bộ nhớ đệm — bỏ qua",
+ "parse-error": "Lỗi phân tích PDF — bỏ qua",
+};
 export const revalidate = 3600;
 export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh THCS.", path: "/nguon-du-lieu" });
 export default function CreditsPage() {
@@ -21,5 +30,24 @@ export default function CreditsPage() {
     return <tr key={grade} className="border-t border-navy-soft/20"><th scope="row" className="p-2">{grade}</th><td className="p-2">{questions.length}</td><td className="p-2">{bank.passages.filter(p => p.sourceId === source.id && passageIds.has(p.id)).length}</td></tr>;
    })}</tbody></table>
   </section>)}
+  <section className="space-y-4 rounded-md border border-navy-soft/20 p-5 sm:p-7">
+   <h2 className="text-xl font-bold">Đề chính thức Bộ/Sở GD&ĐT</h2>
+   <p>Câu hỏi từ đề chính thức được giữ trong kho chờ duyệt cho đến khi chủ sở hữu kiểm tra và duyệt xuất bản. Với đề scan, AI chỉ chép lại chữ từ ảnh (không viết lại, không giải); đáp án chỉ lấy từ file đáp án chính thức, và câu chỉ được giữ khi hai lượt chép độc lập khớp nhau.</p>
+   {!officialExamsReport.seeds.some(seed => seed.status === "imported" || seed.status === "ocr-transcribed") && <p>Chưa có câu hỏi nào từ các đề chính thức được nhập vào kho chờ duyệt.</p>}
+   <div className="overflow-x-auto">
+    <table className="w-full text-left">
+     <caption className="mb-3 text-left font-semibold">Kết quả xử lý các đề chính thức đã xác minh</caption>
+     <thead><tr><th scope="col" className="p-2">Năm</th><th scope="col" className="p-2">Tỉnh</th><th scope="col" className="p-2">Nguồn</th><th scope="col" className="p-2">Trạng thái</th><th scope="col" className="p-2">Số câu</th><th scope="col" className="p-2">Đọc được / loại do hai lượt không khớp</th></tr></thead>
+     <tbody>{officialExamsReport.seeds.map(seed => <tr key={seed.url} className="border-t border-navy-soft/20">
+      <th scope="row" className="p-2">{seed.year}</th>
+      <td className="p-2">{seed.province}</td>
+      <td className="p-2"><a className="inline-flex min-h-11 min-w-11 items-center underline focus-visible:outline-2 focus-visible:outline-offset-2" href={seed.pageUrl ?? seed.url} aria-label={`Nguồn đề chính thức ${seed.province} năm ${seed.year}`}>Xem nguồn</a></td>
+      <td className="p-2">{officialExamStatuses[seed.status] ?? "Chưa xác định"}</td>
+      <td className="p-2">{seed.items}</td>
+      <td className="p-2">{"ocr" in seed && seed.ocr ? `${seed.ocr.extracted} / ${seed.ocr.rejected}` : "—"}</td>
+     </tr>)}</tbody>
+    </table>
+   </div>
+  </section>
  </PageShell>;
 }

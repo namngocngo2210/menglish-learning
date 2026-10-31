@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { parseVoa } from '../src/sources/voa.js';
-import { govItems } from '../src/sources/gov.js';
+import { govItems, hasTextLayer, seedStatus } from '../src/sources/gov.js';
 import { assemble, rejection } from '../src/bank.js';
 import { corpusStats } from '../src/classify.js';
 import { grammarItems } from '../src/build/index.js';
@@ -30,4 +30,20 @@ it('checks blank, missing passage, source evidence and matching metadata',()=>{
 it('classifies official function-word options as grammar',()=>{
  const items=govItems('1. He arrived ___ London. A. in B. on C. at D. by','1. A',seed,'2026-01-01T00:00:00Z');
  expect(items[0]?.skill).toBe('ngu-phap');expect(items[0]?.topicSlug).toBe('gioi-tu');
+});
+
+it('requires at least 200 non-whitespace characters for a PDF text layer',()=>{
+ expect(hasTextLayer('')).toBe(false);
+ expect(hasTextLayer(' \t\n\u00a0'.repeat(200))).toBe(false);
+ expect(hasTextLayer('a'.repeat(199))).toBe(false);
+ expect(hasTextLayer('a '.repeat(200))).toBe(true);
+ expect(hasTextLayer('ấ'.repeat(201))).toBe(true);
+});
+it('prioritizes a missing text layer in either PDF over keyed item counts',()=>{
+ const text='a'.repeat(200);
+ expect(seedStatus('',text,0)).toBe('scanned-no-text-layer');
+ expect(seedStatus(text,'',0)).toBe('scanned-no-text-layer');
+ expect(seedStatus(text,'',1)).toBe('scanned-no-text-layer');
+ expect(seedStatus(text,text,0)).toBe('no-keyed-items');
+ expect(seedStatus(text,text,1)).toBe('imported');
 });

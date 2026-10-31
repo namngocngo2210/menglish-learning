@@ -5,14 +5,16 @@ import { expect, it } from "vitest";
 import { ContentBundleSchema } from "@/lib/content/types";
 import { loadBundle } from "@/lib/content/load";
 import { parseEntranceSlug, parseTestSlug } from "@/lib/routes";
-import { buildBank, serializeBundle } from "@/scripts/lib/build-bank";
-const fragments = readdirSync("content/quarantine").filter(f => f.endsWith(".json")).sort().map(f => ContentBundleSchema.parse(JSON.parse(readFileSync(join("content/quarantine", f), "utf8"))));
+import { buildBank, serializeBundle, withoutPendingOfficialOcr } from "@/scripts/lib/build-bank";
+const rawFragments = readdirSync("content/quarantine").filter(f => f.endsWith(".json")).sort().map(f => ContentBundleSchema.parse(JSON.parse(readFileSync(join("content/quarantine", f), "utf8"))));
+// Scan transcriptions awaiting owner approval never reach the promotion pipeline; fixtures below start from the promotable fragments.
+const fragments = rawFragments.map(withoutPendingOfficialOcr);
 const generated = () => buildBank(fragments);
 it("reproduces every checked-in bank bundle byte for byte", () => {
  const output = generated(); expect(Object.keys(output).sort()).toEqual(["bank-entrance.json", "bank-grade-6.json", "bank-grade-7.json", "bank-grade-8.json", "bank-grade-9.json"]);
  for (const [file, bundle] of Object.entries(output)) expect(readFileSync(join("content/tests", file), "utf8"), file).toBe(serializeBundle(bundle));
  expect(buildBank([...fragments].reverse())).toEqual(output);
- expect(fragments.flatMap(f => f.questions).every(q => q.reviewStatus === "quarantine")).toBe(true);
+ expect(rawFragments.flatMap(f => f.questions).every(q => q.reviewStatus === "quarantine")).toBe(true);
 });
 it("loads at least 300 tests with unique parseable slugs and valid grade/skill membership", () => {
  const bundle = loadBundle(); expect(bundle.tests.length).toBeGreaterThanOrEqual(300);
@@ -109,4 +111,14 @@ it("filters email invitations and recomputes passage word counts across every gr
    expect(passage.wordCount).toBe(passage.body.split(/\s+/).filter(Boolean).length);
   }
  }
+});
+
+it("never promotes official-exam items transcribed from scans until the owner approves them", () => {
+  const pending = rawFragments.flatMap(f => f.questions).filter(q => (q.sourceRef ?? "").includes("ocr-transcribed"));
+  expect(pending.length).toBeGreaterThan(0);
+  const published = new Set(Object.values(generated()).flatMap(b => b.questions.map(q => q.id)));
+  for (const q of pending) expect(published.has(q.id), q.id).toBe(false);
+  for (const bundle of Object.values(generated())) expect(bundle.sources.some(s => s.id.startsWith("gov-"))).toBe(false);
+  const unfiltered = buildBank(rawFragments);
+  expect(unfiltered).toEqual(generated());
 });

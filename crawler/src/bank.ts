@@ -32,7 +32,8 @@ export function assemble(input:Candidate[],corpus:Corpus):Bank{
  const seen=new Set<string>();const ready:Candidate[]=[];
  const ordered=[...input].sort((a,b)=>a.sourceUrl.localeCompare(b.sourceUrl)||a.sourceRef.localeCompare(b.sourceRef)||a.stem.localeCompare(b.stem));
  for(const item of ordered){const reason=rejection(item,corpus);if(reason){count(report.rejections,reason);continue;}
- const key=normalize(item.stem)+(clozeKinds.has(item.kind)&&item.passage?'|'+item.passage.id:'');if(seen.has(key)){count(report.rejections,'duplicate');continue;}seen.add(key);ready.push(item);}
+ // Official items are unique per paper question: stems such as "(13)" legitimately repeat across papers.
+const key=normalize(item.stem)+(clozeKinds.has(item.kind)&&item.passage?'|'+item.passage.id:'')+(item.kind.startsWith('exam-')?'|'+item.sourceRef:'');if(seen.has(key)){count(report.rejections,'duplicate');continue;}seen.add(key);ready.push(item);}
  const voa=ready.filter(i=>i.sourceId==='voa-learning-english');const grades=spreadGrades(voa.map(item=>{const c=classify(item.original,corpus);return {id:item.sourceRef,score:item.score??c.score,grade:item.grade??c.grade};}));const assigned=new Map(voa.map((item,i)=>[item,grades[i]]));
  for(const item of ready){const c=classify(item.original,corpus);const grade=assigned.get(item)??item.grade??c.grade;const difficulty=item.difficulty??c.difficulty;
  if(![6,7,8,9].includes(grade)||![1,2,3].includes(difficulty)){count(report.rejections,'classification');continue;}

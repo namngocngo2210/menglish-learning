@@ -20,14 +20,41 @@ const emptyBundle = (): ContentBundle => ({ sources: [], passages: [], topics: [
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const topicKey = (t: Topic) => `${t.grade}/${t.skill}/${t.slug}`;
 /** Merge all fragments before resolving cross-file resources. No input object is mutated. */
+/**
+ * Official exam items transcribed from scanned PDFs (sourceRef ends with "ocr-transcribed") stay in
+ * quarantine until the owner approves them; the explicit promotion command never publishes them.
+ */
+export const isPendingOfficialOcr = (q: { sourceRef?: string }) => (q.sourceRef ?? "").split("|").map(part => part.trim()).includes("ocr-transcribed");
+/** Removes pending scan transcriptions plus the sources, passages and topics that only they referenced. */
+export function withoutPendingOfficialOcr(bundle: ContentBundle): ContentBundle {
+  const pending = bundle.questions.filter(isPendingOfficialOcr);
+  if (pending.length === 0) return bundle;
+  const questions = bundle.questions.filter(q => !isPendingOfficialOcr(q));
+  const topicKey = (t: { grade: number; skill: string; slug: string }) => `${t.grade}|${t.skill}|${t.slug}`;
+  const questionTopic = (q: { grade: number; skill: string; topicSlug: string }) => `${q.grade}|${q.skill}|${q.topicSlug}`;
+  const pendingPassages = new Set(pending.map(q => q.passageId).filter((id): id is string => !!id));
+  const pendingSources = new Set(pending.map(q => q.sourceId));
+  const pendingTopics = new Set(pending.map(questionTopic));
+  const keptPassages = new Set(questions.map(q => q.passageId).filter((id): id is string => !!id));
+  const keptSources = new Set(questions.map(q => q.sourceId));
+  const keptTopics = new Set(questions.map(questionTopic));
+  return {
+    ...bundle,
+    questions,
+    passages: bundle.passages.filter(p => !pendingPassages.has(p.id) || keptPassages.has(p.id)),
+    sources: bundle.sources.filter(s => !pendingSources.has(s.id) || keptSources.has(s.id)),
+    topics: bundle.topics.filter(t => !pendingTopics.has(topicKey(t)) || keptTopics.has(topicKey(t))),
+  };
+}
 export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (report: GuardReport) => void): Record<string, ContentBundle> {
  const merged = emptyBundle();
  for (const fragment of fragments) {
   const parsed = ContentBundleSchema.parse(fragment);
-  merged.sources.push(...parsed.sources);
-  merged.passages.push(...parsed.passages);
-  merged.topics.push(...parsed.topics);
-  merged.questions.push(...parsed.questions);
+  const kept = withoutPendingOfficialOcr(parsed);
+  merged.sources.push(...kept.sources);
+  merged.passages.push(...kept.passages);
+  merged.topics.push(...kept.topics);
+  merged.questions.push(...kept.questions);
  }
  function unique<T>(items: T[], key: (item: T) => string): T[] {
   const map = new Map<string, T>();
@@ -41,7 +68,7 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  merged.sources = unique(merged.sources, s => s.id);
  merged.passages = unique(merged.passages, p => p.id);
  merged.topics = unique(merged.topics, topicKey);
- merged.questions = unique(merged.questions.filter(q => q.reviewStatus === "quarantine"), q => q.id);
+ merged.questions = unique(merged.questions.filter(q => q.reviewStatus === "quarantine" && !isPendingOfficialOcr(q)), q => q.id);
  const guarded = guardQuestions(merged.questions);
  reportGuards?.(guarded);
  merged.questions = classifyEligibleQuestions(guarded.questions, merged.passages).map(entry => entry.question);
