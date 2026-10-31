@@ -29,14 +29,14 @@ export function Quiz({ questions, passages = [], passageContent, afterResult, pr
  return <section aria-labelledby="quiz-heading" className="space-y-8">
   <div className="rounded-md border border-navy-soft/20 bg-warm p-5"><h2 id="quiz-heading" ref={startRef} tabIndex={-1} className="text-xl font-bold">Bài luyện của em</h2><p className="mt-2">Chọn đáp án rồi bấm “Kiểm tra” để xem lời giải từng câu. Câu đã kiểm tra sẽ được khóa.</p><p className="mt-2 text-sm">Đã chọn {answered}/{questions.length} câu. Khi nộp bài, câu bỏ trống được tính là chưa đúng.</p><noscript><p className="mt-4 font-semibold">Em cần bật JavaScript để kiểm tra đáp án, nộp bài và xem kết quả. Em vẫn có thể đọc bài và chọn đáp án bên dưới.</p></noscript></div>
   <div className={hasPassages ? "grid items-start gap-8 lg:grid-cols-2" : "mx-auto max-w-3xl"}>
-   {hasPassages && <div className="min-w-0 space-y-5 lg:sticky lg:top-6">{passageContent ?? <ol aria-label="Các bài đọc" className="space-y-5">{passages.map((passage, index) => <li key={passage.id}><PassageBlock passage={passage} number={index+1}/></li>)}</ol>}</div>}
+   {hasPassages && <div className="min-w-0 space-y-5 lg:sticky lg:top-6">{passageContent ?? <ol aria-label="Các bài đọc" className="space-y-5">{passages.map((passage, index) => <li key={passage.id} className={index > 0 ? "[contain-intrinsic-size:auto_640px] [content-visibility:auto]" : undefined}><PassageBlock passage={passage} number={index+1}/></li>)}</ol>}</div>}
    <div className="min-w-0 space-y-6">{questions.map((question,index) => {
     const revealed = Boolean(state.checked[question.id] || state.submitted);
     const selected = state.answers[question.id];
     const correct = selected === question.correctKey;
     const FeedbackIcon = !selected ? CircleHelp : correct ? CheckCircle2 : XCircle;
     return <section key={question.id} id={`question-${question.id}`} tabIndex={-1} aria-label={`Câu ${index+1}`} className="rounded-md border border-navy-soft/20 bg-surface p-5 [contain-intrinsic-size:auto_360px] [content-visibility:auto] sm:p-6">
-     {question.passageId && <a className="mb-3 inline-flex min-h-11 items-center text-sm" href={`#passage-${question.passageId}`}>Bài đọc {passages.findIndex(p => p.id === question.passageId)+1}</a>}
+     {question.passageId && <a className="mb-3 inline-flex min-h-11 items-center bg-surface text-sm" href={`#passage-${question.passageId}`}>Bài đọc {passages.findIndex(p => p.id === question.passageId)+1}</a>}
      <fieldset disabled={revealed} className="min-w-0" aria-describedby={revealed ? `feedback-${question.id}` : undefined}>
       <legend className="mb-5 w-full font-bold"><span className="mb-2 block text-sm text-primary">Câu {index+1}</span><span lang="en">{question.stem}</span></legend>
       <div className="space-y-3">{question.options.map(option => <label key={option.key} className={`flex min-h-11 items-start gap-3 rounded-md border p-3 ${selected === option.key ? "border-primary bg-warm" : "border-navy-soft/30"}`}><input className="mt-1 size-5 shrink-0 accent-primary" type="radio" name={`quiz-${question.id}`} value={option.key} checked={selected === option.key} onChange={() => dispatch({type:"select",id:question.id,key:option.key})}/><span lang="en">{option.key}. {option.text}</span></label>)}</div>

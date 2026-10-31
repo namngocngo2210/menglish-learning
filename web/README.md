@@ -14,7 +14,7 @@ npm start
 
 `app/` contains Vietnamese App Router server pages with SSG and hourly ISR. `lib/routes.ts` owns every path and slug; `lib/content/` owns Zod validation, publication filtering, references, caching, and the future importer contract. `lib/scoring.ts` powers interactive client quizzes. `tests/` covers routes, scoring, mixing, progress, rendering and content. `content/tests/` holds the published reviewed bank; see [content format](content/README.md).
 
-`app/globals.css` defines orange/navy tokens: brand is decorative only, cta supports white button text, primary is for accent text, navy/navy-soft for text and structure, surface/warm/warm-2 for backgrounds. No default shadcn gray theme is loaded. Be Vietnam Pro is bundled locally in three unicode-range subsets and four weights through `next/font/local`; no font CDN is used.
+`app/globals.css` defines orange/navy tokens: brand is decorative only, cta supports white button text, primary is for accent text, navy/navy-soft for text and structure, surface/warm/warm-2 for backgrounds. No default shadcn gray theme is loaded. Be Vietnam Pro is bundled locally in three unicode-range subsets and two weights (400 and 700) through `next/font/local`; no font CDN is used.
 
 Pages keep content/routing responsibilities and reuse [typed UI slots](components/ui-kit/README.md). The importer writes quarantine through a host-controlled sink and requires owner review to publish. Quizzes score locally, so answer keys are present in client data; this is a practice site, not a secure exam service.
 
