@@ -1,0 +1,17 @@
+{
+  "name": "beejunior-rooms",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build:bank": "tsx scripts/build-bank.ts",
+    "mem-check": "tsx scripts/mem-check.ts",
+    "build": "esbuild src/server.ts --bundle --platform=node --format=esm --outfile=dist/server.mjs",
+    "start": "node dist/server.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": { "zod": "^4.1.0" },
+  "devDependencies": { "typescript": "^5.9.0", "tsx": "^4.20.0", "vitest": "^3.2.0", "esbuild": "^0.25.0", "@types/node": "^22.18.0" }
+}
