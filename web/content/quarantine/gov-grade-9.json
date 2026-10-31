@@ -1,7 +1,4316 @@
 {
-  "sources": [],
-  "passages": [],
-  "topics": [],
-  "questions": [],
+  "sources": [
+    {
+      "id": "gov-bf84254d",
+      "name": "Sở/Bộ GD&ĐT – Hà Nội",
+      "baseUrl": "https://hanoi.edu.vn",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "attribution": "Hà Nội – 2024"
+    }
+  ],
+  "passages": [
+    {
+      "id": "gov-p-0019d0a76c5a",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2025",
+      "body": "Shopping is an important part of everyday life. (37)____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38)____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39)____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40)____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+      "wordCount": 130,
+      "level": 5
+    },
+    {
+      "id": "gov-p-55f6c917e98a",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2026",
+      "body": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______. In conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+      "wordCount": 204,
+      "level": 5
+    },
+    {
+      "id": "gov-p-668f18253552",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2026",
+      "body": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n- Sign up for the activity (17)______ the school website before Friday.\n- Remember to (18)______ a clear goal for your group before you start.\n- Bring (19)______ reusable water bottle instead of buying plastic ones.\n- Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+      "wordCount": 64,
+      "level": 5
+    },
+    {
+      "id": "gov-p-9042de9c0992",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2025",
+      "body": "(17)______ It helps people understand each other more clearly by using eye contact, body language, and facial expressions. (18)______ Because of these advantages, face-to-face communication is still very important in our daily lives.",
+      "wordCount": 33,
+      "level": 5
+    },
+    {
+      "id": "gov-p-905fac018961",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2026",
+      "body": "To save energy at school, students should practise a few simple habits. To begin with, try to avoid wasting energy during lessons and at break time. ______",
+      "wordCount": 26,
+      "level": 5
+    },
+    {
+      "id": "gov-p-a1072d4fcd19",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2025",
+      "body": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n- Choose one of the jobs you like. The interview will be (13)______ July 20th.\n- Decide who is going to apply and who is going to hire.\n- Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14)______ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n- Give the job interview.\n- Your classmates will comment on your (15)______ during the interview.\n- For (16)______ information, contact 19007666.",
+      "wordCount": 120,
+      "level": 5
+    },
+    {
+      "id": "gov-p-b3b080070b8f",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2024",
+      "body": "INTENSIVE ENGLISH COURSE\nLocation: Bibury School, Malvern School, Trent College\nDates: 30th June – 25th August 2024\nAges: 7 – 18 years old\nOverview:\nWelcome to our Intensive English Programme – the perfect choice for students looking to achieve specific language learning goals and (26)_____ rapid progress in their English proficiency! Our Intensive English Programme offers an additional 12 hours of English language instruction per week on top of our regular (27)_____ English course. These extra classes are held in small groups of three or four, allowing for a personalised learning experience that is tailored to (28)_____ student's individual needs.\nHighlights:\n* Residential accommodation\n* Full-board\n* 12 hours of intensive English (29)_____ small groups\n* A variety of indoor and outdoor (30)_____\n* Two excursions per week",
+      "wordCount": 111,
+      "level": 5
+    },
+    {
+      "id": "gov-p-b989c8c3e0d0",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2024",
+      "body": "TEENTECH Forum\nThomson@2005: I always read about teens and how much time they spend on their electronic devices. Is it a good idea for teens to have a lot of electronic devices? What do you think?\nDan@14: Of course it is! Having a device like a smartphone is a great way for me to contact friends and family members – especially the ones I don't see very often. I share photos and send them text messages on a messaging app all the time. I also use my laptop and my tablet to do research and improve my computer skills.\nHarrison@008: Electronic devices can have some negative effects on teens. I had a tablet, a smartphone and a games console. I spent too much time playing video games and going on social media. My parents said it would reduce my attention span and make me lack social skills. My doctor told me I was gaining weight, too. Now, I just have a smartphone and I only use it after I finish my homework. I'm glad I stopped wasting so much time on electronic devices.",
+      "wordCount": 182,
+      "level": 5
+    },
+    {
+      "id": "gov-p-d0eeee40abe7",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2026",
+      "body": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+      "wordCount": 265,
+      "level": 5
+    },
+    {
+      "id": "gov-p-d1b0f2727923",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2026",
+      "body": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+      "wordCount": 244,
+      "level": 5
+    },
+    {
+      "id": "gov-p-dd63c1ae6fa9",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2025",
+      "body": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+      "wordCount": 155,
+      "level": 5
+    },
+    {
+      "id": "gov-p-f0223c6dd191",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "title": "tuyen-sinh-10-ngoai-ngu-khong-chuyen – 2025",
+      "body": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+      "wordCount": 206,
+      "level": 5
+    }
+  ],
+  "topics": [
+    {
+      "grade": 9,
+      "skill": "doc-hieu",
+      "slug": "chung",
+      "name": "Tổng hợp",
+      "description": "Luyện tập tổng hợp từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "doc-hieu",
+      "slug": "gia-dinh-ban-be",
+      "name": "Gia đình và bạn bè",
+      "description": "Luyện tập gia đình và bạn bè từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "cau-dieu-kien",
+      "name": "Câu điều kiện",
+      "description": "Luyện tập câu điều kiện từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "dong-tu-khuyet-thieu",
+      "name": "Động từ khuyết thiếu",
+      "description": "Luyện tập động từ khuyết thiếu từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "so-sanh",
+      "name": "So sánh",
+      "description": "Luyện tập so sánh từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "thi-hien-tai-don",
+      "name": "Thì hiện tại đơn",
+      "description": "Luyện tập thì hiện tại đơn từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "thi-hien-tai-hoan-thanh",
+      "name": "Thì hiện tại hoàn thành",
+      "description": "Luyện tập thì hiện tại hoàn thành từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "ngu-phap",
+      "slug": "thi-qua-khu-don",
+      "name": "Thì quá khứ đơn",
+      "description": "Luyện tập thì quá khứ đơn từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "chung",
+      "name": "Tổng hợp",
+      "description": "Luyện tập tổng hợp từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "du-lich",
+      "name": "Du lịch",
+      "description": "Luyện tập du lịch từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "gia-dinh-ban-be",
+      "name": "Gia đình và bạn bè",
+      "description": "Luyện tập gia đình và bạn bè từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "giao-duc",
+      "name": "Giáo dục",
+      "description": "Luyện tập giáo dục từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "khoa-hoc-cong-nghe",
+      "name": "Khoa học và công nghệ",
+      "description": "Luyện tập khoa học và công nghệ từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "tu-vung",
+      "slug": "phat-am-trong-am",
+      "name": "Phát âm và trọng âm",
+      "description": "Luyện tập phát âm và trọng âm từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    },
+    {
+      "grade": 9,
+      "skill": "viet-cau",
+      "slug": "viet-lai-cau",
+      "name": "Viết lại câu",
+      "description": "Luyện tập viết lại câu từ nguồn đã ghi nhận; chờ chủ sở hữu duyệt."
+    }
+  ],
+  "questions": [
+    {
+      "id": "gov-00bc5e5d",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "dong-tu-khuyet-thieu",
+      "difficulty": 3,
+      "stem": "Teaching young children can be a ______ job because it requires energy, creativity, and patience.",
+      "options": [
+        {
+          "key": "A",
+          "text": "demanding"
+        },
+        {
+          "key": "B",
+          "text": "private"
+        },
+        {
+          "key": "C",
+          "text": "simple"
+        },
+        {
+          "key": "D",
+          "text": "hard-working"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 22 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 22 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-01d3b648",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(24)",
+      "options": [
+        {
+          "key": "A",
+          "text": "shouldn't"
+        },
+        {
+          "key": "B",
+          "text": "should"
+        },
+        {
+          "key": "C",
+          "text": "ought not"
+        },
+        {
+          "key": "D",
+          "text": "ought"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 24 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 24 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-02bd4c8e",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "The teacher's kind words of ______ helped me speak confidently in front of the class.",
+      "options": [
+        {
+          "key": "A",
+          "text": "encouraging"
+        },
+        {
+          "key": "B",
+          "text": "encouragement"
+        },
+        {
+          "key": "C",
+          "text": "encouraged"
+        },
+        {
+          "key": "D",
+          "text": "encourage"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 10 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 10 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-0a328cb2",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "gia-dinh-ban-be",
+      "difficulty": 3,
+      "stem": "Last weekend, their family enjoyed a picnic lunch ______ the river bank.",
+      "options": [
+        {
+          "key": "A",
+          "text": "next"
+        },
+        {
+          "key": "B",
+          "text": "between"
+        },
+        {
+          "key": "C",
+          "text": "in"
+        },
+        {
+          "key": "D",
+          "text": "on"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 20 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 20 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-0dccc7a0",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(22)",
+      "options": [
+        {
+          "key": "A",
+          "text": "hurt can also"
+        },
+        {
+          "key": "B",
+          "text": "can also hurt"
+        },
+        {
+          "key": "C",
+          "text": "also hurt can"
+        },
+        {
+          "key": "D",
+          "text": "hurt also can"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 22 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 22 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-0e13052f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "dong-tu-khuyet-thieu",
+      "difficulty": 3,
+      "stem": "You/ should/ go/ bus/ instead/ car/ because/ its environmental benefits.",
+      "options": [
+        {
+          "key": "A",
+          "text": "You should go by bus instead of by car because its environmental benefits."
+        },
+        {
+          "key": "B",
+          "text": "You should go by bus instead of by car because of its environmental benefits."
+        },
+        {
+          "key": "C",
+          "text": "You should to go by bus instead of by car because of its environmental benefits."
+        },
+        {
+          "key": "D",
+          "text": "You should going by bus instead by car because of its environmental benefits."
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 38 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 38 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-0efcd123",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "gia-dinh-ban-be",
+      "difficulty": 3,
+      "passageId": "gov-p-9042de9c0992",
+      "stem": "Put the sentences (a-c) in the correct order, then fill in the blank to make a logical text.\na. Talking in person also builds stronger relationships and creates more trust.\nb. These non-verbal signals make the message easier to understand and help avoid confusion.\nc. Spending time together allows friends and family to feel closer and more connected.",
+      "options": [
+        {
+          "key": "A",
+          "text": "c – b – a"
+        },
+        {
+          "key": "B",
+          "text": "c – a – b"
+        },
+        {
+          "key": "C",
+          "text": "b – a – c"
+        },
+        {
+          "key": "D",
+          "text": "a – b – c"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 18 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 18 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-14f04890",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-905fac018961",
+      "stem": "Choose the correct sentence to complete the first half of the following text.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Otherwise, the school can save a lot of money on monthly electricity bills and help the earth become a greener place."
+        },
+        {
+          "key": "B",
+          "text": "In short, learners must stop using all electronic devices during their lessons and only read printed books to save the school's electricity."
+        },
+        {
+          "key": "C",
+          "text": "However, students need to keep the schoolyard completely clean by picking up trash and putting plastic bottles into the correct recycling bins."
+        },
+        {
+          "key": "D",
+          "text": "This means turning off lights, fans, and electronic devices when they are not in use, especially when leaving the classroom."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 1 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 1 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-156be3f5",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "recognition"
+        },
+        {
+          "key": "B",
+          "text": "community"
+        },
+        {
+          "key": "C",
+          "text": "biology"
+        },
+        {
+          "key": "D",
+          "text": "emotional"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 36 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 36 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-17e9a24e",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-hien-tai-don",
+      "difficulty": 3,
+      "stem": "Back then, her mother ran a small stall in the village market, and she always ______ fresh vegetables to nearby families.",
+      "options": [
+        {
+          "key": "A",
+          "text": "was selling"
+        },
+        {
+          "key": "B",
+          "text": "has sold"
+        },
+        {
+          "key": "C",
+          "text": "sold"
+        },
+        {
+          "key": "D",
+          "text": "sells"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 28 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 28 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-1875e810",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(10)",
+      "options": [
+        {
+          "key": "A",
+          "text": "students allows to review"
+        },
+        {
+          "key": "B",
+          "text": "allows students reviewing"
+        },
+        {
+          "key": "C",
+          "text": "allows students to review"
+        },
+        {
+          "key": "D",
+          "text": "allows to students review"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 10 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 10 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-1c46bf7c",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "What does the passage say about sign languages?",
+      "options": [
+        {
+          "key": "A",
+          "text": "They use hands and faces to show meaning."
+        },
+        {
+          "key": "B",
+          "text": "They are easier to understand than grammar."
+        },
+        {
+          "key": "C",
+          "text": "They cannot express feelings in daily life."
+        },
+        {
+          "key": "D",
+          "text": "They are only used in small schools abroad."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 33 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 33 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-1ed99574",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(23)",
+      "options": [
+        {
+          "key": "A",
+          "text": "play"
+        },
+        {
+          "key": "B",
+          "text": "send"
+        },
+        {
+          "key": "C",
+          "text": "run"
+        },
+        {
+          "key": "D",
+          "text": "go"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 23 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 23 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-1f827d51",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "swimming pool / use / heating equipment / people / swim / cold days.",
+      "options": [
+        {
+          "key": "A",
+          "text": "The swimming pool uses a heating equipment that people can swim for cold days."
+        },
+        {
+          "key": "B",
+          "text": "The swimming pool uses a heating equipment, so people can swim on cold days."
+        },
+        {
+          "key": "C",
+          "text": "The swimming pool uses heating equipment, so people can swim on cold days."
+        },
+        {
+          "key": "D",
+          "text": "The swimming pool uses heating equipment enough for people to swim in cold days."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 32 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 32 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-24266516",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(12)",
+      "options": [
+        {
+          "key": "A",
+          "text": "distance from"
+        },
+        {
+          "key": "B",
+          "text": "link between"
+        },
+        {
+          "key": "C",
+          "text": "access of"
+        },
+        {
+          "key": "D",
+          "text": "connection to"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 12 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 12 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-24fd7fa4",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Mike: “I've just got awarded a scholarship!” Chi: “____________________”",
+      "options": [
+        {
+          "key": "A",
+          "text": "My pleasure."
+        },
+        {
+          "key": "B",
+          "text": "No worries. Everything will be alright."
+        },
+        {
+          "key": "C",
+          "text": "Thanks for your advice."
+        },
+        {
+          "key": "D",
+          "text": "How cool! Congratulations!"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 10 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 10 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-28d234de",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "dong-tu-khuyet-thieu",
+      "difficulty": 3,
+      "stem": "Do you think flashcards can help us learn English ______?",
+      "options": [
+        {
+          "key": "A",
+          "text": "more effectively"
+        },
+        {
+          "key": "B",
+          "text": "so effective"
+        },
+        {
+          "key": "C",
+          "text": "as effectively"
+        },
+        {
+          "key": "D",
+          "text": "more effective"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 16 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 16 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-29eb455f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "The tour guide asked the tourists ______ heavy bags when hiking in the mountain.",
+      "options": [
+        {
+          "key": "A",
+          "text": "didn't bring"
+        },
+        {
+          "key": "B",
+          "text": "not brought"
+        },
+        {
+          "key": "C",
+          "text": "not bringing"
+        },
+        {
+          "key": "D",
+          "text": "not to bring"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 13 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 13 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-2ce47523",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Linh asked me whether she had to wait there any longer.",
+      "options": [
+        {
+          "key": "A",
+          "text": "“Do you have to wait here any longer?” Linh asked me."
+        },
+        {
+          "key": "B",
+          "text": "“Do I have to wait here any longer?” Linh asked me."
+        },
+        {
+          "key": "C",
+          "text": "“Did I had to wait there any longer?” Linh asked me."
+        },
+        {
+          "key": "D",
+          "text": "“Does she has to wait here any longer?” Linh asked me."
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 30 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 30 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-2ce4f59d",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Minh made more spelling mistakes than I did.",
+      "options": [
+        {
+          "key": "A",
+          "text": "I made less spelling mistakes than Minh did."
+        },
+        {
+          "key": "B",
+          "text": "I didn't make more spelling mistakes as Minh did."
+        },
+        {
+          "key": "C",
+          "text": "I didn't make as many spelling mistakes as Minh did."
+        },
+        {
+          "key": "D",
+          "text": "I didn't make as much spelling mistakes as Minh did."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 31 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 31 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-2e919979",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-b989c8c3e0d0",
+      "stem": "How does Harrison@008 change his habits of using electronic devices?",
+      "options": [
+        {
+          "key": "A",
+          "text": "He spends most of his time playing video games on social media."
+        },
+        {
+          "key": "B",
+          "text": "He starts using more types of electronic devices."
+        },
+        {
+          "key": "C",
+          "text": "He only uses his smartphone after finishing his homework."
+        },
+        {
+          "key": "D",
+          "text": "He completely stops using electronic devices."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 8 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 8 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-2f4a777f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "I haven't made <u>in</u> my mind <u>yet</u> on how <u>to celebrate</u> <u>my parents'</u> wedding anniversary.",
+      "options": [
+        {
+          "key": "A",
+          "text": "yet"
+        },
+        {
+          "key": "B",
+          "text": "to celebrate"
+        },
+        {
+          "key": "C",
+          "text": "in"
+        },
+        {
+          "key": "D",
+          "text": "my parents'"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 36 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 36 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-2febec79",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-b3b080070b8f",
+      "stem": "(29)",
+      "options": [
+        {
+          "key": "A",
+          "text": "along"
+        },
+        {
+          "key": "B",
+          "text": "under"
+        },
+        {
+          "key": "C",
+          "text": "in"
+        },
+        {
+          "key": "D",
+          "text": "up"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 29 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 29 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-342fd38c",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-a1072d4fcd19",
+      "stem": "(14)",
+      "options": [
+        {
+          "key": "A",
+          "text": "a lot"
+        },
+        {
+          "key": "B",
+          "text": "a few"
+        },
+        {
+          "key": "C",
+          "text": "much of"
+        },
+        {
+          "key": "D",
+          "text": "little of"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 14 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 14 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-34fecaf3",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-55f6c917e98a",
+      "stem": "(37)",
+      "options": [
+        {
+          "key": "A",
+          "text": "to understand traditions better"
+        },
+        {
+          "key": "B",
+          "text": "children often played folk games in the village yard or school playground"
+        },
+        {
+          "key": "C",
+          "text": "help them learn practical skills"
+        },
+        {
+          "key": "D",
+          "text": "traditional customs still play an important role in family and community life"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 37 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 37 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-3c1e6932",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "Why do a lot of experts want to protect small languages according to the passage?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Because they help people travel easily to new places."
+        },
+        {
+          "key": "B",
+          "text": "Because they are spoken in places with no written signs."
+        },
+        {
+          "key": "C",
+          "text": "Because their speakers often forget how to use them."
+        },
+        {
+          "key": "D",
+          "text": "Because their disappearance means losing culture and history."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 35 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 35 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-3cc970d0",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-0019d0a76c5a",
+      "stem": "(39)",
+      "options": [
+        {
+          "key": "A",
+          "text": "People cannot feel or test the product before buying it"
+        },
+        {
+          "key": "B",
+          "text": "People visit many kinds of stores to buy food, clothes, and other items"
+        },
+        {
+          "key": "C",
+          "text": "at items closely, touch them, and even try them on"
+        },
+        {
+          "key": "D",
+          "text": "through hundreds of products and order them with a few clicks"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 39 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 39 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-424207a5",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "giao-duc",
+      "difficulty": 3,
+      "stem": "I wish I ______ a chance to take a photography class next school year.",
+      "options": [
+        {
+          "key": "A",
+          "text": "having"
+        },
+        {
+          "key": "B",
+          "text": "have had"
+        },
+        {
+          "key": "C",
+          "text": "could have"
+        },
+        {
+          "key": "D",
+          "text": "had had"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 14 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 14 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-42477e92",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-9042de9c0992",
+      "stem": "Choose the TOPIC SENTENCE that can BEGIN the text most appropriately.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Face-to-face communication brings many important benefits."
+        },
+        {
+          "key": "B",
+          "text": "Nowadays, people often text or call instead of meeting in person."
+        },
+        {
+          "key": "C",
+          "text": "Talking in person helps avoid confusion caused by unclear messages."
+        },
+        {
+          "key": "D",
+          "text": "Eye contact and body language help make a message easier to understand."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 17 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 17 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-4739e9d0",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Unless people take action to protect the environment, climate change will be worse.",
+      "options": [
+        {
+          "key": "A",
+          "text": "If people didn't take action to protect the environment, climate change would have worse."
+        },
+        {
+          "key": "B",
+          "text": "If people don't take action to protect the environment, climate change will be worse."
+        },
+        {
+          "key": "C",
+          "text": "If people don't take action to protect the environment, climate change would be worse."
+        },
+        {
+          "key": "D",
+          "text": "If people took action to protect the environment, climate change were worse."
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 32 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 32 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-4ba34449",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-a1072d4fcd19",
+      "stem": "(15)",
+      "options": [
+        {
+          "key": "A",
+          "text": "entrance"
+        },
+        {
+          "key": "B",
+          "text": "performance"
+        },
+        {
+          "key": "C",
+          "text": "allowance"
+        },
+        {
+          "key": "D",
+          "text": "instance"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 15 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 15 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-4ce3ae1b",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-b3b080070b8f",
+      "stem": "(26)",
+      "options": [
+        {
+          "key": "A",
+          "text": "work"
+        },
+        {
+          "key": "B",
+          "text": "make"
+        },
+        {
+          "key": "C",
+          "text": "run"
+        },
+        {
+          "key": "D",
+          "text": "finish"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 26 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 26 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-4e459a3b",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-hien-tai-hoan-thanh",
+      "difficulty": 3,
+      "stem": "The city council has decided to <u>pull down</u> a number of unsafe old buildings in the centre.",
+      "options": [
+        {
+          "key": "A",
+          "text": "give up"
+        },
+        {
+          "key": "B",
+          "text": "cheer up"
+        },
+        {
+          "key": "C",
+          "text": "set up"
+        },
+        {
+          "key": "D",
+          "text": "turn up"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 1 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 1 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-5068f568",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-b989c8c3e0d0",
+      "stem": "What is the main topic of the forum discussion?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Some effects of electronic devices on teens."
+        },
+        {
+          "key": "B",
+          "text": "Several benefits of social media for teenagers."
+        },
+        {
+          "key": "C",
+          "text": "Different ways to contact friends and family members."
+        },
+        {
+          "key": "D",
+          "text": "Different ways to improve computer skills."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 5 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 5 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-550897d3",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-b989c8c3e0d0",
+      "stem": "Where does Dan@14 share photos and send messages?",
+      "options": [
+        {
+          "key": "A",
+          "text": "On a games console."
+        },
+        {
+          "key": "B",
+          "text": "On a messaging app."
+        },
+        {
+          "key": "C",
+          "text": "On a computer website."
+        },
+        {
+          "key": "D",
+          "text": "On TeenTech forum."
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 7 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 7 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-55c383ac",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-qua-khu-don",
+      "difficulty": 3,
+      "stem": "Thu Hien <u>has</u> played <u>a saxophone</u> <u>since</u> she <u>was</u> only 10 years old.",
+      "options": [
+        {
+          "key": "A",
+          "text": "was"
+        },
+        {
+          "key": "B",
+          "text": "has"
+        },
+        {
+          "key": "C",
+          "text": "a saxophone"
+        },
+        {
+          "key": "D",
+          "text": "since"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 35 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 35 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-571519f4",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-hien-tai-hoan-thanh",
+      "difficulty": 3,
+      "stem": "Her grandson has taken a coding course to ______ his dream of becoming a software developer.",
+      "options": [
+        {
+          "key": "A",
+          "text": "carry"
+        },
+        {
+          "key": "B",
+          "text": "win"
+        },
+        {
+          "key": "C",
+          "text": "pursue"
+        },
+        {
+          "key": "D",
+          "text": "make"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 25 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 25 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-59d7cd5f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(9)",
+      "options": [
+        {
+          "key": "A",
+          "text": "These steps simple"
+        },
+        {
+          "key": "B",
+          "text": "These simple steps"
+        },
+        {
+          "key": "C",
+          "text": "These steps are simple"
+        },
+        {
+          "key": "D",
+          "text": "These simple are steps"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 9 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 9 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-5da25e05",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "I / look / forward / present / robotics project / class / winter break.",
+      "options": [
+        {
+          "key": "A",
+          "text": "I'm looking forward to presenting my robotics project to the class after the winter break."
+        },
+        {
+          "key": "B",
+          "text": "I'm looking forward to present my robotics project for the class after winter break."
+        },
+        {
+          "key": "C",
+          "text": "I look forward to present my robotics project to the class after the winter break."
+        },
+        {
+          "key": "D",
+          "text": "I'm looking forward presenting my robotics project to the class after a winter break."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 27 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 27 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-6317d015",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "The word “<u>It</u>” in paragraph 2 refers to ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "work"
+        },
+        {
+          "key": "B",
+          "text": "technology"
+        },
+        {
+          "key": "C",
+          "text": "business"
+        },
+        {
+          "key": "D",
+          "text": "machine"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 4 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 4 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-63dd0a8f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "emotional"
+        },
+        {
+          "key": "B",
+          "text": "activity"
+        },
+        {
+          "key": "C",
+          "text": "environment"
+        },
+        {
+          "key": "D",
+          "text": "limitation"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 22 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 22 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-64fcc56f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-668f18253552",
+      "stem": "(20)",
+      "options": [
+        {
+          "key": "A",
+          "text": "give"
+        },
+        {
+          "key": "B",
+          "text": "cut"
+        },
+        {
+          "key": "C",
+          "text": "put"
+        },
+        {
+          "key": "D",
+          "text": "turn"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 20 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 20 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-6b40a794",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "giao-duc",
+      "difficulty": 3,
+      "stem": "The students are looking forward ______ a break after their exams.",
+      "options": [
+        {
+          "key": "A",
+          "text": "will have"
+        },
+        {
+          "key": "B",
+          "text": "to have"
+        },
+        {
+          "key": "C",
+          "text": "to having"
+        },
+        {
+          "key": "D",
+          "text": "having"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 18 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 18 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-6cc8af22",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(20)",
+      "options": [
+        {
+          "key": "A",
+          "text": "who with others"
+        },
+        {
+          "key": "B",
+          "text": "with others who"
+        },
+        {
+          "key": "C",
+          "text": "with others whom"
+        },
+        {
+          "key": "D",
+          "text": "whom with others"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 20 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 20 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-73c32b59",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "These old photos remind us of the fun times we had on our family holiday.",
+      "options": [
+        {
+          "key": "A",
+          "text": "These old photos make us remember the fun times we had on our family holiday."
+        },
+        {
+          "key": "B",
+          "text": "We took these photos during the fun times we had on our family holiday."
+        },
+        {
+          "key": "C",
+          "text": "The fun times we had on our family holiday brings back the memory of these photos."
+        },
+        {
+          "key": "D",
+          "text": "These photos help me experienced the fun times during our family holiday."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 29 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 29 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-75567d58",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(21)",
+      "options": [
+        {
+          "key": "A",
+          "text": "However"
+        },
+        {
+          "key": "B",
+          "text": "Moreover"
+        },
+        {
+          "key": "C",
+          "text": "Besides"
+        },
+        {
+          "key": "D",
+          "text": "Therefore"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 21 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 21 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-762c14eb",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-dd63c1ae6fa9",
+      "stem": "(19)",
+      "options": [
+        {
+          "key": "A",
+          "text": "does music have"
+        },
+        {
+          "key": "B",
+          "text": "do music have"
+        },
+        {
+          "key": "C",
+          "text": "do music has"
+        },
+        {
+          "key": "D",
+          "text": "does music has"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 19 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 19 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7677e6c5",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "dong-tu-khuyet-thieu",
+      "difficulty": 3,
+      "stem": "Sitting around can get boring. <u>To begin with</u>, let's explore some fun hobbies we can try!",
+      "options": [
+        {
+          "key": "A",
+          "text": "First of all"
+        },
+        {
+          "key": "B",
+          "text": "To give advice"
+        },
+        {
+          "key": "C",
+          "text": "In the end"
+        },
+        {
+          "key": "D",
+          "text": "In fact"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 25 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 25 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-77af1e3f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "so-sanh",
+      "difficulty": 3,
+      "stem": "______ a healthy lifestyle helps teenagers reduce stress and study more effectively.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Maintaining"
+        },
+        {
+          "key": "B",
+          "text": "Maintain"
+        },
+        {
+          "key": "C",
+          "text": "With maintaining"
+        },
+        {
+          "key": "D",
+          "text": "Have maintained"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 26 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 26 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-786bb589",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "giao-duc",
+      "difficulty": 3,
+      "stem": "The students at Sentosa School suggested using leftover food from the school ______ to make biogas.",
+      "options": [
+        {
+          "key": "A",
+          "text": "cafeteria"
+        },
+        {
+          "key": "B",
+          "text": "gym"
+        },
+        {
+          "key": "C",
+          "text": "playground"
+        },
+        {
+          "key": "D",
+          "text": "library"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 21 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 21 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7b94c272",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Students who don't organise their ideas before writing complete their essays more slowly than those who start with a plan.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Students who organise their ideas before writing complete their essays more slower than those who start without a plan."
+        },
+        {
+          "key": "B",
+          "text": "Students who organise their ideas before writing complete their essays more quicker than those who start without a plan."
+        },
+        {
+          "key": "C",
+          "text": "Students who start without a plan complete their essays quicker than those who organise their ideas first."
+        },
+        {
+          "key": "D",
+          "text": "Students who organise their ideas before writing complete their essays more quickly than those who start without a plan."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 34 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 34 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7bb4958d",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "du-lich",
+      "difficulty": 3,
+      "stem": "Ms. Lan has just helped a foreign tourist find the way to the nearest bus stop.\n- Tourist: “Thank you very much for your help.”\n- Ms. Lan: “______”",
+      "options": [
+        {
+          "key": "A",
+          "text": "You can say that again."
+        },
+        {
+          "key": "B",
+          "text": "You're absolutely right!"
+        },
+        {
+          "key": "C",
+          "text": "Certainly!"
+        },
+        {
+          "key": "D",
+          "text": "No problem!"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 24 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 24 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7d20fe9e",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "What is the main idea of the passage?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Students should choose one job and never change their career plans."
+        },
+        {
+          "key": "B",
+          "text": "Technology has made all practical jobs disappear from the future job market."
+        },
+        {
+          "key": "C",
+          "text": "Teenagers should build skills to adapt to changes in the job market."
+        },
+        {
+          "key": "D",
+          "text": "Vocational courses are always better than university courses for teenagers."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 8 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 8 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7fe364b3",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "d<u>a</u>nger"
+        },
+        {
+          "key": "B",
+          "text": "f<u>a</u>shion"
+        },
+        {
+          "key": "C",
+          "text": "<u>a</u>ngel"
+        },
+        {
+          "key": "D",
+          "text": "<u>a</u>ncient"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 12 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 12 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-7fe7472a",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(13)",
+      "options": [
+        {
+          "key": "A",
+          "text": "Although"
+        },
+        {
+          "key": "B",
+          "text": "During"
+        },
+        {
+          "key": "C",
+          "text": "Unless"
+        },
+        {
+          "key": "D",
+          "text": "If"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 13 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 13 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-827119af",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-668f18253552",
+      "stem": "(19)",
+      "options": [
+        {
+          "key": "A",
+          "text": "few"
+        },
+        {
+          "key": "B",
+          "text": "a"
+        },
+        {
+          "key": "C",
+          "text": "the"
+        },
+        {
+          "key": "D",
+          "text": "little"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 19 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 19 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-83748672",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "Which of the following is TRUE according to the passage?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Students should believe that one career path is suitable for everyone."
+        },
+        {
+          "key": "B",
+          "text": "Workers in practical jobs never need to use digital tools at work."
+        },
+        {
+          "key": "C",
+          "text": "Hairdressers use online booking apps to avoid meeting customers."
+        },
+        {
+          "key": "D",
+          "text": "Automation can change some jobs, but technology can also create new roles."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 6 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 6 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-84f60e01",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "People think that reading can improve our imagination and creativity.",
+      "options": [
+        {
+          "key": "A",
+          "text": "It is thought that reading can improve our imagination and creativity."
+        },
+        {
+          "key": "B",
+          "text": "Reading is thought improving our imagination and creativity."
+        },
+        {
+          "key": "C",
+          "text": "Reading is thought that can improve our imagination and creativity."
+        },
+        {
+          "key": "D",
+          "text": "It is thought that reading to improve our imagination and creativity."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 34 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 34 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-8762545d",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-a1072d4fcd19",
+      "stem": "(16)",
+      "options": [
+        {
+          "key": "A",
+          "text": "wider"
+        },
+        {
+          "key": "B",
+          "text": "bigger"
+        },
+        {
+          "key": "C",
+          "text": "further"
+        },
+        {
+          "key": "D",
+          "text": "lesser"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 16 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 16 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-876c41c8",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "distance"
+        },
+        {
+          "key": "B",
+          "text": "value"
+        },
+        {
+          "key": "C",
+          "text": "culture"
+        },
+        {
+          "key": "D",
+          "text": "event"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 2 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 2 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-8bc37725",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "Which of the following is TRUE according to the passage?",
+      "options": [
+        {
+          "key": "A",
+          "text": "The way people speak today is often the same as how their grandparents spoke."
+        },
+        {
+          "key": "B",
+          "text": "The way people speak today is often similar to how their grandparents spoke."
+        },
+        {
+          "key": "C",
+          "text": "The way people speak today often differs from how their grandparents spoke."
+        },
+        {
+          "key": "D",
+          "text": "The way people speak today is often like how their grandparents spoke."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 34 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 34 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-8e98305b",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "According to the passage, the word “<u>boost</u>” is CLOSEST in meaning to ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "lessen"
+        },
+        {
+          "key": "B",
+          "text": "worsen"
+        },
+        {
+          "key": "C",
+          "text": "improve"
+        },
+        {
+          "key": "D",
+          "text": "reduce"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 36 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 36 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-94cda5e0",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-55f6c917e98a",
+      "stem": "(39)",
+      "options": [
+        {
+          "key": "A",
+          "text": "to understand traditions better"
+        },
+        {
+          "key": "B",
+          "text": "children often played folk games in the village yard or school playground"
+        },
+        {
+          "key": "C",
+          "text": "help them learn practical skills"
+        },
+        {
+          "key": "D",
+          "text": "traditional customs still play an important role in family and community life"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 39 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 39 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-9acb0301",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "The word “<u>collaborate</u>” in paragraph 3 is CLOSEST in meaning to ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "work harder"
+        },
+        {
+          "key": "B",
+          "text": "work together"
+        },
+        {
+          "key": "C",
+          "text": "work longer"
+        },
+        {
+          "key": "D",
+          "text": "work alone"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 5 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 5 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-9dd53c0e",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-b989c8c3e0d0",
+      "stem": "The phrase 'attention span' in the text probably means _______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "the ability someone can remember"
+        },
+        {
+          "key": "B",
+          "text": "the period of time someone can focus"
+        },
+        {
+          "key": "C",
+          "text": "the learning method someone can use"
+        },
+        {
+          "key": "D",
+          "text": "the learning style someone can choose"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 9 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 9 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-9e722b92",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "“Don't forget to bring your student card to the library,” I said to Nana.",
+      "options": [
+        {
+          "key": "A",
+          "text": "I remind Nana of bringing her student card to the library."
+        },
+        {
+          "key": "B",
+          "text": "I tell Nana not to forget to bring her student card to the library."
+        },
+        {
+          "key": "C",
+          "text": "I asked Nana not to forget bringing her student card to the library."
+        },
+        {
+          "key": "D",
+          "text": "I reminded Nana to bring her student card to the library."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 33 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 33 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-9f1378dc",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(11)",
+      "options": [
+        {
+          "key": "A",
+          "text": "appear"
+        },
+        {
+          "key": "B",
+          "text": "revise"
+        },
+        {
+          "key": "C",
+          "text": "achieve"
+        },
+        {
+          "key": "D",
+          "text": "ignore"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 11 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 11 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a0c9e23c",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Emily shares that she failed the drama club interview, and Phuong responds.\n- Emily: “I didn't perform well at our school's drama club interview.”\n- Phuong: “______”",
+      "options": [
+        {
+          "key": "A",
+          "text": "That club is too hard for them to try."
+        },
+        {
+          "key": "B",
+          "text": "I think I should join something else."
+        },
+        {
+          "key": "C",
+          "text": "Don't give up! You'll have another chance."
+        },
+        {
+          "key": "D",
+          "text": "Maybe you should try something more challenging."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 8 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 8 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a19054f1",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-668f18253552",
+      "stem": "(17)",
+      "options": [
+        {
+          "key": "A",
+          "text": "above"
+        },
+        {
+          "key": "B",
+          "text": "to"
+        },
+        {
+          "key": "C",
+          "text": "on"
+        },
+        {
+          "key": "D",
+          "text": "by"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 17 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 17 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a3367469",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Her son said he was in the school canteen then.",
+      "options": [
+        {
+          "key": "A",
+          "text": "“He was in the school canteen now”, her son said."
+        },
+        {
+          "key": "B",
+          "text": "“I'm in the school canteen then”, her son said."
+        },
+        {
+          "key": "C",
+          "text": "“I'm in the school canteen now”, her son said."
+        },
+        {
+          "key": "D",
+          "text": "“He is in the school canteen then”, her son said."
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 33 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 33 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a5827dd4",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "so-sanh",
+      "difficulty": 3,
+      "stem": "Most/ our classmates/ find/ TV game shows / enjoyable/ interesting.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Most of our classmates finds these TV game shows are enjoyable and interesting."
+        },
+        {
+          "key": "B",
+          "text": "Most in our classmates find these TV game shows enjoyable and interesting."
+        },
+        {
+          "key": "C",
+          "text": "Most in our classmates find these TV game shows enjoyable but interesting."
+        },
+        {
+          "key": "D",
+          "text": "Most of our classmates find these TV game shows enjoyable and interesting."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 40 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 40 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a77c4567",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-55f6c917e98a",
+      "stem": "(38)",
+      "options": [
+        {
+          "key": "A",
+          "text": "to understand traditions better"
+        },
+        {
+          "key": "B",
+          "text": "children often played folk games in the village yard or school playground"
+        },
+        {
+          "key": "C",
+          "text": "help them learn practical skills"
+        },
+        {
+          "key": "D",
+          "text": "traditional customs still play an important role in family and community life"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 38 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 38 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-a93b8120",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C or D on your answer sheet to indicate the word that differs from the other three in the position of the primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "unlucky"
+        },
+        {
+          "key": "B",
+          "text": "pollution"
+        },
+        {
+          "key": "C",
+          "text": "volunteer"
+        },
+        {
+          "key": "D",
+          "text": "historic"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 23 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 23 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-ab96788b",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Some children get a lot of <u>pleasure</u> from doing jigsaw puzzles.",
+      "options": [
+        {
+          "key": "A",
+          "text": "participation"
+        },
+        {
+          "key": "B",
+          "text": "improvement"
+        },
+        {
+          "key": "C",
+          "text": "experience"
+        },
+        {
+          "key": "D",
+          "text": "fun"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 24 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 24 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-aeae9209",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "<u>h</u>onesty"
+        },
+        {
+          "key": "B",
+          "text": "<u>h</u>onour"
+        },
+        {
+          "key": "C",
+          "text": "ex<u>h</u>austed"
+        },
+        {
+          "key": "D",
+          "text": "<u>h</u>olography"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 30 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 30 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b012c8a4",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "It/ nice/ you/ give/ useful/ advice.",
+      "options": [
+        {
+          "key": "A",
+          "text": "It is nice of you to give me such useful advice."
+        },
+        {
+          "key": "B",
+          "text": "It is nice of you giving me an useful advice."
+        },
+        {
+          "key": "C",
+          "text": "It is nice of you to give me a useful advice."
+        },
+        {
+          "key": "D",
+          "text": "It is nice of you giving me such useful advice."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 37 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 37 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b0b7cc16",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-0019d0a76c5a",
+      "stem": "(40)",
+      "options": [
+        {
+          "key": "A",
+          "text": "People cannot feel or test the product before buying it"
+        },
+        {
+          "key": "B",
+          "text": "People visit many kinds of stores to buy food, clothes, and other items"
+        },
+        {
+          "key": "C",
+          "text": "at items closely, touch them, and even try them on"
+        },
+        {
+          "key": "D",
+          "text": "through hundreds of products and order them with a few clicks"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 40 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 40 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b513dab3",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "diversity"
+        },
+        {
+          "key": "B",
+          "text": "electrical"
+        },
+        {
+          "key": "C",
+          "text": "generation"
+        },
+        {
+          "key": "D",
+          "text": "delivery"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 1 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 1 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b62c66ec",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "It's the first time our children ______ their own pottery in a workshop.",
+      "options": [
+        {
+          "key": "A",
+          "text": "have made"
+        },
+        {
+          "key": "B",
+          "text": "had made"
+        },
+        {
+          "key": "C",
+          "text": "made"
+        },
+        {
+          "key": "D",
+          "text": "to make"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 15 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 15 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b8940f99",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "khoa-hoc-cong-nghe",
+      "difficulty": 3,
+      "stem": "There's ______ of information available on the internet about the IELTS tests.",
+      "options": [
+        {
+          "key": "A",
+          "text": "a lot"
+        },
+        {
+          "key": "B",
+          "text": "no"
+        },
+        {
+          "key": "C",
+          "text": "many"
+        },
+        {
+          "key": "D",
+          "text": "few"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 21 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 21 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b9779657",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-668f18253552",
+      "stem": "(18)",
+      "options": [
+        {
+          "key": "A",
+          "text": "take"
+        },
+        {
+          "key": "B",
+          "text": "send"
+        },
+        {
+          "key": "C",
+          "text": "set"
+        },
+        {
+          "key": "D",
+          "text": "do"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 18 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 18 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-b9adce6d",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-b3b080070b8f",
+      "stem": "(28)",
+      "options": [
+        {
+          "key": "A",
+          "text": "all"
+        },
+        {
+          "key": "B",
+          "text": "none"
+        },
+        {
+          "key": "C",
+          "text": "both"
+        },
+        {
+          "key": "D",
+          "text": "each"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 28 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 28 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-bc5fe898",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-hien-tai-don",
+      "difficulty": 3,
+      "stem": "In my opinion, stories about faraway lands are always ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "amazing"
+        },
+        {
+          "key": "B",
+          "text": "amazingly"
+        },
+        {
+          "key": "C",
+          "text": "amazed"
+        },
+        {
+          "key": "D",
+          "text": "amaze"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 19 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 19 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-bdf8ab81",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-b989c8c3e0d0",
+      "stem": "Why does Dan@14 believe it's good for teens to have electronic devices?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Because he can stay connected with friends and relatives and better his computer skills."
+        },
+        {
+          "key": "B",
+          "text": "Because he can play video games on the screen all the time."
+        },
+        {
+          "key": "C",
+          "text": "Because he can improve his social skills by making friends with new people."
+        },
+        {
+          "key": "D",
+          "text": "Because he can gain weight and finish his homework."
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 6 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 6 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-be06b9f3",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "touch<u>ed</u>"
+        },
+        {
+          "key": "B",
+          "text": "develop<u>ed</u>"
+        },
+        {
+          "key": "C",
+          "text": "focus<u>ed</u>"
+        },
+        {
+          "key": "D",
+          "text": "belov<u>ed</u>"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 11 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 11 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-bf4df9da",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "What is the main idea of the passage?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Language is used only for speaking with other people."
+        },
+        {
+          "key": "B",
+          "text": "Only major languages help people in daily situations."
+        },
+        {
+          "key": "C",
+          "text": "Sign languages are more useful than spoken languages."
+        },
+        {
+          "key": "D",
+          "text": "Language connects people and changes across history."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 32 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 32 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-bf6a7cd5",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-b3b080070b8f",
+      "stem": "(30)",
+      "options": [
+        {
+          "key": "A",
+          "text": "abilities"
+        },
+        {
+          "key": "B",
+          "text": "activities"
+        },
+        {
+          "key": "C",
+          "text": "possibilities"
+        },
+        {
+          "key": "D",
+          "text": "difficulties"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 30 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 30 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-c042d917",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-55f6c917e98a",
+      "stem": "(40)",
+      "options": [
+        {
+          "key": "A",
+          "text": "to understand traditions better"
+        },
+        {
+          "key": "B",
+          "text": "children often played folk games in the village yard or school playground"
+        },
+        {
+          "key": "C",
+          "text": "help them learn practical skills"
+        },
+        {
+          "key": "D",
+          "text": "traditional customs still play an important role in family and community life"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 40 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 40 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-c0b2c747",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "viet-cau",
+      "topicSlug": "viet-lai-cau",
+      "difficulty": 3,
+      "stem": "Green Café / wooden tables / create / warm atmosphere / often / attract / young people.",
+      "options": [
+        {
+          "key": "A",
+          "text": "The Green Café where wooden tables create a warm atmosphere often attracts young people."
+        },
+        {
+          "key": "B",
+          "text": "The Green Café, whose wooden tables create a warm atmosphere, often attracts young people."
+        },
+        {
+          "key": "C",
+          "text": "The Green Café in which wooden tables create a warm atmosphere often attract young people."
+        },
+        {
+          "key": "D",
+          "text": "The Green Café, which wooden tables create a warm atmosphere, often attract young people."
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 31 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 31 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-c27370d9",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "According to the passage, why might a hairdresser use an online booking app?",
+      "options": [
+        {
+          "key": "A",
+          "text": "To work without speaking to any other people."
+        },
+        {
+          "key": "B",
+          "text": "To replace all practical skills needed in hairdressing."
+        },
+        {
+          "key": "C",
+          "text": "To stop customers from visiting the salon in person."
+        },
+        {
+          "key": "D",
+          "text": "To make appointments with customers before their arrivals."
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 7 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 7 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-c40a0ad6",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-0019d0a76c5a",
+      "stem": "(38)",
+      "options": [
+        {
+          "key": "A",
+          "text": "People cannot feel or test the product before buying it"
+        },
+        {
+          "key": "B",
+          "text": "People visit many kinds of stores to buy food, clothes, and other items"
+        },
+        {
+          "key": "C",
+          "text": "at items closely, touch them, and even try them on"
+        },
+        {
+          "key": "D",
+          "text": "through hundreds of products and order them with a few clicks"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 38 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 38 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-cf5fc277",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Our English test ______ next Monday at nine o'clock, so please arrive ten minutes early!",
+      "options": [
+        {
+          "key": "A",
+          "text": "starts"
+        },
+        {
+          "key": "B",
+          "text": "starting"
+        },
+        {
+          "key": "C",
+          "text": "has started"
+        },
+        {
+          "key": "D",
+          "text": "will be start"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 5 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 5 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-cf82b4fa",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "character"
+        },
+        {
+          "key": "B",
+          "text": "engineer"
+        },
+        {
+          "key": "C",
+          "text": "suddenly"
+        },
+        {
+          "key": "D",
+          "text": "regular"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 35 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 35 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-d0b46b85",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "If you visit a new place, ______ its culture and customs to behave appropriately.",
+      "options": [
+        {
+          "key": "A",
+          "text": "learning"
+        },
+        {
+          "key": "B",
+          "text": "be learn"
+        },
+        {
+          "key": "C",
+          "text": "learn"
+        },
+        {
+          "key": "D",
+          "text": "will learn"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 27 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 27 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-d4d4d776",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "While living in France, Marie ______ French quite quickly by interacting with locals daily.",
+      "options": [
+        {
+          "key": "A",
+          "text": "picked up"
+        },
+        {
+          "key": "B",
+          "text": "put up"
+        },
+        {
+          "key": "C",
+          "text": "took up"
+        },
+        {
+          "key": "D",
+          "text": "brought up"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 9 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 9 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-d823b37b",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-d1b0f2727923",
+      "stem": "The word “<u>obsolete</u>” in paragraph 2 is OPPOSITE in meaning to ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "useful and up-to-date"
+        },
+        {
+          "key": "B",
+          "text": "useless and outdated"
+        },
+        {
+          "key": "C",
+          "text": "simple and repeated"
+        },
+        {
+          "key": "D",
+          "text": "cheap and common"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 3 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 3 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-d8b51dd2",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-0019d0a76c5a",
+      "stem": "(37)",
+      "options": [
+        {
+          "key": "A",
+          "text": "People cannot feel or test the product before buying it"
+        },
+        {
+          "key": "B",
+          "text": "People visit many kinds of stores to buy food, clothes, and other items"
+        },
+        {
+          "key": "C",
+          "text": "at items closely, touch them, and even try them on"
+        },
+        {
+          "key": "D",
+          "text": "through hundreds of products and order them with a few clicks"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 37 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 37 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-db921103",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "pr<u>o</u>blem"
+        },
+        {
+          "key": "B",
+          "text": "p<u>o</u>pular"
+        },
+        {
+          "key": "C",
+          "text": "c<u>o</u>mfortable"
+        },
+        {
+          "key": "D",
+          "text": "h<u>o</u>liday"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 3 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 3 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-dc21f9c8",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "so-sanh",
+      "difficulty": 3,
+      "stem": "The more time teenagers spend on social media, ______ for outdoor activities.",
+      "options": [
+        {
+          "key": "A",
+          "text": "the fewer time they have"
+        },
+        {
+          "key": "B",
+          "text": "the less time they have"
+        },
+        {
+          "key": "C",
+          "text": "they have fewer time"
+        },
+        {
+          "key": "D",
+          "text": "the less time do they have"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 001), câu 23 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 23 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-dc974834",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "so-sanh",
+      "difficulty": 3,
+      "stem": "If the cost of public transportation ______, more people ______ it regularly.",
+      "options": [
+        {
+          "key": "A",
+          "text": "decrease – can't use"
+        },
+        {
+          "key": "B",
+          "text": "may decrease – won't use"
+        },
+        {
+          "key": "C",
+          "text": "decreases – will use"
+        },
+        {
+          "key": "D",
+          "text": "will decrease – uses"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 001), câu 3 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 3 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-e1d90f6f",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Your effort and creativity made one of ______ events of our company a huge success.",
+      "options": [
+        {
+          "key": "A",
+          "text": "Ø (no article)"
+        },
+        {
+          "key": "B",
+          "text": "a"
+        },
+        {
+          "key": "C",
+          "text": "an"
+        },
+        {
+          "key": "D",
+          "text": "the"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 4 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 4 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-e289c724",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "thi-qua-khu-don",
+      "difficulty": 3,
+      "stem": "Her daughter didn't ______ eat chips when she was younger.",
+      "options": [
+        {
+          "key": "A",
+          "text": "use to"
+        },
+        {
+          "key": "B",
+          "text": "not use to"
+        },
+        {
+          "key": "C",
+          "text": "used to"
+        },
+        {
+          "key": "D",
+          "text": "got used to"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 6 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 6 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-e3ac4a61",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "passageId": "gov-p-f0223c6dd191",
+      "stem": "According to the passage, the word “<u>indispensable</u>” is OPPOSITE in meaning to ______.",
+      "options": [
+        {
+          "key": "A",
+          "text": "uncommon"
+        },
+        {
+          "key": "B",
+          "text": "unusual"
+        },
+        {
+          "key": "C",
+          "text": "unavailable"
+        },
+        {
+          "key": "D",
+          "text": "unimportant"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 31 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 31 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-e8222622",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-a1072d4fcd19",
+      "stem": "(13)",
+      "options": [
+        {
+          "key": "A",
+          "text": "on"
+        },
+        {
+          "key": "B",
+          "text": "at"
+        },
+        {
+          "key": "C",
+          "text": "in"
+        },
+        {
+          "key": "D",
+          "text": "of"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 13 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 13 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-ed6a0fed",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Two of ______ festivals in Viet Nam are the Ban Flower Festival and the Spring Festival.",
+      "options": [
+        {
+          "key": "A",
+          "text": "as famous as"
+        },
+        {
+          "key": "B",
+          "text": "much famous"
+        },
+        {
+          "key": "C",
+          "text": "more famous"
+        },
+        {
+          "key": "D",
+          "text": "the most famous"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 001), câu 7 (Hà Nội, 2025). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+      "sourceRef": "2025 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 7 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:45.372Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-ee2041bc",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Khanh/ have/ take/ a course/ improve/ English?",
+      "options": [
+        {
+          "key": "A",
+          "text": "Khanh had to take a course to improve her English, didn't she?"
+        },
+        {
+          "key": "B",
+          "text": "Khanh had to take a course to improve of her English, wouldn't she?"
+        },
+        {
+          "key": "C",
+          "text": "Khanh had to take a course improving her English, wasn't she?"
+        },
+        {
+          "key": "D",
+          "text": "Khanh had to take a course to improve her English, hadn't she?"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 101), câu 39 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 39 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-ef8ee5d4",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "phat-am-trong-am",
+      "difficulty": 3,
+      "stem": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+      "options": [
+        {
+          "key": "A",
+          "text": "perform<u>a</u>nce"
+        },
+        {
+          "key": "B",
+          "text": "<u>a</u>nniversary"
+        },
+        {
+          "key": "C",
+          "text": "distr<u>a</u>ction"
+        },
+        {
+          "key": "D",
+          "text": "c<u>a</u>mpus"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 29 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 29 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-f700d32e",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-d0eeee40abe7",
+      "stem": "(14)",
+      "options": [
+        {
+          "key": "A",
+          "text": "success"
+        },
+        {
+          "key": "B",
+          "text": "successful"
+        },
+        {
+          "key": "C",
+          "text": "successive"
+        },
+        {
+          "key": "D",
+          "text": "succeed"
+        }
+      ],
+      "correctKey": "A",
+      "explanation": "Đáp án A theo đáp án chính thức (mã đề 001), câu 14 (Hà Nội, 2026). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+      "sourceRef": "2026 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 001 | Question 14 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:48.381Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-fb01b399",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "ngu-phap",
+      "topicSlug": "cau-dieu-kien",
+      "difficulty": 3,
+      "stem": "If he ______ a few years younger, I'm sure he would get the job.",
+      "options": [
+        {
+          "key": "A",
+          "text": "is"
+        },
+        {
+          "key": "B",
+          "text": "will be"
+        },
+        {
+          "key": "C",
+          "text": "were"
+        },
+        {
+          "key": "D",
+          "text": "would be"
+        }
+      ],
+      "correctKey": "C",
+      "explanation": "Đáp án C theo đáp án chính thức (mã đề 101), câu 12 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 12 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-ffbbf469",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "tu-vung",
+      "topicSlug": "chung",
+      "difficulty": 3,
+      "stem": "Wellington, ______ is the capital city of New Zealand, is famous for its stunning natural landscapes and beautiful harbour views.",
+      "options": [
+        {
+          "key": "A",
+          "text": "that"
+        },
+        {
+          "key": "B",
+          "text": "where"
+        },
+        {
+          "key": "C",
+          "text": "what"
+        },
+        {
+          "key": "D",
+          "text": "which"
+        }
+      ],
+      "correctKey": "D",
+      "explanation": "Đáp án D theo đáp án chính thức (mã đề 101), câu 17 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 17 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    },
+    {
+      "id": "gov-fff9fd91",
+      "type": "mcq",
+      "grade": 9,
+      "skill": "doc-hieu",
+      "topicSlug": "chung",
+      "difficulty": 1,
+      "passageId": "gov-p-b3b080070b8f",
+      "stem": "(27)",
+      "options": [
+        {
+          "key": "A",
+          "text": "15 hours"
+        },
+        {
+          "key": "B",
+          "text": "15-hour"
+        },
+        {
+          "key": "C",
+          "text": "15-hours"
+        },
+        {
+          "key": "D",
+          "text": "15's hour"
+        }
+      ],
+      "correctKey": "B",
+      "explanation": "Đáp án B theo đáp án chính thức (mã đề 101), câu 27 (Hà Nội, 2024). Nội dung chép lại từ bản scan (ocr-transcribed); chờ chủ sở hữu duyệt.",
+      "sourceId": "gov-bf84254d",
+      "sourceUrl": "https://hanoi.edu.vn/qi-upload/pdf/2026_10_2/hanoi_15448_deanh_136202413.pdf",
+      "sourceRef": "2024 | Hà Nội | tuyen-sinh-10-ngoai-ngu-khong-chuyen | Mã đề 101 | Question 27 | ocr-transcribed",
+      "sourceName": "Sở/Bộ GD&ĐT – Hà Nội",
+      "license": "Văn bản chính thức của cơ quan nhà nước",
+      "crawledAt": "2026-10-31T14:00:43.148Z",
+      "reviewStatus": "quarantine"
+    }
+  ],
   "tests": []
 }

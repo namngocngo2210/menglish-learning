@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { HttpClient, readCache, type Meta } from './http.js';
 import { articleUrl, crawlVoa, parseVoa, VOA_HOST } from './sources/voa.js';
 import { allowedGovUrl, crawlGov, extractPdf, govItems, hasTextLayer, loadSeeds, seedStatus, type GovSeedOutcome } from './sources/gov.js';
+import { OCR_STATUS, ocrOutcome } from './ocr/candidates.js';
+import { validateExtraction, type OcrExtraction } from './ocr/merge.js';
 import { grammarItems, readingItems, vocabularyItems, wordOrderItems } from './build/index.js';
 import { corpusStats } from './classify.js';
 import { assemble, writeBank } from './bank.js';
@@ -13,15 +15,23 @@ import type { Article, Candidate } from './model.js';
 const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));const raw=join(root,'data/raw');const args=process.argv.slice(3);
 function option(name:string,fallback:string){const index=args.indexOf('--'+name);if(index<0)return fallback;if(!args[index+1]||args[index+1].startsWith('--'))throw new Error(`Missing --${name} value`);return args[index+1];}
 async function cachedMetas(dir:string):Promise<Meta[]>{let entries;try{entries=await readdir(dir,{withFileTypes:true});}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return [];throw error;}const out:Meta[]=[];for(const entry of entries.sort((a,b)=>a.name.localeCompare(b.name))){const path=join(dir,entry.name);if(entry.isDirectory())out.push(...await cachedMetas(path));else if(entry.name.endsWith('.meta.json')){out.push(JSON.parse(await readFile(path,'utf8')) as Meta);}}return out;}
+async function loadOcr():Promise<Map<string,OcrExtraction>>{
+ const dir=join(root,'crawler/ocr');const out=new Map<string,OcrExtraction>();let names:string[];
+ try{names=(await readdir(dir)).filter(n=>n.endsWith('.json')).sort();}catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return out;throw error;}
+ for(const name of names){const ext=validateExtraction(JSON.parse(await readFile(join(dir,name),'utf8')));if(!allowedGovUrl(ext.seed.url))throw new Error('Forbidden official URL in '+name);out.set(ext.seed.url,ext);}
+ return out;
+}
 async function build(){
  const errors:Record<string,number>={};const articles:Article[]=[];
  for(const meta of (await cachedMetas(raw)).sort((a,b)=>a.url.localeCompare(b.url))){if(meta.status!==200||!articleUrl(meta.url))continue;try{const cached=await readCache(raw,meta.url);if(!cached)continue;const article=parseVoa(cached.body.toString(),meta.url,meta.fetchedAt);if(article)articles.push(article);else count(errors,'voa-source-policy-or-parse');}catch{count(errors,'cache-parse');}}
  const corpus=corpusStats(articles.map(a=>a.paragraphs.join('\n')));const items:Candidate[]=[];
  for(const article of articles)for(const builder of [grammarItems,readingItems,vocabularyItems,wordOrderItems])items.push(...builder(article,corpus));
- const outcomes:GovSeedOutcome[]=[];
+ const outcomes:GovSeedOutcome[]=[];const transcribed=await loadOcr();
  for(const seed of await loadSeeds()){
- const outcome:GovSeedOutcome={url:seed.url,answerKeyUrl:seed.answerKeyUrl,pageUrl:seed.pageUrl,year:seed.year,province:seed.province,grade:seed.grade,kind:seed.kind,status:'cache-missing',items:0};
- try{const document=await readCache(raw,seed.url);if(!document||document.meta.status!==200){count(errors,'gov-cache-missing');continue;}const key=seed.answerKeyUrl?await readCache(raw,seed.answerKeyUrl):document;if(!key||key.meta.status!==200){count(errors,'gov-key-cache-missing');continue;}
+  const outcome:GovSeedOutcome={url:seed.url,answerKeyUrl:seed.answerKeyUrl,pageUrl:seed.pageUrl,year:seed.year,province:seed.province,grade:seed.grade,kind:seed.kind,status:'cache-missing',items:0};
+  // Scanned papers use the committed two-pass transcription; no raw cache or images are needed (deterministic build).
+  const ext=transcribed.get(seed.url);if(ext){const {outcome:ocr,candidates}=ocrOutcome(ext);outcome.status=OCR_STATUS;outcome.items=candidates.length;outcome.ocr=ocr;items.push(...candidates);outcomes.push(outcome);continue;}
+  try{const document=await readCache(raw,seed.url);if(!document||document.meta.status!==200){count(errors,'gov-cache-missing');continue;}const key=seed.answerKeyUrl?await readCache(raw,seed.answerKeyUrl):document;if(!key||key.meta.status!==200){count(errors,'gov-key-cache-missing');continue;}
  const text=await extractPdf(document.body);const keyText=key===document?text:await extractPdf(key.body);
  if(!hasTextLayer(text)||!hasTextLayer(keyText)){outcome.status=seedStatus(text,keyText,0);count(errors,'gov-scanned-no-text-layer');continue;}
  const parsed=govItems(text,keyText,seed,document.meta.fetchedAt);outcome.status=seedStatus(text,keyText,parsed.length);outcome.items=parsed.length;if(!parsed.length)count(errors,'gov-no-keyed-items');items.push(...parsed);

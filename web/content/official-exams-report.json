@@ -8,8 +8,45 @@
       "province": "Hà Nội",
       "grade": 9,
       "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen",
-      "status": "scanned-no-text-layer",
-      "items": 0
+      "status": "ocr-transcribed",
+      "items": 37,
+      "ocr": {
+        "extracted": 40,
+        "kept": 37,
+        "rejected": 3,
+        "byReason": {
+          "figure-dependent": 1,
+          "key-mismatch": 1,
+          "underline-mismatch": 1
+        },
+        "byPart": {
+          "mcq": 20,
+          "pronunciation": 3,
+          "reading": 10,
+          "transformation": 4
+        },
+        "examCode": "101",
+        "keyCode": "101",
+        "method": "ocr-transcribed",
+        "models": [
+          "claude-vision (sonnet)",
+          "codex-vision (gpt-6.1-sol)"
+        ],
+        "rejectedItems": [
+          {
+            "number": 2,
+            "reason": "key-mismatch"
+          },
+          {
+            "number": 4,
+            "reason": "underline-mismatch"
+          },
+          {
+            "number": 11,
+            "reason": "figure-dependent"
+          }
+        ]
+      }
     },
     {
       "url": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
@@ -19,8 +56,44 @@
       "province": "Hà Nội",
       "grade": 9,
       "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen",
-      "status": "scanned-no-text-layer",
-      "items": 0
+      "status": "ocr-transcribed",
+      "items": 37,
+      "ocr": {
+        "extracted": 40,
+        "kept": 37,
+        "rejected": 3,
+        "byReason": {
+          "figure-dependent": 2,
+          "text-mismatch": 1
+        },
+        "byPart": {
+          "mcq": 8,
+          "pronunciation": 4,
+          "reading": 22,
+          "transformation": 3
+        },
+        "examCode": "001",
+        "keyCode": "001",
+        "method": "ocr-transcribed",
+        "models": [
+          "claude-vision (sonnet)",
+          "codex-vision (gpt-6.1-sol)"
+        ],
+        "rejectedItems": [
+          {
+            "number": 25,
+            "reason": "figure-dependent"
+          },
+          {
+            "number": 26,
+            "reason": "figure-dependent"
+          },
+          {
+            "number": 28,
+            "reason": "text-mismatch"
+          }
+        ]
+      }
     },
     {
       "url": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
@@ -30,8 +103,44 @@
       "province": "Hà Nội",
       "grade": 9,
       "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen",
-      "status": "scanned-no-text-layer",
-      "items": 0
+      "status": "ocr-transcribed",
+      "items": 37,
+      "ocr": {
+        "extracted": 40,
+        "kept": 37,
+        "rejected": 3,
+        "byReason": {
+          "figure-dependent": 2,
+          "text-mismatch": 1
+        },
+        "byPart": {
+          "mcq": 8,
+          "pronunciation": 4,
+          "reading": 21,
+          "transformation": 4
+        },
+        "examCode": "001",
+        "keyCode": "001",
+        "method": "ocr-transcribed",
+        "models": [
+          "claude-vision (sonnet)",
+          "codex-vision (gpt-6.1-sol)"
+        ],
+        "rejectedItems": [
+          {
+            "number": 2,
+            "reason": "text-mismatch"
+          },
+          {
+            "number": 15,
+            "reason": "figure-dependent"
+          },
+          {
+            "number": 16,
+            "reason": "figure-dependent"
+          }
+        ]
+      }
     }
   ]
 }

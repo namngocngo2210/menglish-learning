@@ -1,0 +1,1195 @@
+{
+  "schema": 1,
+  "seed": {
+    "url": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_5-deanhkhong-chuyen_116202515.pdf",
+    "answerKeyUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16329_6-dap-ananhkhong-chuyen_116202515.pdf",
+    "year": 2025,
+    "province": "Hà Nội",
+    "grade": 9,
+    "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen"
+  },
+  "examCode": "001",
+  "keyCode": "001",
+  "header": "KY THI TUYEN SINH VAO LOP 10 THPT NAM HOC 2025 - 2026, Mon thi: TIENG ANH, Ngay thi: 07/6/2025",
+  "pages": {
+    "exam": 4,
+    "key": 1
+  },
+  "crawledAt": "2026-10-31T14:00:45.372Z",
+  "passA": {
+    "method": "ocr-transcribed",
+    "model": "claude-vision (sonnet)",
+    "items": [
+      {
+        "number": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "diversity",
+          "electrical",
+          "generation",
+          "delivery"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "distance",
+          "value",
+          "culture",
+          "event"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "If the cost of public transportation ______, more people ______ it regularly.",
+        "options": [
+          "decrease – can't use",
+          "may decrease – won't use",
+          "decreases – will use",
+          "will decrease – uses"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Your effort and creativity made one of ______ events of our company a huge success.",
+        "options": [
+          "Ø (no article)",
+          "a",
+          "an",
+          "the"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Our English test ______ next Monday at nine o'clock, so please arrive ten minutes early!",
+        "options": [
+          "starts",
+          "starting",
+          "has started",
+          "will be start"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Her daughter didn't ______ eat chips when she was younger.",
+        "options": [
+          "use to",
+          "not use to",
+          "used to",
+          "got used to"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Two of ______ festivals in Viet Nam are the Ban Flower Festival and the Spring Festival.",
+        "options": [
+          "as famous as",
+          "much famous",
+          "more famous",
+          "the most famous"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Emily shares that she failed the drama club interview, and Phuong responds.\n- Emily: “I didn't perform well at our school's drama club interview.”\n- Phuong: “______”",
+        "options": [
+          "That club is too hard for them to try.",
+          "I think I should join something else.",
+          "Don't give up! You'll have another chance.",
+          "Maybe you should try something more challenging."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "While living in France, Marie ______ French quite quickly by interacting with locals daily.",
+        "options": [
+          "picked up",
+          "put up",
+          "took up",
+          "brought up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The teacher's kind words of ______ helped me speak confidently in front of the class.",
+        "options": [
+          "encouraging",
+          "encouragement",
+          "encouraged",
+          "encourage"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "touch<u>ed</u>",
+          "develop<u>ed</u>",
+          "focus<u>ed</u>",
+          "belov<u>ed</u>"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 12,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "d<u>a</u>nger",
+          "f<u>a</u>shion",
+          "<u>a</u>ngel",
+          "<u>a</u>ncient"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n- Choose one of the jobs you like. The interview will be (13)______ July 20th.\n- Decide who is going to apply and who is going to hire.\n- Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14)______ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n- Give the job interview.\n- Your classmates will comment on your (15)______ during the interview.\n- For (16)______ information, contact 19007666.",
+        "stem": "(13)",
+        "options": [
+          "on",
+          "at",
+          "in",
+          "of"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n- Choose one of the jobs you like. The interview will be (13)______ July 20th.\n- Decide who is going to apply and who is going to hire.\n- Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14)______ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n- Give the job interview.\n- Your classmates will comment on your (15)______ during the interview.\n- For (16)______ information, contact 19007666.",
+        "stem": "(14)",
+        "options": [
+          "a lot",
+          "a few",
+          "much of",
+          "little of"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n- Choose one of the jobs you like. The interview will be (13)______ July 20th.\n- Decide who is going to apply and who is going to hire.\n- Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14)______ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n- Give the job interview.\n- Your classmates will comment on your (15)______ during the interview.\n- For (16)______ information, contact 19007666.",
+        "stem": "(15)",
+        "options": [
+          "entrance",
+          "performance",
+          "allowance",
+          "instance"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 16,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n- Choose one of the jobs you like. The interview will be (13)______ July 20th.\n- Decide who is going to apply and who is going to hire.\n- Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14)______ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n- Give the job interview.\n- Your classmates will comment on your (15)______ during the interview.\n- For (16)______ information, contact 19007666.",
+        "stem": "(16)",
+        "options": [
+          "wider",
+          "bigger",
+          "further",
+          "lesser"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 17,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 17 to 18.",
+        "passage": "(17)______ It helps people understand each other more clearly by using eye contact, body language, and facial expressions. (18)______ Because of these advantages, face-to-face communication is still very important in our daily lives.",
+        "stem": "Choose the TOPIC SENTENCE that can BEGIN the text most appropriately.",
+        "options": [
+          "Face-to-face communication brings many important benefits.",
+          "Nowadays, people often text or call instead of meeting in person.",
+          "Talking in person helps avoid confusion caused by unclear messages.",
+          "Eye contact and body language help make a message easier to understand."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 17 to 18.",
+        "passage": "(17)______ It helps people understand each other more clearly by using eye contact, body language, and facial expressions. (18)______ Because of these advantages, face-to-face communication is still very important in our daily lives.",
+        "stem": "Put the sentences (a-c) in the correct order, then fill in the blank to make a logical text.\na. Talking in person also builds stronger relationships and creates more trust.\nb. These non-verbal signals make the message easier to understand and help avoid confusion.\nc. Spending time together allows friends and family to feel closer and more connected.",
+        "options": [
+          "c – b – a",
+          "c – a – b",
+          "b – a – c",
+          "a – b – c"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(19)",
+        "options": [
+          "does music have",
+          "do music have",
+          "do music has",
+          "does music has"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(20)",
+        "options": [
+          "who with others",
+          "with others who",
+          "with others whom",
+          "whom with others"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(21)",
+        "options": [
+          "However",
+          "Moreover",
+          "Besides",
+          "Therefore"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(22)",
+        "options": [
+          "hurt can also",
+          "can also hurt",
+          "also hurt can",
+          "hurt also can"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(23)",
+        "options": [
+          "play",
+          "send",
+          "run",
+          "go"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19)______ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20)______ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21)______, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22)______ teens' hearing if they listen to it too loudly through headphones.\nParents (23)______ an important role in helping teens make good choices about music. They (24)______ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "(24)",
+        "options": [
+          "shouldn't",
+          "should",
+          "ought not",
+          "ought"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "What does the notice say?",
+        "options": [
+          "The shop sells two different kinds of bag.",
+          "The shop doesn't sell bags to customers.",
+          "Customers can get plastic bags free of charge.",
+          "Customers have to pay for plastic bags."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 26,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "What does the message say?",
+        "options": [
+          "Emma invites you to go to the dentist with her.",
+          "Emma is asking you to reschedule her appointment.",
+          "Emma is asking you to tell the coach she won't come.",
+          "Emma wants you to meet her after basketball practice."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 27,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "I / look / forward / present / robotics project / class / winter break.",
+        "options": [
+          "I'm looking forward to presenting my robotics project to the class after the winter break.",
+          "I'm looking forward to present my robotics project for the class after winter break.",
+          "I look forward to present my robotics project to the class after the winter break.",
+          "I'm looking forward presenting my robotics project to the class after a winter break."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "The contestant / who / guess / the secret words / stay / in front of / the board.",
+        "options": [
+          "The contestant who guess the secret words stay in front of the board.",
+          "The contestant who guesses the secret words stay in front of the board.",
+          "The contestant who guesses the secret words stays in front of the board.",
+          "The contestant who guess the secret words stays in front of the board."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "These old photos remind us of the fun times we had on our family holiday.",
+        "options": [
+          "These old photos make us remember the fun times we had on our family holiday.",
+          "We took these photos during the fun times we had on our family holiday.",
+          "The fun times we had on our family holiday brings back the memory of these photos.",
+          "These photos help me experienced the fun times during our family holiday."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Linh asked me whether she had to wait there any longer.",
+        "options": [
+          "“Do you have to wait here any longer?” Linh asked me.",
+          "“Do I have to wait here any longer?” Linh asked me.",
+          "“Did I had to wait there any longer?” Linh asked me.",
+          "“Does she has to wait here any longer?” Linh asked me."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "According to the passage, the word “<u>indispensable</u>” is OPPOSITE in meaning to ______.",
+        "options": [
+          "uncommon",
+          "unusual",
+          "unavailable",
+          "unimportant"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "What is the main idea of the passage?",
+        "options": [
+          "Language is used only for speaking with other people.",
+          "Only major languages help people in daily situations.",
+          "Sign languages are more useful than spoken languages.",
+          "Language connects people and changes across history."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "What does the passage say about sign languages?",
+        "options": [
+          "They use hands and faces to show meaning.",
+          "They are easier to understand than grammar.",
+          "They cannot express feelings in daily life.",
+          "They are only used in small schools abroad."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "Which of the following is TRUE according to the passage?",
+        "options": [
+          "The way people speak today is often the same as how their grandparents spoke.",
+          "The way people speak today is often similar to how their grandparents spoke.",
+          "The way people speak today often differs from how their grandparents spoke.",
+          "The way people speak today is often like how their grandparents spoke."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "Why do a lot of experts want to protect small languages according to the passage?",
+        "options": [
+          "Because they help people travel easily to new places.",
+          "Because they are spoken in places with no written signs.",
+          "Because their speakers often forget how to use them.",
+          "Because their disappearance means losing culture and history."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn't be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That's why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That's why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today's global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "According to the passage, the word “<u>boost</u>” is CLOSEST in meaning to ______.",
+        "options": [
+          "lessen",
+          "worsen",
+          "improve",
+          "reduce"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37)____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38)____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39)____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40)____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "(37)",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37)____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38)____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39)____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40)____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "(38)",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37)____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38)____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39)____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40)____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "(39)",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37)____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38)____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39)____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40)____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "(40)",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "C",
+      "2": "D",
+      "3": "C",
+      "4": "D",
+      "5": "A",
+      "6": "A",
+      "7": "D",
+      "8": "C",
+      "9": "A",
+      "10": "B",
+      "11": "D",
+      "12": "B",
+      "13": "A",
+      "14": "B",
+      "15": "B",
+      "16": "C",
+      "17": "A",
+      "18": "C",
+      "19": "A",
+      "20": "B",
+      "21": "A",
+      "22": "B",
+      "23": "A",
+      "24": "B",
+      "25": "D",
+      "26": "C",
+      "27": "A",
+      "28": "C",
+      "29": "A",
+      "30": "B",
+      "31": "D",
+      "32": "D",
+      "33": "A",
+      "34": "C",
+      "35": "D",
+      "36": "C",
+      "37": "B",
+      "38": "C",
+      "39": "D",
+      "40": "A"
+    }
+  },
+  "passB": {
+    "method": "ocr-transcribed",
+    "model": "codex-vision (gpt-6.1-sol)",
+    "items": [
+      {
+        "number": 1,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "diversity",
+          "electrical",
+          "generation",
+          "delivery"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "distance",
+          "value",
+          "culture",
+          "event"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "If the cost of public transportation _____, more people _____ it regularly.",
+        "options": [
+          "decrease – can’t use",
+          "may decrease – won’t use",
+          "decreases – will use",
+          "will decrease – uses"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Your effort and creativity made one of _____ events of our company a huge success.",
+        "options": [
+          "Ø (no article)",
+          "a",
+          "an",
+          "the"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Our English test _____ next Monday at nine o’clock, so please arrive ten minutes early!",
+        "options": [
+          "starts",
+          "starting",
+          "has started",
+          "will be start"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Her daughter didn’t _____ eat chips when she was younger.",
+        "options": [
+          "use to",
+          "not use to",
+          "used to",
+          "got used to"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Two of _____ festivals in Viet Nam are the Ban Flower Festival and the Spring Festival.",
+        "options": [
+          "as famous as",
+          "much famous",
+          "more famous",
+          "the most famous"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "- Emily: “I didn’t perform well at our school’s drama club interview.”\n- Phuong: “_____”",
+        "stem": "Emily shares that she failed the drama club interview, and Phuong responds.",
+        "options": [
+          "That club is too hard for them to try.",
+          "I think I should join something else.",
+          "Don’t give up! You’ll have another chance.",
+          "Maybe you should try something more challenging."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "While living in France, Marie _____ French quite quickly by interacting with locals daily.",
+        "options": [
+          "picked up",
+          "put up",
+          "took up",
+          "brought up"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The teacher’s kind words of _____ helped me speak confidently in front of the class.",
+        "options": [
+          "encouraging",
+          "encouragement",
+          "encouraged",
+          "encourage"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "touch<u>ed</u>",
+          "develop<u>ed</u>",
+          "focus<u>ed</u>",
+          "belov<u>ed</u>"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 12,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "d<u>a</u>nger",
+          "f<u>a</u>shion",
+          "<u>a</u>ngel",
+          "<u>a</u>ncient"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "page": 2,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n• Choose one of the jobs you like. The interview will be (13) _____ July 20th.\n• Decide who is going to apply and who is going to hire.\n• Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14) _____ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n• Give the job interview.\n• Your classmates will comment on your (15) _____ during the interview.\n• For (16) _____ information, contact 19007666.",
+        "stem": "",
+        "options": [
+          "on",
+          "at",
+          "in",
+          "of"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "page": 2,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n• Choose one of the jobs you like. The interview will be (13) _____ July 20th.\n• Decide who is going to apply and who is going to hire.\n• Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14) _____ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n• Give the job interview.\n• Your classmates will comment on your (15) _____ during the interview.\n• For (16) _____ information, contact 19007666.",
+        "stem": "",
+        "options": [
+          "a lot",
+          "a few",
+          "much of",
+          "little of"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "page": 2,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n• Choose one of the jobs you like. The interview will be (13) _____ July 20th.\n• Decide who is going to apply and who is going to hire.\n• Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14) _____ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n• Give the job interview.\n• Your classmates will comment on your (15) _____ during the interview.\n• For (16) _____ information, contact 19007666.",
+        "stem": "",
+        "options": [
+          "entrance",
+          "performance",
+          "allowance",
+          "instance"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 16,
+        "page": 2,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 13 to 16.",
+        "passage": "TAKE PART IN A MOCK INTERVIEW FOR A SUMMER JOB\nYour friend and you are planning to apply for a summer job in Da Nang. Prepare!\n• Choose one of the jobs you like. The interview will be (13) _____ July 20th.\n• Decide who is going to apply and who is going to hire.\n• Prepare the interview in pairs.\n- Interviewee: Get ready to present yourself with personal information, qualities, skills, experience and availability. Prepare (14) _____ questions about what you want to know about the job such as tasks, working hours and colleagues.\n- Interviewer: Prepare the questions you are going to ask: personal information, qualities, skills, experience and availability.\n• Give the job interview.\n• Your classmates will comment on your (15) _____ during the interview.\n• For (16) _____ information, contact 19007666.",
+        "stem": "",
+        "options": [
+          "wider",
+          "bigger",
+          "further",
+          "lesser"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 17,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 17 to 18.",
+        "passage": "(17) _____ It helps people understand each other more clearly by using eye contact, body language, and facial expressions. (18) _____ Because of these advantages, face-to-face communication is still very important in our daily lives.",
+        "stem": "Choose the TOPIC SENTENCE that can BEGIN the text most appropriately.",
+        "options": [
+          "Face-to-face communication brings many important benefits.",
+          "Nowadays, people often text or call instead of meeting in person.",
+          "Talking in person helps avoid confusion caused by unclear messages.",
+          "Eye contact and body language help make a message easier to understand."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 17 to 18.",
+        "passage": "(17) _____ It helps people understand each other more clearly by using eye contact, body language, and facial expressions. (18) _____ Because of these advantages, face-to-face communication is still very important in our daily lives.",
+        "stem": "Put the sentences (a-c) in the correct order, then fill in the blank to make a logical text.\na. Talking in person also builds stronger relationships and creates more trust.\nb. These non-verbal signals make the message easier to understand and help avoid confusion.\nc. Spending time together allows friends and family to feel closer and more connected.",
+        "options": [
+          "c – b – a",
+          "c – a – b",
+          "b – a – c",
+          "a – b – c"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "does music have",
+          "do music have",
+          "do music has",
+          "does music has"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "who with others",
+          "with others who",
+          "with others whom",
+          "whom with others"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "However",
+          "Moreover",
+          "Besides",
+          "Therefore"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "hurt can also",
+          "can also hurt",
+          "also hurt can",
+          "hurt also can"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "play",
+          "send",
+          "run",
+          "go"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 19 to 24.",
+        "passage": "A lot of teenagers love music. It helps them express themselves and connect with others. Teens often listen to music through headphones or go to concerts with friends. However, (19) _____ good or bad effects on teen behaviour?\nSome people believe that music has a couple of positive effects. It can make teens feel better when they are sad, and it helps them connect (20) _____ like the same music. Also, learning to play an instrument or write songs can make teens more creative and disciplined.\n(21) _____, some people worry about the negative effects. Some songs with violent or bad words might influence teens to act in risky ways. Music (22) _____ teens' hearing if they listen to it too loudly through headphones.\nParents (23) _____ an important role in helping teens make good choices about music. They (24) _____ talk to teens about the meaning of songs and help them avoid harmful music. With the right guidance, music can have a good influence on teenagers.",
+        "stem": "",
+        "options": [
+          "shouldn’t",
+          "should",
+          "ought not",
+          "ought"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "page": 3,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "Plastic bags – 0.2$\nUse your own bag – FREE!",
+        "stem": "What does the notice say?",
+        "options": [
+          "The shop sells two different kinds of bag.",
+          "The shop doesn’t sell bags to customers.",
+          "Customers can get plastic bags free of charge.",
+          "Customers have to pay for plastic bags."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 26,
+        "page": 3,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "Hey! I can’t come to basketball practice today.\nI have a dentist appointment after school.\nCan you tell the coach for me?\nEmma",
+        "stem": "What does the message say?",
+        "options": [
+          "Emma invites you to go to the dentist with her.",
+          "Emma is asking you to reschedule her appointment.",
+          "Emma is asking you to tell the coach she won’t come.",
+          "Emma wants you to meet her after basketball practice."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 27,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "I / look / forward / present / robotics project / class / winter break.",
+        "options": [
+          "I’m looking forward to presenting my robotics project to the class after the winter break.",
+          "I’m looking forward to present my robotics project for the class after winter break.",
+          "I look forward to present my robotics project to the class after the winter break.",
+          "I’m looking forward presenting my robotics project to the class after a winter break."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "The contestant / who / guess / the secret words / stay / in front of / the board.",
+        "options": [
+          "The contestant who guess the secret words stay in front of the board.",
+          "The contestant who guesses the secret words stay in front of the board.",
+          "The contestant who guesses the secret words stays in front the board.",
+          "The contestant who guess the secret words stays in front of the board."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "These old photos remind us of the fun times we had on our family holiday.",
+        "options": [
+          "These old photos make us remember the fun times we had on our family holiday.",
+          "We took these photos during the fun times we had on our family holiday.",
+          "The fun times we had on our family holiday brings back the memory of these photos.",
+          "These photos help me experienced the fun times during our family holiday."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Linh asked me whether she had to wait there any longer.",
+        "options": [
+          "“Do you have to wait here any longer?” Linh asked me.",
+          "“Do I have to wait here any longer?” Linh asked me.",
+          "“Did I had to wait there any longer?” Linh asked me.",
+          "“Does she has to wait here any longer?” Linh asked me."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "According to the passage, the word “<u>indispensable</u>” is OPPOSITE in meaning to _____.",
+        "options": [
+          "uncommon",
+          "unusual",
+          "unavailable",
+          "unimportant"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "What is the main idea of the passage?",
+        "options": [
+          "Language is used only for speaking with other people.",
+          "Only major languages help people in daily situations.",
+          "Sign languages are more useful than spoken languages.",
+          "Language connects people and changes across history."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "What does the passage say about sign languages?",
+        "options": [
+          "They use hands and faces to show meaning.",
+          "They are easier to understand than grammar.",
+          "They cannot express feelings in daily life.",
+          "They are only used in small schools abroad."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "Which of the following is TRUE according to the passage?",
+        "options": [
+          "The way people speak today is often the same as how their grandparents spoke.",
+          "The way people speak today is often similar to how their grandparents spoke.",
+          "The way people speak today often differs from how their grandparents spoke.",
+          "The way people speak today is often like how their grandparents spoke."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "Why do a lot of experts want to protect small languages according to the passage?",
+        "options": [
+          "Because they help people travel easily to new places.",
+          "Because they are spoken in places with no written signs.",
+          "Because their speakers often forget how to use them.",
+          "Because their disappearance means losing culture and history."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "page": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 31 to 36.",
+        "passage": "Language is <u>indispensable</u> to humans. It helps us share our thoughts, express our emotions, and understand one another. Without language, we wouldn’t be able to build relationships or learn from others. Over time, languages have gradually developed, changing in sounds, grammar, and vocabulary. That’s why the way people speak today is often very different from how their grandparents spoke.\nAround the world, there are thousands of languages. Some are spoken by millions of people, while others are used by only a small group. Sadly, many of these smaller languages are disappearing. When a language dies, we also lose part of a culture and history. That’s why many specialists are working hard to protect endangered languages before they are lost forever.\nNot all languages are spoken with voices. Sign languages use hand movements and facial expressions to share meaning. They are used by people who are deaf or hard of hearing and are just as rich and meaningful as spoken ones.\nLearning another language can also help you personally. It can <u>boost</u> your self-confidence, strengthen your brain and help you understand different cultures. In today’s global world, speaking more than one language can help you open doors in both life and work.",
+        "stem": "According to the passage, the word “<u>boost</u>” is CLOSEST in meaning to _____.",
+        "options": [
+          "lessen",
+          "worsen",
+          "improve",
+          "reduce"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "page": 4,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37) _____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38) _____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39) _____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40) _____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "_____",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "page": 4,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37) _____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38) _____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39) _____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40) _____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "_____",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "page": 4,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37) _____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38) _____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39) _____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40) _____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "_____",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "page": 4,
+        "instruction": "Four phrases/ sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks from 37 to 40.",
+        "passage": "Shopping is an important part of everyday life. (37) _____. Some enjoy going to small local shops, while others prefer big supermarkets or modern shopping malls. In these places, shoppers can look (38) _____. This is especially helpful when buying things like clothes, shoes, or furniture. Sometimes, shop assistants also give useful advice or help customers choose the right product.\nToday, more and more people shop online. It is easy, fast, and can be done at any time from home. With just a phone or computer, buyers can look (39) _____. Items are then delivered to their homes.\nHowever, online shopping has some problems. (40) _____. There may also be delivery delays, or the item might look different from the pictures.\nBoth online and in-person shopping have advantages, so people can choose what works best for them.",
+        "stem": "_____",
+        "options": [
+          "People cannot feel or test the product before buying it",
+          "People visit many kinds of stores to buy food, clothes, and other items",
+          "at items closely, touch them, and even try them on",
+          "through hundreds of products and order them with a few clicks"
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "C",
+      "2": "D",
+      "3": "C",
+      "4": "D",
+      "5": "A",
+      "6": "A",
+      "7": "D",
+      "8": "C",
+      "9": "A",
+      "10": "B",
+      "11": "D",
+      "12": "B",
+      "13": "A",
+      "14": "B",
+      "15": "B",
+      "16": "C",
+      "17": "A",
+      "18": "C",
+      "19": "A",
+      "20": "B",
+      "21": "A",
+      "22": "B",
+      "23": "A",
+      "24": "B",
+      "25": "D",
+      "26": "C",
+      "27": "A",
+      "28": "C",
+      "29": "A",
+      "30": "B",
+      "31": "D",
+      "32": "D",
+      "33": "A",
+      "34": "C",
+      "35": "D",
+      "36": "C",
+      "37": "B",
+      "38": "C",
+      "39": "D",
+      "40": "A"
+    }
+  }
+}

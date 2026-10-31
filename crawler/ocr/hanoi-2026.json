@@ -1,0 +1,1195 @@
+{
+  "schema": 1,
+  "seed": {
+    "url": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-detieng-anhdai-tra_26202616.pdf",
+    "answerKeyUrl": "https://hanoi.edu.vn/upload/pdf/2026_10_2/hanoi_16984_3-datieng-anhdai-tra_26202616.pdf",
+    "year": 2026,
+    "province": "Hà Nội",
+    "grade": 9,
+    "kind": "tuyen-sinh-10-ngoai-ngu-khong-chuyen"
+  },
+  "examCode": "001",
+  "keyCode": "001",
+  "header": "KY THI TUYEN SINH VAO LOP 10 THPT NAM HOC 2026 - 2027, Mon thi: TIENG ANH, Ngay thi: 30/5/2026",
+  "pages": {
+    "exam": 4,
+    "key": 1
+  },
+  "crawledAt": "2026-10-31T14:00:48.381Z",
+  "passA": {
+    "method": "ocr-transcribed",
+    "model": "claude-vision (sonnet)",
+    "items": [
+      {
+        "number": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 1 to 2.",
+        "passage": "To save energy at school, students should practise a few simple habits. To begin with, try to avoid wasting energy during lessons and at break time. ______",
+        "stem": "Choose the correct sentence to complete the first half of the following text.",
+        "options": [
+          "Otherwise, the school can save a lot of money on monthly electricity bills and help the earth become a greener place.",
+          "In short, learners must stop using all electronic devices during their lessons and only read printed books to save the school's electricity.",
+          "However, students need to keep the schoolyard completely clean by picking up trash and putting plastic bottles into the correct recycling bins.",
+          "This means turning off lights, fans, and electronic devices when they are not in use, especially when leaving the classroom."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 1 to 2.",
+        "passage": "To save energy at school, students should practise a few simple habits. To begin with, try to avoid wasting energy during lessons and at break time. ______",
+        "stem": "Reorder the following sentences to complete the second half of the text in a logical way.\na. By taking these simple actions, students can help reduce energy waste and protect the environment.\nb. Finally, they should advise their classmates to save energy and work together to build good habits in the classroom.\nc. Next, they should make use of sunlight and fresh air whenever possible by opening windows instead of using electric lights and air conditioners.",
+        "options": [
+          "b - c - a",
+          "c - b - a",
+          "a - b - c",
+          "b - a - c"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>obsolete</u>” in paragraph 2 is OPPOSITE in meaning to ______.",
+        "options": [
+          "useful and up-to-date",
+          "useless and outdated",
+          "simple and repeated",
+          "cheap and common"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>It</u>” in paragraph 2 refers to ______.",
+        "options": [
+          "work",
+          "technology",
+          "business",
+          "machine"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>collaborate</u>” in paragraph 3 is CLOSEST in meaning to ______.",
+        "options": [
+          "work harder",
+          "work together",
+          "work longer",
+          "work alone"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "Which of the following is TRUE according to the passage?",
+        "options": [
+          "Students should believe that one career path is suitable for everyone.",
+          "Workers in practical jobs never need to use digital tools at work.",
+          "Hairdressers use online booking apps to avoid meeting customers.",
+          "Automation can change some jobs, but technology can also create new roles."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "According to the passage, why might a hairdresser use an online booking app?",
+        "options": [
+          "To work without speaking to any other people.",
+          "To replace all practical skills needed in hairdressing.",
+          "To stop customers from visiting the salon in person.",
+          "To make appointments with customers before their arrivals."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "What is the main idea of the passage?",
+        "options": [
+          "Students should choose one job and never change their career plans.",
+          "Technology has made all practical jobs disappear from the future job market.",
+          "Teenagers should build skills to adapt to changes in the job market.",
+          "Vocational courses are always better than university courses for teenagers."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(9)",
+        "options": [
+          "These steps simple",
+          "These simple steps",
+          "These steps are simple",
+          "These simple are steps"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(10)",
+        "options": [
+          "students allows to review",
+          "allows students reviewing",
+          "allows students to review",
+          "allows to students review"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(11)",
+        "options": [
+          "appear",
+          "revise",
+          "achieve",
+          "ignore"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 12,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(12)",
+        "options": [
+          "distance from",
+          "link between",
+          "access of",
+          "connection to"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(13)",
+        "options": [
+          "Although",
+          "During",
+          "Unless",
+          "If"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students' future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "(14)",
+        "options": [
+          "success",
+          "successful",
+          "successive",
+          "succeed"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "What does the notice say?",
+        "options": [
+          "Staff are not responsible if people get hurt here.",
+          "The playground opens only during certain hours for visitors.",
+          "Public visitors may play here if they follow rules.",
+          "Visitors may enter this playground with the permission."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 16,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "What does the message mean?",
+        "options": [
+          "You should move strange bags away from public areas yourself.",
+          "You must tell security staff if you see a bag left alone.",
+          "You can open unattended bags to find the owner's name.",
+          "You should take lost bags to your home and check them later."
+        ],
+        "needsFigure": true
+      },
+      {
+        "number": 17,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n- Sign up for the activity (17)______ the school website before Friday.\n- Remember to (18)______ a clear goal for your group before you start.\n- Bring (19)______ reusable water bottle instead of buying plastic ones.\n- Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "(17)",
+        "options": [
+          "above",
+          "to",
+          "on",
+          "by"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n- Sign up for the activity (17)______ the school website before Friday.\n- Remember to (18)______ a clear goal for your group before you start.\n- Bring (19)______ reusable water bottle instead of buying plastic ones.\n- Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "(18)",
+        "options": [
+          "take",
+          "send",
+          "set",
+          "do"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n- Sign up for the activity (17)______ the school website before Friday.\n- Remember to (18)______ a clear goal for your group before you start.\n- Bring (19)______ reusable water bottle instead of buying plastic ones.\n- Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "(19)",
+        "options": [
+          "few",
+          "a",
+          "the",
+          "little"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n- Sign up for the activity (17)______ the school website before Friday.\n- Remember to (18)______ a clear goal for your group before you start.\n- Bring (19)______ reusable water bottle instead of buying plastic ones.\n- Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "(20)",
+        "options": [
+          "give",
+          "cut",
+          "put",
+          "turn"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The students at Sentosa School suggested using leftover food from the school ______ to make biogas.",
+        "options": [
+          "cafeteria",
+          "gym",
+          "playground",
+          "library"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Teaching young children can be a ______ job because it requires energy, creativity, and patience.",
+        "options": [
+          "demanding",
+          "private",
+          "simple",
+          "hard-working"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The more time teenagers spend on social media, ______ for outdoor activities.",
+        "options": [
+          "the fewer time they have",
+          "the less time they have",
+          "they have fewer time",
+          "the less time do they have"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Ms. Lan has just helped a foreign tourist find the way to the nearest bus stop.\n- Tourist: “Thank you very much for your help.”\n- Ms. Lan: “______”",
+        "options": [
+          "You can say that again.",
+          "You're absolutely right!",
+          "Certainly!",
+          "No problem!"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Her grandson has taken a coding course to ______ his dream of becoming a software developer.",
+        "options": [
+          "carry",
+          "win",
+          "pursue",
+          "make"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 26,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "______ a healthy lifestyle helps teenagers reduce stress and study more effectively.",
+        "options": [
+          "Maintaining",
+          "Maintain",
+          "With maintaining",
+          "Have maintained"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 27,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "If you visit a new place, ______ its culture and customs to behave appropriately.",
+        "options": [
+          "learning",
+          "be learn",
+          "learn",
+          "will learn"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Back then, her mother ran a small stall in the village market, and she always ______ fresh vegetables to nearby families.",
+        "options": [
+          "was selling",
+          "has sold",
+          "sold",
+          "sells"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "perform<u>a</u>nce",
+          "<u>a</u>nniversary",
+          "distr<u>a</u>ction",
+          "c<u>a</u>mpus"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "<u>h</u>onesty",
+          "<u>h</u>onour",
+          "ex<u>h</u>austed",
+          "<u>h</u>olography"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Green Café / wooden tables / create / warm atmosphere / often / attract / young people.",
+        "options": [
+          "The Green Café where wooden tables create a warm atmosphere often attracts young people.",
+          "The Green Café, whose wooden tables create a warm atmosphere, often attracts young people.",
+          "The Green Café in which wooden tables create a warm atmosphere often attract young people.",
+          "The Green Café, which wooden tables create a warm atmosphere, often attract young people."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "swimming pool / use / heating equipment / people / swim / cold days.",
+        "options": [
+          "The swimming pool uses a heating equipment that people can swim for cold days.",
+          "The swimming pool uses a heating equipment, so people can swim on cold days.",
+          "The swimming pool uses heating equipment, so people can swim on cold days.",
+          "The swimming pool uses heating equipment enough for people to swim in cold days."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "“Don't forget to bring your student card to the library,” I said to Nana.",
+        "options": [
+          "I remind Nana of bringing her student card to the library.",
+          "I tell Nana not to forget to bring her student card to the library.",
+          "I asked Nana not to forget bringing her student card to the library.",
+          "I reminded Nana to bring her student card to the library."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Students who don't organise their ideas before writing complete their essays more slowly than those who start with a plan.",
+        "options": [
+          "Students who organise their ideas before writing complete their essays more slower than those who start without a plan.",
+          "Students who organise their ideas before writing complete their essays more quicker than those who start without a plan.",
+          "Students who start without a plan complete their essays quicker than those who organise their ideas first.",
+          "Students who organise their ideas before writing complete their essays more quickly than those who start without a plan."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "character",
+          "engineer",
+          "suddenly",
+          "regular"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "recognition",
+          "community",
+          "biology",
+          "emotional"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______. In conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "(37)",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______. In conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "(38)",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______. In conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "(39)",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______. In conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "(40)",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "D",
+      "2": "B",
+      "3": "A",
+      "4": "B",
+      "5": "B",
+      "6": "D",
+      "7": "D",
+      "8": "C",
+      "9": "B",
+      "10": "C",
+      "11": "C",
+      "12": "D",
+      "13": "D",
+      "14": "A",
+      "15": "A",
+      "16": "B",
+      "17": "C",
+      "18": "C",
+      "19": "B",
+      "20": "B",
+      "21": "A",
+      "22": "A",
+      "23": "B",
+      "24": "D",
+      "25": "C",
+      "26": "A",
+      "27": "C",
+      "28": "C",
+      "29": "A",
+      "30": "D",
+      "31": "B",
+      "32": "C",
+      "33": "D",
+      "34": "D",
+      "35": "B",
+      "36": "A",
+      "37": "D",
+      "38": "C",
+      "39": "B",
+      "40": "A"
+    }
+  },
+  "passB": {
+    "method": "ocr-transcribed",
+    "model": "codex-vision (gpt-6.1-sol)",
+    "items": [
+      {
+        "number": 1,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 1 to 2.",
+        "passage": "To save energy at school, students should practise a few simple habits. To begin with, try to avoid wasting energy during lessons and at break time. ______",
+        "stem": "Choose the correct sentence to complete the first half of the following text.",
+        "options": [
+          "Otherwise, the school can save a lot of money on monthly electricity bills and help the earth become a greener place.",
+          "In short, learners must stop using all electronic devices during their lessons and only read printed books to save the school’s electricity.",
+          "However, students need to keep the schoolyard completely clean by picking up trash and putting plastic bottles into the correct recycling bins.",
+          "This means turning off lights, fans, and electronic devices when they are not in use, especially when leaving the classroom."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 2,
+        "page": 1,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions from 1 to 2.",
+        "passage": "a. By taking these simple actions, students can help reduce energy waste and protect the environment.\nb. Finally, they should advise their classmates to save energy and work together to build good habits in the classroom.\nc. Next, they should make use of sunlight and fresh air whenever possible by opening windows instead of using electric lights and air conditioners.",
+        "stem": "Reorder the following sentences to complete the second half of the text in a logical way.",
+        "options": [
+          "b - c - a",
+          "c - b - a",
+          "a - b - c",
+          "b - a - c"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 3,
+        "page": 1,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>obsolete</u>” in paragraph 2 is OPPOSITE in meaning to ______.",
+        "options": [
+          "useful and up-to-date",
+          "useless and outdated",
+          "simple and repeated",
+          "cheap and common"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 4,
+        "page": 1,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>It</u>” in paragraph 2 refers to ______.",
+        "options": [
+          "work",
+          "technology",
+          "business",
+          "machine"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 5,
+        "page": 2,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "The word “<u>collaborate</u>” in paragraph 3 is CLOSEST in meaning to ______.",
+        "options": [
+          "work harder",
+          "work together",
+          "work longer",
+          "work alone"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 6,
+        "page": 2,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "Which of the following is TRUE according to the passage?",
+        "options": [
+          "Students should believe that one career path is suitable for everyone.",
+          "Workers in practical jobs never need to use digital tools at work.",
+          "Hairdressers use online booking apps to avoid meeting customers.",
+          "Automation can change some jobs, but technology can also create new roles."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 7,
+        "page": 2,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "According to the passage, why might a hairdresser use an online booking app?",
+        "options": [
+          "To work without speaking to any other people.",
+          "To replace all practical skills needed in hairdressing.",
+          "To stop customers from visiting the salon in person.",
+          "To make appointments with customers before their arrivals."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 8,
+        "page": 2,
+        "instruction": "Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "For young people, planning a career now means more than choosing a job they like. They also need to understand how work is changing. In the past, a person might learn one set of skills and use it for many years. Today, however, technology and new customer needs are changing the way people work.\nAutomation is one clear example. When a machine can do a task faster, more accurately and at a lower cost, that task may become <u>obsolete</u>. This has happened to some simple jobs in ticket offices, factories and service counters. However, technology does not only take work away. <u>It</u> also creates new opportunities in fields such as online business, video editing, digital services and software development.\nBecause of these changes, workers need more than technical knowledge. They often have to <u>collaborate</u> with other people, share information, and solve problems together. A doctor may work with nurses and technicians to manage digital records, and a hairdresser may use an online booking app to arrange visits and communicate with customers before they arrive. Even jobs that seem practical or traditional may now require basic digital skills.\nThere is no single career path that suits every student. University may be the right choice for some, while vocational courses may help others prepare for skilled work sooner. To build a successful future, teenagers should develop useful skills, stay curious, and be prepared for further changes in the job market.",
+        "stem": "What is the main idea of the passage?",
+        "options": [
+          "Students should choose one job and never change their career plans.",
+          "Technology has made all practical jobs disappear from the future job market.",
+          "Teenagers should build skills to adapt to changes in the job market.",
+          "Vocational courses are always better than university courses for teenagers."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 9,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "These steps simple",
+          "These simple steps",
+          "These steps are simple",
+          "These simple are steps"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 10,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "students allows to review",
+          "allows students reviewing",
+          "allows students to review",
+          "allows to students review"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 11,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "appear",
+          "revise",
+          "achieve",
+          "ignore"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 12,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "distance from",
+          "link between",
+          "access of",
+          "connection to"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 13,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "Although",
+          "During",
+          "Unless",
+          "If"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 14,
+        "page": 2,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "MANAGING YOUR TIME BETTER\nMany teenagers feel stressed because they have too much schoolwork and too many activities after class. To study more effectively, students should build good time-management habits. One useful way is to make a clear timetable and write down important tasks. This helps students avoid forgetting homework or leaving everything until the last minute.\nStudents can also divide big tasks into smaller steps. For example, instead of trying to finish a whole project in one evening, they can complete one part each day. This makes the work less difficult and gives students more confidence. (9)______ can also help them stay calm before exams.\nAnother useful habit is to keep away from distractions while studying. Students should turn off unnecessary notifications and choose a quiet place to work. This (10)______ their lessons more carefully and finish their homework faster.\nGood time management is not only about studying. Teenagers also need time for rest, exercise and family. If they plan their day well, they can have enough time to relax without feeling guilty. This can improve both their physical and mental health. It may also help them (11)______ better results at school.\nHowever, students should not make their timetable too strict. A good plan should be realistic and flexible. When something unexpected happens, they can change their schedule instead of feeling stressed. Learning to manage time well is an important skill because it has a strong (12)______ students’ future success.\n(13)______ students practise these habits regularly, they will become more independent and responsible. They will understand that (14)______ is not only about working hard, but also about working wisely.",
+        "stem": "",
+        "options": [
+          "success",
+          "successful",
+          "successive",
+          "succeed"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 15,
+        "page": 2,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "This is NOT\na public playground!\nManagement is not responsible\nfor injuries or accidents.",
+        "stem": "What does the notice say?",
+        "options": [
+          "Staff are not responsible if people get hurt here.",
+          "The playground opens only during certain hours for visitors.",
+          "Public visitors may play here if they follow rules.",
+          "Visitors may enter this playground with the permission."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 16,
+        "page": 3,
+        "instruction": "Read the following notice or message and mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "Please report any unattended bags\nto security staff immediately!",
+        "stem": "What does the message mean?",
+        "options": [
+          "You should move strange bags away from public areas yourself.",
+          "You must tell security staff if you see a bag left alone.",
+          "You can open unattended bags to find the owner’s name.",
+          "You should take lost bags to your home and check them later."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 17,
+        "page": 3,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n• Sign up for the activity (17)______ the school website before Friday.\n• Remember to (18)______ a clear goal for your group before you start.\n• Bring (19)______ reusable water bottle instead of buying plastic ones.\n• Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "",
+        "options": [
+          "above",
+          "to",
+          "on",
+          "by"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 18,
+        "page": 3,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n• Sign up for the activity (17)______ the school website before Friday.\n• Remember to (18)______ a clear goal for your group before you start.\n• Bring (19)______ reusable water bottle instead of buying plastic ones.\n• Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "",
+        "options": [
+          "take",
+          "send",
+          "set",
+          "do"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 19,
+        "page": 3,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n• Sign up for the activity (17)______ the school website before Friday.\n• Remember to (18)______ a clear goal for your group before you start.\n• Bring (19)______ reusable water bottle instead of buying plastic ones.\n• Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "",
+        "options": [
+          "few",
+          "a",
+          "the",
+          "little"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 20,
+        "page": 3,
+        "instruction": "Read the following announcement and mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "GREEN SCHOOL WEEK\nTo help protect the environment, all students are invited to join Green School Week.\nPlease follow these instructions:\n• Sign up for the activity (17)______ the school website before Friday.\n• Remember to (18)______ a clear goal for your group before you start.\n• Bring (19)______ reusable water bottle instead of buying plastic ones.\n• Try to (20)______ down on plastic waste by reusing bags and boxes whenever possible.",
+        "stem": "",
+        "options": [
+          "give",
+          "cut",
+          "put",
+          "turn"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 21,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The students at Sentosa School suggested using leftover food from the school ______ to make biogas.",
+        "options": [
+          "cafeteria",
+          "gym",
+          "playground",
+          "library"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 22,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Teaching young children can be a ______ job because it requires energy, creativity, and patience.",
+        "options": [
+          "demanding",
+          "private",
+          "simple",
+          "hard-working"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 23,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "The more time teenagers spend on social media, ______ for outdoor activities.",
+        "options": [
+          "the fewer time they have",
+          "the less time they have",
+          "they have fewer time",
+          "the less time do they have"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 24,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": "- Tourist: “Thank you very much for your help.”\n- Ms. Lan: “______”",
+        "stem": "Ms. Lan has just helped a foreign tourist find the way to the nearest bus stop.",
+        "options": [
+          "You can say that again.",
+          "You’re absolutely right!",
+          "Certainly!",
+          "No problem!"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 25,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Her grandson has taken a coding course to ______ his dream of becoming a software developer.",
+        "options": [
+          "carry",
+          "win",
+          "pursue",
+          "make"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 26,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "______ a healthy lifestyle helps teenagers reduce stress and study more effectively.",
+        "options": [
+          "Maintaining",
+          "Maintain",
+          "With maintaining",
+          "Have maintained"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 27,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "If you visit a new place, ______ its culture and customs to behave appropriately.",
+        "options": [
+          "learning",
+          "be learn",
+          "learn",
+          "will learn"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 28,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.",
+        "passage": null,
+        "stem": "Back then, her mother ran a small stall in the village market, and she always ______ fresh vegetables to nearby families.",
+        "options": [
+          "was selling",
+          "has sold",
+          "sold",
+          "sells"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 29,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "perform<u>a</u>nce",
+          "<u>a</u>nniversary",
+          "distr<u>a</u>ction",
+          "c<u>a</u>mpus"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 30,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "<u>h</u>onesty",
+          "<u>h</u>onour",
+          "ex<u>h</u>austed",
+          "<u>h</u>olography"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 31,
+        "page": 3,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "Green Café / wooden tables / create / warm atmosphere / often / attract / young people.",
+        "options": [
+          "The Green Café where wooden tables create a warm atmosphere often attracts young people.",
+          "The Green Café, whose wooden tables create a warm atmosphere, often attracts young people.",
+          "The Green Café in which wooden tables create a warm atmosphere often attract young people.",
+          "The Green Café, which wooden tables create a warm atmosphere, often attract young people."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 32,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is best made from the given cues in each of the following questions.",
+        "passage": null,
+        "stem": "swimming pool / use / heating equipment / people / swim / cold days.",
+        "options": [
+          "The swimming pool uses a heating equipment that people can swim for cold days.",
+          "The swimming pool uses a heating equipment, so people can swim on cold days.",
+          "The swimming pool uses heating equipment, so people can swim on cold days.",
+          "The swimming pool uses heating equipment enough for people to swim in cold days."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 33,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "“Don’t forget to bring your student card to the library,” I said to Nana.",
+        "options": [
+          "I remind Nana of bringing her student card to the library.",
+          "I tell Nana not to forget to bring her student card to the library.",
+          "I asked Nana not to forget bringing her student card to the library.",
+          "I reminded Nana to bring her student card to the library."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 34,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the sentence that is closest in meaning to the original sentence in each of the following questions.",
+        "passage": null,
+        "stem": "Students who don’t organise their ideas before writing complete their essays more slowly than those who start with a plan.",
+        "options": [
+          "Students who organise their ideas before writing complete their essays more slower than those who start without a plan.",
+          "Students who organise their ideas before writing complete their essays more quicker than those who start without a plan.",
+          "Students who start without a plan complete their essays quicker than those who organise their ideas first.",
+          "Students who organise their ideas before writing complete their essays more quickly than those who start without a plan."
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 35,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "character",
+          "engineer",
+          "suddenly",
+          "regular"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 36,
+        "page": 4,
+        "instruction": "Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.",
+        "passage": null,
+        "stem": "",
+        "options": [
+          "recognition",
+          "community",
+          "biology",
+          "emotional"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 37,
+        "page": 4,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______.\nIn conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "______",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 38,
+        "page": 4,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______.\nIn conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "______",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 39,
+        "page": 4,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______.\nIn conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "______",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      },
+      {
+        "number": 40,
+        "page": 4,
+        "instruction": "Four phrases/sentences have been removed from the text below. For each question, mark the letter A, B, C, or D on your answer sheet to indicate the correct option that best fits each of the numbered blanks.",
+        "passage": "PRESERVING TRADITIONS IN MODERN LIFE\nMany young people today live in a fast-changing world. They use smartphones, study online and enjoy modern forms of entertainment. However, (37)______. Many schools and families are finding creative ways to teach teenagers about cultural heritage. For example, many families still prepare traditional dishes during festivals and special occasions. Grandparents often teach children how to make spring rolls, sticky rice or other local dishes. These activities (38)______ and understand the value of family traditions more clearly.\nTraditional games are also worth preserving. In the past, (39)______. Today, some schools organize Cultural Days, where students can try these games and learn about their meanings. Digital tools can also be used to introduce traditional music, costumes and festivals to young people through online videos and digital stories.\nPreserving traditions does not mean refusing modern life. Instead, it means choosing useful ways to keep cultural values alive. Young people can share photos of family festivals online, interview older family members or learn traditional songs from their grandparents. They can also join local cultural events (40)______.\nIn conclusion, traditions help young people understand who they are and where they come from. When traditions and modern life go together, culture can continue to grow in meaningful ways.",
+        "stem": "______",
+        "options": [
+          "to understand traditions better",
+          "children often played folk games in the village yard or school playground",
+          "help them learn practical skills",
+          "traditional customs still play an important role in family and community life"
+        ],
+        "needsFigure": false
+      }
+    ],
+    "key": {
+      "1": "D",
+      "2": "B",
+      "3": "A",
+      "4": "B",
+      "5": "B",
+      "6": "D",
+      "7": "D",
+      "8": "C",
+      "9": "B",
+      "10": "C",
+      "11": "C",
+      "12": "D",
+      "13": "D",
+      "14": "A",
+      "15": "A",
+      "16": "B",
+      "17": "C",
+      "18": "C",
+      "19": "B",
+      "20": "B",
+      "21": "A",
+      "22": "A",
+      "23": "B",
+      "24": "D",
+      "25": "C",
+      "26": "A",
+      "27": "C",
+      "28": "C",
+      "29": "A",
+      "30": "D",
+      "31": "B",
+      "32": "C",
+      "33": "D",
+      "34": "D",
+      "35": "B",
+      "36": "A",
+      "37": "D",
+      "38": "C",
+      "39": "B",
+      "40": "A"
+    }
+  }
+}

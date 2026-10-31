@@ -5,9 +5,10 @@ import type { Candidate, Source } from '../model.js';
 import { hash, words } from '../util.js';
 import { extractPdf, parseAnswerKey, parseExam } from '../parse/exam.js';
 import { examTopic } from '../classify.js';
+import type { OcrOutcome } from '../ocr/candidates.js';
 export interface GovSeed {url:string;year:number;province:string;grade:number;kind:string;answerKeyUrl?:string;pageUrl?:string}
-export type GovSeedStatus='imported'|'scanned-no-text-layer'|'no-keyed-items'|'cache-missing'|'parse-error';
-export interface GovSeedOutcome extends GovSeed {status:GovSeedStatus;items:number}
+export type GovSeedStatus='imported'|'ocr-transcribed'|'scanned-no-text-layer'|'no-keyed-items'|'cache-missing'|'parse-error';
+export interface GovSeedOutcome extends GovSeed {status:GovSeedStatus;items:number;ocr?:OcrOutcome}
 export const MIN_TEXT_LAYER_CHARACTERS=200;
 export function hasTextLayer(text:string):boolean{return text.replace(/\s/g,'').length>=MIN_TEXT_LAYER_CHARACTERS;}
 export function seedStatus(text:string,keyText:string,items:number):GovSeedStatus{
