@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  /* Decorative only: never text or white-text button bg. */
+  --color-brand: #f5691a;
+  --color-cta: #c2410c;
+  --color-primary: #a23f00;
+  --color-navy: #111a2b;
+  --color-navy-soft: #1b2a4a;
+  --color-surface: #f9f9ff;
+  --color-warm: #fff7ed;
+  --color-warm-2: #fff3eb;
+}
+@theme inline {
+  --font-sans: var(--font-be-vietnamese), var(--font-be-latin-ext), var(--font-be-latin), sans-serif;
+}
+body { background: var(--color-surface); color: var(--color-navy); font-family: var(--font-sans); line-height: 1.6; overflow-wrap: anywhere; }
+a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 0.2em; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Shared keyboard treatment includes native quiz controls and buttons. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+:where([id]) { scroll-margin-top: 1.5rem; }
+button:not(:disabled), label:has(input:not(:disabled)) { cursor: pointer; }
+button:disabled { cursor: not-allowed; }

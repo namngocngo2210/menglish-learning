@@ -6,7 +6,7 @@ Chú thích: **[Thiết kế]** = đã có tài liệu/bản xem trước, chưa
 
 1. **[Thiết kế] Hướng thị giác cam/navy** (họ màu MEnglish, Be Vietnam Pro) thay bản xanh da trời; 4 ảnh PNG tĩnh (home, admin × 1440/390). **Chờ chủ duyệt thẩm mỹ**; tên/logo chưa quyết định. Xem [ui-design.md](ui-design.md).
 2. **[Chưa làm] Hoàn thiện các màn còn lại** sau khi chủ duyệt hướng.
-3. Toolchain UI: Next.js + Tailwind + shadcn/ui + Lucide; giao diện do Gemini qua `agy` tạo.
+3. Toolchain UI: Next.js + Tailwind + shadcn/ui + Lucide; giao diện do Claude thiết kế, Codex hiện thực.
 
 ## Giai đoạn 1 — Trắc nghiệm đọc + viết, miễn phí (≈ 4–5 tuần) — [Chưa làm]
 

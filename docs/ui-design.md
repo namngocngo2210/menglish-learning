@@ -31,7 +31,7 @@ Chủ sở hữu chọn **họ màu MEnglish (cam/navy)** thay cho xanh da trờ
 ### Toolchain frontend và quy trình tạo giao diện
 
 - Toolchain: **Next.js + Tailwind CSS + shadcn/ui + Lucide** (phiên bản đã kiểm chứng ghi ở `verification.md`: Next 16.4.3, React 19.3.1, Tailwind 4.3.3, Lucide 1.65.0, shadcn CLI 4.23.0). Primitives shadcn lấy từ upstream, không tự viết lại.
-- Mã/thiết kế UI do **Gemini (`gemini-3.8-flash-medium`) qua Antigravity CLI (`agy`)** tạo, dùng skill `/ui-ux-pro-max` native (đã cài và kiểm chứng expansion). Skill native không tự cấp quyền filesystem/terminal. Dev rà soát và kiểm chứng; không dùng Claude/Codex thay thế phần UI.
+- Thiết kế UI do Claude đảm nhiệm (theo skill `ui-ux-pro-max`), mã do Codex/dev hiện thực và kiểm chứng.
 - Backend vẫn là Go + Gin ([architecture.md](architecture.md)); chọn Next.js/Tailwind/shadcn/Lucide cho `web/` là quyết định thiết kế, chưa có `web/`.
 
 ### Màn hình admin (một chủ) — module thiết kế
@@ -47,7 +47,7 @@ Học sinh công khai **không cần đăng nhập**.
 ## 1. Mục Đích & Phạm Vi Dự Án
 
 - **Bản xem trước thẩm mỹ (Design Preview Only):** Đây là bản xem trước giao diện được thiết kế để chủ sở hữu và người đánh giá độc lập xem xét về mặt thẩm mỹ, bố cục và luồng trải nghiệm người dùng (aesthetic & UX review). Bản thiết kế này **KHÔNG PHẢI** là mã nguồn triển khai thực tế trên môi trường production.
-- **Tác giả giao diện duy nhất:** Gemini `gemini-3.8-flash-medium` qua Antigravity CLI chính thức (`agy`), đầu ra JSON có cấu trúc, không dùng công cụ filesystem. Đội ngũ phát triển hiện thực hóa chính xác các nội dung trong danh mục cho phép và thực hiện kiểm chứng độc lập.
+- **Tác giả giao diện:** Claude (thiết kế) và Codex/dev (mã), theo hướng cam/navy trong `docs/previews/sky-blue-v2`; kiểm chứng độc lập bởi tester/reviewer.
 - **Nhánh tài liệu:** `docs/ui-sky-blue-design` (PR 2; tên nhánh giữ nguyên dù hướng đã đổi sang cam/navy).
 - **Phê duyệt độc lập:** Bản thiết kế chỉ có hiệu lực phục vụ đánh giá; việc nghiệm thu cần quy trình kiểm thử độc lập và sự phê duyệt chính thức từ chủ sở hữu.
 

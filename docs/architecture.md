@@ -6,7 +6,7 @@ Giai đoạn 1: trắc nghiệm **đọc + viết**, học sinh công khai dùng
 ## Thiết kế giao diện và admin — chưa triển khai
 
 - Hướng thị giác: họ màu cam/navy MEnglish, Be Vietnam Pro; xanh da trời chỉ là lịch sử. Chi tiết và trạng thái duyệt: [ui-design.md](ui-design.md).
-- Toolchain `web/` (thiết kế): Next.js + Tailwind CSS + shadcn/ui + Lucide; giao diện do Gemini qua `agy` tạo. Fixture `docs/previews/sky-blue-v2/` chỉ để duyệt thiết kế (static export, mock, không bảo vệ route/API, không credential/session), không phải `web/` hay CMS thật.
+- Toolchain `web/` (thiết kế): Next.js + Tailwind CSS + shadcn/ui + Lucide; giao diện do Claude thiết kế, Codex hiện thực. Fixture `docs/previews/sky-blue-v2/` chỉ để duyệt thiết kế (static export, mock, không bảo vệ route/API, không credential/session), không phải `web/` hay CMS thật.
 - **Admin một chủ** (không nhân viên/vai trò) thuộc cùng `web` + `api`, tách hoàn toàn khỏi học sinh (học sinh không đăng nhập). Cần: server-side login/session, authorization mọi API admin (`/api/v1/admin/*` thiết kế), secure cookie/CSRF, audit publish/delete/crawl/config, validation/rate limit, chống SSRF cho cấu hình nguồn ([security.md](security.md)).
 - Luồng nội dung: **crawler → quarantine/draft → chủ duyệt → publish**, không tự xuất bản. Crawler chỉ ghi trạng thái quarantine; chỉ hành động của chủ mới chuyển sang published. Bảng dữ liệu: [data-model.md](data-model.md).
 - Schema/API/session/worker thật cần phê duyệt riêng; các phần kiến trúc bên dưới là kế hoạch tương lai.
