@@ -4,8 +4,9 @@ import { JsonLd } from "@/components/json-ld";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, LinkCardList } from "@/components/ui-kit";
-import { getGrades, getSkills, getTopics, getTestsForTopic } from "@/lib/content/load";
+import { getGrades, getSkills, getTopics, getTestsForTopic, loadBundle } from "@/lib/content/load";
 import { topicPath, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES } from "@/lib/routes";
+import { getTopicDef } from "@/lib/topics/registry";
 export const dynamicParams = false;
 export const revalidate = 3600;
 export function generateStaticParams() { return getGrades().flatMap(g => getSkills(g).flatMap(skill => getTopics(g,skill).map(t => ({grade:gradeSlug(g),skill,topic:t.slug})))); }
@@ -13,11 +14,24 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
- return buildMetadata({ title: `${topic.name} - ${SKILL_NAMES[skill]} ${grade}`, description: `${topic.description} Luyện ${SKILL_NAMES[skill].toLowerCase()} tiếng Anh lớp ${grade} qua bài tập có đáp án.`, path: topicPath(grade, skill, topic.slug) });
+ return buildMetadata({ title: `${topic.name} lớp ${grade}`, description: topic.description, path: topicPath(grade, skill, topic.slug) });
 }
 export default async function TopicPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) notFound();
  const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();
- return <PageShell title={topic.name}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name}]}/><p>{topic.description}</p><RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}/><LinkCardList emptyMessage="Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé." items={getTestsForTopic(grade,skill,topic.slug).map(test=>({label:test.title,progressKey:test.slug,description:`${test.questionIds.length} câu hỏi · Có giải thích đáp án`,href:testPath(grade,skill,topic.slug,parseTestSlug(test.slug)!.test)}))}/><AdSlot slot="footer"/></PageShell>;
+ const def = getTopicDef(skill, topic.slug);
+ const tests = getTestsForTopic(grade, skill, topic.slug);
+ const questionCount = loadBundle().questions.filter(q => q.grade === grade && q.skill === skill && (topic.slug === "tong-hop" || q.topicSlug === topic.slug)).length;
+ const otherGrades = getGrades().filter(g => g !== grade).flatMap(g => getTopics(g, skill).filter(t => t.slug === topic.slug));
+ return <PageShell title={topic.name}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name}]}/>{def ? <section aria-label="Kiến thức cần nhớ" className="space-y-4 leading-relaxed">
+  {def.intro.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+  {def.examples && <><h2 className="text-xl font-bold">Ví dụ</h2><ul className="list-disc space-y-2 pl-6">{def.examples.map(example => <li key={example.en}><span lang="en">{example.en}</span><br/>{example.vi}</li>)}</ul></>}
+  {def.tips && <><h2 className="text-xl font-bold">Lưu ý khi làm bài</h2><ul className="list-disc space-y-2 pl-6">{def.tips.map(tip => <li key={tip}>{tip}</li>)}</ul></>}
+ </section> : <p>{topic.description}</p>}
+ <p>Lớp {grade}: {questionCount} câu hỏi · {tests.length} đề luyện tập</p><RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}/><LinkCardList emptyMessage="Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé." items={tests.map(test=>({label:test.title,progressKey:test.slug,description:`${test.questionIds.length} câu hỏi · Có giải thích đáp án`,href:testPath(grade,skill,topic.slug,parseTestSlug(test.slug)!.test)}))}/><section className="space-y-4"><h2 className="text-xl font-bold">Chủ đề khác trong {SKILL_NAMES[skill]} lớp {grade}</h2>
+ <LinkCardList emptyMessage="Chưa có chủ đề khác cho lớp này." items={getTopics(grade, skill).filter(t => t.slug !== topic.slug).map(t => ({ label: t.name, description: t.description, href: topicPath(grade, skill, t.slug) }))}/></section>
+ {otherGrades.length > 0 && <section className="space-y-4"><h2 className="text-xl font-bold">Chủ đề này ở lớp khác</h2>
+ <LinkCardList items={otherGrades.map(t => ({ label: `${t.name} lớp ${t.grade}`, description: t.description, href: topicPath(t.grade, skill, t.slug) }))}/></section>}
+ <AdSlot slot="footer"/></PageShell>;
 }

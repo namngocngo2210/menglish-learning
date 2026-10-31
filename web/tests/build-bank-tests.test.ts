@@ -1,3 +1,4 @@
+import { classifyQuestion } from "../lib/topics/classify";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, it } from "vitest";
@@ -54,7 +55,10 @@ it("records owner approval on copies while preserving every source field and qua
  for (const q of Object.values(generated()).flatMap(b => b.questions)) {
   expect(q.reviewNote).toBe("owner-approved-bulk 2026-10-31");
   expect(q.reviewedAt).toBe("2026-10-31T00:00:00.000Z");
-  expect(q).toEqual({ ...original.get(q.id)!, reviewStatus: "published", reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: "2026-10-31T00:00:00.000Z" });
+  const raw = original.get(q.id)!;
+  const passage = fragments.flatMap(f => f.passages).find(p => q.passageId ? p.id === q.passageId : p.sourceId === q.sourceId && p.sourceUrl === q.sourceUrl);
+  const topicSlug = q.skill === "ngu-phap" || q.skill === "tu-vung" ? classifyQuestion(raw, passage).topic ?? "tong-hop" : raw.topicSlug;
+  expect(q).toEqual({ ...raw, topicSlug, reviewStatus: "published", reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: "2026-10-31T00:00:00.000Z" });
  }
  expect(fragments).toEqual(before);
 });

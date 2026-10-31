@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { GRADES, SKILLS, isSlug, parseEntranceSlug, parseTestSlug } from "@/lib/routes";
+import { GRADES, SKILLS, isSlug, parseEntranceSlug, parseTestSlug } from "../routes";
 const text = z.string().trim().min(1);
 const slug = text.refine(isSlug, "Expected an ASCII kebab-case slug");
 export const GradeSchema = z.union(GRADES.map(g => z.literal(g)));

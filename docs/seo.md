@@ -81,3 +81,10 @@ Chạy trên: trang chủ, trang lớp, trang chủ đề, trang đề.
   in `web/README.md` and `web/.env.example`. The optional loader is lazy, configures
   non-personalized requests first, and defaults child-directed treatment to ON.
   Quiz ads mount only in submitted results, outside question/passage areas.
+
+## Chủ đề cụ thể
+
+- Ngữ pháp và từ vựng dùng danh mục viết tay và bộ phân loại theo luật khi dựng ngân hàng; không dùng LLM. Chủ đề đủ 10 câu mới có trang và đề; Đọc hiểu, Viết câu giữ nguyên.
+- Trang chủ đề có kiến thức, ví dụ, số câu và liên kết cùng kỹ năng hoặc cùng chủ đề ở lớp khác. Tổng hợp luôn đứng cuối và vẫn lấy toàn bộ câu của kỹ năng.
+- `web/content/legacy-redirects.json` được sinh từ danh sách đường dẫn cũ; Next.js đọc để chuyển hướng vĩnh viễn sang Tổng hợp cùng lớp/kỹ năng. Không đưa đường dẫn đã bỏ vào sitemap.
+- Số liệu, luật và tỷ lệ chưa phân loại: [Báo cáo chủ đề](topic-classification.md), sinh cùng `npm run build:tests`.
