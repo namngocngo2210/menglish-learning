@@ -31,7 +31,7 @@ export default async function TestPage({ params }: { params: Promise<{ grade: st
  <p>Luyện tiếng Anh lớp {grade}, kỹ năng {SKILL_NAMES[skill].toLowerCase()}, chủ đề {topic.name}: {test.questions.length} câu hỏi. Chọn đáp án, bấm “Kiểm tra” để xem giải thích từng câu, rồi “Nộp bài” để xem kết quả. Không giới hạn thời gian.</p>
  <PreviousResult slug={test.slug}/>
  <RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}>
-  <Quiz questions={quiz.questions} passages={quiz.passages} progressKey={test.slug} afterResult={<AdSlot slot="footer"/>}/>
+  <Quiz questions={quiz.questions.map(({ id, stem, options, correctKey, explanation, passageId }) => ({ id, stem, options, correctKey, explanation, passageId }))} passages={quiz.passages} progressKey={test.slug} afterResult={<AdSlot slot="footer"/>}/>
  </RandomQuiz>
  <nav aria-label="Bài luyện liên quan" className="space-y-4"><h2 className="text-xl font-bold">Tiếp tục luyện tập</h2>
  <ul className="grid gap-3 sm:grid-cols-2">{getTestsForTopic(grade,skill,topic.slug).filter(t => t.slug !== test.slug).map(t => {

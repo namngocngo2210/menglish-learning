@@ -4,7 +4,6 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { getEntranceTests } from "@/lib/content/load";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
-export const dynamicParams = false;
 export const revalidate = 3600;
 export const metadata = buildMetadata({ title: "Ôn thi tiếng Anh vào lớp 10", description: "Ôn thi vào lớp 10 với đề tiếng Anh tổng hợp từ ngân hàng lớp 8–9, có kiểm tra đáp án và giải thích tiếng Việt.", path: "/thi-vao-lop-10" });
 export default function EntrancePage() {

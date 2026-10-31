@@ -35,7 +35,7 @@ export function Quiz({ questions, passages = [], passageContent, afterResult, pr
     const selected = state.answers[question.id];
     const correct = selected === question.correctKey;
     const FeedbackIcon = !selected ? CircleHelp : correct ? CheckCircle2 : XCircle;
-    return <section key={question.id} id={`question-${question.id}`} tabIndex={-1} aria-label={`Câu ${index+1}`} className="rounded-md border border-navy-soft/20 bg-surface p-5 sm:p-6">
+    return <section key={question.id} id={`question-${question.id}`} tabIndex={-1} aria-label={`Câu ${index+1}`} className="rounded-md border border-navy-soft/20 bg-surface p-5 [contain-intrinsic-size:auto_360px] [content-visibility:auto] sm:p-6">
      {question.passageId && <a className="mb-3 inline-flex min-h-11 items-center text-sm" href={`#passage-${question.passageId}`}>Bài đọc {passages.findIndex(p => p.id === question.passageId)+1}</a>}
      <fieldset disabled={revealed} className="min-w-0" aria-describedby={revealed ? `feedback-${question.id}` : undefined}>
       <legend className="mb-5 w-full font-bold"><span className="mb-2 block text-sm text-primary">Câu {index+1}</span><span lang="en">{question.stem}</span></legend>

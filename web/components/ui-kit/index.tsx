@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PreviousResult } from "@/components/quiz/PreviousResult";
+import { ProgressHydrator } from "@/components/quiz/ProgressHydrator";
 import { ArrowUpRight, BookOpen, ChevronRight, Languages, LibraryBig, PenLine } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Question } from "@/lib/content/types";
@@ -33,10 +33,10 @@ export function Breadcrumbs({ items }: { items: readonly NavigationItem[] }) {
 }
 export function LinkCardList({ items, emptyMessage = "Nội dung đang được chuẩn bị. Em hãy quay lại sau nhé." }: { items: readonly LinkCard[]; emptyMessage?: string }) {
  if (!items.length) return <p className="rounded-md border border-dashed border-navy-soft/30 bg-warm p-6">{emptyMessage}</p>;
- return <ul className="grid gap-4 md:grid-cols-2">{items.map(item => {
+ return <>{items.some(item => item.progressKey) && <ProgressHydrator/>}<ul className="grid gap-4 md:grid-cols-2">{items.map(item => {
  const Icon = item.skill ? skillIcons[item.skill] : BookOpen;
- return <li key={item.href} className="min-w-0"><Link href={item.href} className="group flex h-full min-h-11 items-start gap-4 rounded-md border border-navy-soft/20 bg-surface p-5 text-navy! no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm sm:p-6"><span className="rounded-md bg-warm-2 p-3 text-primary"><Icon aria-hidden="true" className="size-5"/></span><div className="min-w-0 flex-1"><h2 className="text-lg font-bold">{item.label}</h2>{item.description && <p className="mt-2 text-sm leading-relaxed text-navy-soft">{item.description}</p>}{item.progressKey && <PreviousResult slug={item.progressKey}/>}</div><ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-primary"/></Link></li>;
- })}</ul>;
+ return <li key={item.href} className="min-w-0"><Link href={item.href} className="group flex h-full min-h-11 items-start gap-4 rounded-md border border-navy-soft/20 bg-surface p-5 text-navy! no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm sm:p-6"><span className="rounded-md bg-warm-2 p-3 text-primary"><Icon aria-hidden="true" className="size-5"/></span><div className="min-w-0 flex-1"><h2 className="text-lg font-bold">{item.label}</h2>{item.description && <p className="mt-2 text-sm leading-relaxed text-navy-soft">{item.description}</p>}{item.progressKey && <p data-progress-slug={item.progressKey} className="mt-2 text-sm font-semibold text-primary empty:hidden"/>}</div><ArrowUpRight aria-hidden="true" className="mt-1 size-5 shrink-0 text-primary"/></Link></li>;
+ })}</ul></>;
 }
 export { PassageBlock } from "./PassageBlock";
 export function QuestionBlock({ question, number }: { question: Question; number: number }) {

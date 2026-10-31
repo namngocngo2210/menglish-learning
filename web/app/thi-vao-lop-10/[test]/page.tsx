@@ -27,7 +27,7 @@ export default async function EntranceTestPage({ params }: { params: Promise<{ t
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Thi vào lớp 10", href: "/thi-vao-lop-10" }, { label: t.title }]}/>
   <p>Ôn thi tiếng Anh vào lớp 10, tổng hợp kỹ năng và chủ đề lớp 8–9 với {t.questions.length} câu hỏi. Chọn đáp án, kiểm tra từng câu để đọc giải thích, rồi nộp bài để xem kết quả. Không giới hạn thời gian.</p>
   <PreviousResult slug={t.slug}/>
-  <RandomQuiz poolUrl="/pool/thi-vao-lop-10" size={40} afterResult={<AdSlot slot="footer"/>}><Quiz questions={quiz.questions} passages={quiz.passages} progressKey={t.slug} afterResult={<AdSlot slot="footer"/>}/></RandomQuiz>
+  <RandomQuiz poolUrl="/pool/thi-vao-lop-10" size={40} afterResult={<AdSlot slot="footer"/>}><Quiz questions={quiz.questions.map(({ id, stem, options, correctKey, explanation, passageId }) => ({ id, stem, options, correctKey, explanation, passageId }))} passages={quiz.passages} progressKey={t.slug} afterResult={<AdSlot slot="footer"/>}/></RandomQuiz>
   <nav aria-label="Đề ôn thi liên quan"><h2 className="text-xl font-bold">Tiếp tục ôn thi</h2><ul className="grid gap-3 sm:grid-cols-2">{tests.filter(test => test.slug !== t.slug).map(test => <li key={test.slug}><Link className="inline-flex min-h-11 items-center" href={`/${test.slug}`}>{tests.indexOf(test) === index-1 ? "Đề trước: " : tests.indexOf(test) === index+1 ? "Đề tiếp theo: " : ""}{test.title}</Link></li>)}</ul><Link className="inline-flex min-h-11 items-center" href="/thi-vao-lop-10">Về danh sách đề thi vào lớp 10</Link></nav>
  </PageShell>;
 }

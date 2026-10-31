@@ -23,6 +23,8 @@ export const latinExtFont = localFont({
   { path: "../fonts/be-vietnam-pro-latin-ext-800-normal.woff2", weight: "800", style: "normal" },
  ],
  variable: "--font-be-latin-ext",
+ // Vietnamese and Latin subsets cover the site text; load extended glyphs on demand.
+ preload: false,
  display: "swap",
  // Keep fallback fonts after all three subsets in the combined CSS stack.
  adjustFontFallback: false,

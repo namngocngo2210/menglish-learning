@@ -2,6 +2,7 @@ import { ContentBundleSchema, type ContentBundle, type Test, type Topic } from "
 import { partitionTests, type MixedTest } from "../../lib/mixer";
 import { entranceTestPath, GRADES, SKILLS, SKILL_NAMES } from "../../lib/routes";
 import { guardQuestions, type GuardReport } from "./guards";
+import { stripVoaEmailCallsToAction } from "./passage-filter";
 export const PUBLISHED_AT = "2026-10-31T00:00:00.000Z";
 const emptyBundle = (): ContentBundle => ({ sources: [], passages: [], topics: [], questions: [], tests: [] });
 const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
@@ -60,7 +61,10 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  const used = new Set(tests.flatMap(t => t.questionIds));
  const questions = merged.questions.filter(q => used.has(q.id)).map(q => ({ ...q, reviewStatus: "published" as const, reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: PUBLISHED_AT }));
  const usedPassages = new Set(questions.map(q => q.passageId));
- const passages = merged.passages.filter(p => usedPassages.has(p.id));
+ const passages = merged.passages.filter(p => usedPassages.has(p.id)).map(p => {
+  const body = stripVoaEmailCallsToAction(p.body);
+  return body === p.body ? p : { ...p, body, wordCount: body.split(/\s+/).filter(Boolean).length };
+ });
  const byPassage = new Map(passages.map(p => [p.id, p]));
  const bySource = new Map(merged.sources.map(s => [s.id, s]));
  for (const q of questions) {

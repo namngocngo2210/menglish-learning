@@ -2,7 +2,6 @@ import { getGrades, getSkills, getTopics } from "@/lib/content/load";
 import { getQuizPool } from "@/lib/content/pool";
 import { gradeSlug, parseGradeSlug, parseSkill } from "@/lib/routes";
 export const dynamic = "force-static";
-export const dynamicParams = false;
 export const revalidate = 3600;
 export function generateStaticParams() {
  return getGrades().flatMap(g => getSkills(g).flatMap(skill => [...new Set(["tong-hop", ...getTopics(g, skill).map(t => t.slug)])].map(topic => ({ grade: gradeSlug(g), skill, topic }))));

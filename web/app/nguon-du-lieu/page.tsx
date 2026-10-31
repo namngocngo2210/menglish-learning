@@ -3,7 +3,6 @@ import { JsonLd } from "@/components/json-ld";
 import { loadBundle } from "@/lib/content/load";
 import { GRADES } from "@/lib/routes";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
-export const dynamicParams = false;
 export const revalidate = 3600;
 export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh THCS.", path: "/nguon-du-lieu" });
 export default function CreditsPage() {

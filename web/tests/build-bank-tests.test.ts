@@ -90,3 +90,19 @@ it("filters duplicate quarantine options before public validation and partitioni
  expect(Object.values(output).flatMap(b => b.questions).some(p => p.id === q.id)).toBe(false);
  expect(Object.values(output).flatMap(b => b.tests).some(t => t.questionIds.includes(q.id))).toBe(false);
 });
+
+it("filters email invitations and recomputes passage word counts across every grade", () => {
+ const withInvitations = fragments.map(fragment => ({ ...fragment, passages: fragment.passages.map(passage => ({
+  ...passage, body: `${passage.body}\n\nSend us an email at learningenglish@voanews.com.`,
+ })) }));
+ for (const grade of [6, 7, 8, 9]) {
+  // Build each grade alone because shared passages are stored only in the first bundle that uses them.
+  const output = buildBank(withInvitations.map(fragment => ({ ...fragment, questions: fragment.questions.filter(q => q.grade === grade) })));
+  const passages = output[`bank-grade-${grade}.json`].passages;
+  expect(passages.length).toBeGreaterThan(0);
+  for (const passage of passages) {
+   expect(passage.body).not.toMatch(/learningenglish@voanews\.com/i);
+   expect(passage.wordCount).toBe(passage.body.split(/\s+/).filter(Boolean).length);
+  }
+ }
+});
