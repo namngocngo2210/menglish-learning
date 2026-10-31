@@ -2,6 +2,7 @@ import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { ContentBundleSchema } from "../lib/content/types";
 import { buildBank, serializeBundle } from "./lib/build-bank";
+import { generateClassificationReport, generateLegacyRedirects } from "./lib/topic-artifacts";
 const directory = join(process.cwd(), "content/quarantine");
 const fragments = readdirSync(directory).filter(file => file.endsWith(".json")).sort().map(file => ContentBundleSchema.parse(JSON.parse(readFileSync(join(directory, file), "utf8"))));
 const output = buildBank(fragments, report => {
@@ -21,3 +22,9 @@ for (const grade of [6, 7, 8, 9]) {
   console.log(`  ${kind}: ${count} tests`);
  }
 }
+
+const legacyPaths: string[] = JSON.parse(readFileSync(join(process.cwd(), "tests/fixtures/legacy-routes.json"), "utf8"));
+const redirects = generateLegacyRedirects(legacyPaths, output);
+writeFileSync(join(process.cwd(), "content/legacy-redirects.json"), `${JSON.stringify(redirects, null, 2)}\n`);
+writeFileSync(join(process.cwd(), "../docs/topic-classification.md"), generateClassificationReport(fragments, output));
+console.log(`Legacy redirects: ${redirects.length}; classification report: ../docs/topic-classification.md`);

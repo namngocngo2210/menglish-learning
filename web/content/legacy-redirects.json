@@ -1,0 +1,346 @@
+[
+  {
+    "source": "/lop-6/ngu-phap/chung",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/ngu-phap/chung/de-1",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/ngu-phap/chung/de-2",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/ngu-phap/chung/de-3",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/ngu-phap/dong-tu-khuyet-thieu/de-3",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/ngu-phap/dong-tu-khuyet-thieu/de-4",
+    "destination": "/lop-6/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-1",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-10",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-11",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-12",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-13",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-14",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-15",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-16",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-17",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-18",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-19",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-2",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-20",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-21",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-3",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-4",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-5",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-6",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-7",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-8",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-6/tu-vung/chung/de-9",
+    "destination": "/lop-6/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/chung",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/chung/de-1",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/chung/de-2",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/chung/de-3",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/dong-tu-khuyet-thieu/de-3",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/su-hoa-hop-chu-vi",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/su-hoa-hop-chu-vi/de-1",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/thi-qua-khu-don",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/ngu-phap/thi-qua-khu-don/de-1",
+    "destination": "/lop-7/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-1",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-10",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-11",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-12",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-13",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-14",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-15",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-16",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-17",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-18",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-19",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-2",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-20",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-21",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-22",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-23",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-24",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-3",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-4",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-5",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-6",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-7",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-8",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/chung/de-9",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/gia-dinh-ban-be",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/gia-dinh-ban-be/de-1",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/giao-duc",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-7/tu-vung/giao-duc/de-1",
+    "destination": "/lop-7/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/ngu-phap/chung",
+    "destination": "/lop-8/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-8/ngu-phap/chung/de-1",
+    "destination": "/lop-8/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-8/ngu-phap/so-sanh",
+    "destination": "/lop-8/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-8/ngu-phap/so-sanh/de-1",
+    "destination": "/lop-8/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-1",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-2",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-3",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-4",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-5",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-6",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-7",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-8/tu-vung/chung/de-8",
+    "destination": "/lop-8/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-9/ngu-phap/cau-bi-dong",
+    "destination": "/lop-9/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-9/ngu-phap/cau-bi-dong/de-1",
+    "destination": "/lop-9/ngu-phap/tong-hop"
+  },
+  {
+    "source": "/lop-9/tu-vung/chung",
+    "destination": "/lop-9/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-9/tu-vung/chung/de-1",
+    "destination": "/lop-9/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-9/tu-vung/chung/de-2",
+    "destination": "/lop-9/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-9/tu-vung/chung/de-3",
+    "destination": "/lop-9/tu-vung/tong-hop"
+  },
+  {
+    "source": "/lop-9/tu-vung/chung/de-4",
+    "destination": "/lop-9/tu-vung/tong-hop"
+  }
+]

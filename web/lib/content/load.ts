@@ -6,6 +6,7 @@ import { resolve, join } from "node:path";
 import { ContentBundleSchema, type ContentBundle } from "./types";
 import { applyOptionOrder } from "@/lib/mixer";
 import { GRADES, type Grade, type Skill, SKILLS } from "@/lib/routes";
+import { topicOrder } from "../topics/registry";
 const cache = new Map<string, ContentBundle>();
 export function loadBundle(directory?: string): ContentBundle {
  // The configurable path is intentionally opaque to tracing; next.config.ts includes default bundles.
@@ -66,7 +67,7 @@ export function loadBundle(directory?: string): ContentBundle {
 }
 export function getGrades(): readonly Grade[] { return GRADES; }
 export function getSkills(grade: Grade): Skill[] { return GRADES.includes(grade) ? [...SKILLS] : []; }
-export function getTopics(grade: Grade, skill: Skill) { return loadBundle().topics.filter(t => t.grade === grade && t.skill === skill); }
+export function getTopics(grade: Grade, skill: Skill) { return loadBundle().topics.filter(t => t.grade === grade && t.skill === skill).sort((a, b) => topicOrder(skill, a.slug) - topicOrder(skill, b.slug)); }
 export function getTest(slug: string) { return loadBundle().tests.find(t => t.slug === slug); }
 export function getTestsForTopic(grade: Grade, skill: Skill, topicSlug: string) { return loadBundle().tests.filter(t => t.grade === grade && t.skill === skill && t.topicSlug === topicSlug); }
 export function getTestWithQuestions(slug: string) {
