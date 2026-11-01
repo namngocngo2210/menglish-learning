@@ -30,3 +30,8 @@ English practice site for Vietnamese students, grades 6-9. Phase 1: reading + gr
 - Branch from up-to-date origin default branch in a `../wt-<name>` worktree; one request = one branch = one PR.
 - UI code: Claude writes the design brief, Codex implements. No Antigravity/Gemini.
 - Never deploy or merge from a worker; no secrets in the repo.
+
+## Engineering standards (backend TypeScript, new packages)
+- Read `docs/engineering-standards.md` before writing backend code; verify with `docs/definition-of-done.md`. Decisions: `docs/adr/`.
+- Run `npm run check` at the repo root (lint, format, typecheck, boundaries, licenses). Commit format: `npm run commits:check`. Heavy jobs via `~/.local/bin/heavy -m 1800M -- <cmd>`.
+- Agent prompts must cite the standards sections they rely on; never loosen a lint/coverage rule to pass (needs an ADR).
