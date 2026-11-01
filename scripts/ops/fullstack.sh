@@ -78,6 +78,7 @@ case "${1:-}" in
     sleep 3; wait_healthy api 90; expect "api healthy again (restart policy)" "$?" '^0$'; echo "api recovery: $((SECONDS - t0)) s"
     expect "api RestartCount" "$(docker inspect -f '{{.RestartCount}}' "$P-api-1")" '^[1-9]'
     echo "== 2. kill -9 postgres: cached pages keep serving, api degrades, everything self-heals"
+    rc_api="$(docker inspect -f '{{.RestartCount}}' "$P-api-1")"; rc_worker="$(docker inspect -f '{{.RestartCount}}' "$P-worker-1")"
     before="$(docker exec "$P-postgres-1" psql -U postgres -d beejunior -Atc 'select count(*) from questions')"
     # postgres runs as uid 70, so the host cannot SIGKILL it without sudo: kill it, then start it again after 8 s
     # (acting as the supervisor). Crash recovery from WAL is what is being tested, not the restart policy.
@@ -91,6 +92,9 @@ case "${1:-}" in
     expect "api and web /readyz recover without restarting them" "$ok" '^0$'; echo "readyz recovery: $((SECONDS - t0)) s"
     expect "no data lost after kill -9 (questions count)" "$(docker exec "$P-postgres-1" psql -U postgres -d beejunior -Atc 'select count(*) from questions')" "^$before\$"
     expect "web RestartCount unchanged (0)" "$(docker inspect -f '{{.RestartCount}}' "$P-web-1")" '^0$'
+    # A dropped postgres connection must not crash the long-running processes (pool 'error' listeners).
+    expect "api did not crash on the lost connection" "$(docker inspect -f '{{.RestartCount}}' "$P-api-1")" "^$rc_api\$"
+    expect "worker did not crash on the lost connection" "$(docker inspect -f '{{.RestartCount}}' "$P-worker-1")" "^$rc_worker\$"
     echo "failures: $fails"; exit $((fails > 0)) ;;
   drill)
     B="$(mktemp -d)"
