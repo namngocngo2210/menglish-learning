@@ -1,3 +1,4 @@
+import { gradeParams, skillParams, topicParams, testParams } from "@/lib/content/params";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { expect, it, vi, afterEach } from "vitest";
@@ -52,10 +53,10 @@ it("emits complete Quiz, Organization and WebSite data", () => {
 
 it("gives every page unique, length-bounded metadata with canonical and hreflang vi", async () => {
  const meta = [
-  ...(await Promise.all(gradePage.generateStaticParams().map(p => gradePage.generateMetadata({ params: Promise.resolve(p) })))),
-  ...(await Promise.all(skillPage.generateStaticParams().map(p => skillPage.generateMetadata({ params: Promise.resolve(p) })))),
-  ...(await Promise.all(topicPage.generateStaticParams().map(p => topicPage.generateMetadata({ params: Promise.resolve(p) })))),
-  ...(await Promise.all(testPage.generateStaticParams().map(p => testPage.generateMetadata({ params: Promise.resolve(p) })))),
+  ...(await Promise.all(gradeParams().map(p => gradePage.generateMetadata({ params: Promise.resolve(p) })))),
+  ...(await Promise.all(skillParams().map(p => skillPage.generateMetadata({ params: Promise.resolve(p) })))),
+  ...(await Promise.all(topicParams().map(p => topicPage.generateMetadata({ params: Promise.resolve(p) })))),
+  ...(await Promise.all(testParams().map(p => testPage.generateMetadata({ params: Promise.resolve(p) })))),
  ];
  expect(meta.length).toBeGreaterThan(100);
  for (const m of meta) {

@@ -1,24 +1,25 @@
+import { ensureContent } from "@/lib/content/source";
 import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
 import { fitTitle, buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, LinkCardList } from "@/components/ui-kit";
-import { getGrades, getSkills, getTopics, getTestsForTopic, loadBundle } from "@/lib/content/load";
+import { getGrades, getTopics, getTestsForTopic, loadBundle } from "@/lib/content/load";
 import { topicPath, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES } from "@/lib/routes";
 import { FaqSection } from "@/components/faq-section";
 import { buildTopicFaq } from "@/lib/seo-content";
 import { getTopicDef } from "@/lib/topics/registry";
-export const dynamicParams = false;
-export const revalidate = 3600;
-export function generateStaticParams() { return getGrades().flatMap(g => getSkills(g).flatMap(skill => getTopics(g,skill).map(t => ({grade:gradeSlug(g),skill,topic:t.slug})))); }
+export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
+ await ensureContent();
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
  return buildMetadata({ title: fitTitle(`${topic.name} lớp ${grade}`, ": bài tập có đáp án", ": bài tập"), description: `${getTopicDef(skill, topic.slug)?.summary ?? topic.description} Bài tập ${SKILL_NAMES[skill].toLowerCase()} lớp ${grade} có đáp án và giải thích.`, path: topicPath(grade, skill, topic.slug) });
 }
 export default async function TopicPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
+ await ensureContent();
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill) notFound();
  const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();

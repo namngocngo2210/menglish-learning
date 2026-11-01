@@ -1,3 +1,4 @@
+import { testParams, entranceParams } from "@/lib/content/params";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it, vi } from "vitest";
@@ -10,19 +11,19 @@ import { buildRandomQuiz } from "@/lib/random-quiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 vi.mock("next/navigation", () => ({ usePathname: () => "/", notFound: () => { throw new Error("Not found"); } }));
 it("generates exactly all 370+ bank test routes across both route families", () => {
- const paths = [...fixed.generateStaticParams().map(p => `${p.grade}/${p.skill}/${p.topic}/${p.test}`), ...entrance.generateStaticParams().map(p => `thi-vao-lop-10/${p.test}`)];
+ const paths = [...testParams().map(p => `${p.grade}/${p.skill}/${p.topic}/${p.test}`), ...entranceParams().map(p => `thi-vao-lop-10/${p.test}`)];
  expect(paths.sort()).toEqual(getAllTestSlugs().sort()); expect(paths.length).toBeGreaterThanOrEqual(300);
- expect(fixed.dynamicParams).toBe(false); expect(entrance.dynamicParams).toBe(false);
+ expect(fixed.dynamic).toBe("force-dynamic"); expect(entrance.dynamic).toBe("force-dynamic");
 });
-it("centralizes published source credits and per-grade counts", () => {
- const html = renderToStaticMarkup(createElement(Credits));
+it("centralizes published source credits and per-grade counts", async () => {
+ const html = renderToStaticMarkup(await Credits());
  expect(html).toContain("VOA Learning English"); expect(html).toContain("Public domain"); expect(html).toContain("không dùng AI");
  for (const source of loadBundle().sources) expect(html).toContain(`href="${source.baseUrl}"`);
  for (const grade of [6, 7, 8, 9]) expect(html).toContain(String(loadBundle().questions.filter(q => q.grade === grade && q.sourceName === "VOA Learning English").length));
  expect(html).toContain("BreadcrumbList");
 });
 it("renders fixed entrance quiz questions without source attribution or ad nodes", async () => {
- const html = renderToStaticMarkup(await entrance.default({ params: Promise.resolve(entrance.generateStaticParams()[0]) }));
+ const html = renderToStaticMarkup(await entrance.default({ params: Promise.resolve(entranceParams()[0]) }));
  expect(html).toContain("<fieldset"); expect(html).toContain('type="radio"'); expect(html).toContain("Quiz");
  expect(html).not.toContain("adsbygoogle"); expect(html).not.toContain("Vị trí quảng cáo");
  expect(html).not.toContain("Nguồn nội dung"); expect(html).not.toContain("Giấy phép"); expect(html).not.toContain("license");
