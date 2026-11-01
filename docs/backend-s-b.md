@@ -48,11 +48,18 @@ Không lỗi nào (0 mã khác 200). Mục tiêu p95 HIT < 100 ms đạt ở 1/1
 
 Số 170 MB đo trên host không cap (V8 không bị áp lực bộ nhớ, load generator chung máy). Trong container đúng cap, đỉnh ≈ 105 MB < 160 MB ⇒ **giữ cap 160 MB**, không nâng. Cờ heap 96 + semi-space 2 để GC sớm, chừa dư địa. Soak 10 phút (cờ "Sau", 50 đồng thời, 65.457 request, 0 non-200, ~109 req/s): idle 80,1 MB → đỉnh `VmHWM` 107,3 MB, cgroup anon 49 MB, `oom_kill` 0, `OOMKilled=false`.
 
+## Kiểm chứng lại (1/11, stack throwaway từ HEAD, mạng `--internal`, qua `heavy`)
+
+- **Parity** (`scripts/ssr/parity.mjs`, static build của `main` 6c908df vs SSR): sitemap 373 URL giống hệt; 378 trang so sánh, digest (title/mô tả/canonical/robots/OG/JSON-LD/heading/liên kết/văn bản/số câu) giống hệt trừ 4 URL 404 (`/lop-5`, `/lop-6/khong-co`, …: cùng mã 404, HTML 404 động khác trang 404 tĩnh); 32 pool JSON giống từng byte. HTML thô chỉ khác payload RSC nội tuyến của React.
+- **Tải, miss**: sau `/_purge all`, 10 đồng thời trên 316 đề: 316 MISS đầu tiên (cả warmer chạy song song) p50 ≈ 950 ms, p99 toàn phiên 540 ms; sau đó HIT p95 9,4 ms. **Mục tiêu miss p95 < 300 ms @10 chưa đạt** với render lạnh trên 1 CPU (không chặn người dùng vì stale-while-revalidate và warmer, nhưng là rủi ro Googlebot khi cache trống).
+- **Tải, HIT** (49 trang, cùng máy): p95 1,0 / 11,3 / 39,4 / 128,7 ms ở 1/10/50/200 đồng thời (1.425 / 2.051 / 2.293 / 2.342 req/s), 0 lỗi.
+- **RSS**: api VmRSS 100,6 MB (VmHWM 104,9 MB) sau tải, cap 160 MB; web cgroup 149 MiB / 384 MiB (edge node 134 MB + next-server 138 MB RSS, trang chia sẻ); postgres 61 MiB / 256 MiB.
+- **Lighthouse mobile, median của 3 lần**, 6 URL của `web/lighthouserc.json`, Chromium 1208: trực tiếp từ edge (không nén) Perf 77–89 (LCP 3,6–5,5 s) vì edge không nén (nén là việc của Caddy `encode`, ADR 0005); static của `main` cùng điều kiện Perf 86–95. **Phía sau Caddy `encode zstd gzip`** (đúng topo production): Perf 94–98, A11y 100, SEO 100 ở cả 6 URL. Best-practices 79 chỉ vì đo qua HTTP thường (không HTTPS) trong mạng nội bộ. CI Lighthouse trên PR cũng xanh.
+- **Memory soak 1 giờ và chaos Postgres** vẫn chưa chạy.
+
 ## Chưa làm (cần phiên tiếp theo)
 
-- Đo **miss** dưới tải (cache lạnh, p95 < 300 ms @10) — lần đo trên đã nóng sẵn vì chạy sau parity.
-- Chaos (pause/kill Postgres → STALE/503 với UA Googlebot) trên stack thật; edge đã có test đơn vị cho từng nhánh.
-- Soak RAM 1 giờ; Lighthouse CI SSR vs static (3 lần chạy median) — chưa chạy.
+- Cải thiện **miss lạnh** (p95 < 300 ms @10) hoặc chủ chấp nhận rủi ro; chaos (pause/kill Postgres → STALE/503 với UA Googlebot) trên stack thật; soak RAM 1 giờ.
 - Chuẩn hoá lại thứ tự trang 404 nếu cần byte-equal; ghi ADR 0005 (snapshot nội dung trong tiến trình thay vì 2–4 truy vấn/trang; edge là package riêng bundle bằng esbuild).
 
 ## Triển khai (boss, theo gói được chủ duyệt — agent không chạy trên máy chủ)
