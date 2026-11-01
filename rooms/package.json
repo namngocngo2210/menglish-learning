@@ -8,7 +8,7 @@
     "build:bank": "tsx scripts/build-bank.ts",
     "mem-check": "tsx scripts/mem-check.ts",
     "load-test": "tsx scripts/load-test.ts",
-    "build": "esbuild src/server.ts --bundle --platform=node --format=esm --outfile=dist/server.mjs",
+    "build": "esbuild src/server.ts --bundle --alias:@bj/core=../packages/core/src/index.ts --alias:zod=./node_modules/zod --platform=node --format=esm --outfile=dist/server.mjs",
     "start": "node dist/server.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

@@ -1,0 +1,17 @@
+**/node_modules
+**/.next
+**/.env*
+**/*.tsbuildinfo
+**/coverage
+.git
+.github
+docs
+web/app
+web/public
+admin
+api
+crawler
+worker
+rooms/dist
+rooms/data
+rooms/tests

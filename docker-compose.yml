@@ -11,6 +11,7 @@ services:
         NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR: ${NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR:-}
         NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
         SEO_NOINDEX: ${SEO_NOINDEX:-false}
+        ROOMS_ENABLED: ${ROOMS_ENABLED:-false} # read at build time by static pages: flip => rebuild web
     container_name: menglish-learning
     restart: unless-stopped
     expose:
@@ -22,6 +23,30 @@ services:
       - /tmp
     security_opt:
       - no-new-privileges:true
+    networks:
+      - menglish-proxy
+
+  # Group practice (docs/rooms-deploy.md). RAM-only state, no DB/secrets. Caddy: /rt/* -> menglish-learning-rooms:3100.
+  # Flag off => every /rt route except /rt/healthz answers 503.
+  rooms:
+    image: menglish-learning-rooms:latest
+    build:
+      context: .
+      dockerfile: rooms/Dockerfile
+    container_name: menglish-learning-rooms
+    restart: unless-stopped
+    expose:
+      - "3100"
+    mem_limit: 256m
+    cpus: 0.5
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 40s # > ROOMS_DRAIN_MS (30 s)
+    environment:
+      ROOMS_ENABLED: ${ROOMS_ENABLED:-false}
     networks:
       - menglish-proxy
 
