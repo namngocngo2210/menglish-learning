@@ -1,0 +1,78 @@
+# SKETCH only (blueprint). Real spec is generated from zod schemas in sprint S-B/S-C.
+openapi: 3.1.0
+info: { title: BeeJunior API, version: 1.0.0-sketch }
+servers: [{ url: /api/v1 }]
+components:
+  securitySchemes:
+    adminSession: { type: apiKey, in: cookie, name: __Host-bj_admin }
+    internalToken: { type: http, scheme: bearer }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, request_id]
+          properties: { code: { type: string }, message: { type: string }, details: { type: array, items: {} }, request_id: { type: string } }
+    ReviewStatus: { type: string, enum: [quarantine, draft, in_review, published, rejected, archived] }
+    Option: { type: object, required: [key, text], properties: { key: { enum: [A, B, C, D] }, text: { type: string } } }
+    Question:
+      type: object
+      required: [id, grade, skill, topic, difficulty, stem, options, correctKey, explanation, reviewStatus, version]
+      properties:
+        id: { type: string, description: external_id e.g. voa-002ba730 }
+        grade: { type: integer, minimum: 6, maximum: 9 }
+        skill: { enum: [doc-hieu, ngu-phap, tu-vung, viet-cau] }
+        topic: { type: string }
+        difficulty: { type: integer, minimum: 1, maximum: 3 }
+        passageId: { type: string }
+        stem: { type: string }
+        options: { type: array, minItems: 4, maxItems: 4, items: { $ref: '#/components/schemas/Option' } }
+        correctKey: { enum: [A, B, C, D] }
+        explanation: { type: string }
+        source: { type: object }
+        provenance: { type: object }
+        reviewStatus: { $ref: '#/components/schemas/ReviewStatus' }
+        version: { type: integer }
+    Transition:
+      type: object
+      required: [to]
+      properties: { to: { $ref: '#/components/schemas/ReviewStatus' }, note: { type: string, maxLength: 500 } }
+paths:
+  /healthz: { get: { summary: liveness, responses: { '200': { description: ok } } } }
+  /readyz: { get: { summary: readiness (DB), responses: { '200': { description: ok }, '503': { description: db down } } } }
+  /public/grades: { get: { summary: grades with test counts, responses: { '200': { description: ok } } } }
+  /public/topics: { get: { summary: topics by grade/skill, parameters: [{ name: grade, in: query }, { name: skill, in: query }], responses: { '200': { description: ok } } } }
+  /public/tests/{slug}:
+    get: { summary: fixed test with questions (options already re-ordered), parameters: [{ name: slug, in: path, required: true, schema: { type: string } }], responses: { '200': { description: ok }, '404': { description: not found } } }
+  /public/reports:
+    post:
+      summary: report a wrong question (no PII; rate limited; honeypot)
+      requestBody: { content: { application/json: { schema: { type: object, required: [questionId, reason], additionalProperties: false, properties: { questionId: { type: string }, reason: { enum: [wrong_answer, typo, unclear, offensive, other] }, note: { type: string, maxLength: 500 } } } } } }
+      responses: { '202': { description: accepted }, '429': { description: rate limited } }
+  /internal/snapshot: { get: { security: [{ internalToken: [] }], summary: ContentBundle export (fallback static / backups), responses: { '200': { description: ok } } } }
+  /admin/auth/login: { post: { summary: login (argon2id, rate limited, optional TOTP), responses: { '204': { description: session cookie set }, '401': { description: invalid }, '429': { description: locked } } } }
+  /admin/auth/logout: { post: { security: [{ adminSession: [] }], responses: { '204': { description: ok } } } }
+  /admin/auth/me: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok }, '401': { description: no session } } } }
+  /admin/sources: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } }, post: { security: [{ adminSession: [] }], responses: { '201': { description: created (allowed_hosts validated against hard allowlist) } } } }
+  /admin/sources/{id}/crawl: { post: { security: [{ adminSession: [] }], summary: enqueue crawl job (never runs inline), responses: { '202': { description: queued } } } }
+  /admin/crawl-jobs: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } } }
+  /admin/questions:
+    get:
+      security: [{ adminSession: [] }]
+      parameters: [{ name: status, in: query }, { name: grade, in: query }, { name: skill, in: query }, { name: topic, in: query }, { name: q, in: query }, { name: cursor, in: query }, { name: limit, in: query, schema: { maximum: 100 } }]
+      responses: { '200': { description: keyset-paginated list } }
+  /admin/questions/{id}:
+    get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } }
+    patch: { security: [{ adminSession: [] }], summary: edit (requires If-Match version; writes question_revisions + audit_log), responses: { '200': { description: ok }, '412': { description: version conflict } } }
+  /admin/questions/{id}/transition:
+    post: { security: [{ adminSession: [] }], requestBody: { content: { application/json: { schema: { $ref: '#/components/schemas/Transition' } } } }, responses: { '200': { description: ok; publish enqueues cache purge }, '409': { description: illegal transition } } }
+  /admin/questions/bulk-transition:
+    post: { security: [{ adminSession: [] }], summary: max 200 ids OR filter + expected_count (must match), responses: { '200': { description: ok }, '409': { description: expected_count mismatch } } }
+  /admin/tests: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } }, post: { security: [{ adminSession: [] }], responses: { '201': { description: created } } } }
+  /admin/tests/generate: { post: { security: [{ adminSession: [] }], summary: mixer preset + seed -> draft test, responses: { '201': { description: draft created } } } }
+  /admin/mixer-presets: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } }, post: { security: [{ adminSession: [] }], responses: { '201': { description: created } } } }
+  /admin/reports: { get: { security: [{ adminSession: [] }], responses: { '200': { description: ok } } } }
+  /admin/audit: { get: { security: [{ adminSession: [] }], responses: { '200': { description: append-only log } } } }
+  /admin/publish-site: { post: { security: [{ adminSession: [] }], summary: flush outbox -> web cache purge + warm, responses: { '202': { description: queued } } } }
