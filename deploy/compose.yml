@@ -89,6 +89,8 @@ services:
     <<: *hardening
     image: postgres:16-alpine
     read_only: false
+    # Secret files are 0600 owned by the host user; root without caps cannot read them (found in the S-F full-stack run).
+    cap_add: [DAC_OVERRIDE]
     restart: "no"
     mem_limit: 64m
     memswap_limit: 64m
@@ -137,11 +139,18 @@ services:
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url_api
       INTERNAL_TOKEN_FILE: /run/secrets/internal_token
+      REPORT_SALT_FILE: /run/secrets/report_salt
+      SESSION_HMAC_KEY_FILE: /run/secrets/session_hmac_key
+      TOTP_ENC_KEY_FILE: /run/secrets/totp_enc_key
+      ADMIN_ORIGIN: ${ADMIN_ORIGIN:-https://beejunior.meducation.vn} # without these three the admin API stays disabled
       TRUST_PROXY: ${TRUST_PROXY:-} # proxy IP/CIDR (Caddy) or true; empty = ignore X-Forwarded-For
-    secrets: [db_url_api, internal_token]
+    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key]
     depends_on:
       postgres: { condition: service_healthy }
-    networks: [bj-internal, menglish-proxy] # Caddy: /api/* -> api:8080
+    networks:
+      bj-internal: {}
+      # Caddy: /api/*, /admin* -> bj-api:8080. The alias is unique on the shared network (a bare "api" could collide).
+      menglish-proxy: { aliases: [bj-api] }
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null"]
       interval: 15s
@@ -178,7 +187,9 @@ services:
     secrets: [db_url_web, internal_token]
     depends_on:
       postgres: { condition: service_healthy }
-    networks: [bj-internal, menglish-proxy] # Caddy: everything else -> web:3100
+    networks:
+      bj-internal: {}
+      menglish-proxy: { aliases: [bj-web] } # Caddy: everything else -> bj-web:3100
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3100/healthz >/dev/null"]
       interval: 30s
@@ -231,3 +242,6 @@ secrets:
   db_url_web: { file: "${SECRETS_DIR}/db_url_web" }
   db_url_worker: { file: "${SECRETS_DIR}/db_url_worker" }
   internal_token: { file: "${SECRETS_DIR}/internal_token" }
+  report_salt: { file: "${SECRETS_DIR}/report_salt" }
+  session_hmac_key: { file: "${SECRETS_DIR}/session_hmac_key" }
+  totp_enc_key: { file: "${SECRETS_DIR}/totp_enc_key" }

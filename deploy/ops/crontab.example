@@ -1,0 +1,7 @@
+# BeeJunior cron (owner installs with `crontab -e`; see docs/runbook.md). Times are the host's local time.
+# BJ_ALERT_CMD: a command that reads the message on stdin (e.g. a script that posts to Telegram); optional.
+PATH=/usr/local/bin:/usr/bin:/bin
+BJ_REPO=/home/menglish/menglish-learning
+30 3 * * *  $BJ_REPO/deploy/ops/backup.sh       >> $HOME/backups/beejunior/backup.log 2>&1
+30 4 * * 0  $BJ_REPO/deploy/ops/restore-test.sh >> $HOME/backups/beejunior/backup.log 2>&1
+*/5 * * * * $BJ_REPO/deploy/ops/watchdog.sh     >> $HOME/backups/beejunior/watchdog.log 2>&1

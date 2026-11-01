@@ -29,6 +29,8 @@ FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production MIGRATIONS_DIR=/app/db/migrations ADMIN_DIST=/app/admin
 RUN addgroup -S -g 1001 app && adduser -S -u 1001 -G app app
+# argon2 ships a native addon (.node) that esbuild cannot bundle: keep it external and copy the package.
+COPY --from=deps --chown=app:app /app/node_modules/@node-rs ./node_modules/@node-rs
 COPY --from=build --chown=app:app /app/api/dist ./dist
 COPY --from=build --chown=app:app /app/admin/dist ./admin
 COPY --from=build --chown=app:app /app/worker/dist/main.mjs ./dist/worker/main.mjs

@@ -36,6 +36,8 @@ export function createPublicReader(options: PublicReaderOptions): PublicReader {
     connectionTimeoutMillis: 1_500,
     statement_timeout: 2_000,
   });
+  // An idle client dies when postgres restarts; the next query reconnects. Without a listener Node would exit.
+  pool.on("error", () => undefined);
   const db = new Kysely<DB>({ dialect: new PostgresDialect({ pool }) });
 
   return {

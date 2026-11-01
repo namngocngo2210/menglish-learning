@@ -21,6 +21,7 @@
     "test": "npm test --workspaces --if-present",
     "deps:check": "node scripts/check-deps.mjs",
     "licenses:check": "node scripts/check-licenses.mjs",
+    "ops:test": "node --test scripts/ops/*.test.mjs",
     "commits:check": "node scripts/check-commits.mjs",
     "check": "npm run lint && npm run format:check && npm run typecheck && npm run deps:check && npm run licenses:check"
   },

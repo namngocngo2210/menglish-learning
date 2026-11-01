@@ -29,6 +29,10 @@ async function run(): Promise<void> {
     statement_timeout: 30_000,
     connectionTimeoutMillis: 5_000,
   });
+  // An idle client dies when postgres restarts; without a listener Node exits (found by the S-F chaos run).
+  pool.on("error", (error) => {
+    log.warn("pg_pool_error", { reason: error.message });
+  });
   const workerId = `worker-${randomUUID()}`;
   const post =
     cfg.edgePurgeUrl !== undefined && cfg.edgePurgeToken !== undefined

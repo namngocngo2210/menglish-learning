@@ -30,6 +30,7 @@ jobs:
       - run: npm run typecheck
       - run: npm run deps:check
       - run: npm run licenses:check
+      - run: npm run ops:test
 
   commits:
     name: Commit messages
