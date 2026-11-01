@@ -34,5 +34,7 @@ put db_url_superuser "postgres://postgres:$pg_superuser@postgres:5432/beejunior"
 put db_url_api "postgres://bj_api_login:$pg_api@postgres:5432/beejunior"
 put db_url_web "postgres://bj_web_login:$pg_web@postgres:5432/beejunior"
 put internal_token "$(rand)"
+put session_hmac_key "$(rand)$(rand)"
+put totp_enc_key "$(openssl rand -base64 32)"
 
 echo "done: $dir (mode 700, files 600). Do not copy these files into chat, the repo or logs."

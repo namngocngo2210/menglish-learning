@@ -82,3 +82,9 @@ Thuật toán cửa sổ trượt (sliding window). Khóa đếm = IP thật + m
 - Redis lỗi: chuyển sang bộ đếm trong bộ nhớ của tiến trình (fail-open có giới hạn), không chặn toàn bộ người dùng.
 - Mọi ngưỡng cấu hình qua biến môi trường.
 - Kiểm thử: test tải xác nhận nhận 429 khi vượt ngưỡng, người dùng thường không bị ảnh hưởng, Redis tắt vẫn phục vụ.
+
+## Ghi chú S-C (vòng sửa 1)
+- OpenAPI `/api/v1/openapi.json` gồm cả `/api/v1/admin/*` và `POST /api/v1/public/reports` (khai báo trong `api/src/server/admin-openapi.ts`; test so khớp với bảng route của Fastify).
+- `TOTP verify/disable` dùng chung bộ đếm sai + khoá 15 phút với đăng nhập (10 lần sai). Khoá-DoS: chỉ phiên đã đăng nhập của chính tài khoản mới kích hoạt được; khoá cũng chặn đăng nhập tài khoản đó 15 phút.
+- `TRUST_PROXY` (mặc định tắt): chỉ đặt `true` hoặc IP/CIDR của Caddy khi api nằm sau proxy; để trống thì bỏ qua `X-Forwarded-For`.
+- Chưa làm: chống replay mã TOTP trong cửa sổ 30 s (cần cột lưu step đã dùng + migration; mã sai đã bị giới hạn lần thử).

@@ -4,6 +4,11 @@ import rateLimit from "@fastify/rate-limit";
 import Fastify from "fastify";
 import type { FastifyInstance, FastifyServerOptions } from "fastify";
 import { ZodError } from "zod";
+import { createAdminAuth } from "../admin/auth";
+import type { AuthDeps } from "../admin/auth";
+import { reportsPlugin } from "../cms/reports";
+import { adminPlugin } from "../cms/routes";
+import type { CmsOptions } from "../cms/routes";
 import { buildOpenApi } from "./openapi";
 import { HttpProblem, problemBody, sendProblem } from "./problems";
 import { buildRouteSpecs, registerRoutes } from "./routes";
@@ -11,7 +16,13 @@ import type { RouteDeps, RouteSpec } from "./routes";
 
 export interface AppOptions extends RouteDeps {
   rateLimitPerMinute: number;
+  /** Fastify trustProxy: false, true, or the proxy IP/CIDR list (TRUST_PROXY). */
+  trustProxy?: boolean | string;
   logger: Exclude<FastifyServerOptions["logger"], undefined>;
+  /** CMS admin API + public reports; omitted = not registered. */
+  cms?: CmsOptions;
+  /** Admin login/session/CSRF/TOTP; omitted = admin routes stay deny-all. */
+  auth?: AuthDeps;
 }
 
 export interface BuiltApp {
@@ -34,8 +45,14 @@ export function loggerOptions(
         "req.headers.authorization",
         "req.headers.cookie",
         'res.headers["set-cookie"]',
+        'req.headers["x-csrf-token"]',
+        "req.body",
         "*.password",
         "*.token",
+        "*.totp",
+        "*.code",
+        "*.csrfToken",
+        "*.recoveryCodes",
         "*.secret",
         "*.api_key",
       ],
@@ -55,7 +72,8 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
   const app: FastifyInstance = Fastify({
     logger: options.logger,
     bodyLimit: 64 * 1024,
-    trustProxy: true,
+    // Default false: X-Forwarded-For is only honoured when the operator says the api sits behind a proxy.
+    trustProxy: options.trustProxy ?? false,
     genReqId: (req) => {
       const given = req.headers["x-request-id"];
       return typeof given === "string" && REQUEST_ID.test(given) ? given : randomUUID();
@@ -125,6 +143,14 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
     routes.push(`${String(route.method)} ${route.url}`);
   });
   registerRoutes(app, specs, options);
+  const adminAuth = options.auth ? createAdminAuth(options.auth) : undefined;
+  if (adminAuth) await app.register(adminAuth.plugin, { prefix: "/api/v1/admin/auth" });
+  if (options.cms) {
+    // The session guard replaces deny-all whenever auth is configured.
+    const cms = adminAuth ? { ...options.cms, adminGuard: adminAuth.guard } : options.cms;
+    await app.register(adminPlugin(cms), { prefix: "/api/v1/admin" });
+    await app.register(reportsPlugin(cms));
+  }
   await app.ready();
   return { app, specs, routes };
 }

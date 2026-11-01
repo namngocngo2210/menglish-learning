@@ -1,5 +1,7 @@
 import { z } from "zod";
 import { ProblemSchema } from "./schemas";
+import { EXTRA_OPERATIONS } from "./admin-openapi";
+import type { ExtraOperation } from "./admin-openapi";
 import type { RouteSpec } from "./routes";
 
 export interface OpenApiDocument {
@@ -13,7 +15,11 @@ const json = (schema: z.ZodType): unknown =>
   z.toJSONSchema(schema, { io: "output", unrepresentable: "any" });
 
 /** OpenAPI 3.1 document generated from the route specs (zod is the single source; no hand-written file). */
-export function buildOpenApi(specs: readonly RouteSpec[], version = "1.0.0"): OpenApiDocument {
+export function buildOpenApi(
+  specs: readonly RouteSpec[],
+  version = "1.0.0",
+  extra: readonly ExtraOperation[] = EXTRA_OPERATIONS,
+): OpenApiDocument {
   const paths: OpenApiDocument["paths"] = {};
   for (const spec of specs) {
     const parameters: unknown[] = [];
@@ -60,12 +66,38 @@ export function buildOpenApi(specs: readonly RouteSpec[], version = "1.0.0"): Op
       responses,
     };
   }
+  for (const e of extra) {
+    const needsAuth = e.tag !== "public" && !e.path.endsWith("/auth/login");
+    const problem = (description: string): unknown => ({
+      description,
+      content: { "application/problem+json": { schema: { $ref: "#/components/schemas/Problem" } } },
+    });
+    (paths[e.path] ??= {})[e.method] = {
+      summary: e.summary,
+      tags: [e.tag],
+      ...(e.path.includes("{id}")
+        ? { parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }] }
+        : {}),
+      ...(needsAuth ? { security: [{ adminSession: [] }] } : {}),
+      responses: {
+        [e.ok]: { description: "Success" },
+        400: problem("Validation failed"),
+        ...(needsAuth
+          ? { 401: problem("No valid session"), 403: problem("Forbidden or bad CSRF") }
+          : {}),
+        ...(e.tag === "public" ? { 429: problem("Rate limited") } : {}),
+      },
+    };
+  }
   return {
     openapi: "3.1.0",
     info: { title: "BeeJunior API", version },
     paths,
     components: {
-      securitySchemes: { internalToken: { type: "http", scheme: "bearer" } },
+      securitySchemes: {
+        internalToken: { type: "http", scheme: "bearer" },
+        adminSession: { type: "apiKey", in: "cookie", name: "__Host-bj_admin" },
+      },
       schemas: { Problem: json(ProblemSchema) },
     },
   };

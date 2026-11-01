@@ -22,6 +22,7 @@
     "@bj/db-types": "*",
     "@fastify/helmet": "^13.2.0",
     "@fastify/rate-limit": "^10.3.0",
+    "@node-rs/argon2": "^2.2.2",
     "fastify": "^5.12.7",
     "kysely": "^0.28.0",
     "node-pg-migrate": "^8.0.0",

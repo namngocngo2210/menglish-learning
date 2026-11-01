@@ -22,6 +22,15 @@ describe("loadServerConfig", () => {
     });
   });
 
+  it("does not trust X-Forwarded-For unless TRUST_PROXY is set", () => {
+    const base = { DATABASE_URL: "postgres://x/y" };
+    expect(loadServerConfig(base).trustProxy).toBe(false);
+    expect(loadServerConfig({ ...base, TRUST_PROXY: "true" }).trustProxy).toBe(true);
+    expect(loadServerConfig({ ...base, TRUST_PROXY: "172.18.0.0/16" }).trustProxy).toBe(
+      "172.18.0.0/16",
+    );
+  });
+
   it("accepts DATABASE_URL and leaves the internal token undefined", () => {
     const config = loadServerConfig({ DATABASE_URL: "postgres://x/y", PORT: "9000" });
     expect(config.port).toBe(9000);

@@ -25,7 +25,16 @@ export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
+export interface AdminRecoveryCodes {
+  admin_user_id: Int8;
+  code_hash: string;
+  created_at: Generated<Timestamp>;
+  id: Generated<Int8>;
+  used_at: Timestamp | null;
+}
+
 export interface AdminSessions {
+  absolute_expires_at: Timestamp;
   admin_user_id: Int8;
   created_at: Generated<Timestamp>;
   csrf_secret: string;
@@ -34,14 +43,17 @@ export interface AdminSessions {
   ip_hash: string | null;
   last_seen_at: Generated<Timestamp>;
   revoked_at: Timestamp | null;
+  rotated_from: string | null;
   user_agent_hash: string | null;
 }
 
 export interface AdminUsers {
   created_at: Generated<Timestamp>;
   email: string;
+  failed_login_count: Generated<number>;
   id: Generated<Int8>;
   last_login_at: Timestamp | null;
+  locked_until: Timestamp | null;
   password_hash: string;
   totp_secret_enc: string | null;
 }
@@ -305,6 +317,7 @@ export interface VPublicTopics {
 }
 
 export interface DB {
+  admin_recovery_codes: AdminRecoveryCodes;
   admin_sessions: AdminSessions;
   admin_users: AdminUsers;
   audit_log: AuditLog;

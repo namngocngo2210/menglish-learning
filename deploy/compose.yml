@@ -137,6 +137,7 @@ services:
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url_api
       INTERNAL_TOKEN_FILE: /run/secrets/internal_token
+      TRUST_PROXY: ${TRUST_PROXY:-} # proxy IP/CIDR (Caddy) or true; empty = ignore X-Forwarded-For
     secrets: [db_url_api, internal_token]
     depends_on:
       postgres: { condition: service_healthy }
