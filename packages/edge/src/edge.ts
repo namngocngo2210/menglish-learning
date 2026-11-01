@@ -16,6 +16,14 @@ const MAINTENANCE_HTML =
 const PURGE_MAX_BODY = 64 * 1024;
 const PASS_MAX_BODY = 1024 * 1024;
 const REQUEST_ID = /^[A-Za-z0-9-]{8,64}$/;
+const ALLOWED_METHODS = new Set(["GET", "HEAD", "POST", "OPTIONS"]); // no TRACE/CONNECT/PUT/DELETE on a read-only site
+const SECURITY_HEADERS: Readonly<Record<string, string>> = {
+  "x-content-type-options": "nosniff",
+  "referrer-policy": "strict-origin-when-cross-origin", // the browser default, made explicit
+  "x-frame-options": "DENY",
+  "content-security-policy": "frame-ancestors 'none'", // only framing; script policy is a separate decision
+  "permissions-policy": "camera=(), microphone=(), geolocation=()",
+};
 /** Hop-by-hop and cookie headers are never copied between upstream and client. */
 const DROP_RESPONSE_HEADERS = new Set([
   "connection",
@@ -481,7 +489,14 @@ export function createEdge(options: EdgeOptions): Edge {
       "x-request-id",
       typeof given === "string" && REQUEST_ID.test(given) ? given : randomUUID(),
     );
+    // Baseline hardening for every response (HSTS and the full CSP belong to the TLS proxy, see docs/deploy-plan-s-f.md).
+    for (const [name, value] of Object.entries(SECURITY_HEADERS)) res.setHeader(name, value);
     const method = req.method ?? "GET";
+    if (!ALLOWED_METHODS.has(method)) {
+      res.writeHead(405, { allow: "GET, HEAD, POST, OPTIONS", "cache-control": "no-store" });
+      res.end();
+      return;
+    }
     const { path, key } = cacheKey(req.url ?? "/");
     if (path === "/healthz") {
       res.writeHead(200, { "content-type": "text/plain", "cache-control": "no-store" });

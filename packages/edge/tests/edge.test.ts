@@ -246,6 +246,26 @@ describe("keys and cookies", () => {
   });
 });
 
+describe("baseline hardening", () => {
+  it("adds security headers to cached pages, pass-through and errors; refuses TRACE and PUT", async () => {
+    const h = await start(() => html("<h1>page</h1>"));
+    for (const path of [TEST_PAGE, "/_next/static/a.js", "/healthz", "/missing"]) {
+      const res = await h.get(path);
+      expect(res.headers["x-content-type-options"], path).toBe("nosniff");
+      expect(res.headers["content-security-policy"], path).toBe("frame-ancestors 'none'");
+      expect(res.headers["x-frame-options"], path).toBe("DENY");
+      expect(res.headers["referrer-policy"], path).toBe("strict-origin-when-cross-origin");
+    }
+    const calls = h.calls.length;
+    for (const method of ["TRACE", "PUT", "DELETE"]) {
+      const res = await h.get(TEST_PAGE, {}, method);
+      expect(res.status, method).toBe(405);
+      expect(res.headers.allow).toBe("GET, HEAD, POST, OPTIONS");
+    }
+    expect(h.calls.length).toBe(calls); // refused methods never reach the upstream
+  });
+});
+
 describe("failure handling", () => {
   it("serves stale-on-error for a 5xx and for a hung upstream", async () => {
     let mode: "ok" | "500" | "down" = "ok";
