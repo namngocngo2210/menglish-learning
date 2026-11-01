@@ -63,7 +63,7 @@ Cấu hình: `.dependency-cruiser.cjs`, chạy `npm run deps:check` (chỉ quét
 - Cấm `any` (`no-explicit-any`, `no-unsafe-*`); dùng `unknown` + zod parse. [E] eslint `strictTypeChecked`. Ngoại lệ: `// eslint-disable-next-line <rule> -- <lý do>` một dòng, reviewer duyệt.
 - Cấm `enum` thường; dùng union literal hoặc `as const`. [E] `no-restricted-syntax`.
 - Cấm `console.*` trong code ứng dụng; dùng logger pino (§6). [E] `no-console`.
-- ESM (`"type": "module"`), import có đuôi `.js` khi `NodeNext`; `import type` cho type. [E] `consistent-type-imports`, `verbatimModuleSyntax`.
+- ESM (`"type": "module"`), `moduleResolution: Bundler`, import tương đối **không** đuôi file ([ADR 0004](adr/0004-bundler-module-resolution.md)); `import type` cho type. [E] `consistent-type-imports`, `verbatimModuleSyntax`.
 - Node LTS ghim: `.nvmrc` = `22`, `engines.node: ">=22.12"` ở mỗi `package.json`, CI dùng `node-version-file: .nvmrc`. Nâng LTS = ADR. [E] CI + `engine-strict` khi bật `.npmrc` ở S-A.
 - Không `!` (non-null) ngoài test; không `as` để thoát kiểm tra — parse bằng zod. [E] `no-non-null-assertion` (strict); `as` [D].
 

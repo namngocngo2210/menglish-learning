@@ -1,0 +1,26 @@
+{
+  "name": "@bj/db-types",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Kysely table types generated from the migrated database (kysely-codegen). Do not edit db.generated.ts.",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "generate": "kysely-codegen --dialect postgres --out-file src/db.generated.ts --exclude-pattern pgmigrations"
+  },
+  "dependencies": {
+    "kysely": "^0.28.0"
+  },
+  "devDependencies": {
+    "kysely-codegen": "^0.19.0",
+    "pg": "^8.13.0"
+  }
+}

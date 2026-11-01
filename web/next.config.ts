@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 const config: NextConfig = {
   output: "standalone",
+  transpilePackages: ["@bj/core"],
   async redirects() {
     let raw: string;
     try { raw = readFileSync(join(process.cwd(), "content/legacy-redirects.json"), "utf8"); }

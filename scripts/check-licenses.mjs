@@ -2,7 +2,7 @@
 // Usage: node scripts/check-licenses.mjs. Exceptions live in scripts/license-exceptions.json (needs an ADR).
 import { readFileSync, existsSync } from "node:fs";
 
-const LOCKS = ["web", "rooms", "crawler", "."]
+const LOCKS = ["rooms", "crawler", "."]
   .map((dir) => `${dir}/package-lock.json`)
   .filter((f) => existsSync(f));
 const ALLOW = new Set([
@@ -48,7 +48,8 @@ const bad = [];
 for (const lock of LOCKS) {
   const data = JSON.parse(readFileSync(lock, "utf8"));
   for (const [path, pkg] of Object.entries(data.packages ?? {})) {
-    if (path === "") continue;
+    // Workspace packages (api, packages/core, web) are first-party, not dependencies.
+    if (path === "" || !path.includes("node_modules/") || pkg.link) continue;
     const name = path.replace(/^.*node_modules\//, "");
     const license = typeof pkg.license === "string" ? pkg.license : undefined;
     if (license === undefined) {

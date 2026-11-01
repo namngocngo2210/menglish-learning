@@ -3,3 +3,6 @@ node_modules/
 crawler/node_modules/
 crawler/dist/
 .npm-cache/
+coverage/
+.next/
+dist/

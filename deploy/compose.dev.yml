@@ -1,0 +1,48 @@
+# DEVELOPMENT ONLY: a throwaway Postgres for running migrations, the importer and the API tests.
+# Not for the shared host: production/staging deployment is done by the owner under the bounded
+# package of docs/backend-blueprint.md §6.7. Data lives in tmpfs and disappears with the container.
+#
+#   export BJ_DEV_DB_PASSWORD=<any throwaway value>      # never commit a real secret
+#   docker compose -f deploy/compose.dev.yml up -d
+#   export DATABASE_URL=postgres://postgres:$BJ_DEV_DB_PASSWORD@127.0.0.1:55432/postgres
+#   npm run cli -w @bj/api -- migrate && npm run cli -w @bj/api -- import
+#   (stop it with `docker compose -f deploy/compose.dev.yml down` when finished)
+name: bj-dev
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: "no"
+    environment:
+      POSTGRES_PASSWORD: ${BJ_DEV_DB_PASSWORD:?set BJ_DEV_DB_PASSWORD to a throwaway value}
+    command:
+      - postgres
+      - -c
+      - shared_buffers=96MB
+      - -c
+      - effective_cache_size=192MB
+      - -c
+      - max_connections=30
+      - -c
+      - jit=off
+      - -c
+      - log_min_duration_statement=500ms
+    ports:
+      - "127.0.0.1:${BJ_DEV_DB_PORT:-55432}:5432"
+    tmpfs:
+      - /var/lib/postgresql/data
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: 0.5
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - bj-dev
+
+networks:
+  bj-dev: {}
