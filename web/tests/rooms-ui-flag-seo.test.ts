@@ -78,3 +78,16 @@ it("room shell and join routes: 404 when off or invalid code, noindex meta", asy
   await expect(room.default({ params: Promise.resolve({ ma: "k7m-2qx" }) })).resolves.toBeTruthy();
   expect(() => join.default()).not.toThrow();
 });
+
+it("test page shows 'Tạo phòng từ đề này' only when the flag is on, with ?de= preselect link", async () => {
+  const { default: TestPage } = await import("@/app/[grade]/[skill]/[topic]/[test]/page");
+  const { getAllRoutes: routes } = await import("@/lib/seo");
+  const testRoute = routes().map(r => r.path).find(p => /^\/lop-\d\/[^/]+\/[^/]+\/de-\d+$/.test(p))!;
+  const [, grade, skill, topic, test] = testRoute.split("/");
+  const render = async () => renderToStaticMarkup(await TestPage({ params: Promise.resolve({ grade, skill, topic, test }) }));
+  expect(await render()).not.toContain("Tạo phòng từ đề này");
+  vi.stubEnv("ROOMS_ENABLED", "true");
+  const html = await render();
+  expect(html).toContain("Tạo phòng từ đề này");
+  expect(html).toContain(`href="/luyen-tap-nhom?de=${testRoute.slice(1)}#tao-phong"`);
+});
