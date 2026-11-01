@@ -5,8 +5,8 @@ import { GRADES } from "@/lib/routes";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import officialExamsReport from "@/content/official-exams-report.json";
 const officialExamStatuses: Record<string, string> = {
- "imported": "Đã nhập vào kho chờ duyệt",
- "ocr-transcribed": "Bản scan, chép lại bằng OCR 2 lượt độc lập, đã nhập vào kho chờ duyệt",
+ "imported": "Đã xuất bản",
+ "ocr-transcribed": "Đã xuất bản (bản scan, chép lại bằng OCR 2 lượt độc lập)",
  "scanned-no-text-layer": "Bản scan, không có lớp văn bản — bỏ qua",
  "no-keyed-items": "Không có câu hỏi kèm đáp án hợp lệ — bỏ qua",
  "cache-missing": "Thiếu tệp trong bộ nhớ đệm — bỏ qua",
@@ -32,8 +32,8 @@ export default function CreditsPage() {
   </section>)}
   <section className="space-y-4 rounded-xl border border-navy-soft/20 p-5 sm:p-7">
    <h2 className="text-xl font-bold">Đề chính thức Bộ/Sở GD&ĐT</h2>
-   <p>Câu hỏi từ đề chính thức được giữ trong kho chờ duyệt cho đến khi chủ sở hữu kiểm tra và duyệt xuất bản. Với đề scan, AI chỉ chép lại chữ từ ảnh (không viết lại, không giải); đáp án chỉ lấy từ file đáp án chính thức, và câu chỉ được giữ khi hai lượt chép độc lập khớp nhau.</p>
-   {!officialExamsReport.seeds.some(seed => seed.status === "imported" || seed.status === "ocr-transcribed") && <p>Chưa có câu hỏi nào từ các đề chính thức được nhập vào kho chờ duyệt.</p>}
+   <p>Câu hỏi từ đề chính thức đã được chủ sở hữu duyệt xuất bản và được giữ nguyên văn. Với đề scan, AI chỉ chép lại chữ từ ảnh (không viết lại, không giải); đáp án chỉ lấy từ file đáp án chính thức, và câu chỉ được giữ khi hai lượt chép độc lập khớp nhau.</p>
+   {!officialExamsReport.seeds.some(seed => seed.status === "imported" || seed.status === "ocr-transcribed") && <p>Chưa có câu hỏi nào từ các đề chính thức được xuất bản.</p>}
    <div className="overflow-x-auto">
     <table className="w-full text-left">
      <caption className="mb-3 text-left font-semibold">Kết quả xử lý các đề chính thức đã xác minh</caption>

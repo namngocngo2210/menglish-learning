@@ -32,7 +32,12 @@ export function entranceTestPath(k: number): string {
  if (!Number.isSafeInteger(k) || k < 1) throw new Error("Invalid entrance test number");
  return `${ENTRANCE_PATH}/de-${k}`;
 }
+/** Fixed official paper for one exam year, e.g. thi-vao-lop-10/de-chinh-thuc-2026 (no leading slash). */
+export function officialEntranceSlug(year: string | number): string {
+ if (!/^20[0-9]{2}$/.test(String(year))) throw new Error("Invalid exam year");
+ return `thi-vao-lop-10/de-chinh-thuc-${year}`;
+}
 export function parseEntranceSlug(slug: string): { test: string } | null {
- const match = /^thi-vao-lop-10\/(de-[1-9][0-9]*)$/.exec(slug);
+ const match = /^thi-vao-lop-10\/(de-[1-9][0-9]*|de-chinh-thuc-20[0-9]{2})$/.exec(slug);
  return match ? { test: match[1] } : null;
 }

@@ -1,6 +1,6 @@
 import { ContentBundleSchema, type ContentBundle, type Test, type Topic, type Question, type Passage } from "../../lib/content/types";
 import { partitionTests, type MixedTest } from "../../lib/mixer";
-import { entranceTestPath, GRADES, SKILLS, SKILL_NAMES } from "../../lib/routes";
+import { entranceTestPath, officialEntranceSlug, GRADES, SKILLS, SKILL_NAMES } from "../../lib/routes";
 import { guardQuestions, type GuardReport } from "./guards";
 import { stripVoaEmailCallsToAction } from "./passage-filter";
 import { classifyQuestion } from "../../lib/topics/classify";
@@ -21,40 +21,26 @@ const compare = (a: string, b: string) => a < b ? -1 : a > b ? 1 : 0;
 const topicKey = (t: Topic) => `${t.grade}/${t.skill}/${t.slug}`;
 /** Merge all fragments before resolving cross-file resources. No input object is mutated. */
 /**
- * Official exam items transcribed from scanned PDFs (sourceRef ends with "ocr-transcribed") stay in
- * quarantine until the owner approves them; the explicit promotion command never publishes them.
+ * Official exam items (Sở GD&ĐT Hà Nội entrance papers, transcribed from scans: sourceRef contains
+ * "ocr-transcribed"). The owner approved all of them on 2026-10-31. They are published verbatim: they skip the
+ * VOA-oriented guards, keep their paper order in fixed per-year tests and also join the topic/mixed/entrance pools.
  */
-export const isPendingOfficialOcr = (q: { sourceRef?: string }) => (q.sourceRef ?? "").split("|").map(part => part.trim()).includes("ocr-transcribed");
-/** Removes pending scan transcriptions plus the sources, passages and topics that only they referenced. */
-export function withoutPendingOfficialOcr(bundle: ContentBundle): ContentBundle {
-  const pending = bundle.questions.filter(isPendingOfficialOcr);
-  if (pending.length === 0) return bundle;
-  const questions = bundle.questions.filter(q => !isPendingOfficialOcr(q));
-  const topicKey = (t: { grade: number; skill: string; slug: string }) => `${t.grade}|${t.skill}|${t.slug}`;
-  const questionTopic = (q: { grade: number; skill: string; topicSlug: string }) => `${q.grade}|${q.skill}|${q.topicSlug}`;
-  const pendingPassages = new Set(pending.map(q => q.passageId).filter((id): id is string => !!id));
-  const pendingSources = new Set(pending.map(q => q.sourceId));
-  const pendingTopics = new Set(pending.map(questionTopic));
-  const keptPassages = new Set(questions.map(q => q.passageId).filter((id): id is string => !!id));
-  const keptSources = new Set(questions.map(q => q.sourceId));
-  const keptTopics = new Set(questions.map(questionTopic));
-  return {
-    ...bundle,
-    questions,
-    passages: bundle.passages.filter(p => !pendingPassages.has(p.id) || keptPassages.has(p.id)),
-    sources: bundle.sources.filter(s => !pendingSources.has(s.id) || keptSources.has(s.id)),
-    topics: bundle.topics.filter(t => !pendingTopics.has(topicKey(t)) || keptTopics.has(topicKey(t))),
-  };
-}
+export const isOfficialExam = (q: { sourceRef?: string }) => (q.sourceRef ?? "").split("|").map(part => part.trim()).includes("ocr-transcribed");
+const officialRef = (q: { sourceRef?: string }) => {
+ const parts = (q.sourceRef ?? "").split("|").map(part => part.trim());
+ return { year: parts[0], number: Number((parts.find(p => /^Question \d+$/.test(p)) ?? "").replace("Question ", "")) };
+};
+/** The owner-facing review note replaces the internal "awaiting approval" explanation; the key is unchanged. */
+const officialExplanation = (q: Question) => `Đáp án đúng là ${q.correctKey} (theo đáp án chính thức của đề thi).`;
 export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (report: GuardReport) => void): Record<string, ContentBundle> {
  const merged = emptyBundle();
  for (const fragment of fragments) {
   const parsed = ContentBundleSchema.parse(fragment);
-  const kept = withoutPendingOfficialOcr(parsed);
-  merged.sources.push(...kept.sources);
-  merged.passages.push(...kept.passages);
-  merged.topics.push(...kept.topics);
-  merged.questions.push(...kept.questions);
+  merged.sources.push(...parsed.sources);
+  merged.passages.push(...parsed.passages);
+  // Official fragments restate topics (e.g. 9/doc-hieu/chung) that the VOA fragments already define.
+  for (const topic of parsed.topics) if (!merged.topics.some(t => topicKey(t) === topicKey(topic))) merged.topics.push(topic);
+  merged.questions.push(...parsed.questions);
  }
  function unique<T>(items: T[], key: (item: T) => string): T[] {
   const map = new Map<string, T>();
@@ -68,10 +54,14 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  merged.sources = unique(merged.sources, s => s.id);
  merged.passages = unique(merged.passages, p => p.id);
  merged.topics = unique(merged.topics, topicKey);
- merged.questions = unique(merged.questions.filter(q => q.reviewStatus === "quarantine" && !isPendingOfficialOcr(q)), q => q.id);
- const guarded = guardQuestions(merged.questions);
+ merged.questions = unique(merged.questions.filter(q => q.reviewStatus === "quarantine"), q => q.id);
+ const official = merged.questions.filter(isOfficialExam);
+ const guarded = guardQuestions(merged.questions.filter(q => !isOfficialExam(q)));
  reportGuards?.(guarded);
- merged.questions = classifyEligibleQuestions(guarded.questions, merged.passages).map(entry => entry.question);
+ merged.questions = classifyEligibleQuestions([...guarded.questions, ...official], merged.passages).map(entry => entry.question).sort((a, b) => compare(a.id, b.id));
+ const officialIds = new Set(official.map(q => q.id));
+ // Official items feed only the fixed per-year papers and the entrance mixer, so existing topic/mixed sets stay stable.
+ const regular = merged.questions.filter(q => !officialIds.has(q.id));
  const topics = merged.topics.filter(t => t.skill !== "ngu-phap" && t.skill !== "tu-vung").map(t => ({ ...t, name: t.slug === "chung" ? "Tổng hợp" : t.name, description: `Bài luyện ${SKILL_NAMES[t.skill].toLowerCase()} lớp ${t.grade} chủ đề ${(t.slug === "chung" ? "Tổng hợp" : t.name).toLowerCase()}.` }));
  for (const grade of GRADES) for (const skill of ["ngu-phap", "tu-vung"] as const) {
   for (const def of TOPIC_REGISTRY[skill]) {
@@ -83,14 +73,14 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
   parts.forEach((part, index) => tests.push({ ...meta(index + 1), ...part, publishedAt: PUBLISHED_AT }));
  }
  for (const topic of topics) {
-  const pool = merged.questions.filter(q => q.grade === topic.grade && q.skill === topic.skill && q.topicSlug === topic.slug);
+  const pool = regular.filter(q => q.grade === topic.grade && q.skill === topic.skill && q.topicSlug === topic.slug);
   if (pool.length < 10) continue;
   add(partitionTests(pool, { seedPrefix: `${topic.grade}/${topic.skill}/${topic.slug}`, size: 20, minSize: 10 }), k => ({
    slug: `lop-${topic.grade}/${topic.skill}/${topic.slug}/de-${k}`, grade: topic.grade, skill: topic.skill, topicSlug: topic.slug, kind: "topic", title: `${topic.name} - Đề ${k}`,
   }));
  }
  for (const grade of GRADES) for (const skill of SKILLS) {
-  const pool = merged.questions.filter(q => q.grade === grade && q.skill === skill);
+  const pool = regular.filter(q => q.grade === grade && q.skill === skill);
   if (pool.length < 10) continue;
   const topic: Topic = { grade, skill, slug: "tong-hop", name: `Tổng hợp ${SKILL_NAMES[skill]}`, description: `Bài luyện ${SKILL_NAMES[skill].toLowerCase()} tổng hợp lớp ${grade}.` };
   topics.push(topic);
@@ -101,9 +91,16 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  add(partitionTests(merged.questions.filter(q => q.grade === 8 || q.grade === 9), {
   seedPrefix: "thi-vao-lop-10", size: 40, minSize: 20, skillMix: { "tu-vung": .3, "ngu-phap": .3, "doc-hieu": .3, "viet-cau": .1 },
  }), k => ({ slug: entranceTestPath(k).slice(1), grade: 9, kind: "entrance10", title: `Đề luyện thi vào lớp 10 - Đề ${k}` }));
+ // Fixed official papers: one test per exam year, questions in paper order (reading passages stay adjacent), original option order.
+ const papers = new Map<string, Question[]>();
+ for (const q of official) { const year = officialRef(q).year; papers.set(year, [...(papers.get(year) ?? []), q]); }
+ for (const [year, items] of [...papers].sort(([a], [b]) => compare(a, b))) {
+  items.sort((a, b) => officialRef(a).number - officialRef(b).number);
+  tests.push({ slug: officialEntranceSlug(year), grade: 9, kind: "entrance10", title: `Đề thi vào lớp 10 môn Tiếng Anh Hà Nội năm ${year}`, seed: `thi-vao-lop-10/chinh-thuc/${year}`, questionIds: items.map(q => q.id), publishedAt: PUBLISHED_AT });
+ }
  unique(tests, t => t.slug);
  const used = new Set(tests.flatMap(t => t.questionIds));
- const questions = merged.questions.filter(q => used.has(q.id)).map(q => ({ ...q, reviewStatus: "published" as const, reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: PUBLISHED_AT }));
+ const questions = merged.questions.filter(q => used.has(q.id)).map(q => ({ ...q, ...(officialIds.has(q.id) ? { explanation: officialExplanation(q) } : {}), reviewStatus: "published" as const, reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: PUBLISHED_AT }));
  const usedPassages = new Set(questions.map(q => q.passageId));
  const passages = merged.passages.filter(p => usedPassages.has(p.id)).map(p => {
   const body = stripVoaEmailCallsToAction(p.body);

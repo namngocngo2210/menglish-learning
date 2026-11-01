@@ -10,9 +10,9 @@ export default function EntrancePage() {
  return <PageShell title="Ôn thi tiếng Anh vào lớp 10">
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Thi vào lớp 10", path: "/thi-vao-lop-10" }])}/>
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Thi vào lớp 10" }]}/>
-  <p>Luyện đề tiếng Anh tổng hợp từ ngân hàng câu hỏi lớp 8–9. Chọn đáp án, kiểm tra từng câu rồi nộp bài để xem điểm và giải thích tiếng Việt. Đây là bài ôn luyện, không phải đề thi chính thức.</p>
+  <p>Luyện đề tiếng Anh vào lớp 10: đề thi chính thức của Sở GD&ĐT Hà Nội các năm 2024, 2025, 2026 (các câu có hình minh họa không được đưa vào) và các đề tổng hợp từ ngân hàng câu hỏi lớp 8–9. Chọn đáp án, kiểm tra từng câu rồi nộp bài để xem điểm.</p>
   <RandomQuiz poolUrl="/pool/thi-vao-lop-10" size={40} afterResult={<AdSlot slot="footer"/>}/>
-  <LinkCardList items={getEntranceTests().map(t => ({ label: t.title, href: `/${t.slug}`, description: `${t.questionIds.length} câu hỏi · Có giải thích đáp án`, progressKey: t.slug }))}/>
+  <LinkCardList items={[...getEntranceTests()].sort((a, b) => Number(b.slug.includes("de-chinh-thuc-")) - Number(a.slug.includes("de-chinh-thuc-"))).map(t => ({ label: t.title, href: `/${t.slug}`, description: `${t.questionIds.length} câu hỏi · Có giải thích đáp án`, progressKey: t.slug }))}/>
   <AdSlot slot="footer"/>
  </PageShell>;
 }

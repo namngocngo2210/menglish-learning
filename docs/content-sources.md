@@ -26,9 +26,10 @@ Phạm vi của AI: **chỉ chép chữ từ ảnh trang** (không viết lại,
 - Giữ câu khi và chỉ khi: cả hai lượt có câu đó, không cần hình, văn bản khớp (bỏ qua khác biệt trình bày: kiểu nháy, dấu gạch, khoảng trắng, độ dài chỗ trống, cách tách đoạn/stem và nhãn blank), phần gạch chân khớp, và hai lượt cùng đọc một đáp án A–D. Câu lệch bị loại và đếm theo lý do trong `official-exams-report.json`.
 - Ngân sách: 59 lượt xem ảnh/vùng cắt tổng cộng (cap ~60), gồm cả lượt kiểm tra mẫu; không chạy lặp.
 - Dữ liệu chép lưu ở `crawler/ocr/hanoi-<năm>.json` (hai lượt + khoá đáp án, không chứa ảnh); `npm run build-bank` chỉ đọc các file này nên kết quả xác định, không cần ảnh hay cache PDF. Logic gộp/kiểm tra: `crawler/src/ocr/merge.ts` (+ `crawler/test/ocr.test.ts`).
-- Mọi câu có `sourceRef` kết thúc bằng `ocr-transcribed`, `reviewStatus: quarantine`; script `build:tests` **không bao giờ** xuất bản chúng (`web/scripts/lib/build-bank.ts`) cho tới khi owner duyệt. Câu thi vào lớp 10 chỉ vào ngân hàng tuyển sinh sau khi duyệt.
+- **Owner đã duyệt xuất bản cả 111 câu ngày 31/10/2026** (ghi `reviewNote: "owner-approved-bulk 2026-10-31"`). File quarantine giữ nguyên `reviewStatus: quarantine` (nguồn gốc); `npm run build:tests` tạo bản `published` trong `web/content/tests/`. Câu giữ nguyên văn (không sửa, không viết lại), bỏ qua guard VOA; metadata nguồn, giấy phép, `sourceRef` (`ocr-transcribed`) giữ trong dữ liệu nhưng trang không hiển thị nguồn từng câu; lời giải nội bộ “chờ duyệt” được thay bằng “Đáp án đúng là X (theo đáp án chính thức của đề thi).”
+- Xuất bản: 3 đề cố định `/thi-vao-lop-10/de-chinh-thuc-2024|2025|2026` (37 câu theo thứ tự đề gốc, đoạn văn đi kèm câu hỏi, giữ nguyên thứ tự phương án) + các câu vào pool trộn đề `/thi-vao-lop-10/de-N` và pool luyện ngẫu nhiên. Không vào bộ đề theo chủ đề/tổng hợp lớp 9 để các đề đó không đổi. Rooms: `rooms/scripts/build-bank.ts` tự lấy mọi câu `published` nên 111 câu vào bank-rooms khi chạy lại script (không đổi mã rooms).
 
-Kết quả thực (kho chờ duyệt, lớp 9, `tuyen-sinh-10-ngoai-ngu-khong-chuyen`):
+Kết quả thực (đã xuất bản, lớp 9, `tuyen-sinh-10-ngoai-ngu-khong-chuyen`):
 
 | Năm (mã đề) | Câu đọc được | Giữ lại | Loại | Lý do loại | Giữ theo phần |
 | --- | ---: | ---: | ---: | --- | --- |
