@@ -27,4 +27,4 @@ Chúng ta dùng **TypeScript (Node 22 LTS): Fastify 5 + Kysely + `pg`, zod, `nod
 - Bề mặt dependency lớn hơn → lockfile, `npm audit` chặn high+, allowlist giấy phép, ADR cho thư viện nặng ([standards §10](../engineering-standards.md)).
 - Hợp đồng giữa các tầng là **OpenAPI sinh từ zod + schema SQL**, không phải code TS → có thể thay riêng lớp `api` sang Go sau này.
 - Đổi ý khi: cần ≥ 2 replica, ngân sách RAM < ~700 MB, chủ có đội chỉ viết Go, hoặc đo `api` thật > 160 MB sau S-B.
-- Ngoại lệ giấy phép ghi nhận ở đây: `@img/sharp-*` (libvips LGPL, nhị phân dựng sẵn do Next.js kéo vào, liên kết động, không sửa) — xem `scripts/license-exceptions.json`.
+- Ngoại lệ giấy phép ghi nhận ở đây: `@img/sharp-*` (libvips LGPL, nhị phân dựng sẵn do Next.js kéo vào, liên kết động, không sửa) — xem `scripts/license-exceptions.json`. Thêm `rechoir@0.6.2` (thiếu trường license trong package.json, upstream MIT; chỉ là phụ thuộc dev gián tiếp của kysely-codegen, không đóng gói vào sản phẩm).

@@ -39,6 +39,7 @@ export default tseslint.config(
       "@typescript-eslint/consistent-type-imports": "error",
       "@typescript-eslint/naming-convention": [
         "error",
+        { selector: "variable", filter: { regex: "Schema$", match: true }, format: ["PascalCase"] }, // zod schemas (GradeSchema)
         { selector: "default", format: ["camelCase"], leadingUnderscore: "allow" },
         { selector: "variable", format: ["camelCase", "UPPER_CASE"], leadingUnderscore: "allow" },
         { selector: "typeLike", format: ["PascalCase"] },
@@ -46,18 +47,34 @@ export default tseslint.config(
         { selector: "property", format: null }, // wire/DB names (snake_case, headers) are allowed
         { selector: "import", format: null },
       ],
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
+      "@typescript-eslint/dot-notation": ["error", { allowIndexSignaturePropertyAccess: true }], // pairs with noPropertyAccessFromIndexSignature
       "no-console": "error", // use the pino logger
       "no-restricted-syntax": [
         "error",
         { selector: "TSEnumDeclaration:not([const=true])", message: "Use a union of string literals or `as const` object, not enum." },
+        {
+          selector: "CallExpression[callee.object.name='sql'][callee.property.name='raw']",
+          message: "sql.raw is forbidden: use parameterised Kysely expressions (engineering-standards §5).",
+        },
       ],
       eqeqeq: ["error", "always"],
+      "no-restricted-properties": [
+        "error",
+        { object: "process", property: "env", message: "Read configuration once in config.ts (loadConfig); pass it as a parameter." },
+      ],
+      "no-restricted-globals": [
+        "error",
+        { name: "fetch", message: "Outbound HTTP goes through safe-fetch (SSRF guard); do not call fetch directly." },
+      ],
       "no-restricted-imports": [
         "error",
         { patterns: [{ group: ["../*/src/*", "**/internal/*"], message: "Import a package through its public entry point only." }] },
       ],
     },
   },
+  // The only places allowed to touch process.env: the config loader and the CLI entry.
+  { files: ["**/config.ts", "api/src/main.ts", "**/tests/**/*.ts"], rules: { "no-restricted-properties": "off" } },
   // Test files may be looser on a few type-aware rules.
   {
     files: ["**/*.test.ts", "**/tests/**/*.ts", "**/test/**/*.ts"],

@@ -1,0 +1,29 @@
+{
+  "name": "@bj/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "BeeJunior api: CLI (migrate, import, export-snapshot, parity) now; Fastify server from S-B.",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "cli": "tsx src/main.ts"
+  },
+  "dependencies": {
+    "@bj/core": "*",
+    "@bj/db-types": "*",
+    "kysely": "^0.28.0",
+    "node-pg-migrate": "^8.0.0",
+    "pg": "^8.13.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "tsx": "^4.23.15",
+    "vitest": "^5.0.5"
+  }
+}

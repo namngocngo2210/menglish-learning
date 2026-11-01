@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # web is covered by ci.yml (lint, typecheck, test, Lighthouse). New packages are added here in S-A.
+        # web is covered by ci.yml; core and api by the workspace-tests job below.
         dir: [rooms, crawler]
     defaults:
       run:
@@ -71,7 +71,6 @@ jobs:
       matrix:
         include:
           - { dir: ".", flags: "" }
-          - { dir: web, flags: "" }
           # Ratchet: rooms/crawler dev-only vitest 3 -> tinypool (critical, test runner only, no prod exposure).
           # Gate production deps now; drop `--omit=dev` when vitest is bumped to 5 (own PR).
           - { dir: rooms, flags: "--omit=dev" }
@@ -99,3 +98,38 @@ jobs:
       - uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  workspace-tests:
+    name: Workspace tests (core, api) + migrations
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: ci-throwaway
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgres://postgres:ci-throwaway@localhost:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: node scripts/check-migrations.mjs
+      - name: Generated database types are up to date
+        run: |
+          DATABASE_URL="$TEST_DATABASE_URL" npm run cli -w @bj/api -- migrate
+          DATABASE_URL="$TEST_DATABASE_URL" npm run generate -w @bj/db-types
+          git diff --exit-code -- packages/db-types
+      - run: npm test -w @bj/core -- --coverage
+      - run: npm test -w @bj/api -- --coverage
+      - name: Migration files are immutable once on main
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          node scripts/check-migrations.mjs "origin/${{ github.base_ref }}"

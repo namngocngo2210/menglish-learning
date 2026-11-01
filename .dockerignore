@@ -1,0 +1,15 @@
+**/node_modules
+**/.next
+**/.env*
+**/*.tsbuildinfo
+**/coverage
+.git
+.github
+docs
+rooms
+crawler
+admin
+worker
+web/tests
+web/e2e
+README.md
