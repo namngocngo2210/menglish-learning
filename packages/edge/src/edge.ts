@@ -29,6 +29,8 @@ const PurgeBodySchema = z.strictObject({
   paths: z.array(z.string().max(512).startsWith("/")).max(500).optional(),
   prefixes: z.array(z.string().max(512).startsWith("/")).max(500).optional(),
   all: z.boolean().optional(),
+  /** Mark matches stale instead of deleting them: crawlers get STALE (never a cold MISS) while the warmer re-renders. */
+  soft: z.boolean().optional(),
 });
 
 export interface EdgeStats {
@@ -330,17 +332,17 @@ export function createEdge(options: EdgeOptions): Edge {
     const prefixes = input.prefixes ?? [];
     const removedPaths = new Set<string>();
     let removed = 0;
-    if (input.all === true) {
-      for (const key of store.keys()) removedPaths.add(cacheKey(key).path);
-      removed = store.clear();
-    } else {
-      for (const key of store.keys()) {
-        const { path } = cacheKey(key);
-        if (exact.has(path) || prefixes.some((p) => path.startsWith(p))) {
-          store.delete(key);
-          removedPaths.add(path);
-          removed++;
-        }
+    const drop = (key: string): void => {
+      const entry = store.get(key);
+      if (input.soft === true && entry) entry.at = now() - entry.ttl * 1000 - 1;
+      else store.delete(key);
+    };
+    for (const key of store.keys()) {
+      const { path } = cacheKey(key);
+      if (input.all === true || exact.has(path) || prefixes.some((p) => path.startsWith(p))) {
+        drop(key);
+        removedPaths.add(path);
+        removed++;
       }
     }
     let refreshed = false;

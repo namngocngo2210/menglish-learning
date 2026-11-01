@@ -402,6 +402,18 @@ describe("purge and warmer", () => {
     expect(h.edge.store.size).toBe(4);
   });
 
+  it("soft purge keeps the body and serves STALE until the warmer refreshes it", async () => {
+    const h = await start((request) =>
+      request.path === "/internal/refresh" ? { status: 200, headers: {}, body: Buffer.from("{}") } : html(request.path),
+    );
+    await h.get("/a");
+    const result = await h.edge.purge({ paths: ["/a"], soft: true });
+    expect(result.removed).toBe(1);
+    expect(h.edge.store.size).toBe(1);
+    await result.done;
+    expect((await h.get("/a")).headers["x-cache"]).toBe("HIT");
+  });
+
   it("purges everything and warms from the sitemap one request at a time", async () => {
     let active = 0;
     let peak = 0;
