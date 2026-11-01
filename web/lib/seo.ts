@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
 import { getGrades, getSkills, getTopics, getTestsForTopic, getEntranceTests } from "@/lib/content/load";
-import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath } from "@/lib/routes";
+import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath, roomsLandingPath } from "@/lib/routes";
+import { roomsEnabled } from "@/lib/rooms/flag";
 
 export function absoluteUrl(path: string): string {
  if (!path.startsWith("/")) throw new Error("SEO paths must start with /");
@@ -63,6 +64,8 @@ export function getAllRoutes(): PublicRoute[] {
  routes.unshift({ path: "/", lastModified: newest(all), changeFrequency: "weekly", priority: 1 });
  routes.push({ path: "/nguon-du-lieu", lastModified: newest(all), changeFrequency: "monthly", priority: 0.3 });
  routes.push(...[aboutPath(), privacyPath(), contactPath()].map(path => ({ path, lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "yearly" as const, priority: 0.3 })));
+ // Room URLs (/luyen-tap-nhom/phong/*, /vao) are never listed; the landing only when the feature is on.
+ if (roomsEnabled()) routes.push({ path: roomsLandingPath(), lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "monthly", priority: 0.6 });
  return routes;
 }
 
@@ -98,4 +101,8 @@ export function websiteJsonLd() {
 
 export function organizationJsonLd() {
  return { "@context": context, "@type": "Organization", name: SITE.name, url: absoluteUrl("/"), logo: absoluteUrl(SITE.logo.full) };
+}
+
+export function webPageJsonLd({ name, description, path }: { name: string; description: string; path: string }) {
+ return { "@context": context, "@type": "WebPage", name, description, url: absoluteUrl(path), inLanguage: "vi", isPartOf: { "@type": "WebSite", name: SITE.name, url: absoluteUrl("/") }, publisher: organizationJsonLd() };
 }

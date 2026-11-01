@@ -50,3 +50,9 @@ Random quizzes fetch static `/pool/…` JSON only on interaction and keep the UR
 unchanged. Fixed quiz progress stays on the device under `ml:progress:v1`;
 storage failures do not prevent practice. Published source credits are centralized
 on `/nguon-du-lieu`.
+
+## Group practice (rooms) UI
+
+`ROOMS_ENABLED=true|1` (default OFF, read at build/start on the server) turns on `/luyen-tap-nhom` (indexable, in the sitemap, linked from header/footer) and the private room shell `/luyen-tap-nhom/phong/[ma]` + `/luyen-tap-nhom/vao?ma=`. When OFF the landing is a noindex "sắp ra mắt" page, the room routes return 404 and no menu entry or create/join control is rendered. Rebuild after changing it.
+
+The client talks to the rooms service through same-origin `/rt/*` (`lib/rooms/client.ts`, SSE + polling fallback in `lib/rooms/events-machine.ts`). For local development set `ROOMS_DEV_PROXY=http://127.0.0.1:<port>` (localhost only) and `next.config.ts` rewrites `/rt/*` to it. The production route is added with the Caddy change in sprint S4. Room pages are served with `X-Robots-Tag: noindex, nofollow`, `Referrer-Policy: no-referrer`, `Cache-Control: no-store` and never contain an ad slot (only the landing may).

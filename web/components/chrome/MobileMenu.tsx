@@ -3,15 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { GRADES, gradePath, aboutPath, privacyPath, contactPath } from "@/lib/routes";
+import { GRADES, gradePath, aboutPath, privacyPath, contactPath, roomsLandingPath } from "@/lib/routes";
 import { NavLink } from "./NavLink";
 
-export function MobileMenu() {
+export function MobileMenu({ showRooms = false }: { showRooms?: boolean }) {
  const pathname = usePathname();
- return <MobileMenuPanel key={pathname}/>;
+ return <MobileMenuPanel key={pathname} showRooms={showRooms}/>;
 }
 
-function MobileMenuPanel() {
+function MobileMenuPanel({ showRooms }: { showRooms: boolean }) {
  const [open, setOpen] = useState(false);
  const root = useRef<HTMLDivElement>(null);
  const button = useRef<HTMLButtonElement>(null);
@@ -59,7 +59,7 @@ function MobileMenuPanel() {
   <button ref={button} type="button" aria-label={open ? "Đóng menu" : "Mở menu"} aria-expanded={open} aria-controls="mobile-navigation" onClick={() => open ? close(true) : setOpen(true)} className="flex size-11 items-center justify-center rounded-xl border border-navy-soft/20 text-navy hover:bg-warm">{open ? <X aria-hidden="true" className="size-5"/> : <Menu aria-hidden="true" className="size-5"/>}</button>
   <nav ref={panel} id="mobile-navigation" hidden={!open} aria-label="Điều hướng di động" className="absolute inset-x-0 top-full max-h-[70dvh] overflow-y-auto overscroll-contain border-b border-navy-soft/20 bg-surface px-5 py-5 shadow-lg sm:px-8" onClick={event => { if (event.target instanceof Element && event.target.closest("a")) close(); }}>
    <h2 className="mb-2 px-3 text-sm font-bold text-primary">Chọn lớp</h2><ul className="grid grid-cols-2 gap-2">{GRADES.map(grade => <li key={grade}><NavLink href={gradePath(grade)} className={linkClass}>Lớp {grade}</NavLink></li>)}</ul>
-   <h2 className="mt-5 mb-2 px-3 text-sm font-bold text-primary">Thông tin</h2><ul>{[["/thi-vao-lop-10","Thi vào lớp 10"],["/nguon-du-lieu","Nguồn dữ liệu và giấy phép"],[aboutPath(),"Giới thiệu"],[privacyPath(),"Chính sách bảo mật"],[contactPath(),"Liên hệ"]].map(([href,label]) => <li key={href}><NavLink href={href} className={linkClass}>{label}</NavLink></li>)}</ul>
+   <h2 className="mt-5 mb-2 px-3 text-sm font-bold text-primary">Thông tin</h2><ul>{[["/thi-vao-lop-10","Thi vào lớp 10"],...(showRooms ? [[roomsLandingPath(),"Luyện tập nhóm"]] : []),["/nguon-du-lieu","Nguồn dữ liệu và giấy phép"],[aboutPath(),"Giới thiệu"],[privacyPath(),"Chính sách bảo mật"],[contactPath(),"Liên hệ"]].map(([href,label]) => <li key={href}><NavLink href={href} className={linkClass}>{label}</NavLink></li>)}</ul>
   </nav>
  </div>;
 }

@@ -94,7 +94,8 @@ it("indexes by default, never emits noindex in production code and robots blocks
  };
  for (const dir of ["app", "lib", "components"]) walk(join(process.cwd(), dir));
  const next = readFileSync(join(process.cwd(), "next.config.ts"), "utf8");
- expect(/X-Robots-Tag/i.test(next)).toBe(false);
+ // X-Robots-Tag is allowed only for the private room shell routes (see rooms-ui-flag-seo.test.ts).
+ expect(next.match(/X-Robots-Tag/gi)).toHaveLength(1);
  // Only the SEO_NOINDEX switch helper may mention noindex.
  expect([...new Set(hits)].filter(f => !["app/robots.ts", "lib/seo.ts", "package.json", "lighthouserc.json"].includes(f)).sort()).toEqual([]);
 });
