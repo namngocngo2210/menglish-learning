@@ -2,6 +2,7 @@
 export * from "./slug";
 export * from "./routes";
 export * from "./schemas";
+export * from "./public-view";
 export * from "./scoring";
 export * from "./mixer/index";
 export * from "./topics/registry";

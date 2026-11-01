@@ -1,12 +1,14 @@
+import { ensureContent } from "@/lib/content/source";
 import { PageShell, Breadcrumbs, LinkCardList } from "@/components/ui-kit";
 import { JsonLd } from "@/components/json-ld";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { getEntranceTests } from "@/lib/content/load";
 import { buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 export const metadata = buildMetadata({ title: "Ôn thi tiếng Anh vào lớp 10", description: "Ôn thi vào lớp 10 với đề tiếng Anh tổng hợp từ ngân hàng lớp 8–9, có kiểm tra đáp án và giải thích tiếng Việt.", path: "/thi-vao-lop-10" });
-export default function EntrancePage() {
+export default async function EntrancePage() {
+ await ensureContent();
  return <PageShell title="Ôn thi tiếng Anh vào lớp 10">
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Thi vào lớp 10", path: "/thi-vao-lop-10" }])}/>
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Thi vào lớp 10" }]}/>

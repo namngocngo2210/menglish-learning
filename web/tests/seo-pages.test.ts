@@ -1,3 +1,4 @@
+import { entranceParams, gradeParams, skillParams, topicParams, testParams } from "@/lib/content/params";
 import * as entrancePage from "@/app/thi-vao-lop-10/[test]/page";
 import { metadata as entrance } from "@/app/thi-vao-lop-10/page";
 import { metadata as credits } from "@/app/nguon-du-lieu/page";
@@ -14,11 +15,11 @@ import { absoluteUrl, getAllRoutes } from "@/lib/seo";
 
 it("matches static page params exactly and gives every route unique metadata", async () => {
  const generated = await Promise.all([
-  ...entrancePage.generateStaticParams().map(p => entrancePage.generateMetadata({params:Promise.resolve(p)})),
-  ...gradePage.generateStaticParams().map(p => gradePage.generateMetadata({params:Promise.resolve(p)})),
-  ...skillPage.generateStaticParams().map(p => skillPage.generateMetadata({params:Promise.resolve(p)})),
-  ...topicPage.generateStaticParams().map(p => topicPage.generateMetadata({params:Promise.resolve(p)})),
-  ...testPage.generateStaticParams().map(p => testPage.generateMetadata({params:Promise.resolve(p)})),
+  ...entranceParams().map(p => entrancePage.generateMetadata({params:Promise.resolve(p)})),
+  ...gradeParams().map(p => gradePage.generateMetadata({params:Promise.resolve(p)})),
+  ...skillParams().map(p => skillPage.generateMetadata({params:Promise.resolve(p)})),
+  ...topicParams().map(p => topicPage.generateMetadata({params:Promise.resolve(p)})),
+  ...testParams().map(p => testPage.generateMetadata({params:Promise.resolve(p)})),
  ]);
  const metadata = [home, about, privacy, contact, entrance, credits, ...generated];
  expect(metadata.map(m => m.alternates?.canonical).sort()).toEqual(getAllRoutes().map(r => absoluteUrl(r.path)).sort());

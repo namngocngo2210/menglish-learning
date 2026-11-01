@@ -240,6 +240,7 @@ export interface VPublicPassages {
   id: string | null;
   level: number | null;
   published_at: Timestamp | null;
+  sort_key: Int8 | null;
   source_code: string | null;
   source_url: string | null;
   title: string | null;
@@ -257,6 +258,7 @@ export interface VPublicQuestions {
   passage_id: string | null;
   published_at: Timestamp | null;
   skill: string | null;
+  sort_key: Int8 | null;
   source_code: string | null;
   source_ref: string | null;
   source_url: string | null;
@@ -270,6 +272,7 @@ export interface VPublicSources {
   code: string | null;
   license: string | null;
   name: string | null;
+  sort_key: Int8 | null;
 }
 
 export interface VPublicTestItems {
@@ -286,6 +289,7 @@ export interface VPublicTests {
   seed: string | null;
   skill: string | null;
   slug: string | null;
+  sort_key: Int8 | null;
   title: string | null;
   topic_slug: string | null;
 }
@@ -296,6 +300,7 @@ export interface VPublicTopics {
   name: string | null;
   skill: string | null;
   slug: string | null;
+  sort_key: Int8 | null;
   sort_order: number | null;
 }
 

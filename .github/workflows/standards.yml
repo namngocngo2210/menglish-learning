@@ -100,7 +100,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   workspace-tests:
-    name: Workspace tests (core, api) + migrations
+    name: Workspace tests (core, data, edge, api) + migrations
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -133,3 +133,16 @@ jobs:
         run: |
           git fetch origin "${{ github.base_ref }}" --depth=1
           node scripts/check-migrations.mjs "origin/${{ github.base_ref }}"
+      - run: npm test -w @bj/data -- --coverage
+      - run: npm test -w @bj/edge -- --coverage
+      - name: OpenAPI document is generated from the routes and v1 stays additive
+        run: |
+          npm run openapi -w @bj/api
+          git diff --exit-code -- api/openapi.v1.json
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git fetch origin "${{ github.base_ref }}" --depth=1
+            if git cat-file -e "origin/${{ github.base_ref }}:api/openapi.v1.json" 2>/dev/null; then
+              git show "origin/${{ github.base_ref }}:api/openapi.v1.json" > /tmp/openapi-baseline.json
+              npm run openapi:compat -w @bj/api -- /tmp/openapi-baseline.json
+            fi
+          fi

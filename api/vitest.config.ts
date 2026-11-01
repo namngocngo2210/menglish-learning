@@ -12,7 +12,12 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**"],
-      exclude: ["src/main.ts", "src/db/types.ts"],
+      exclude: [
+        "src/main.ts",
+        "src/db/types.ts",
+        "src/server/main.ts",
+        "src/server/write-openapi.ts",
+      ],
       thresholds: { lines: 80, branches: 80, functions: 80, statements: 80 },
     },
   },

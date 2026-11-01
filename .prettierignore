@@ -28,3 +28,4 @@ package-lock.json
 # Markdown is hand-formatted (tables, Vietnamese prose); not enforced.
 *.md
 *.generated.ts
+api/openapi.v1.json

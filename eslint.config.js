@@ -74,7 +74,7 @@ export default tseslint.config(
     },
   },
   // The only places allowed to touch process.env: the config loader and the CLI entry.
-  { files: ["**/config.ts", "api/src/main.ts", "**/tests/**/*.ts"], rules: { "no-restricted-properties": "off" } },
+  { files: ["**/config.ts", "api/src/main.ts", "packages/edge/src/main.ts", "**/tests/**/*.ts"], rules: { "no-restricted-properties": "off" } },
   // Test files may be looser on a few type-aware rules.
   {
     files: ["**/*.test.ts", "**/tests/**/*.ts", "**/test/**/*.ts"],

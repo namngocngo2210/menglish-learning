@@ -5,10 +5,14 @@ import { readFileSync, readdirSync } from "node:fs";
 import { resolve, join } from "node:path";
 import { ContentBundleSchema, type ContentBundle } from "./types";
 import { applyOptionOrder } from "@/lib/mixer";
+import { selectPublicContent } from "@bj/core";
+import { contentMode, getContentStore } from "./source";
 import { GRADES, type Grade, type Skill, SKILLS } from "@/lib/routes";
 import { topicOrder } from "../topics/registry";
 const cache = new Map<string, ContentBundle>();
 export function loadBundle(directory?: string): ContentBundle {
+ // Production: the published content comes from Postgres (see ./source.ts); pages call ensureContent() first.
+ if (directory === undefined && !process.env.QUESTION_CONTENT_DIR && contentMode() === "db") return getContentStore().current();
  // The configurable path is intentionally opaque to tracing; next.config.ts includes default bundles.
  const dir = resolve(/* turbopackIgnore: true */ directory ?? process.env.QUESTION_CONTENT_DIR ?? join(process.cwd(), "content/tests"));
  const cached = cache.get(dir); if (cached) return cached;
@@ -54,16 +58,8 @@ export function loadBundle(directory?: string): ContentBundle {
    if (!q || (t.kind === "entrance10" ? q.grade !== 8 && q.grade !== 9 : q.grade !== t.grade || q.skill !== t.skill || (t.kind === "topic" && q.topicSlug !== t.topicSlug))) fail(`tests:${t.slug}`, `test ${t.slug}: question ${id} missing or mismatched`);
   }
  }
- bundle.questions = bundle.questions.filter(q => q.reviewStatus === "published");
- const published = new Set(bundle.questions.map(q => q.id));
- // Hide the entire test rather than silently changing its question count.
- bundle.tests = bundle.tests.filter(t => t.questionIds.every(id => published.has(id)));
- bundle.topics = bundle.topics.filter(topic => bundle.tests.some(t => t.grade === topic.grade && t.skill === topic.skill && t.topicSlug === topic.slug));
- const usedPassages = new Set(bundle.questions.map(q => q.passageId));
- bundle.passages = bundle.passages.filter(p => usedPassages.has(p.id));
- const usedSources = new Set([...bundle.questions, ...bundle.passages].map(item => item.sourceId));
- bundle.sources = bundle.sources.filter(s => usedSources.has(s.id));
- cache.set(dir, bundle); return bundle;
+ const visible = selectPublicContent(bundle);
+ cache.set(dir, visible); return visible;
 }
 export function getGrades(): readonly Grade[] { return GRADES; }
 export function getSkills(grade: Grade): Skill[] { return GRADES.includes(grade) ? [...SKILLS] : []; }

@@ -1,3 +1,4 @@
+import { topicParams } from "@/lib/content/params";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { createElement } from "react";
@@ -8,7 +9,7 @@ import { ContentBundleSchema } from "../lib/content/types";
 import { getTopicDef, topicOrder } from "../lib/topics/registry";
 import { getAllRoutes } from "../lib/seo";
 import sitemap from "../app/sitemap";
-import TopicPage, { generateMetadata, generateStaticParams } from "../app/[grade]/[skill]/[topic]/page";
+import TopicPage, { generateMetadata } from "../app/[grade]/[skill]/[topic]/page";
 import { buildBank, serializeBundle, classifyEligibleQuestions } from "../scripts/lib/build-bank";
 import { generateClassificationReport, generateLegacyRedirects } from "../scripts/lib/topic-artifacts";
 import { SKILL_NAMES } from "../lib/routes";
@@ -52,7 +53,7 @@ it("preserves legacy paths or redirects them to an existing same-grade skill mix
  expect(() => generateLegacyRedirects(["/lop-6/ngu-phap/missing"], {})).toThrow(/destination/i);
 });
 it("includes every topic page and test in the sitemap, with unique bounded topic metadata", async () => {
- const paths = new Set(getAllRoutes().map(r => r.path)); const urls = new Set(sitemap().map(r => new URL(r.url).pathname));
+ const paths = new Set(getAllRoutes().map(r => r.path)); const urls = new Set((await sitemap()).map(r => new URL(r.url).pathname));
  const titles: string[] = []; const descriptions: string[] = [];
  for (const topic of bundle.topics) {
   const path = `/lop-${topic.grade}/${topic.skill}/${topic.slug}`; expect(paths.has(path)).toBe(true); expect(urls.has(path)).toBe(true);
@@ -86,7 +87,7 @@ it("renders knowledge, counts and related links while mixed topics keep their de
  const mixed = bundle.topics.find(t => t.grade === topic.grade && t.skill === topic.skill && t.slug === "tong-hop")!;
  const mixedHtml = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: `lop-${topic.grade}`, skill: topic.skill, topic: "tong-hop" }) }));
  expect(mixedHtml).toContain(mixed.description); expect(mixedHtml).not.toContain('aria-label="Kiến thức cần nhớ"');
- expect(generateStaticParams().map(p => `/${p.grade}/${p.skill}/${p.topic}`).sort()).toEqual(bundle.topics.map(t => `/lop-${t.grade}/${t.skill}/${t.slug}`).sort());
+ expect(topicParams().map(p => `/${p.grade}/${p.skill}/${p.topic}`).sort()).toEqual(bundle.topics.map(t => `/lop-${t.grade}/${t.skill}/${t.slug}`).sort());
 });
 it("uses provenance to find context for cloze items without passageId", () => {
  const q = { ...fragments.flatMap(f => f.questions).find(q => q.skill === "tu-vung")!, sourceId: "unit", sourceUrl: "https://example.test/food", stem: "The ___ is here.", options: (["A","B","C","D"] as const).map((key, i) => ({ key, text: ["oven","seem","very","also"][i] })), correctKey: "A" as const, passageId: undefined };

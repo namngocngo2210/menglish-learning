@@ -1,3 +1,4 @@
+import { ensureContent } from "@/lib/content/source";
 import { PageShell, Breadcrumbs } from "@/components/ui-kit";
 import { JsonLd } from "@/components/json-ld";
 import { loadBundle } from "@/lib/content/load";
@@ -12,9 +13,10 @@ const officialExamStatuses: Record<string, string> = {
  "cache-missing": "Thiếu tệp trong bộ nhớ đệm — bỏ qua",
  "parse-error": "Lỗi phân tích PDF — bỏ qua",
 };
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh THCS.", path: "/nguon-du-lieu" });
-export default function CreditsPage() {
+export default async function CreditsPage() {
+ await ensureContent();
  const bank = loadBundle();
  return <PageShell title="Nguồn dữ liệu và giấy phép">
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Nguồn dữ liệu và giấy phép", path: "/nguon-du-lieu" }])}/>
