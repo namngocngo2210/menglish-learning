@@ -266,7 +266,7 @@ API prototype (Fastify + helmet + cookie + rate-limit + pino + `pg`, 1 truy vấ
 
 ### 4.6 Ngân sách RAM khi gộp SSR web + api + Postgres
 
-Đo đỉnh (prototype, cùng lúc): Postgres **≤ 97 MiB**, web + edge-cache **≤ 183 MiB** (đỉnh nguội, 1 CPU) / 146 MiB dưới tải cache, api **≤ 35 MiB** ⇒ **≈ 300–320 MiB đo được** cho ba dịch vụ. Đề xuất giới hạn (§6.4): web 384, api 160, postgres 256, worker 320 ⇒ **cap 1.120 MB**; thường trực dự kiến ≈ 400–500 MB [ước]. Máy hiện còn `available` ≈ 2,5–3,1 GB [đo `free`]; khi *mọi* container chạm cap cùng lúc, tổng tăng thêm ≲ 1,05 GB (đã trừ ≈ 72 MB `web` hiện có) nên vẫn còn ≥ 1,4 GB cho production — nhưng máy từng đứng hình do thiếu RAM, nên S-F bắt buộc có soak-test dưới `heavy` và `memswap_limit = mem_limit`. Lợi ích phụ của SSR: **publish không còn cần rebuild Next (≈ 1,8 GB tạm)**; chỉ purge cache.
+Đo đỉnh (prototype, cùng lúc): Postgres **≤ 97 MiB**, web + edge-cache **≤ 183 MiB** (đỉnh nguội, 1 CPU) / 146 MiB dưới tải cache, api **≤ 35 MiB** ⇒ **≈ 300–320 MiB đo được** cho ba dịch vụ. Đề xuất giới hạn (§6.4): web 384, api 160, postgres 256, worker 320 ⇒ **cap 1.120 MB**; thường trực dự kiến ≈ 400–500 MB [ước]. Máy hiện còn `available` ≈ 2,5–3,1 GB [đo `free`]; khi *mọi* container chạm cap cùng lúc, tổng tăng thêm ≲ 1,05 GB (đã trừ ≈ 72 MB `web` hiện có) nên vẫn còn ≥ 1,4 GB cho production — nhưng máy từng đứng hình do thiếu RAM, nên S-F bắt buộc có soak-test dưới `heavy` và `memswap_limit = mem_limit`. **Số đo thật toàn stack từ S-F:** [ops-measurements-s-f.md](ops-measurements-s-f.md) (đỉnh ≈ 345–395 MiB cho cả bốn dịch vụ, web 178 MiB, 0 OOM). Lợi ích phụ của SSR: **publish không còn cần rebuild Next (≈ 1,8 GB tạm)**; chỉ purge cache.
 
 ### 4.7 Phương án dự phòng: static/ISR (không phải kế hoạch)
 
