@@ -177,7 +177,7 @@ Mọi tính năng chạm auth/phiên/SSRF/quyền DB cần reviewer kiểm theo 
 - **PR nhỏ:** một mục đích, mục tiêu < ~400 dòng đổi (không tính file sinh/lock); lớn hơn ⇒ tách hoặc giải thích. Mô tả bằng tiếng Việt theo [mẫu PR](../.github/pull_request_template.md). CODEOWNERS = owner. [E] template + CODEOWNERS; cỡ PR [D].
 - **Definition of Ready** (trước khi dev bắt đầu): mục tiêu & tiêu chí nghiệm thu rõ; phụ thuộc/quyết định đã có (ADR); ghi chạm hạ tầng máy chủ hay không; test cần có đã nêu. **Definition of Done:** [definition-of-done.md](definition-of-done.md).
 - **Checklist review (reviewer):** theo definition-of-done + mục 3/4/5; ưu tiên: đúng → an toàn → test → đơn giản → tên gọi. Phát hiện phải trích dòng; lỗi nền (có sẵn trên `main`, không do PR) báo riêng, không gộp vào PR.
-- **ADR:** quyết định có hệ quả kiến trúc/hạ tầng/dependency nặng/hạ sàn chất lượng ⇒ `docs/adr/NNNN-ten.md` từ `0000-template.md`, trạng thái đề xuất → được chấp nhận (chủ duyệt). ADR **không sửa lịch sử**: thay thế bằng ADR mới. Hiện có: 0001 (D1), 0002 (R0, D2–D14), 0003 (sao lưu R2).
+- **ADR:** quyết định có hệ quả kiến trúc/hạ tầng/dependency nặng/hạ sàn chất lượng ⇒ `docs/adr/NNNN-ten.md` từ `0000-template.md`, trạng thái đề xuất → được chấp nhận (chủ duyệt). ADR **không sửa lịch sử**: thay thế bằng ADR mới. Hiện có: 0001 (D1), 0002 (R0, D2–D14), 0003 (sao lưu R2), 0004 (trình độ CEFR ước tính).
 - **Changelog:** `CHANGELOG.md` (Keep a Changelog) ghi thay đổi nhìn thấy được/khác biệt vận hành ở mỗi PR đổi hành vi; chưa tạo tệp cho tới PR đầu tiên có code backend (S-A) [D].
 
 ## 10. Dependencies

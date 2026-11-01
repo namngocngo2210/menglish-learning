@@ -1,0 +1,36 @@
+TOTAL 2698 voa 2587 official 111
+
+DISTRIBUTION (count and %) Pre-A1 A1 A2 B1 B2
+ALL voa                      n= 2587     0( 0.0%)   420(16.2%)   983(38.0%)   901(34.8%)   283(10.9%)  meanS=2.28 medianLv=A2
+voa lop 6                    n=  893     0( 0.0%)   259(29.0%)   367(41.1%)   224(25.1%)    43( 4.8%)  meanS=2.01 medianLv=A2
+voa lop 7                    n= 1084     0( 0.0%)   131(12.1%)   446(41.1%)   396(36.5%)   111(10.2%)  meanS=2.31 medianLv=A2
+voa lop 8                    n=  386     0( 0.0%)    15( 3.9%)    99(25.6%)   193(50.0%)    79(20.5%)  meanS=2.63 medianLv=B1
+voa lop 9                    n=  224     0( 0.0%)    15( 6.7%)    71(31.7%)    88(39.3%)    50(22.3%)  meanS=2.55 medianLv=B1
+official (lop-10 entrance)   n=  111     0( 0.0%)     7( 6.3%)    49(44.1%)    37(33.3%)    18(16.2%)  meanS=2.39 medianLv=A2
+voa skill ngu-phap           n=  421     0( 0.0%)    57(13.5%)   216(51.3%)   134(31.8%)    14( 3.3%)  meanS=2.19 medianLv=A2
+voa skill tu-vung            n= 1253     0( 0.0%)   345(27.5%)   517(41.3%)   279(22.3%)   112( 8.9%)  meanS=2.07 medianLv=A2
+voa skill doc-hieu           n=  870     0( 0.0%)    18( 2.1%)   237(27.2%)   474(54.5%)   141(16.2%)  meanS=2.59 medianLv=B1
+voa skill viet-cau           n=   43     0( 0.0%)     0( 0.0%)    13(30.2%)    14(32.6%)    16(37.2%)  meanS=2.75 medianLv=B1
+official skill ngu-phap      n=   15     0( 0.0%)     1( 6.7%)     2(13.3%)     8(53.3%)     4(26.7%)  meanS=2.62 medianLv=B1
+official skill tu-vung       n=   32     0( 0.0%)     5(15.6%)    13(40.6%)     3( 9.4%)    11(34.4%)  meanS=2.45 medianLv=A2
+official skill doc-hieu      n=   53     0( 0.0%)     1( 1.9%)    31(58.5%)    19(35.8%)     2( 3.8%)  meanS=2.24 medianLv=A2
+
+confidence: mean 0.39  low(<0.3): 1066  high(>=0.6): 563
+P(random lop9 item scores higher than random lop6 item) = 0.739
+agreement primary vs frequency-only: exact 35.4%, within one level 84.1%
+confusion primary(rows) x freq-only(cols):
+Pre-A1  [0, 0, 0, 0, 0]
+A1      [15, 114, 171, 109, 18]
+A2      [21, 87, 230, 442, 252]
+B1      [0, 15, 112, 398, 413]
+B2      [0, 4, 11, 72, 214]
+
+PASSAGES (n=50): {'Pre-A1': 0, 'A1': 0, 'A2': 9, 'B1': 29, 'B2': 12}
+TESTS (n=316) by median level: {'B1': 127, 'A2': 153, 'A1': 28, 'B2': 8}
+entrance10 [('thi-vao-lop-10/de-1', 'B1', [0, 3, 11, 18, 8]), ('thi-vao-lop-10/de-10', 'B1', [0, 0, 7, 24, 9]), ('thi-vao-lop-10/de-11', 'B1', [0, 1, 10, 17, 13])]
+tests where >=70% items share one level: 58 / 316
+audit pool Pre-A1 0 sampled 0
+audit pool A1 427 sampled 30
+audit pool A2 1032 sampled 30
+audit pool B1 938 sampled 30
+audit pool B2 301 sampled 30
