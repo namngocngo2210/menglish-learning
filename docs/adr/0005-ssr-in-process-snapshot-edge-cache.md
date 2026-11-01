@@ -27,5 +27,7 @@ Toàn bộ route công khai phải SSR từ Postgres qua role `bj_web` trên vie
 
 - Tốt: HIT p95 10,5 ms @10 đồng thời [đo]; web 155 MiB RSS [đo].
 - Xấu: HTML thô khác static ở payload RSC nội tuyến (không nhìn thấy được); trang 404 động khác trang 404 tĩnh (cùng mã 404).
-- Việc tiếp: đo miss lạnh, chaos DB, soak 1 giờ, Lighthouse CI SSR vs static (chưa làm, xem backend-s-b.md).
+- Miss lạnh [đo]: ~63 ms CPU/render (gần như toàn bộ runtime React/Next) ⇒ 10 miss đồng thời trên 1 CPU p95 ≈ 0,7–0,85 s, không đạt < 300 ms (đạt ≤ ~3 đồng thời, p95 204 ms). Giảm thiểu: `soft` purge (STALE thay vì MISS, 0 MISS ở 10 đồng thời), warmer trước traffic, deploy song song rồi chuyển Caddy.
+- Chaos (DB/api pause, khởi động không DB, hồi phục không restart) và soak 1 giờ (web ≤ 173 MiB/384, api ≤ 45/160, pg ≤ 67/256, không xu hướng tăng, 0 OOM) đạt [đo]; Lighthouse qua Caddy `encode` Perf 94–98, A11y/SEO 100. Chi tiết: backend-s-b.md.
+- Tiến trình Next chết ⇒ edge thoát, Docker khởi động lại container, cache RAM mất (cold start).
 - Hoàn tác: giữ image static cũ. Đổi ý khi nội dung lớn vượt vài chục MB hoặc cần cập nhật tức thì.
