@@ -404,7 +404,9 @@ describe("purge and warmer", () => {
 
   it("soft purge keeps the body and serves STALE until the warmer refreshes it", async () => {
     const h = await start((request) =>
-      request.path === "/internal/refresh" ? { status: 200, headers: {}, body: Buffer.from("{}") } : html(request.path),
+      request.path === "/internal/refresh"
+        ? { status: 200, headers: {}, body: Buffer.from("{}") }
+        : html(request.path),
     );
     await h.get("/a");
     const result = await h.edge.purge({ paths: ["/a"], soft: true });
