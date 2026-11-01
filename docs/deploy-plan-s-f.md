@@ -2,6 +2,27 @@
 
 Đây là danh sách **mọi thao tác chạm máy chủ**; agent không làm bước nào. Mỗi bước: lệnh chính xác, kiểm tra, và cách quay lại. Ý nghĩa nền: blueprint §6.6–6.7, quyết định D6–D10 (đã duyệt "theo khuyến nghị"), [runbook.md](runbook.md). Số liệu: [ops-measurements-s-f.md](ops-measurements-s-f.md).
 
+## BƯỚC CỦA CHỦ (OWNER STEPS) — làm trước, theo thứ tự
+
+Agent không bao giờ đọc bí mật, không chạy `admin:create`, không giữ khoá mã hoá. Bốn việc dưới đây chỉ chủ làm, trên máy chủ hoặc Cloudflare:
+
+1. **Sinh bí mật DB/phiên, một lần** (không in giá trị, không ghi đè tệp đã có):
+   ```bash
+   cd ~/menglish-learning && bash deploy/gen-secrets.sh
+   ```
+   Kết quả: `~/beejunior-secrets/` (700, tệp 600) và mẫu `~/beejunior-offsite/r2.env.template`.
+2. **Tạo tài khoản admin trên TTY của chủ** (sau H6; mật khẩu gõ tay, không echo, không qua agent/argv/env/tệp):
+   ```bash
+   dc run --rm -it api node dist/main.mjs admin:create <email>
+   ```
+3. **Cloudflare R2:** tạo bucket `beejunior-backups`, token **chỉ giới hạn trong bucket đó** (Object Read & Write), đặt lifecycle rules (và bucket lock) theo [backup-offsite-r2.md](backup-offsite-r2.md) §6; sau đó điền tệp env quyền 600:
+   ```bash
+   cp ~/beejunior-offsite/r2.env.template ~/beejunior-offsite/r2.env && chmod 600 ~/beejunior-offsite/r2.env && $EDITOR ~/beejunior-offsite/r2.env
+   ```
+4. **Khoá riêng mã hoá backup:** tạo offline (backup-offsite-r2.md §3), giữ **ngoài máy chủ** ở ≥ 2 nơi; không bao giờ đặt lên máy chủ hay đưa cho agent. Mất khoá riêng = không giải mã được bản ngoài máy.
+
+**`BJ_ALERT_CMD` chưa được đặt** trong `deploy/ops/crontab.example` (chỉ có chú thích). Hệ quả: `watchdog.sh` vẫn in `FAIL` vào `watchdog.log` nhưng **không gửi cảnh báo nào** (cảnh báo tắt) cho tới khi chủ đặt `BJ_ALERT_CMD=<lệnh đọc nội dung từ stdin, vd. script gửi Telegram>` ở đầu crontab (H10). Trước đó chủ phải tự xem `watchdog.log`.
+
 **Điều kiện trước (không chạm máy chủ):** PR S-A…S-F đã merge vào `main`; chủ đã duyệt PR này. `main` hiện có lỗi dựng image `api` (argon2 native) — sửa nằm trong PR này, nên **không deploy trước khi PR này merge**.
 
 **Biến dùng chung** (mọi bước chạy trong `~/menglish-learning` ở đúng commit đã merge):
@@ -25,6 +46,12 @@ dc() { docker compose -p beejunior -f deploy/compose.yml "$@"; }
 | H10 | Cron backup / restore-test / watchdog | `crontab -e` rồi dán 3 dòng từ `deploy/ops/crontab.example` | xoá 3 dòng |
 | H11 | Sao lưu ngoài máy R2 | chủ làm theo [backup-offsite-r2.md](backup-offsite-r2.md) §6 (bucket, token, lifecycle, bucket lock, khoá mã hoá), rồi điền `~/beejunior-offsite/r2.env` | xoá `r2.env` ⇒ backup chỉ còn tại chỗ (watchdog báo nếu thiếu bản ngoài) |
 | H12 | Dừng container cũ `menglish-learning` | **bước riêng, sau ≥ 7 ngày ổn định**: `docker stop menglish-learning` | `docker start menglish-learning` + Caddy quay lại |
+
+**Cổng S-B bắt buộc trước khi đổi Caddy (H9)** — thiếu một cổng thì không đổi:
+- [ ] Warmer đã chạy xong.
+- [ ] URL trong sitemap đạt tỉ lệ cache **HIT ≥ 99%** (đọc `cf-cache-status` / `X-Cache` của edge).
+- [ ] Chỉ **soft purge** (không hard purge) trong suốt quá trình chuyển.
+- [ ] Container tĩnh `menglish-learning` **vẫn chạy** để quay lại (giữ nguyên tới H12).
 
 ## A. Kiểm song song trước khi đổi Caddy (H8)
 
