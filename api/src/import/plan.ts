@@ -1,7 +1,6 @@
-import { getTopicDef, topicOrder } from "@bj/core";
+import { getTopicDef, parseSourceRef, topicOrder } from "@bj/core";
 import type { OptionKey, Passage, Question, Source, Test, Topic } from "@bj/core";
 import type { LayerFile } from "./files";
-import { parseSourceRef } from "./provenance";
 
 export type PlannedReviewStatus =
   "quarantine" | "draft" | "in_review" | "published" | "rejected" | "archived";

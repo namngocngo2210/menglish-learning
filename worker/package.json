@@ -1,0 +1,29 @@
+{
+  "name": "@bj/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "BeeJunior worker: Postgres-backed crawl queue, reaper, SSRF-guarded crawler into quarantine, outbox dispatcher. Same image as api.",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "build": "esbuild src/main.ts --bundle --platform=node --target=node22 --format=esm --external:pg-native --alias:@crawler=../crawler/src/lib.ts --banner:js=\"import{createRequire}from'node:module';const require=createRequire(import.meta.url);\" --outfile=dist/main.mjs"
+  },
+  "dependencies": {
+    "@bj/core": "*",
+    "cheerio": "1.0.0",
+    "pdfjs-dist": "4.10.38",
+    "pg": "^8.13.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "node-pg-migrate": "^8.0.0",
+    "esbuild": "^0.28.2",
+    "vitest": "^5.0.5"
+  }
+}

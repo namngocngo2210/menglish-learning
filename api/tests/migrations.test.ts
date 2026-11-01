@@ -8,7 +8,7 @@ import { CONTENT_DIR } from "./content-dir";
 import { ADMIN_URL, createMigratedDb, createTestDb } from "./helpers";
 import type { TestDb } from "./helpers";
 
-const MIGRATION_COUNT = 25;
+const MIGRATION_COUNT = 26;
 
 async function tables(db: TestDb): Promise<string[]> {
   const { rows } = await db.admin.query<{ table_name: string }>(

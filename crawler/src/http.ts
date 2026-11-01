@@ -15,8 +15,9 @@ export async function readCache(root:string,url:string):Promise<Cached|null>{
  return {body,meta};} catch(error){if((error as NodeJS.ErrnoException).code==='ENOENT')return null;throw error;}
 }
 export class RateLimiter {
+ constructor(private readonly gapMs=1000){}
  private next=new Map<string,number>();
- async wait(host:string):Promise<void>{const now=Date.now();const start=Math.max(now,this.next.get(host)??0);this.next.set(host,start+1000);if(start>now)await new Promise(r=>setTimeout(r,start-now));}
+ async wait(host:string):Promise<void>{const now=Date.now();const start=Math.max(now,this.next.get(host)??0);this.next.set(host,start+this.gapMs);if(start>now)await new Promise(r=>setTimeout(r,start-now));}
 }
 const globalLimiter=new RateLimiter();
 interface Group { agents:string[]; rules:{allow:boolean;path:string}[] }
@@ -32,14 +33,15 @@ export function robotsAllowed(text:string,path:string):boolean {
 }
 export class HttpClient {
  private robots=new Map<string,Promise<string>>();
- constructor(readonly root:string,readonly refresh=false,readonly allowed:(host:string)=>boolean=()=>false,private fetcher:typeof fetch=fetch){}
+ constructor(readonly root:string,readonly refresh=false,readonly allowed:(host:string)=>boolean=()=>false,private fetcher:typeof fetch=fetch,gapMs?:number){this.limiter=gapMs===undefined?globalLimiter:new RateLimiter(gapMs);}
+ private limiter:RateLimiter;
  private check(url:string){const u=new URL(url);if(u.protocol!=='https:'||u.username||u.password||u.port||!this.allowed(u.hostname))throw new Error(`Forbidden URL: ${url}`);return u;}
  private async raw(url:string):Promise<Cached>{
  const u=this.check(url); if(!this.refresh){const cached=await readCache(this.root,url);if(cached)return cached;}
 
  let last:unknown;
  for(let attempt=0;attempt<3;attempt++){
- await globalLimiter.wait(u.host);
+ await this.limiter.wait(u.host);
  try {
  const response=await this.fetcher(url,{headers:{'User-Agent':USER_AGENT},signal:AbortSignal.timeout(20_000),redirect:'manual'});
  const body=Buffer.from(await response.arrayBuffer());const meta:Meta={url,fetchedAt:new Date().toISOString(),status:response.status,contentHash:hash(body.toString('base64'))};

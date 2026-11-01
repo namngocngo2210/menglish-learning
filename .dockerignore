@@ -9,7 +9,9 @@ docs
 rooms
 crawler
 admin
-worker
 web/tests
 web/e2e
 README.md
+!crawler/src
+!crawler/config
+!crawler/ocr

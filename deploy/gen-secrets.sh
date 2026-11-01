@@ -19,20 +19,23 @@ put() { # put <name> <value>
 }
 rand() { openssl rand -hex 24; }
 
-pg_superuser="$(rand)"; pg_api="$(rand)"; pg_web="$(rand)"
+pg_superuser="$(rand)"; pg_api="$(rand)"; pg_web="$(rand)"; pg_worker="$(rand)"
 # Reuse existing passwords when only some files are missing, so URLs stay consistent with them.
 [ -e "$dir/pg_superuser" ] && pg_superuser="$(cat "$dir/pg_superuser")"
 [ -e "$dir/pg_api" ] && pg_api="$(cat "$dir/pg_api")"
 [ -e "$dir/pg_web" ] && pg_web="$(cat "$dir/pg_web")"
+[ -e "$dir/pg_worker" ] && pg_worker="$(cat "$dir/pg_worker")"
 
 put pg_superuser "$pg_superuser"
 put pg_api "$pg_api"
 put pg_web "$pg_web"
+put pg_worker "$pg_worker"
 # .pgpass format for the one-shot db-init service (host:port:db:user:password).
 put pgpass_superuser "postgres:5432:beejunior:postgres:$pg_superuser"
 put db_url_superuser "postgres://postgres:$pg_superuser@postgres:5432/beejunior"
 put db_url_api "postgres://bj_api_login:$pg_api@postgres:5432/beejunior"
 put db_url_web "postgres://bj_web_login:$pg_web@postgres:5432/beejunior"
+put db_url_worker "postgres://bj_worker_login:$pg_worker@postgres:5432/beejunior"
 put internal_token "$(rand)"
 put session_hmac_key "$(rand)$(rand)"
 put totp_enc_key "$(openssl rand -base64 32)"
