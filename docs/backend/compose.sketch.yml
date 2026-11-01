@@ -1,0 +1,117 @@
+# SKETCH only (blueprint) — not deployed, not a working deploy file. Sizes follow docs/backend-blueprint.md §6.4.
+name: beejunior
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  postgres:
+    <<: *hardening
+    image: postgres:16-alpine            # pin by digest in the real file
+    read_only: false                      # data dir lives on the volume
+    cap_add: [CHOWN, SETUID, SETGID, DAC_OVERRIDE, FOWNER]
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: 0.5
+    pids_limit: 128
+    command: ["-c","shared_buffers=96MB","-c","max_connections=30","-c","work_mem=4MB","-c","maintenance_work_mem=32MB",
+              "-c","effective_cache_size=192MB","-c","max_wal_size=512MB","-c","wal_compression=on","-c","jit=off",
+              "-c","log_min_duration_statement=500"]
+    environment:
+      POSTGRES_PASSWORD_FILE: "/run/secrets/pg_superuser"
+    secrets: [pg_superuser]
+    volumes:
+      - "bj-pgdata:/var/lib/postgresql/data"
+    networks: [bj-internal]              # NO published ports
+    healthcheck:
+      test: ["CMD-SHELL","pg_isready -U postgres"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  migrate:                               # one-shot: docker compose run --rm migrate
+    <<: *hardening
+    image: "beejunior-api:${TAG}"
+    command: ["node","dist/cli.js","migrate"]
+    restart: "no"
+    mem_limit: 128m
+    secrets: [pg_migrate]
+    networks: [bj-internal]
+
+  api:
+    <<: *hardening
+    image: "beejunior-api:${TAG}"
+    command: ["node","--max-old-space-size=128","dist/server.js"]
+    mem_limit: 160m
+    memswap_limit: 160m
+    cpus: 0.5
+    pids_limit: 128
+    tmpfs: [/tmp]
+    secrets: [pg_api, session_hmac_key, totp_enc_key, internal_token]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [bj-internal, menglish-proxy]   # Caddy: /api/* and /admin*
+    healthcheck:
+      test: ["CMD","node","dist/healthcheck.js"]
+      interval: 15s
+      timeout: 3s
+
+  worker:                                # same image as api, different entrypoint; never reachable from outside
+    <<: *hardening
+    image: "beejunior-api:${TAG}"
+    command: ["node","--max-old-space-size=256","dist/worker.js"]
+    mem_limit: 320m
+    memswap_limit: 320m
+    cpus: 0.5
+    pids_limit: 128
+    tmpfs: [/tmp]
+    volumes:
+      - "bj-raw:/data/raw"
+    secrets: [pg_worker, internal_token]
+    networks: [bj-internal, bj-egress]    # egress only for crawl; app-level SSRF guard + optional DOCKER-USER rules
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  web:                                   # Next SSR standalone + edge-cache (entrypoint starts both)
+    <<: *hardening
+    image: "beejunior-web:${TAG}"
+    command: ["node","edge.cjs"]          # edge-cache :3100 in front of Next :3000
+    mem_limit: 384m
+    memswap_limit: 384m
+    cpus: 1.0
+    pids_limit: 128
+    tmpfs: [/tmp]
+    environment:
+      NODE_OPTIONS: "--max-old-space-size=256"
+      PG_POOL_MAX: "5"
+      HTML_MAX_BYTES: "67108864"
+    secrets: [pg_web_ro, internal_token]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [bj-internal, menglish-proxy]   # Caddy -> web:3100
+    healthcheck:
+      test: ["CMD","wget","-qO-","http://127.0.0.1:3100/healthz"]
+      interval: 30s
+      timeout: 5s
+
+networks:
+  bj-internal: { internal: true }
+  bj-egress: {}
+  menglish-proxy: { external: true }
+volumes:
+  bj-pgdata: {}
+  bj-raw: {}
+secrets:                                  # files under ~/beejunior-secrets (mode 600), created by the owner
+  pg_superuser: { file: "${SECRETS_DIR}/pg_superuser" }
+  pg_migrate: { file: "${SECRETS_DIR}/pg_migrate" }
+  pg_api: { file: "${SECRETS_DIR}/pg_api" }
+  pg_worker: { file: "${SECRETS_DIR}/pg_worker" }
+  pg_web_ro: { file: "${SECRETS_DIR}/pg_web_ro" }
+  session_hmac_key: { file: "${SECRETS_DIR}/session_hmac_key" }
+  totp_enc_key: { file: "${SECRETS_DIR}/totp_enc_key" }
+  internal_token: { file: "${SECRETS_DIR}/internal_token" }

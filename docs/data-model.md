@@ -1,5 +1,7 @@
 # Mô hình dữ liệu (PostgreSQL 16)
 
+> **Cập nhật 1/11:** schema đã chỉnh theo dữ liệu thật và đã nạp thử thành công: [backend-blueprint.md §3](backend-blueprint.md#3-cơ-sở-dữ-liệu), [backend/schema.sql](backend/schema.sql) (đề xuất, chờ chủ duyệt).
+
 Migration bằng `goose` trong `db/migrations`, truy vấn sinh bằng `sqlc` từ `db/queries`.
 
 ## Thiết kế CMS một chủ — đề xuất, chưa có migration
