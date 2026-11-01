@@ -170,6 +170,7 @@ services:
         NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR: ${NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR:-}
         NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
         SEO_NOINDEX: ${SEO_NOINDEX:-false}
+        ROOMS_ENABLED: ${ROOMS_ENABLED:-false} # read at build time by static pages: flip => rebuild web
     # Edge cache on :3100 spawns Next on 127.0.0.1:3000 inside the same container.
     command: ["node", "--max-old-space-size=256", "edge/edge.mjs"]
     mem_limit: 384m
@@ -222,6 +223,25 @@ services:
       interval: 30s
       timeout: 3s
       retries: 3
+
+  # Group practice (docs/rooms-deploy.md). RAM-only state, no DB/secrets. Caddy: /rt/* -> menglish-learning-rooms:3100.
+  rooms:
+    <<: *hardening
+    image: menglish-learning-rooms:latest
+    container_name: menglish-learning-rooms
+    build:
+      context: ..
+      dockerfile: rooms/Dockerfile
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: 0.5
+    pids_limit: 64
+    tmpfs: [/tmp]
+    stop_grace_period: 40s # > ROOMS_DRAIN_MS (30 s)
+    environment:
+      ROOMS_ENABLED: ${ROOMS_ENABLED:-false}
+    networks:
+      menglish-proxy: {} # no published ports; Caddy reaches it by container name
 
 networks:
   bj-internal: { internal: true }
