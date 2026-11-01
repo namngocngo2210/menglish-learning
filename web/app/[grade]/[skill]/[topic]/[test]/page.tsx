@@ -5,7 +5,7 @@ import { RandomQuiz } from "@/components/quiz/RandomQuiz";
 import { PreviousResult } from "@/components/quiz/PreviousResult";
 import { Quiz } from "@/components/quiz/Quiz";
 import { JsonLd } from "@/components/json-ld";
-import { buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
+import { TITLE_MAX, buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs } from "@/components/ui-kit";
 import { getAllTestSlugs, getTestWithQuestions, getTopics, getTestsForTopic } from "@/lib/content/load";
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
  if (!grade || !skill || !isSlug(p.test)) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
  const test = getTestWithQuestions(testPath(grade, skill, topic.slug, p.test).slice(1)); if (!test) return {};
- return buildMetadata({ title: `${test.title} - ${SKILL_NAMES[skill]} - Lớp ${grade}`, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}, ${p.test}: ${test.questions.length} câu có đáp án và giải thích.`, path: testPath(grade, skill, topic.slug, p.test), type: "article" });
+ return buildMetadata({ title: [`${test.title} - ${SKILL_NAMES[skill]} - Lớp ${grade}`, `${test.title} - Lớp ${grade}`, test.title].find(t => t.length <= TITLE_MAX) ?? test.title, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}, ${p.test}: ${test.questions.length} câu có đáp án và giải thích.`, path: testPath(grade, skill, topic.slug, p.test), type: "article" });
 }
 export default async function TestPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string; test: string }> }) {
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);

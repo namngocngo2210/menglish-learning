@@ -81,7 +81,7 @@ it("renders knowledge, counts and related links while mixed topics keep their de
  for (const example of def.examples!) expect(html).toContain(renderToStaticMarkup(createElement("span", { lang: "en" }, example.en)));
  expect(html).toContain(`Chủ đề khác trong ${SKILL_NAMES[topic.skill]} lớp ${topic.grade}`);
  expect(html).toContain("Chủ đề này ở lớp khác"); expect(html).toContain("câu hỏi ·");
- expect(html).toContain("BreadcrumbList"); expect(html).not.toContain("FAQPage");
+ expect(html).toContain("BreadcrumbList"); expect(html).toContain("FAQPage"); expect(html).toContain("Câu hỏi thường gặp");
  expect(html).toContain('href="/lop-6/ngu-phap/tong-hop"');
  const mixed = bundle.topics.find(t => t.grade === topic.grade && t.skill === topic.skill && t.slug === "tong-hop")!;
  const mixedHtml = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: `lop-${topic.grade}`, skill: topic.skill, topic: "tong-hop" }) }));

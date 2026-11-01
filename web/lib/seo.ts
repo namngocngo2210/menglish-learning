@@ -11,35 +11,58 @@ export function absoluteUrl(path: string): string {
 type SeoEnv = Record<string, string | undefined>;
 export function isNoindex(env: SeoEnv = process.env): boolean { return env.SEO_NOINDEX === "true"; }
 
+/** Longest page title so that "<title> | BeeJunior" stays within 60 characters. */
+export const TITLE_MAX = 60 - SITE.name.length - 3;
+/** Appends the first suffix that still fits, else returns the base title. */
+export function fitTitle(base: string, ...suffixes: string[]): string {
+ return suffixes.map(s => `${base}${s}`).find(t => t.length <= TITLE_MAX) ?? base;
+}
+
 export function buildMetadata({ title, description, path, type = "website" }: {
  title: string; description: string; path: string; type?: "website" | "article";
 }, env: SeoEnv = process.env): Metadata {
  return {
-  title, description, alternates: { canonical: absoluteUrl(path) },
+  title, description, alternates: { canonical: absoluteUrl(path), languages: { vi: absoluteUrl(path) } },
   openGraph: { title, description, url: absoluteUrl(path), siteName: SITE.name, locale: "vi_VN", type, images: [{ url: absoluteUrl(SITE.logo.ogImage), width: 1200, height: 630, alt: SITE.name }] },
   twitter: { card: "summary_large_image", title, description, images: [{ url: absoluteUrl(SITE.logo.ogImage), width: 1200, height: 630, alt: SITE.name }] },
   robots: { index: !isNoindex(env), follow: !isNoindex(env) },
  };
 }
 
-type PublicRoute = { path: string; lastModified?: Date; changeFrequency: "weekly" | "monthly" | "yearly"; priority: number };
+type PublicRoute = { path: string; lastModified: Date; changeFrequency: "weekly" | "monthly" | "yearly"; priority: number };
+/** Fixed review date of the hand-written static pages; bump when their copy changes. */
+export const STATIC_PAGES_LASTMOD = new Date("2026-11-01T00:00:00.000Z");
+const newest = (dates: Date[]) => dates.reduce((a, b) => (b > a ? b : a), dates[0] ?? STATIC_PAGES_LASTMOD);
 export function getAllRoutes(): PublicRoute[] {
- const routes: PublicRoute[] = [{ path: "/", changeFrequency: "weekly", priority: 1 }];
+ const routes: PublicRoute[] = [];
+ const all: Date[] = [];
  for (const grade of getGrades()) {
-  routes.push({ path: gradePath(grade), changeFrequency: "weekly", priority: 0.8 });
+  const gradeDates: Date[] = [];
+  const gradeRoutes: PublicRoute[] = [];
   for (const skill of getSkills(grade)) {
-   routes.push({ path: skillPath(grade, skill), changeFrequency: "weekly", priority: 0.7 });
+   const skillDates: Date[] = [];
+   const skillRoutes: PublicRoute[] = [];
    for (const topic of getTopics(grade, skill)) {
-    routes.push({ path: topicPath(grade, skill, topic.slug), changeFrequency: "weekly", priority: 0.6 });
-    for (const test of getTestsForTopic(grade, skill, topic.slug)) {
-     routes.push({ path: `/${test.slug}`, lastModified: new Date(test.publishedAt), changeFrequency: "monthly", priority: 0.5 });
-    }
+    const tests = getTestsForTopic(grade, skill, topic.slug);
+    const testDates = tests.map(t => new Date(t.publishedAt));
+    skillRoutes.push({ path: topicPath(grade, skill, topic.slug), lastModified: newest(testDates), changeFrequency: "weekly", priority: 0.6 });
+    for (const test of tests) skillRoutes.push({ path: `/${test.slug}`, lastModified: new Date(test.publishedAt), changeFrequency: "monthly", priority: 0.5 });
+    skillDates.push(...testDates);
    }
+   gradeRoutes.push({ path: skillPath(grade, skill), lastModified: newest(skillDates), changeFrequency: "weekly", priority: 0.7 }, ...skillRoutes);
+   gradeDates.push(...skillDates);
   }
+  routes.push({ path: gradePath(grade), lastModified: newest(gradeDates), changeFrequency: "weekly", priority: 0.8 }, ...gradeRoutes);
+  all.push(...gradeDates);
  }
- routes.push({ path: "/thi-vao-lop-10", changeFrequency: "weekly", priority: 0.8 });
- routes.push(...getEntranceTests().map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
- routes.push(...["/nguon-du-lieu", aboutPath(), privacyPath(), contactPath()].map(path => ({ path, changeFrequency: "yearly" as const, priority: 0.3 })));
+ const entrance = getEntranceTests();
+ const entranceDates = entrance.map(t => new Date(t.publishedAt));
+ all.push(...entranceDates);
+ routes.push({ path: "/thi-vao-lop-10", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.8 });
+ routes.push(...entrance.map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
+ routes.unshift({ path: "/", lastModified: newest(all), changeFrequency: "weekly", priority: 1 });
+ routes.push({ path: "/nguon-du-lieu", lastModified: newest(all), changeFrequency: "monthly", priority: 0.3 });
+ routes.push(...[aboutPath(), privacyPath(), contactPath()].map(path => ({ path, lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "yearly" as const, priority: 0.3 })));
  return routes;
 }
 

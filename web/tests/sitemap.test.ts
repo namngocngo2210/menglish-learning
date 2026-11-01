@@ -16,7 +16,7 @@ it("lists exactly every public content route with absolute URLs and publication 
 });
 it("allows indexing and advertises the sitemap by default", () => {
  vi.stubEnv("SEO_NOINDEX",undefined);
- expect(robots()).toEqual({rules:{userAgent:"*",allow:"/"},sitemap:absoluteUrl("/sitemap.xml")});
+ expect(robots()).toEqual({rules:{userAgent:"*",allow:"/",disallow:["/api/","/pool/"]},sitemap:absoluteUrl("/sitemap.xml")});
 });
 it("blocks crawling only for the beta opt-in switch", () => {
  vi.stubEnv("SEO_NOINDEX","true");
