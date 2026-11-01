@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/json-ld";
 import { RoomEntry } from "@/components/rooms/RoomEntry";
 import { Breadcrumbs, PageShell } from "@/components/ui-kit";
 import { ROOMS_DESCRIPTION, ROOMS_FAQ, ROOMS_PRIVACY, ROOMS_STEPS, ROOMS_TITLE } from "@/lib/rooms/landing-content";
+import { buildRoomCatalog } from "@/lib/rooms/catalog";
 import { roomsEnabled } from "@/lib/rooms/flag";
 import { breadcrumbJsonLd, buildMetadata, webPageJsonLd } from "@/lib/seo";
 import { GRADES, ENTRANCE_PATH, gradePath, homePath, roomsLandingPath } from "@/lib/routes";
@@ -47,7 +48,7 @@ export default function RoomsLandingPage() {
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: "Luyện tập nhóm", path: roomsLandingPath() }])}/>
   <JsonLd data={webPageJsonLd({ name: ROOMS_TITLE, description: ROOMS_DESCRIPTION, path: roomsLandingPath() })}/>
   <Breadcrumbs items={crumbs}/>
-  <RoomEntry/>
+  <RoomEntry catalog={buildRoomCatalog()}/>
   <section aria-labelledby="cach-choi" className="space-y-4">
    <h2 id="cach-choi" className="text-xl font-bold">Cách chơi trong 3 bước</h2>
    <ol className="grid gap-4 md:grid-cols-3">{ROOMS_STEPS.map((s, i) => <li key={s.title} className="rounded-2xl border-2 border-navy/20 bg-sky-soft p-5"><span className="flex size-9 items-center justify-center rounded-full bg-cta font-bold" aria-hidden="true">{i + 1}</span><h3 className="mt-3 font-bold">{s.title}</h3><p className="mt-1 text-navy-soft">{s.text}</p></li>)}</ol>

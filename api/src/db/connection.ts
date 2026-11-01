@@ -15,6 +15,9 @@ export function connect(databaseUrl: string, max = 4): DbHandle {
     statement_timeout: 120_000,
     connectionTimeoutMillis: 5_000,
   });
+  // An idle client dies when postgres restarts; the next query reconnects, /readyz reports the state.
+  // Without a listener Node would exit on the 'error' event.
+  pool.on("error", () => undefined);
   const db = new Kysely<Database>({ dialect: new PostgresDialect({ pool }) });
   return {
     db,

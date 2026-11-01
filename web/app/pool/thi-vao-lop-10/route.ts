@@ -1,4 +1,4 @@
 import { getQuizPool } from "@/lib/content/pool";
-export const dynamic = "force-static";
-export const revalidate = 3600;
-export function GET() { return Response.json(getQuizPool()); }
+import { ensureContent } from "@/lib/content/source";
+export const dynamic = "force-dynamic";
+export async function GET() { await ensureContent(); return Response.json(getQuizPool()); }

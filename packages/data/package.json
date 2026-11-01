@@ -1,0 +1,31 @@
+{
+  "name": "@bj/data",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only access to the public content views (v_public_*) for the SSR web and the api. Returns a ContentBundle.",
+  "license": "UNLICENSED",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bj/core": "*",
+    "@bj/db-types": "*",
+    "kysely": "^0.28.0",
+    "pg": "^8.13.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "node-pg-migrate": "^8.0.0",
+    "vitest": "^5.0.5"
+  }
+}

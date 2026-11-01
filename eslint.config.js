@@ -73,8 +73,26 @@ export default tseslint.config(
       ],
     },
   },
+  // Admin SPA runs in the browser: React components are PascalCase and it talks to its own origin with fetch.
+  {
+    files: ["admin/**/*.{ts,tsx}"],
+    languageOptions: { globals: { ...globals.browser } },
+    rules: {
+      "@typescript-eslint/naming-convention": [
+        "error",
+        { selector: "variable", filter: { regex: "Schema$", match: true }, format: ["PascalCase"] },
+        { selector: ["function", "variable", "parameter"], format: ["camelCase", "PascalCase", "UPPER_CASE"], leadingUnderscore: "allow", trailingUnderscore: "allow" },
+        { selector: "default", format: ["camelCase"], leadingUnderscore: "allow" },
+        { selector: "typeLike", format: ["PascalCase"] },
+        { selector: "property", format: null },
+        { selector: "import", format: null },
+      ],
+      "no-restricted-globals": "off",
+      "no-restricted-properties": "off",
+    },
+  },
   // The only places allowed to touch process.env: the config loader and the CLI entry.
-  { files: ["**/config.ts", "api/src/main.ts", "**/tests/**/*.ts"], rules: { "no-restricted-properties": "off" } },
+  { files: ["**/config.ts", "api/src/main.ts", "packages/edge/src/main.ts", "**/tests/**/*.ts"], rules: { "no-restricted-properties": "off" } },
   // Test files may be looser on a few type-aware rules.
   {
     files: ["**/*.test.ts", "**/tests/**/*.ts", "**/test/**/*.ts"],

@@ -1,5 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": { "types": ["node"], "allowJs": true, "checkJs": true },
-  "include": ["eslint.config.js", "scripts/**/*.mjs"]
+  "include": ["eslint.config.js", "scripts/**/*.mjs"],
+  "exclude": ["scripts/ssr", "scripts/ops"]
 }

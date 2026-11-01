@@ -1,0 +1,247 @@
+# BeeJunior production-shaped stack: web (Next SSR + edge cache) + api (Fastify) + postgres.
+# DEV FILE: boss/ops deploy it under the owner-bounded package of docs/backend-blueprint.md §6.7.
+# Agents never run it on the shared host. Sizes follow decision D8: web 384 MB / 1 CPU, api 160 MB, postgres 256 MB.
+#
+# Secrets are files under ${SECRETS_DIR} (default ~/beejunior-secrets), created by the owner with
+# deploy/gen-secrets.sh. Nothing secret is in this file, in the images or in the environment.
+#
+#   docker compose -f deploy/compose.yml build
+#   docker compose -f deploy/compose.yml up -d postgres
+#   docker compose -f deploy/compose.yml run --rm migrate          # schema (as superuser, one-shot)
+#   docker compose -f deploy/compose.yml run --rm db-init          # login roles + passwords
+#   docker compose -f deploy/compose.yml run --rm import           # first time only: seed content (D11)
+#   docker compose -f deploy/compose.yml up -d api web
+name: beejunior
+
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  postgres:
+    <<: *hardening
+    image: postgres:16-alpine
+    read_only: false # the data directory lives on the volume
+    cap_add: [CHOWN, SETUID, SETGID, DAC_OVERRIDE, FOWNER]
+    mem_limit: 256m
+    memswap_limit: 256m
+    cpus: 0.5
+    pids_limit: 128
+    command:
+      - postgres
+      - -c
+      - shared_buffers=96MB
+      - -c
+      - effective_cache_size=192MB
+      - -c
+      - work_mem=4MB
+      - -c
+      - maintenance_work_mem=32MB
+      - -c
+      - max_connections=30
+      - -c
+      - max_wal_size=512MB
+      - -c
+      - wal_compression=on
+      - -c
+      - jit=off
+      - -c
+      - log_min_duration_statement=500
+    environment:
+      POSTGRES_DB: beejunior
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg_superuser
+    secrets: [pg_superuser]
+    volumes:
+      - bj-pgdata:/var/lib/postgresql/data
+    networks: [bj-internal] # no published ports
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d beejunior"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # One-shot: applies the SQL migrations as the superuser. Not a long-running service.
+  migrate:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    build: { context: .., dockerfile: api/Dockerfile }
+    command: ["node", "dist/main.mjs", "migrate"]
+    restart: "no"
+    mem_limit: 128m
+    memswap_limit: 128m
+    tmpfs: [/tmp]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_superuser
+    secrets: [db_url_superuser]
+    networks: [bj-internal]
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: [tools]
+
+  # One-shot: creates the login roles bj_api_login / bj_web_login (members of the group roles made by
+  # migration 0019) and sets their passwords from secret files (psql reads them; they never touch argv).
+  db-init:
+    <<: *hardening
+    image: postgres:16-alpine
+    read_only: false
+    # Secret files are 0600 owned by the host user; root without caps cannot read them (found in the S-F full-stack run).
+    cap_add: [DAC_OVERRIDE]
+    restart: "no"
+    mem_limit: 64m
+    memswap_limit: 64m
+    entrypoint: ["sh", "/deploy/db-init.sh"]
+    environment:
+      PGHOST: postgres
+      PGDATABASE: beejunior
+      PGUSER: postgres
+    volumes:
+      - ./db-init.sh:/deploy/db-init.sh:ro
+    secrets: [pgpass_superuser, pg_api, pg_web, pg_worker]
+    networks: [bj-internal]
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: [tools]
+
+  # One-shot, first deploy only: imports the frozen seed JSON (D11: afterwards the database is the source).
+  import:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    command: ["node", "dist/main.mjs", "import", "--content-dir", "/seed"]
+    restart: "no"
+    mem_limit: 160m
+    memswap_limit: 160m
+    tmpfs: [/tmp]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_superuser
+    volumes:
+      - ../web/content:/seed:ro
+    secrets: [db_url_superuser]
+    networks: [bj-internal]
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: [tools]
+
+  api:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    build: { context: .., dockerfile: api/Dockerfile }
+    command: ["node", "--max-old-space-size=96", "--max-semi-space-size=2", "dist/server/main.mjs"]
+    mem_limit: 160m
+    memswap_limit: 160m
+    cpus: 0.5
+    pids_limit: 128
+    tmpfs: [/tmp]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_api
+      INTERNAL_TOKEN_FILE: /run/secrets/internal_token
+      REPORT_SALT_FILE: /run/secrets/report_salt
+      SESSION_HMAC_KEY_FILE: /run/secrets/session_hmac_key
+      TOTP_ENC_KEY_FILE: /run/secrets/totp_enc_key
+      ADMIN_ORIGIN: ${ADMIN_ORIGIN:-https://beejunior.meducation.vn} # without these three the admin API stays disabled
+      TRUST_PROXY: ${TRUST_PROXY:-} # proxy IP/CIDR (Caddy) or true; empty = ignore X-Forwarded-For
+    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks:
+      bj-internal: {}
+      # Caddy: /api/*, /admin* -> bj-api:8080. The alias is unique on the shared network (a bare "api" could collide).
+      menglish-proxy: { aliases: [bj-api] }
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/healthz >/dev/null"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+  web:
+    <<: *hardening
+    image: beejunior-web:${TAG:-local}
+    build:
+      context: ..
+      dockerfile: web/Dockerfile
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://beejunior.meducation.vn}
+        NEXT_PUBLIC_ADSENSE_CLIENT: ${NEXT_PUBLIC_ADSENSE_CLIENT:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT: ${NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR: ${NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR:-}
+        NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
+        SEO_NOINDEX: ${SEO_NOINDEX:-false}
+    # Edge cache on :3100 spawns Next on 127.0.0.1:3000 inside the same container.
+    command: ["node", "--max-old-space-size=256", "edge/edge.mjs"]
+    mem_limit: 384m
+    memswap_limit: 384m
+    cpus: 1.0
+    pids_limit: 128
+    tmpfs: [/tmp]
+    environment:
+      CONTENT_SOURCE: db
+      DATABASE_URL_FILE: /run/secrets/db_url_web
+      INTERNAL_TOKEN_FILE: /run/secrets/internal_token
+      PG_POOL_MAX: "5"
+      HTML_MAX_BYTES: "67108864"
+      NODE_OPTIONS: "--max-old-space-size=256"
+    secrets: [db_url_web, internal_token]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks:
+      bj-internal: {}
+      menglish-proxy: { aliases: [bj-web] } # Caddy: everything else -> bj-web:3100
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3100/healthz >/dev/null"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # Same image as the api, different entrypoint: crawl queue + reaper + outbox dispatcher (D8: 320 MB).
+  # Role bj_worker can insert quarantine rows only; it cannot publish. No published ports, internal network only
+  # (crawl traffic leaves through the host's default route; the SSRF guard enforces the source allowlist).
+  worker:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    command: ["node", "--max-old-space-size=224", "dist/worker/main.mjs", "run"]
+    mem_limit: 320m
+    memswap_limit: 320m
+    cpus: 0.5
+    pids_limit: 128
+    tmpfs: ["/tmp:size=96m"]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_worker
+      EDGE_PURGE_URL: http://web:3100/_purge
+      EDGE_PURGE_TOKEN_FILE: /run/secrets/internal_token
+      CRAWL_DATA_DIR: /tmp/crawl
+    secrets: [db_url_worker, internal_token]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [bj-internal, bj-egress]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8081/healthz >/dev/null"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+networks:
+  bj-internal: { internal: true }
+  menglish-proxy: { external: true }
+  bj-egress: {} # outbound internet for the worker only (crawl); bj-internal has none
+
+volumes:
+  bj-pgdata: {}
+
+secrets:
+  pg_superuser: { file: "${SECRETS_DIR:?set SECRETS_DIR}/pg_superuser" }
+  pgpass_superuser: { file: "${SECRETS_DIR}/pgpass_superuser" }
+  pg_api: { file: "${SECRETS_DIR}/pg_api" }
+  pg_web: { file: "${SECRETS_DIR}/pg_web" }
+  pg_worker: { file: "${SECRETS_DIR}/pg_worker" }
+  db_url_superuser: { file: "${SECRETS_DIR}/db_url_superuser" }
+  db_url_api: { file: "${SECRETS_DIR}/db_url_api" }
+  db_url_web: { file: "${SECRETS_DIR}/db_url_web" }
+  db_url_worker: { file: "${SECRETS_DIR}/db_url_worker" }
+  internal_token: { file: "${SECRETS_DIR}/internal_token" }
+  report_salt: { file: "${SECRETS_DIR}/report_salt" }
+  session_hmac_key: { file: "${SECRETS_DIR}/session_hmac_key" }
+  totp_enc_key: { file: "${SECRETS_DIR}/totp_enc_key" }

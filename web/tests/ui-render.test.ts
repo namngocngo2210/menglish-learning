@@ -85,7 +85,7 @@ it("server-renders empty progress targets alongside card content", () => {
 
 it("renders the home mascot outside questions and publishes BeeJunior organization data", async () => {
  const { default: Home } = await import("@/app/page");
- const html = renderToStaticMarkup(createElement(Home));
+ const html = renderToStaticMarkup(await Home());
  expect(html).toContain('alt="Chú ong BeeJunior đeo kính cầm bút và sách"');
  expect(html).toContain('"@type":"Organization","name":"BeeJunior"');
  expect(html.match(/<h1[ >]/g)).toHaveLength(1);

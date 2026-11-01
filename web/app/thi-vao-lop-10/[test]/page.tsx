@@ -1,3 +1,4 @@
+import { ensureContent } from "@/lib/content/source";
 import { toQuizPool } from "@/lib/random-quiz";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -8,17 +9,16 @@ import { PreviousResult } from "@/components/quiz/PreviousResult";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
 import { getEntranceTests, getEntranceTestWithQuestions } from "@/lib/content/load";
-import { parseEntranceSlug } from "@/lib/routes";
 import { buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
-export const dynamicParams = false;
-export const revalidate = 3600;
-export function generateStaticParams() { return getEntranceTests().map(t => parseEntranceSlug(t.slug)!); }
+export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ test: string }> }) {
+ await ensureContent();
  const p = await params; const t = getEntranceTestWithQuestions(`thi-vao-lop-10/${p.test}`); if (!t) return {};
  const official = p.test.startsWith("de-chinh-thuc-");
  return buildMetadata({ title: `${t.title} - Thi vào lớp 10`, description: official ? `${t.title}: ${t.questions.length} câu trắc nghiệm có đáp án, làm online miễn phí, không cần đăng nhập.` : `Ôn tiếng Anh vào lớp 10, ${p.test}: ${t.questions.length} câu tổng hợp lớp 8–9 có đáp án và giải thích tiếng Việt.`, path: `/${t.slug}`, type: "article" });
 }
 export default async function EntranceTestPage({ params }: { params: Promise<{ test: string }> }) {
+ await ensureContent();
  const p = await params; const t = getEntranceTestWithQuestions(`thi-vao-lop-10/${p.test}`); if (!t) notFound();
  const tests = getEntranceTests(); const index = tests.findIndex(test => test.slug === t.slug);
  const quiz = toQuizPool(t);

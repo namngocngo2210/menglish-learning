@@ -26,7 +26,7 @@ export interface ReviewItem { questionId: string; stem: string; options: QuizOpt
 export type ReportReason = "ten_khong_phu_hop" | "noi_dung_sai" | "khac";
 export type RoomSettingsPatch = Partial<Pick<RoomSettings, "maxPlayers" | "timeLimitMinutes" | "locked">> & { test?: TestSpec };
 
-export const ROOM_ERROR_CODES = ["invalid_input", "no_session", "not_host", "room_not_found", "room_not_joinable", "room_full", "name_taken", "bad_state", "name_rejected", "not_enough_questions", "rate_limited", "busy", "network", "unknown"] as const;
+export const ROOM_ERROR_CODES = ["invalid_input", "no_session", "not_host", "room_not_found", "room_not_joinable", "room_full", "name_taken", "already_joined", "bad_state", "name_rejected", "not_enough_questions", "rate_limited", "busy", "network", "unknown"] as const;
 export type RoomErrorCode = (typeof ROOM_ERROR_CODES)[number];
 
 export const SSE_EVENTS = ["snapshot", "player_joined", "player_left", "player_kicked", "player_connection", "host_changed", "settings_changed", "game_started", "progress", "results_ready", "rematch", "room_closed", "superseded", "server_restarting"] as const;

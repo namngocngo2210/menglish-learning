@@ -10,11 +10,20 @@
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest run",
-    "cli": "tsx src/main.ts"
+    "cli": "tsx src/main.ts",
+    "start": "tsx src/server/main.ts",
+    "openapi": "tsx src/server/write-openapi.ts",
+    "openapi:compat": "tsx src/server/check-compat.ts",
+    "build": "esbuild src/server/main.ts src/main.ts --bundle --platform=node --target=node22 --format=esm --external:pg-native --external:@node-rs/argon2 --banner:js=\"import{createRequire}from'node:module';const require=createRequire(import.meta.url);\" --outbase=src --outdir=dist --out-extension:.js=.mjs"
   },
   "dependencies": {
     "@bj/core": "*",
+    "@bj/data": "*",
     "@bj/db-types": "*",
+    "@fastify/helmet": "^13.2.0",
+    "@fastify/rate-limit": "^10.3.0",
+    "@node-rs/argon2": "^2.2.2",
+    "fastify": "^5.12.7",
     "kysely": "^0.28.0",
     "node-pg-migrate": "^8.0.0",
     "pg": "^8.13.0",
@@ -23,6 +32,7 @@
   "devDependencies": {
     "@types/pg": "^8.11.0",
     "@vitest/coverage-v8": "^5.0.5",
+    "esbuild": "^0.28.2",
     "tsx": "^4.23.15",
     "vitest": "^5.0.5"
   }

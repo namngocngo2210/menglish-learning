@@ -7,10 +7,10 @@ it("defaults the site URL to beejunior.meducation.vn", () => {
   expect(SITE.baseUrl).toBe("https://beejunior.meducation.vn");
   expect(absoluteUrl("/lop-6")).toBe("https://beejunior.meducation.vn/lop-6");
 });
-it("derives sitemap and canonical URLs from the single configured base", () => {
+it("derives sitemap and canonical URLs from the single configured base", async () => {
   const base = SITE.baseUrl.replace(/\/+$/, "");
-  for (const entry of sitemap()) expect(entry.url.startsWith(`${base}/`) || entry.url === base).toBe(true);
-  expect(sitemap().some(entry => entry.url.includes("beta.meducation.vn"))).toBe(false);
+  for (const entry of await sitemap()) expect(entry.url.startsWith(`${base}/`) || entry.url === base).toBe(true);
+  expect((await sitemap()).some(entry => entry.url.includes("beta.meducation.vn"))).toBe(false);
   const meta = buildMetadata({ title: "t", description: "d", path: "/lien-he" });
   expect(meta.alternates?.canonical).toBe(`${base}/lien-he`);
 });

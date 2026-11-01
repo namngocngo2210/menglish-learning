@@ -1,3 +1,4 @@
+import { ensureContent } from "@/lib/content/source";
 import { toQuizPool } from "@/lib/random-quiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 import Link from "next/link";
@@ -8,12 +9,11 @@ import { JsonLd } from "@/components/json-ld";
 import { TITLE_MAX, buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs } from "@/components/ui-kit";
-import { getAllTestSlugs, getTestWithQuestions, getTopics, getTestsForTopic } from "@/lib/content/load";
-import { isSlug, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, testPath, homePath, gradePath, skillPath, topicPath, SKILL_NAMES } from "@/lib/routes";
-export const dynamicParams = false;
-export const revalidate = 3600;
-export function generateStaticParams() { return getAllTestSlugs().flatMap(slug => { const p = parseTestSlug(slug); if (!p) return []; return {grade:gradeSlug(p.grade),skill:p.skill,topic:p.topic,test:p.test}; }); }
+import { getTestWithQuestions, getTopics, getTestsForTopic } from "@/lib/content/load";
+import { isSlug, gradeSlug, parseGradeSlug, parseSkill, testPath, homePath, gradePath, skillPath, topicPath, SKILL_NAMES } from "@/lib/routes";
+export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ grade: string; skill: string; topic: string; test: string }> }) {
+ await ensureContent();
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill || !isSlug(p.test)) return {};
  const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
@@ -21,6 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
  return buildMetadata({ title: [`${test.title} - ${SKILL_NAMES[skill]} - Lớp ${grade}`, `${test.title} - Lớp ${grade}`, test.title].find(t => t.length <= TITLE_MAX) ?? test.title, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}, ${p.test}: ${test.questions.length} câu có đáp án và giải thích.`, path: testPath(grade, skill, topic.slug, p.test), type: "article" });
 }
 export default async function TestPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string; test: string }> }) {
+ await ensureContent();
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill || !isSlug(p.test)) notFound();
  const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();

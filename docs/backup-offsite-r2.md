@@ -1,6 +1,6 @@
 # Sao lưu ngoài máy: Cloudflare R2 (D6, chủ quyết định 1/11)
 
-Thiết kế cho S-F (biến môi trường giữ chỗ từ S-A/S-B). Đây là **thiết kế, chưa triển khai**: chưa có code, chưa tạo bucket, chưa đụng máy chủ. Quyết định: [ADR 0003](adr/0003-offsite-backup-r2.md). Backup tại chỗ (`pg_dump` 03:30, giữ 14 ngày + 8 tuần + 6 tháng) xem blueprint §3.2. **DB staging/prod của MEnglish không thuộc phạm vi.**
+Thiết kế cho S-F (biến môi trường giữ chỗ từ S-A/S-B). **Mã đã có từ S-F** (`scripts/ops/`, `deploy/ops/`), nhưng chưa tạo bucket và chưa chạy trên máy chủ (cần chủ duyệt, xem [deploy-plan-s-f.md](deploy-plan-s-f.md)). Quyết định: [ADR 0003](adr/0003-offsite-backup-r2.md), điều chỉnh bởi [ADR 0007](adr/0007-offsite-uploader-no-sdk.md) (không dùng `@aws-sdk`, tự ký SigV4). Backup tại chỗ (`pg_dump` 03:30, giữ 14 ngày + 8 tuần + 6 tháng) xem blueprint §3.2. **DB staging/prod của MEnglish không thuộc phạm vi.**
 
 ## 1. Nguyên tắc
 
@@ -31,7 +31,7 @@ BACKUP_PUBLIC_KEY_FILE=/run/secrets/backup_public_key.pem   # chỉ KHOÁ CÔNG 
 
 Chọn **phong bì X25519 + AES-256-GCM bằng `node:crypto`** (có sẵn trong Node 22, không dependency, không cần keyring trên máy chủ). Phương án thay thế: `gpg --encrypt -r <fingerprint>` (host có `/usr/bin/gpg`, chỉ import khoá công khai) — chấp nhận được, nhưng phải quản lý keyring và dễ cấu hình sai; chỉ dùng nếu chủ thích.
 
-Quy trình mỗi bản backup (script `deploy/backup-offsite.ts`, chạy sau `pg_dump`):
+Quy trình mỗi bản backup (script `scripts/ops/offsite.mjs`, do `deploy/ops/backup.sh` gọi sau `pg_dump`):
 1. Sinh khoá dữ liệu ngẫu nhiên 256-bit (DEK) và cặp X25519 **tạm thời**.
 2. ECDH(khoá riêng tạm, khoá công khai của chủ) → HKDF-SHA256 → khoá bọc; bọc DEK bằng AES-256-GCM. Huỷ khoá riêng tạm ngay.
 3. Mã hoá luồng dump bằng AES-256-GCM theo **khối 1 MiB**, nonce = bộ đếm khối (không bao giờ tái dùng), thẻ xác thực mỗi khối, khối cuối đánh dấu để chống cắt ngắn. Bộ nhớ không phụ thuộc cỡ tệp.
@@ -46,11 +46,11 @@ Chủ cất `backup-private.pem` ở ≥ 2 nơi offline (vd. trình quản lý m
 
 **Xoay khoá:** sinh cặp mới; đặt khoá công khai mới trên máy chủ; từ đó backup dùng khoá mới. Bản cũ vẫn cần khoá riêng cũ ⇒ **giữ khoá riêng cũ cho tới khi bản cũ nhất dùng nó hết hạn lưu giữ** (tối đa 6 tháng + 1 tuần). Tên đối tượng/header ghi vân tay khoá để biết dùng khoá nào. Xoay mỗi 12 tháng hoặc ngay khi nghi ngờ lộ khoá riêng.
 
-**Diễn tập khôi phục (hằng tháng, và bắt buộc trước khi S-F kết thúc):** chủ tải đối tượng từ R2 về máy riêng → `bj-restore decrypt --key backup-private.pem` (lệnh CLI trong cùng package, chạy trên máy chủ) giải mã → `pg_restore` vào DB rỗng → đối chiếu số bản ghi bảng chính với bảng §3.6. Khoá riêng **không** được đưa lên máy chủ; nếu cần giải mã tại chỗ thì dùng máy chủ khác/tạm và xoá sau. Test tự động (vitest): mã hoá→giải mã khớp từng bit; sửa 1 bit ⇒ lỗi xác thực; cắt ngắn ⇒ lỗi; khoá sai ⇒ lỗi.
+**Diễn tập khôi phục (hằng tháng, và bắt buộc trước khi S-F kết thúc):** chủ tải đối tượng từ R2 về máy riêng → `node scripts/ops/offsite.mjs decrypt backup-private.pem <đối-tượng>.enc <ra>.dump` (chạy trên máy riêng của chủ, cần Node ≥ 22 và bản repo) giải mã → `pg_restore` vào DB rỗng → đối chiếu số bản ghi bảng chính với bảng §3.6. Khoá riêng **không** được đưa lên máy chủ; nếu cần giải mã tại chỗ thì dùng máy chủ khác/tạm và xoá sau. Test tự động (vitest): mã hoá→giải mã khớp từng bit; sửa 1 bit ⇒ lỗi xác thực; cắt ngắn ⇒ lỗi; khoá sai ⇒ lỗi.
 
 ## 4. Tải lên và kiểm chứng
 
-- `@aws-sdk/client-s3` (+ `@aws-sdk/lib-storage` cho multipart) cấu hình `endpoint=R2_ENDPOINT`, `region="auto"`, `forcePathStyle` theo tài liệu R2. Đây là dependency **nặng**: cần ADR (0003 đã nêu) và nằm trong package `worker`/`deploy`, không vào `api`.
+- Client S3 tối thiểu tự viết (`scripts/ops/s3.mjs`, SigV4, path-style, `region="auto"`, ADR 0007); không có dependency.
 - Sau tải: `HeadObject` so `ContentLength` với kích thước tệp mã hoá; tính SHA-256 của tệp mã hoá khi ghi, lưu vào **metadata đối tượng** (`x-amz-meta-sha256`) và vào bảng/ tệp nhật ký cục bộ; hằng tuần job `backup-verify` tải ngẫu nhiên 1 bản, băm lại, so khớp (vòng đi-về). Dùng checksum ở tầng ứng dụng như trên, không dựa vào checksum phía máy chủ R2 (mức hỗ trợ từng tiêu đề checksum của S3 API cần kiểm trước: https://developers.cloudflare.com/r2/api/s3/api/).
 - **Báo động:** thất bại (mạng, 403, kích thước/băm lệch, quá 26 giờ chưa có bản mới) ⇒ thoát code ≠ 0, ghi log `event=backup_offsite_failed`, watchdog của ops (đã theo dõi "tuổi backup") báo Telegram. Không có thông báo = lỗi.
 
@@ -66,12 +66,12 @@ Theo thói quen ở `menglish-main/docs/chuyen-upload-sang-r2.md` (đã đọc, 
 
 1. **Tạo bucket:** R2 → *Create bucket* → tên `beejunior-backups` (không dùng lại bucket MEnglish). *Settings*: để **Public access = Disabled**; **không** thêm CORS, không gắn domain.
 2. **Tạo token:** R2 → *Manage API tokens* → *Create API token* → quyền **Object Read & Write**, phạm vi **chỉ bucket `beejunior-backups`**, (tuỳ chọn) giới hạn IP của máy chủ. Ghi *Access Key ID*, *Secret Access Key* và endpoint `https://<account-id>.r2.cloudflarestorage.com`; Secret chỉ hiện một lần.
-3. **Đặt khoá trên máy chủ:** tạo tệp env quyền 600 (vd. `~/beejunior-secrets/r2.env`, cùng thư mục `gen-secrets.sh`) với 5 biến `R2_*` ở mục 2; không gõ qua chat, không commit, agent không đọc.
+3. **Đặt khoá trên máy chủ:** `gen-secrets.sh` tạo sẵn `~/beejunior-offsite/r2.env.template`; chép thành `r2.env` (quyền 600), điền `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT` (thư mục riêng, không chung với secret DB); không gõ qua chat, không commit, agent không đọc.
 4. **Sinh cặp khoá mã hoá** trên máy riêng (mục 3); chép khoá công khai lên máy chủ; cất khoá riêng offline ≥ 2 nơi.
 5. **Lifecycle:** bucket → *Settings → Object lifecycle rules → Add rule*: ba rule theo tiền tố `pg/daily/` (xoá sau 14 ngày), `pg/weekly/` (56 ngày), `pg/monthly/` (183 ngày) → *Save*.
 6. **Bucket lock:** *Settings → Bucket lock rules → Add rule*: tiền tố `pg/`, thời hạn 14 ngày (dài hơn rule daily thì daily sẽ không xoá sớm hơn lock — chấp nhận) → *Save*. Thử xoá một đối tượng thử bằng token script để chắc lock hoạt động.
-7. **Chạy thử:** chạy `backup-offsite` một lần, kiểm tệp `.enc` xuất hiện, `HeadObject` khớp; làm **diễn tập khôi phục** đầu tiên bằng khoá riêng của bạn.
-8. **Báo động:** nhờ ops thêm kiểm tra "tuổi đối tượng mới nhất trong R2 < 26 giờ" vào watchdog.
+7. **Chạy thử:** chạy `deploy/ops/backup.sh` một lần, kiểm tệp `.enc` xuất hiện, `HeadObject` khớp; làm **diễn tập khôi phục** đầu tiên bằng khoá riêng của bạn.
+8. **Báo động:** `deploy/ops/watchdog.sh` kiểm tuổi bản sao ngoài máy (< 26 giờ) mỗi 5 phút; đặt `BJ_ALERT_CMD` để nhận tin. Kiểm trực tiếp trên R2 (tuỳ chọn): `node scripts/ops/offsite.mjs --env-file ~/beejunior-offsite/r2.env age-check`; vòng đi-về hằng tuần: `... verify`.
 9. **Định kỳ:** hằng tháng diễn tập khôi phục; hằng 12 tháng xoay khoá; khi nghi lộ token → *Roll* token trong dashboard và cập nhật tệp env.
 
 ## 7. Còn mở

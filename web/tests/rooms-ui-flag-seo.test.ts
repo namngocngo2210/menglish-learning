@@ -17,10 +17,10 @@ it("flag is OFF by default and accepts only true/1", () => {
   for (const v of ["true", "1", "TRUE", " true "]) expect(roomsEnabled({ ROOMS_ENABLED: v })).toBe(true);
 });
 
-it("sitemap lists the landing only when enabled and never any room URL", () => {
-  expect(sitemap().map(e => e.url)).not.toContain(absoluteUrl("/luyen-tap-nhom"));
+it("sitemap lists the landing only when enabled and never any room URL", async () => {
+  expect((await sitemap()).map(e => e.url)).not.toContain(absoluteUrl("/luyen-tap-nhom"));
   vi.stubEnv("ROOMS_ENABLED", "true");
-  const urls = sitemap().map(e => e.url);
+  const urls = (await sitemap()).map(e => e.url);
   expect(urls).toContain(absoluteUrl("/luyen-tap-nhom"));
   expect(urls.filter(u => /\/luyen-tap-nhom\/(phong|vao)/.test(u))).toEqual([]);
   expect(getAllRoutes().filter(r => r.path.startsWith("/luyen-tap-nhom"))).toHaveLength(1);

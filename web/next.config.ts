@@ -16,7 +16,8 @@ function roomsDevProxy(env: Record<string, string | undefined> = process.env): s
 
 const config: NextConfig = {
   output: "standalone",
-  transpilePackages: ["@bj/core"],
+  transpilePackages: ["@bj/core", "@bj/data", "@bj/db-types"],
+  serverExternalPackages: ["pg"],
   async redirects() {
     let raw: string;
     try { raw = readFileSync(join(process.cwd(), "content/legacy-redirects.json"), "utf8"); }
