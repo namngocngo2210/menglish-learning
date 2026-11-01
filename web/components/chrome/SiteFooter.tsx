@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getGrades, getSkills } from "@/lib/content/load";
-import { gradePath, skillPath, homePath, aboutPath, privacyPath, contactPath, SKILL_NAMES } from "@/lib/routes";
+import { gradePath, skillPath, homePath, aboutPath, privacyPath, contactPath, roomsLandingPath, SKILL_NAMES } from "@/lib/routes";
+import { roomsEnabled } from "@/lib/rooms/flag";
 import { SITE } from "@/lib/site-config";
 import { NavLink } from "./NavLink";
 
@@ -15,7 +16,7 @@ export function SiteFooter() {
     const skills = getSkills(grade);
     return skills.length > 0 && <div key={grade}><h3 className="text-sm font-semibold">Lớp {grade}</h3><ul aria-label={`Kỹ năng lớp ${grade}`} className="flex flex-wrap gap-x-4">{skills.map(skill => <li key={skill}><NavLink href={skillPath(grade,skill)} className={`${linkClass} text-sm`}>{SKILL_NAMES[skill]}</NavLink></li>)}</ul></div>;
    })}</div></nav>
-   <nav aria-label="Thông tin ở chân trang"><h2 className="mb-3 font-bold">Thông tin</h2><ul>{[["/thi-vao-lop-10","Thi vào lớp 10"],["/nguon-du-lieu","Nguồn dữ liệu và giấy phép"],[aboutPath(),"Giới thiệu"],[privacyPath(),"Chính sách bảo mật"],[contactPath(),"Liên hệ"]].map(([href,label]) => <li key={href}><NavLink href={href} className={linkClass}>{label}</NavLink></li>)}</ul></nav>
+   <nav aria-label="Thông tin ở chân trang"><h2 className="mb-3 font-bold">Thông tin</h2><ul>{[["/thi-vao-lop-10","Thi vào lớp 10"],...(roomsEnabled() ? [[roomsLandingPath(),"Luyện tập nhóm"]] : []),["/nguon-du-lieu","Nguồn dữ liệu và giấy phép"],[aboutPath(),"Giới thiệu"],[privacyPath(),"Chính sách bảo mật"],[contactPath(),"Liên hệ"]].map(([href,label]) => <li key={href}><NavLink href={href} className={linkClass}>{label}</NavLink></li>)}</ul></nav>
   </div>
   <div className="border-t border-surface/20"><p className="mx-auto max-w-6xl px-5 py-5 text-sm sm:px-8">© {new Date().getFullYear()} {SITE.name}.</p></div>
  </footer>;

@@ -1,12 +1,12 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, CircleHelp, XCircle } from "lucide-react";
-import { numberQuestions, sectionProgress, type Answers, type QuizQuestion, type QuizSection } from "@/lib/quiz/sections";
+import { numberQuestions, sectionProgress, type Answers, type DisplayQuestion, type QuizQuestion, type QuizSection } from "@/lib/quiz/sections";
 import type { OptionKey } from "@/lib/content/types";
 
 export interface FocusRequest { id: string; nonce: number }
 export interface SectionedPracticeProps {
- sections: readonly QuizSection[];
+ sections: readonly QuizSection<DisplayQuestion>[];
  answers: Answers;
  checked: Record<string, boolean>;
  /** Reveal every explanation and lock all answers (results / review mode). */
@@ -33,16 +33,19 @@ function jump(id: string, block: ScrollLogicalPosition) {
  el.focus({ preventScroll: true });
 }
 
-function QuestionCard({ question, number, selected, revealed, feedback, onSelect, onCheck }: { question: QuizQuestion; number: number; selected: OptionKey | undefined; revealed: boolean; feedback: boolean; onSelect: SectionedPracticeProps["onSelect"]; onCheck?: SectionedPracticeProps["onCheck"] }) {
- const correct = selected === question.correctKey;
+/** Only fully graded questions can show feedback; room questions never carry these fields. */
+const isGraded = (q: DisplayQuestion): q is QuizQuestion => "correctKey" in q;
+function QuestionCard({ question, number, selected, revealed, feedback, onSelect, onCheck }: { question: DisplayQuestion; number: number; selected: OptionKey | undefined; revealed: boolean; feedback: boolean; onSelect: SectionedPracticeProps["onSelect"]; onCheck?: SectionedPracticeProps["onCheck"] }) {
+ const graded = feedback && isGraded(question) ? question : null;
+ const correct = graded ? selected === graded.correctKey : false;
  const FeedbackIcon = !selected ? CircleHelp : correct ? CheckCircle2 : XCircle;
  return <section id={`question-${question.id}`} tabIndex={-1} aria-label={`Câu ${number}`} className="scroll-mt-4 rounded-xl border border-navy-soft/20 bg-surface p-5 sm:p-6">
-  <fieldset disabled={revealed} className="min-w-0" aria-describedby={revealed && feedback ? `feedback-${question.id}` : undefined}>
+  <fieldset disabled={revealed} className="min-w-0" aria-describedby={revealed && graded ? `feedback-${question.id}` : undefined}>
    <legend className="mb-5 w-full font-bold"><span className="mb-2 block text-sm text-primary">Câu {number}</span><span lang="en">{question.stem}</span></legend>
    <div className="space-y-3">{question.options.map(option => <label key={option.key} className={`flex min-h-11 items-start gap-3 rounded-xl border p-3 ${selected === option.key ? "border-primary bg-warm" : "border-navy-soft/30"}`}><input className="mt-1 size-5 shrink-0 accent-primary" type="radio" name={`quiz-${question.id}`} value={option.key} checked={selected === option.key} onChange={() => onSelect(question.id, option.key)}/><span lang="en">{option.key}. {option.text}</span></label>)}</div>
   </fieldset>
-  {feedback && !revealed && <button type="button" disabled={!selected} onClick={() => { onCheck?.(question.id); requestAnimationFrame(() => document.getElementById(`feedback-${question.id}`)?.focus()); }} className={`${ctaClass} mt-5`}>Kiểm tra<span className="sr-only"> câu {number}</span></button>}
-  {feedback && <div id={`feedback-${question.id}`} tabIndex={-1} aria-live="polite" aria-atomic="true">{revealed && <div className="mt-5 space-y-3 rounded-xl border border-navy-soft/20 bg-warm p-4"><p className="flex items-center gap-2 font-bold"><FeedbackIcon aria-hidden="true" className="size-5 shrink-0 text-primary"/>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : "Chưa đúng. Em hãy xem lời giải nhé."}</p><p className="font-semibold">Đáp án đúng: {question.correctKey}.</p><p>{question.explanation}</p></div>}</div>}
+  {graded && !revealed && <button type="button" disabled={!selected} onClick={() => { onCheck?.(question.id); requestAnimationFrame(() => document.getElementById(`feedback-${question.id}`)?.focus()); }} className={`${ctaClass} mt-5`}>Kiểm tra<span className="sr-only"> câu {number}</span></button>}
+  {graded && <div id={`feedback-${question.id}`} tabIndex={-1} aria-live="polite" aria-atomic="true">{revealed && <div className="mt-5 space-y-3 rounded-xl border border-navy-soft/20 bg-warm p-4"><p className="flex items-center gap-2 font-bold"><FeedbackIcon aria-hidden="true" className="size-5 shrink-0 text-primary"/>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : "Chưa đúng. Em hãy xem lời giải nhé."}</p><p className="font-semibold">Đáp án đúng: {graded.correctKey}.</p><p>{graded.explanation}</p></div>}</div>}
  </section>;
 }
 
@@ -104,7 +107,7 @@ export function SectionedPractice({ sections, answers, checked, revealAll = fals
    </section>;
   })}
   <div data-js-only="" className="sticky bottom-0 z-20 -mx-4 space-y-2 border-t border-navy-soft/20 bg-surface/95 px-4 py-3 sm:mx-0 sm:rounded-xl sm:border">
-   <div className="flex items-center gap-2 max-sm:[&_button]:px-3">
+   <div className="flex flex-wrap items-center gap-2 max-sm:[&_button]:px-3">
     <button type="button" className={buttonClass} disabled={activeIndex <= 0} onClick={() => goTo(activeIndex - 1)}><ChevronLeft aria-hidden="true" className="size-5"/><span className="max-sm:sr-only">Phần trước</span></button>
     {footer}
     <button type="button" className={`${buttonClass} sm:ml-auto`} disabled={last} onClick={() => goTo(activeIndex + 1)}><span className="max-sm:sr-only">Phần sau</span><ChevronRight aria-hidden="true" className="size-5"/></button>
