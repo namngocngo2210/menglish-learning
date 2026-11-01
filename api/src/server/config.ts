@@ -11,6 +11,11 @@ const EnvSchema = z.object({
   INTERNAL_TOKEN_FILE: z.string().min(1).optional(),
   REPORT_SALT: z.string().min(16).optional(),
   REPORT_SALT_FILE: z.string().min(1).optional(),
+  SESSION_HMAC_KEY: z.string().min(32).optional(),
+  SESSION_HMAC_KEY_FILE: z.string().min(1).optional(),
+  TOTP_ENC_KEY: z.string().min(32).optional(),
+  TOTP_ENC_KEY_FILE: z.string().min(1).optional(),
+  ADMIN_ORIGIN: z.url().optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
 });
 
@@ -23,6 +28,8 @@ export interface ServerConfig {
   internalToken: string | undefined;
   /** HMAC secret for audit/report hashes; undefined disables the CMS API. */
   reportSalt: string | undefined;
+  /** Admin auth settings; undefined (any of the three missing) leaves admin routes deny-all. */
+  adminAuth: { hmacKey: string; totpKey: Buffer; origin: string } | undefined;
   rateLimitPerMinute: number;
 }
 
@@ -49,7 +56,23 @@ export function loadServerConfig(
     ? readFileSync(v.INTERNAL_TOKEN_FILE, "utf8").trim()
     : v.INTERNAL_TOKEN;
   const salt = v.REPORT_SALT_FILE ? readFileSync(v.REPORT_SALT_FILE, "utf8").trim() : v.REPORT_SALT;
+  const read = (file: string | undefined, plain: string | undefined): string | undefined => {
+    const value = file ? readFileSync(file, "utf8").trim() : plain;
+    return value === "" ? undefined : value;
+  };
+  const hmacKey = read(v.SESSION_HMAC_KEY_FILE, v.SESSION_HMAC_KEY);
+  const totpKey = read(v.TOTP_ENC_KEY_FILE, v.TOTP_ENC_KEY);
+  if (totpKey !== undefined && Buffer.from(totpKey, "base64").length !== 32)
+    throw new Error("Invalid environment: TOTP_ENC_KEY (base64 of 32 bytes)");
   return {
+    adminAuth:
+      hmacKey && totpKey && v.ADMIN_ORIGIN
+        ? {
+            hmacKey,
+            totpKey: Buffer.from(totpKey, "base64"),
+            origin: new URL(v.ADMIN_ORIGIN).origin,
+          }
+        : undefined,
     port: v.PORT,
     host: v.HOST,
     logLevel: v.LOG_LEVEL,

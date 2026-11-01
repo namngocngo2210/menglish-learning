@@ -6,13 +6,15 @@ import { loadServerConfig } from "./config";
 async function run(): Promise<void> {
   const config = loadServerConfig();
   const reader = createPublicReader({ connectionString: config.databaseUrl, poolMax: 10 });
-  const cmsPool = config.reportSalt
-    ? new pg.Pool({ connectionString: config.databaseUrl, max: 5, statement_timeout: 30_000 })
-    : undefined;
+  const cmsPool =
+    config.reportSalt || config.adminAuth
+      ? new pg.Pool({ connectionString: config.databaseUrl, max: 5, statement_timeout: 30_000 })
+      : undefined;
   const { app } = await buildApp({
     reader,
     internalToken: config.internalToken,
     ...(cmsPool && config.reportSalt ? { cms: { pool: cmsPool, salt: config.reportSalt } } : {}),
+    ...(cmsPool && config.adminAuth ? { auth: { pool: cmsPool, ...config.adminAuth } } : {}),
     rateLimitPerMinute: config.rateLimitPerMinute,
     logger: loggerOptions(config.logLevel),
   });

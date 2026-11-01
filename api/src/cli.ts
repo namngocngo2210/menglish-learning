@@ -1,5 +1,7 @@
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import { createAdmin, readHidden } from "./admin/create";
+import type { TtyIn, TtyOut } from "./admin/create";
 import { loadConfig } from "./config";
 import { connect } from "./db/connection";
 import { readContentDir } from "./import/files";
@@ -24,6 +26,7 @@ Commands:
   import [--content-dir DIR] [--dry-run]      Idempotent import of the seed JSON (quarantine + published)
   parity [--content-dir DIR]                  Import-parity report; exit 1 on any difference
   export-snapshot --out DIR                   Write the published content as a ContentBundle
+  admin:create <email>                        Create the single owner account (password typed at the TTY)
 
 Environment: DATABASE_URL or DATABASE_URL_FILE.`;
 
@@ -34,6 +37,7 @@ export async function main(
   argv: readonly string[],
   io: Io,
   env: Readonly<Record<string, string | undefined>>,
+  tty: { input: TtyIn; output: TtyOut } = { input: process.stdin, output: process.stdout },
 ): Promise<number> {
   const [command, ...rest] = argv;
   if (command === undefined || command === "help" || command === "--help") {
@@ -50,6 +54,8 @@ export async function main(
         return await runParity(rest, io, env);
       case "export-snapshot":
         return await runExport(rest, io, env);
+      case "admin:create":
+        return await runAdminCreate(rest, io, env, tty);
       default:
         io.err(`Unknown command: ${command}\n${USAGE}`);
         return 2;
@@ -143,6 +149,26 @@ async function runParity(
   } finally {
     await handle.close();
   }
+}
+
+/** `admin:create <email>`: the password is read from the TTY only (D7), never from argv, env or files. */
+async function runAdminCreate(
+  args: readonly string[],
+  io: Io,
+  env: Readonly<Record<string, string | undefined>>,
+  tty: { input: TtyIn; output: TtyOut },
+): Promise<number> {
+  const { positionals } = parseArgs({ args: [...args], options: {}, allowPositionals: true });
+  const email = positionals[0];
+  if (positionals.length !== 1 || email === undefined)
+    throw new Error("Usage: admin:create <email>");
+  const databaseUrl = loadConfig(env).databaseUrl;
+  const password = await readHidden("Password: ", tty.input, tty.output);
+  const again = await readHidden("Repeat password: ", tty.input, tty.output);
+  if (password !== again) throw new Error("Passwords do not match");
+  await createAdmin(databaseUrl, email, password);
+  io.out("Admin account created.");
+  return 0;
 }
 
 async function runExport(
