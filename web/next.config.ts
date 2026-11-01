@@ -16,6 +16,8 @@ function roomsDevProxy(env: Record<string, string | undefined> = process.env): s
 
 const config: NextConfig = {
   output: "standalone",
+  // gzip inside the Next server buffers the proxied /rt SSE stream, so it is off only while the local dev proxy is on.
+  compress: roomsDevProxy() === null,
   transpilePackages: ["@bj/core", "@bj/data", "@bj/db-types"],
   serverExternalPackages: ["pg"],
   async redirects() {

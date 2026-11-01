@@ -80,7 +80,7 @@ describe("room codes", () => {
 });
 
 describe("describeRoomError", () => {
- const err = (status: number, code: Parameters<typeof RoomsApiError.prototype.constructor>[1], details?: Record<string, unknown>, retry?: number) => new RoomsApiError(status, code, "x", retry, details);
+ const err = (status: number, code: ConstructorParameters<typeof RoomsApiError>[1], details?: Record<string, unknown>, retry?: number) => new RoomsApiError(status, code, "x", retry, details);
  it("maps server errors to Vietnamese messages and fields", () => {
   expect(describeRoomError(err(409, "name_taken"))).toMatchObject({ field: "name" });
   expect(describeRoomError(err(422, "name_rejected"))).toMatchObject({ field: "name" });

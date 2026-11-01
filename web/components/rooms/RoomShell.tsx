@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { AlertTriangle, Loader2, WifiOff } from "lucide-react";
 import { createRoomsClient, RoomsApiError, type RoomsClient } from "@/lib/rooms/client";
 import { RoomLobby } from "./RoomLobby";
@@ -19,7 +19,7 @@ const CLOSE_TEXT: Record<CloseReason, string> = {
  host_closed: "Chủ phòng đã đóng phòng.", idle: "Phòng đã đóng vì không có hoạt động.", empty: "Phòng đã đóng vì không còn ai trong phòng.",
  maintenance: "Phòng đã đóng để bảo trì hệ thống.", expired: "Phòng đã hết thời gian tồn tại.",
 };
-const btn = "inline-flex min-h-11 items-center justify-center rounded-xl bg-cta px-5 font-bold text-navy no-underline hover:bg-cta-hover";
+const btn = "inline-flex min-h-11 items-center justify-center rounded-xl bg-cta px-5 font-bold text-navy! no-underline hover:bg-cta-hover";
 
 function Panel({ title, children, icon }: { title: string; children?: React.ReactNode; icon?: React.ReactNode }) {
  return <section className="mx-auto max-w-xl rounded-2xl border-2 border-navy/20 bg-white p-6 text-center shadow-sm sm:p-8">
@@ -54,7 +54,7 @@ function Body({ s, retry, code, client, onJoined, onBlocked }: { s: ShellState; 
 
 export function RoomShell({ code }: { code: string }) {
  const [s, dispatch] = useReducer(shellReducer, initialShell);
- const client = useRef(createRoomsClient()).current;
+ const [client] = useState(() => createRoomsClient());
  const etag = useRef<string | null>(null);
  const alive = useRef(true);
  useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);

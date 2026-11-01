@@ -107,7 +107,7 @@ export function SectionedPractice({ sections, answers, checked, revealAll = fals
    </section>;
   })}
   <div data-js-only="" className="sticky bottom-0 z-20 -mx-4 space-y-2 border-t border-navy-soft/20 bg-surface/95 px-4 py-3 sm:mx-0 sm:rounded-xl sm:border">
-   <div className="flex items-center gap-2 max-sm:[&_button]:px-3">
+   <div className="flex flex-wrap items-center gap-2 max-sm:[&_button]:px-3">
     <button type="button" className={buttonClass} disabled={activeIndex <= 0} onClick={() => goTo(activeIndex - 1)}><ChevronLeft aria-hidden="true" className="size-5"/><span className="max-sm:sr-only">Phần trước</span></button>
     {footer}
     <button type="button" className={`${buttonClass} sm:ml-auto`} disabled={last} onClick={() => goTo(activeIndex + 1)}><span className="max-sm:sr-only">Phần sau</span><ChevronRight aria-hidden="true" className="size-5"/></button>

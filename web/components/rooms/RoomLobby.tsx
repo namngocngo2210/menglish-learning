@@ -39,7 +39,7 @@ export function RoomLobby({ client, room }: RoomScreenProps) {
    <h2 id="players-title" className="flex items-baseline justify-between gap-3 text-xl font-bold"><span>Người chơi</span><span className="text-base font-semibold text-navy-soft">{room.playerCount}/{room.settings.maxPlayers} người</span></h2>
    <PlayerList room={room}>{p => <>
     <StatusChip label={statusLabel(p, room.state)}/>
-    {host && p.playerId !== room.me.playerId && <button type="button" className={`${btnSecondary} px-3`} aria-label={`Mời ${p.name} ra khỏi phòng`} onClick={() => setKicking({ id: p.playerId, name: p.name })}><UserX aria-hidden="true" className="size-5"/><span className="max-sm:sr-only">Mời ra</span></button>}
+    {host && p.playerId !== room.me.playerId && <button type="button" className={`${btnSecondary} px-3`} aria-label={`Mời ra khỏi phòng: ${p.name}`} onClick={() => setKicking({ id: p.playerId, name: p.name })}><UserX aria-hidden="true" className="size-5"/><span className="max-sm:sr-only">Mời ra</span></button>}
    </>}</PlayerList>
    <p role="status" className="mt-3 font-semibold text-navy-soft">{host ? start.hint : "Đang chờ chủ phòng bấm Bắt đầu…"}</p>
   </section>

@@ -12,7 +12,8 @@ import { btnCta, btnSecondary, card, ConfirmDialog, ErrorLine, LeaveButton, useA
 
 /** Clock chip: server-calibrated, role=timer without per-second live announcements. */
 function TimerChip({ room }: Pick<RoomScreenProps, "room">) {
- const offset = useMemo(() => clockOffset(room.serverNow, Date.now()), [room.serverNow]);
+ // Calibrate once on mount: clock skew does not change while the room is open.
+ const [offset] = useState(() => clockOffset(room.serverNow, Date.now()));
  const [left, setLeft] = useState<number | null>(() => remainingMs(room.deadlineAt, offset, Date.now()));
  const [note, setNote] = useState("");
  const prev = useRef(left);

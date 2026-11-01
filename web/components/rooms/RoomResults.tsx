@@ -61,7 +61,7 @@ export function RoomResults({ client, room }: RoomScreenProps) {
  if (state.status === "error") return <div className={card} data-slot="results"><h1 className="text-2xl font-extrabold">Không tải được kết quả</h1><div className="mt-3"><ErrorLine message="Không tải được kết quả. Em thử lại nhé."/></div><button type="button" className={`${btnCta} mt-4`} onClick={() => void load()}>Thử lại</button></div>;
  if (state.status !== "ready") return <p role="status" className={card} data-slot="results">Đang tải kết quả…</p>;
  const r = state.data;
- const opponentLeft = r.ranking.some(x => !x.isMe && x.note === "left");
+ const opponentLeft = r.ranking.some(x => !x.isMe && x.note === "left") || (r.duel !== null && r.ranking.length < 2); // the server drops players who left
  return <div className="space-y-5" data-slot="results">
   <section className={card} aria-labelledby="res-title">
    <h1 id="res-title" className="flex items-center gap-2 text-2xl font-extrabold"><Trophy aria-hidden="true" className="size-6"/>{r.duel ? duelHeadline(r.duel, opponentLeft) : "Kết quả"}</h1>
