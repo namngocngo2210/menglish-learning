@@ -1,6 +1,6 @@
 # Luyện tập nhóm — kế hoạch triển khai
 
-> **Thiết kế ĐÃ ĐƯỢC CHỦ DUYỆT (31/10): chủ chọn theo toàn bộ khuyến nghị ở mục 6 (D1–D14).** Sprint S1 (lõi phòng, package `rooms/`) triển khai sau cờ `ROOMS_ENABLED` (mặc định tắt). Tài liệu: [group-practice.md](group-practice.md) · [kỹ thuật](group-practice-tech.md) · [API](group-practice-api.md).
+> **Thiết kế ĐÃ ĐƯỢC CHỦ DUYỆT (31/10): chủ chọn theo toàn bộ khuyến nghị ở mục 6 (D1–D14).** Sprint S1 (lõi phòng) và S2 (SSE, rate limit, drain, test tải/chaos; package `rooms/`) đã triển khai sau cờ `ROOMS_ENABLED` (mặc định tắt). Tài liệu: [group-practice.md](group-practice.md) · [kỹ thuật](group-practice-tech.md) · [API](group-practice-api.md).
 
 ## 1. Phương án đã khuyến nghị
 

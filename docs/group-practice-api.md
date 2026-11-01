@@ -1,6 +1,6 @@
 # Luyện tập nhóm — hợp đồng API và dữ liệu (phác thảo)
 
-> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (Sprint S1) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/SSE/deploy.** Tên trường có thể chỉnh khi hiện thực. Quy tắc: [group-practice.md](group-practice.md). Lý do chọn SSE + POST, token, giới hạn: [group-practice-tech.md](group-practice-tech.md).
+> **Trạng thái: thiết kế ĐÃ DUYỆT (chủ, 31/10, D1–D14 theo khuyến nghị — xem [plan §6](group-practice-plan.md#6-quyết-định-của-chủ-sở-hữu)). Lõi phòng (S1) và lớp thời gian thực/độ bền/an toàn (S2: SSE, giới hạn tốc độ, drain, healthz, CSP) nằm trong `rooms/`, tắt mặc định bằng `ROOMS_ENABLED`; chưa có UI/deploy.** Tên trường có thể chỉnh khi hiện thực. Quy tắc: [group-practice.md](group-practice.md). Lý do chọn SSE + POST, token, giới hạn: [group-practice-tech.md](group-practice-tech.md).
 
 Quy ước: tiền tố `/rt` (Caddy chuyển tới service `rooms`); JSON UTF-8; lỗi `{ "error": { "code", "message" } }` như [architecture.md](architecture.md); xác thực người chơi bằng cookie token `HttpOnly` theo phòng ([tech §5](group-practice-tech.md#5-token-vào-lại-và-phiên)); mọi POST/PUT kiểm tra `Origin` + `Content-Type: application/json`; thân ≤ 4 KB.
 

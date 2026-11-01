@@ -139,7 +139,6 @@ describe('http api', () => {
     const code: string = created.json.code;
     const stranger = new Client(base, log);
     expect((await stranger.call('GET', `/rt/rooms/${code}/snapshot`)).status).toBe(401);
-    expect((await host.call('GET', `/rt/rooms/${code}/events`)).status).toBe(501);
     expect((await host.call('POST', `/rt/rooms/${code}/start`, {})).status).toBe(409); // needs 2 connected
     expect((await host.call('POST', `/rt/rooms/${code}/start`, { x: 1 })).status).toBe(400);
     expect((await host.call('POST', `/rt/rooms/${code}/report`, { reason: 'khac' })).status).toBe(204);
