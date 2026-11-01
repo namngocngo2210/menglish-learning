@@ -6,6 +6,7 @@ import pg from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createAdmin } from "../src/admin/create";
 import { buildApp, loggerOptions } from "../src/server/app";
+import { buildOpenApi } from "../src/server/openapi";
 import type { BuiltApp } from "../src/server/app";
 import { ADMIN_URL, createMigratedDb } from "./helpers";
 import type { TestDb } from "./helpers";
@@ -76,6 +77,7 @@ describe.skipIf(ADMIN_URL === undefined)("security suite (PostgreSQL)", () => {
       reader: {} as PublicReader,
       internalToken: undefined,
       rateLimitPerMinute: 100_000,
+      trustProxy: true,
       logger: { ...loggerOptions("trace"), stream: sink },
       cms: { pool, salt: "s".repeat(32) },
       auth: {
@@ -123,6 +125,22 @@ describe.skipIf(ADMIN_URL === undefined)("security suite (PostgreSQL)", () => {
       expect(`${route.method} ${route.url} -> ${String(res.statusCode)}`).toMatch(/-> (401|403)$/);
       expect(res.body).not.toContain("stack");
     }
+  });
+
+  it("OpenAPI lists exactly the admin and report routes Fastify registered", () => {
+    const doc = buildOpenApi([]);
+    const documented = Object.entries(doc.paths)
+      .filter(([path]) => path.startsWith(ADMIN) || path === "/api/v1/public/reports")
+      .flatMap(([path, ops]) => Object.keys(ops).map((m) => `${m.toUpperCase()} ${path}`))
+      .sort();
+    const registered = built.routes
+      .filter(
+        (r) => !r.startsWith("HEAD ") && (r.includes(` ${ADMIN}`) || r.endsWith("public/reports")),
+      )
+      .map((r) => r.replace(/:([A-Za-z]+)/g, "{$1}"))
+      .sort();
+    expect(documented).toEqual(registered);
+    expect(registered.length).toBeGreaterThan(30);
   });
 
   it("rejects missing, garbage, tampered, foreign-name, revoked and expired credentials", async () => {

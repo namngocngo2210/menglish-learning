@@ -83,6 +83,7 @@ async function start(
     reader,
     internalToken: "internalToken" in extra ? extra.internalToken : TOKEN,
     rateLimitPerMinute: extra.rateLimitPerMinute ?? 1000,
+    trustProxy: true,
     logger: extra.logger ? { ...loggerOptions("info"), stream: extra.logger } : false,
   });
   apps.push(built);

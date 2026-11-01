@@ -38,6 +38,7 @@ describe.skipIf(ADMIN_URL === undefined)("admin auth (PostgreSQL)", () => {
       reader: {} as PublicReader,
       internalToken: undefined,
       rateLimitPerMinute: 10_000,
+      trustProxy: true,
       logger: { ...loggerOptions("trace"), stream: sink },
       cms: { pool, salt: "s".repeat(32) },
       auth: { pool, hmacKey: HMAC_KEY, totpKey: TOTP_KEY, origin: ORIGIN, now: () => clock },
@@ -363,6 +364,30 @@ describe.skipIf(ADMIN_URL === undefined)("admin auth (PostgreSQL)", () => {
       });
       expect(again.statusCode).toBe(401);
       expect(await audits()).toContain("auth.recovery_code_used");
+    });
+
+    it("locks TOTP verify and disable after repeated failures, even for correct credentials", async () => {
+      const s = await login();
+      const { codes } = await enable(s);
+      const disable = (password: string, code: string) =>
+        authed(s, "POST", "/api/v1/admin/auth/totp/disable", { password, code });
+      // enable() already burned one attempt with its wrong-code check.
+      for (let i = 0; i < 9; i++) expect((await disable(PASSWORD, "000000")).statusCode).toBe(403);
+      const locked = await disable(PASSWORD, codes[0] ?? "");
+      expect(locked.statusCode).toBe(429);
+      expect(locked.headers["retry-after"]).toBeDefined();
+      expect((await authed(s, "GET", "/api/v1/admin/auth/me")).json()).toMatchObject({
+        totpEnabled: true,
+      });
+    });
+
+    it("locks TOTP enrollment verification after repeated wrong codes", async () => {
+      const s = await login();
+      await authed(s, "POST", "/api/v1/admin/auth/totp/enroll", {});
+      const verify = (code: string) =>
+        authed(s, "POST", "/api/v1/admin/auth/totp/verify", { code });
+      for (let i = 0; i < 10; i++) expect((await verify("000000")).statusCode).toBe(422);
+      expect((await verify("000000")).statusCode).toBe(429);
     });
 
     it("disable needs password + code, revokes other sessions and removes TOTP", async () => {

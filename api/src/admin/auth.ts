@@ -287,6 +287,31 @@ export function createAdminAuth(deps: AuthDeps) {
     return false;
   }
 
+  /**
+   * TOTP verify/disable share the login failure counter and lockout, so a stolen session cannot
+   * brute-force the code or password. Lockout-DoS note: only the account's own sessions can trigger
+   * it here, and an admin can clear it with the CLI; login lockout is the same trade-off.
+   */
+  async function assertNotLocked(id: string): Promise<void> {
+    const { rows } = await pool.query<{ locked_until: Date | null }>(
+      "SELECT locked_until FROM admin_users WHERE id = $1",
+      [id],
+    );
+    const until = rows[0]?.locked_until;
+    if (until && until > now()) {
+      const retry = Math.ceil((until.getTime() - now().getTime()) / 1000);
+      throw new HttpProblem("rate_limited", `Retry after ${String(retry)} s`, undefined, retry);
+    }
+  }
+
+  async function failAttempt(id: string): Promise<void> {
+    await pool.query(
+      `UPDATE admin_users SET failed_login_count = failed_login_count + 1,
+         locked_until = CASE WHEN failed_login_count + 1 >= $2 THEN $3::timestamptz ELSE locked_until END WHERE id = $1`,
+      [id, LOCK_AFTER, new Date(now().getTime() + LOCK_MS)],
+    );
+  }
+
   async function userRow(
     id: string,
   ): Promise<{ email: string; password_hash: string; totp_secret_enc: string | null }> {
@@ -363,9 +388,12 @@ export function createAdminAuth(deps: AuthDeps) {
       const user = await userRow(p.adminUserId);
       if (!user.totp_secret_enc?.startsWith("pending:"))
         throw new HttpProblem("conflict", "No pending TOTP enrollment");
+      await assertNotLocked(p.adminUserId);
       const secret = decrypt(totpKey, user.totp_secret_enc.slice(8));
-      if (!totpValid(secret, code, now().getTime()))
+      if (!totpValid(secret, code, now().getTime())) {
+        await failAttempt(p.adminUserId);
         throw new HttpProblem("validation_failed", "Invalid code");
+      }
       const codes = newRecoveryCodes();
       const hashes = await Promise.all(codes.map(hashSecret));
       const client = await pool.connect();
@@ -401,6 +429,7 @@ export function createAdminAuth(deps: AuthDeps) {
       const user = await userRow(p.adminUserId);
       if (!user.totp_secret_enc || user.totp_secret_enc.startsWith("pending:"))
         throw new HttpProblem("conflict", "TOTP is not enabled");
+      await assertNotLocked(p.adminUserId);
       const passwordOk = await verifySecret(user.password_hash, body.password);
       // Password first so a wrong password never burns a recovery code.
       const codeOk =
@@ -408,7 +437,10 @@ export function createAdminAuth(deps: AuthDeps) {
         (RECOVERY_CODE.test(body.code)
           ? await consumeRecoveryCode(p.adminUserId, body.code)
           : totpValid(decrypt(totpKey, user.totp_secret_enc), body.code, now().getTime()));
-      if (!passwordOk || !codeOk) throw new HttpProblem("forbidden", "Invalid credentials");
+      if (!passwordOk || !codeOk) {
+        await failAttempt(p.adminUserId);
+        throw new HttpProblem("forbidden", "Invalid credentials");
+      }
       await pool.query("UPDATE admin_users SET totp_secret_enc = NULL WHERE id = $1", [
         p.adminUserId,
       ]);

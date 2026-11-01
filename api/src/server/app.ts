@@ -16,6 +16,8 @@ import type { RouteDeps, RouteSpec } from "./routes";
 
 export interface AppOptions extends RouteDeps {
   rateLimitPerMinute: number;
+  /** Fastify trustProxy: false, true, or the proxy IP/CIDR list (TRUST_PROXY). */
+  trustProxy?: boolean | string;
   logger: Exclude<FastifyServerOptions["logger"], undefined>;
   /** CMS admin API + public reports; omitted = not registered. */
   cms?: CmsOptions;
@@ -70,7 +72,8 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
   const app: FastifyInstance = Fastify({
     logger: options.logger,
     bodyLimit: 64 * 1024,
-    trustProxy: true,
+    // Default false: X-Forwarded-For is only honoured when the operator says the api sits behind a proxy.
+    trustProxy: options.trustProxy ?? false,
     genReqId: (req) => {
       const given = req.headers["x-request-id"];
       return typeof given === "string" && REQUEST_ID.test(given) ? given : randomUUID();

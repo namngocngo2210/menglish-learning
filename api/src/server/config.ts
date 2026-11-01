@@ -16,6 +16,7 @@ const EnvSchema = z.object({
   TOTP_ENC_KEY: z.string().min(32).optional(),
   TOTP_ENC_KEY_FILE: z.string().min(1).optional(),
   ADMIN_ORIGIN: z.url().optional(),
+  TRUST_PROXY: z.string().min(1).optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
 });
 
@@ -31,6 +32,8 @@ export interface ServerConfig {
   /** Admin auth settings; undefined (any of the three missing) leaves admin routes deny-all. */
   adminAuth: { hmacKey: string; totpKey: Buffer; origin: string } | undefined;
   rateLimitPerMinute: number;
+  /** TRUST_PROXY: "true" or a proxy IP/CIDR list; unset = do not trust X-Forwarded-For. */
+  trustProxy: boolean | string;
 }
 
 /** Reads the server configuration once at startup. Errors name variables, never values. */
@@ -80,5 +83,7 @@ export function loadServerConfig(
     internalToken: token === "" ? undefined : token,
     reportSalt: salt === "" ? undefined : salt,
     rateLimitPerMinute: v.RATE_LIMIT_PER_MINUTE,
+    trustProxy:
+      v.TRUST_PROXY === undefined ? false : v.TRUST_PROXY === "true" ? true : v.TRUST_PROXY,
   };
 }
