@@ -232,3 +232,5 @@ Khi chủ sở hữu phê duyệt triển khai mã nguồn phía máy chủ (Go/
 - **Đã có (thiết kế):** mã nguồn đại diện home + admin một chủ theo cam/navy và 4 ảnh PNG tĩnh; mã vòng xanh cũ giữ làm lịch sử.
 - **Chưa có:** chủ sở hữu chưa duyệt thẩm mỹ; chưa có website, backend, auth hay dữ liệu thật.
 - **Quy trình:** (1) chủ duyệt hoặc yêu cầu chỉnh hướng thẩm mỹ; (2) chỉ sau đó mới hoàn thiện các màn còn lại; (3) tester/reviewer độc lập kiểm tra; bằng chứng thực tế ở `verification.md`, không bịa kết quả hay ảnh chụp.
+
+> Bố cục làm bài theo từng bài đọc (tách pane, cuộn độc lập): xem [quiz-sections.md](./quiz-sections.md).

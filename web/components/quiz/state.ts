@@ -9,10 +9,12 @@ export type QuizAction =
  | { type: "select"; id: string; key: OptionKey }
  | { type: "check"; id: string }
  | { type: "submit" }
- | { type: "reset" };
+ | { type: "reset" }
+ | { type: "hydrate"; answers: QuizState["answers"]; checked: QuizState["checked"] };
 export function initialQuizState(): QuizState { return { answers: {}, checked: {}, submitted: false }; }
 export function quizReducer(state: QuizState, action: QuizAction): QuizState {
  if (action.type === "reset") return initialQuizState();
+ if (action.type === "hydrate") return state.submitted ? state : { ...state, answers: action.answers, checked: action.checked };
  if (state.submitted) return state;
  if (action.type === "submit") return { ...state, submitted: true };
  if (state.checked[action.id]) return state;

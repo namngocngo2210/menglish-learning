@@ -6,8 +6,8 @@ import { AdSlot } from "@/components/ads/AdSlot";
 
 it("renders native questions and passages without exposing explanations or ads before submission", () => {
  const html = renderToStaticMarkup(createElement(Quiz, {
-  questions: [{id:"q1",stem:"Choose a word.",options:[{key:"A",text:"One"},{key:"B",text:"Two"},{key:"C",text:"Three"},{key:"D",text:"Four"}],correctKey:"B",explanation:"Lời giải riêng chỉ hiện sau kiểm tra."}],
-  passageContent: createElement("p",{lang:"en"},"A server-rendered passage."),
+  questions: [{id:"q1",stem:"Choose a word.",options:[{key:"A",text:"One"},{key:"B",text:"Two"},{key:"C",text:"Three"},{key:"D",text:"Four"}],correctKey:"B",explanation:"Lời giải riêng chỉ hiện sau kiểm tra.",passageId:"p1"}],
+  passages: [{id:"p1",title:"Pass",body:"A server-rendered passage.",wordCount:4,level:1}],
   afterResult: createElement(AdSlot,{slot:"footer"}),
  }));
  expect(html).toContain("A server-rendered passage.");
