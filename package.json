@@ -1,0 +1,30 @@
+{
+  "name": "beejunior-root",
+  "private": true,
+  "description": "Repo-level tooling only (lint, format, boundaries, checks). Packages keep their own package.json until S-A introduces npm workspaces.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "lint": "eslint --no-error-on-unmatched-pattern packages api worker admin rooms crawler scripts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "deps:check": "node scripts/check-deps.mjs",
+    "licenses:check": "node scripts/check-licenses.mjs",
+    "commits:check": "node scripts/check-commits.mjs",
+    "check": "npm run lint && npm run format:check && npm run typecheck && npm run deps:check && npm run licenses:check"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.5",
+    "dependency-cruiser": "^18.7.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}

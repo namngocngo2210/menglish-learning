@@ -1,0 +1,29 @@
+# Ratchet: Prettier is enforced only on new/standards-owned paths (see docs/engineering-standards.md §Ratchet).
+# Legacy trees are ignored until they are migrated; remove a line when its tree is reformatted in its own PR.
+*
+!/scripts/
+!/scripts/**
+!/packages/
+!/packages/**
+!/api/
+!/api/**
+!/worker/
+!/worker/**
+!/admin/
+!/admin/**
+!/db/
+!/db/**
+!/*.json
+!/*.mjs
+!/*.cjs
+!/.github/
+!/.github/**
+!/docs/engineering-standards.md
+!/docs/definition-of-done.md
+!/docs/adr/
+!/docs/adr/**
+node_modules
+package-lock.json
+
+# Markdown is hand-formatted (tables, Vietnamese prose); not enforced.
+*.md

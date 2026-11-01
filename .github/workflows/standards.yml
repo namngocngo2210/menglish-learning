@@ -1,0 +1,101 @@
+name: Standards
+
+# Runs on EVERY pull request (no path filter) so the engineering standards cannot be skipped.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: standards-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo-checks:
+    name: Lint, format, typecheck, boundaries, licenses
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run format:check
+      - run: npm run typecheck
+      - run: npm run deps:check
+      - run: npm run licenses:check
+
+  commits:
+    name: Commit messages
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: node scripts/check-commits.mjs "origin/${{ github.base_ref }}" HEAD
+
+  tests:
+    name: Typecheck + test (${{ matrix.dir }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # web is covered by ci.yml (lint, typecheck, test, Lighthouse). New packages are added here in S-A.
+        dir: [rooms, crawler]
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: ${{ matrix.dir }}/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  audit:
+    name: npm audit (high+) ${{ matrix.dir }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { dir: ".", flags: "" }
+          - { dir: web, flags: "" }
+          # Ratchet: rooms/crawler dev-only vitest 3 -> tinypool (critical, test runner only, no prod exposure).
+          # Gate production deps now; drop `--omit=dev` when vitest is bumped to 5 (own PR).
+          - { dir: rooms, flags: "--omit=dev" }
+          - { dir: crawler, flags: "--omit=dev" }
+    defaults:
+      run:
+        working-directory: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm audit --audit-level=high ${{ matrix.flags }}
+
+  secrets:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read # gitleaks-action lists PR commits via the API
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
