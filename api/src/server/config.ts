@@ -16,6 +16,7 @@ const EnvSchema = z.object({
   TOTP_ENC_KEY: z.string().min(32).optional(),
   TOTP_ENC_KEY_FILE: z.string().min(1).optional(),
   ADMIN_ORIGIN: z.url().optional(),
+  ADMIN_DIST: z.string().min(1).optional(),
   TRUST_PROXY: z.string().min(1).optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
 });
@@ -31,6 +32,8 @@ export interface ServerConfig {
   reportSalt: string | undefined;
   /** Admin auth settings; undefined (any of the three missing) leaves admin routes deny-all. */
   adminAuth: { hmacKey: string; totpKey: Buffer; origin: string } | undefined;
+  /** ADMIN_DIST: directory of the built admin SPA; unset = /admin is not served. */
+  adminDist: string | undefined;
   rateLimitPerMinute: number;
   /** TRUST_PROXY: "true" or a proxy IP/CIDR list; unset = do not trust X-Forwarded-For. */
   trustProxy: boolean | string;
@@ -76,6 +79,7 @@ export function loadServerConfig(
             origin: new URL(v.ADMIN_ORIGIN).origin,
           }
         : undefined,
+    adminDist: v.ADMIN_DIST,
     port: v.PORT,
     host: v.HOST,
     logLevel: v.LOG_LEVEL,

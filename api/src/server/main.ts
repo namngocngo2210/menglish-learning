@@ -15,6 +15,7 @@ async function run(): Promise<void> {
     internalToken: config.internalToken,
     ...(cmsPool && config.reportSalt ? { cms: { pool: cmsPool, salt: config.reportSalt } } : {}),
     ...(cmsPool && config.adminAuth ? { auth: { pool: cmsPool, ...config.adminAuth } } : {}),
+    ...(config.adminDist ? { adminDist: config.adminDist } : {}),
     rateLimitPerMinute: config.rateLimitPerMinute,
     trustProxy: config.trustProxy,
     logger: loggerOptions(config.logLevel),
