@@ -82,6 +82,7 @@ async function runMigrate(
   }
   const names = await migrate(loadConfig(env).databaseUrl, {
     direction,
+    ...(env["MIGRATIONS_DIR"] === undefined ? {} : { dir: env["MIGRATIONS_DIR"] }),
     ...(count === undefined ? {} : { count }),
   });
   io.out(

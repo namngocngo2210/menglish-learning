@@ -6,7 +6,10 @@ COPY package.json package-lock.json ./
 COPY web/package.json web/
 COPY packages/core/package.json packages/core/
 COPY api/package.json api/
-RUN npm ci --workspace web --include-workspace-root=false
+COPY packages/data/package.json packages/data/
+COPY packages/db-types/package.json packages/db-types/
+COPY packages/edge/package.json packages/edge/
+RUN npm ci --workspace web --workspace @bj/edge --include-workspace-root=false
 
 FROM node:22-alpine AS build
 WORKDIR /app
@@ -28,7 +31,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY packages ./packages
 COPY web ./web
-RUN mkdir -p web/public && npm run build --workspace web
+RUN mkdir -p web/public && npm run build --workspace web && npm run build --workspace @bj/edge
 
 FROM node:22-alpine AS runner
 WORKDIR /app
@@ -38,6 +41,8 @@ RUN addgroup -S -g 1001 app && adduser -S -u 1001 -G app app
 COPY --from=build --chown=app:app /app/web/.next/standalone ./
 COPY --from=build --chown=app:app /app/web/.next/static ./web/.next/static
 COPY --from=build --chown=app:app /app/web/public ./web/public
+# Edge HTML cache (blueprint §4): started instead of web/server.js by deploy/compose.yml (CMD node edge/edge.mjs).
+COPY --from=build --chown=app:app /app/packages/edge/dist/edge.mjs ./edge/edge.mjs
 USER app
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s CMD wget -qO- http://127.0.0.1:3000/ >/dev/null || exit 1

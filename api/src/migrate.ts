@@ -7,6 +7,8 @@ export type Direction = "up" | "down";
 
 export interface MigrateOptions {
   direction: Direction;
+  /** Directory of the SQL migrations; defaults to the repository db/migrations (the image sets MIGRATIONS_DIR). */
+  dir?: string;
   /** Number of migrations to apply/revert; Infinity = all (up) — down requires an explicit count or "all". */
   count?: number;
   log?: (message: string) => void;
@@ -17,7 +19,7 @@ export async function migrate(databaseUrl: string, options: MigrateOptions): Pro
   const log = options.log ?? (() => undefined);
   const result = await runner({
     databaseUrl,
-    dir: MIGRATIONS_DIR,
+    dir: options.dir ?? MIGRATIONS_DIR,
     direction: options.direction,
     count: options.count ?? Infinity,
     migrationsTable: "pgmigrations",
