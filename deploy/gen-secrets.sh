@@ -37,7 +37,18 @@ put db_url_api "postgres://bj_api_login:$pg_api@postgres:5432/beejunior"
 put db_url_web "postgres://bj_web_login:$pg_web@postgres:5432/beejunior"
 put db_url_worker "postgres://bj_worker_login:$pg_worker@postgres:5432/beejunior"
 put internal_token "$(rand)"
+put report_salt "$(rand)"
 put session_hmac_key "$(rand)$(rand)"
 put totp_enc_key "$(openssl rand -base64 32)"
+
+# Off-host backup settings live in their OWN directory (mounted into the uploader container, never next to the
+# DB secrets). Only an empty 600 template is created; the owner fills in the R2 values and copies the PUBLIC key.
+off="${BJ_OFFSITE_DIR:-$HOME/beejunior-offsite}"
+if [ ! -e "$off/r2.env.template" ]; then
+  mkdir -p "$off" && chmod 700 "$off"
+  printf 'R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com\nR2_BUCKET=beejunior-backups\nR2_ACCESS_KEY_ID=\nR2_SECRET_ACCESS_KEY=\nBACKUP_PUBLIC_KEY_FILE=%s/backup-public.pem\n' "$off" > "$off/r2.env.template"
+  chmod 600 "$off/r2.env.template"
+  echo "create $off/r2.env.template (copy to r2.env, fill in, chmod 600)"
+fi
 
 echo "done: $dir (mode 700, files 600). Do not copy these files into chat, the repo or logs."
