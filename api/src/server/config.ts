@@ -9,6 +9,8 @@ const EnvSchema = z.object({
   DATABASE_URL_FILE: z.string().min(1).optional(),
   INTERNAL_TOKEN: z.string().min(16).optional(),
   INTERNAL_TOKEN_FILE: z.string().min(1).optional(),
+  REPORT_SALT: z.string().min(16).optional(),
+  REPORT_SALT_FILE: z.string().min(1).optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
 });
 
@@ -19,6 +21,8 @@ export interface ServerConfig {
   databaseUrl: string;
   /** Bearer token for /api/v1/internal/*; undefined disables those routes (403). */
   internalToken: string | undefined;
+  /** HMAC secret for audit/report hashes; undefined disables the CMS API. */
+  reportSalt: string | undefined;
   rateLimitPerMinute: number;
 }
 
@@ -44,12 +48,14 @@ export function loadServerConfig(
   const token = v.INTERNAL_TOKEN_FILE
     ? readFileSync(v.INTERNAL_TOKEN_FILE, "utf8").trim()
     : v.INTERNAL_TOKEN;
+  const salt = v.REPORT_SALT_FILE ? readFileSync(v.REPORT_SALT_FILE, "utf8").trim() : v.REPORT_SALT;
   return {
     port: v.PORT,
     host: v.HOST,
     logLevel: v.LOG_LEVEL,
     databaseUrl,
     internalToken: token === "" ? undefined : token,
+    reportSalt: salt === "" ? undefined : salt,
     rateLimitPerMinute: v.RATE_LIMIT_PER_MINUTE,
   };
 }

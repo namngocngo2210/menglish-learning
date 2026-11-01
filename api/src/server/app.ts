@@ -4,6 +4,9 @@ import rateLimit from "@fastify/rate-limit";
 import Fastify from "fastify";
 import type { FastifyInstance, FastifyServerOptions } from "fastify";
 import { ZodError } from "zod";
+import { reportsPlugin } from "../cms/reports";
+import { adminPlugin } from "../cms/routes";
+import type { CmsOptions } from "../cms/routes";
 import { buildOpenApi } from "./openapi";
 import { HttpProblem, problemBody, sendProblem } from "./problems";
 import { buildRouteSpecs, registerRoutes } from "./routes";
@@ -12,6 +15,8 @@ import type { RouteDeps, RouteSpec } from "./routes";
 export interface AppOptions extends RouteDeps {
   rateLimitPerMinute: number;
   logger: Exclude<FastifyServerOptions["logger"], undefined>;
+  /** CMS admin API + public reports; omitted = not registered. */
+  cms?: CmsOptions;
 }
 
 export interface BuiltApp {
@@ -125,6 +130,10 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
     routes.push(`${String(route.method)} ${route.url}`);
   });
   registerRoutes(app, specs, options);
+  if (options.cms) {
+    await app.register(adminPlugin(options.cms), { prefix: "/api/v1/admin" });
+    await app.register(reportsPlugin(options.cms));
+  }
   await app.ready();
   return { app, specs, routes };
 }
