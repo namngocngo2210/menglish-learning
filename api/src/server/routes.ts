@@ -46,11 +46,15 @@ export interface RouteSpec {
 const digest = (value: string): Buffer => createHash("sha256").update(value).digest();
 
 /** Wraps database access: any failure becomes a clean 503 with Retry-After, never a 500 with details. */
-async function guarded<T>(work: () => Promise<T>): Promise<T> {
+async function guarded<T>(request: FastifyRequest, work: () => Promise<T>): Promise<T> {
   try {
     return await work();
   } catch (error) {
     if (error instanceof HttpProblem || error instanceof ZodError) throw error;
+    request.log.error(
+      { err: { name: (error as Error).name, message: (error as Error).message } },
+      "database_error",
+    );
     throw new HttpProblem(
       "unavailable",
       "The content database is temporarily unavailable",
@@ -84,8 +88,8 @@ export function buildRouteSpecs(deps: RouteDeps): RouteSpec[] {
         503: { description: "Database unavailable" },
       },
       cacheControl: "no-store",
-      handler: async () => {
-        await guarded(() => reader.ping());
+      handler: async ({ request }) => {
+        await guarded(request, () => reader.ping());
         return { status: "ok" };
       },
     },
@@ -100,7 +104,7 @@ export function buildRouteSpecs(deps: RouteDeps): RouteSpec[] {
         503: { description: "Database unavailable" },
       },
       cacheControl: "public, max-age=60",
-      handler: async () => ({ items: await guarded(() => reader.grades()) }),
+      handler: async ({ request }) => ({ items: await guarded(request, () => reader.grades()) }),
     },
     {
       method: "GET",
@@ -115,9 +119,9 @@ export function buildRouteSpecs(deps: RouteDeps): RouteSpec[] {
         503: { description: "Database unavailable" },
       },
       cacheControl: "public, max-age=60",
-      handler: async ({ query }) => {
+      handler: async ({ query, request }) => {
         const q = TopicsQuerySchema.parse(query);
-        const items = await guarded(() =>
+        const items = await guarded(request, () =>
           reader.topics({
             ...(q.grade === undefined ? {} : { grade: q.grade }),
             ...(q.skill === undefined ? {} : { skill: q.skill }),
@@ -140,9 +144,9 @@ export function buildRouteSpecs(deps: RouteDeps): RouteSpec[] {
         503: { description: "Database unavailable" },
       },
       cacheControl: "public, max-age=60",
-      handler: async ({ params }) => {
+      handler: async ({ params, request }) => {
         const slug = TestParamsSchema.parse(params)["*"];
-        const test = await guarded(() => reader.test(slug));
+        const test = await guarded(request, () => reader.test(slug));
         if (!test) throw new HttpProblem("not_found", "No public test with this slug");
         return test;
       },
@@ -162,7 +166,7 @@ export function buildRouteSpecs(deps: RouteDeps): RouteSpec[] {
         503: { description: "Database unavailable" },
       },
       cacheControl: "no-store",
-      handler: async () => guarded(() => reader.loadBundle()),
+      handler: async ({ request }) => guarded(request, () => reader.loadBundle()),
     },
   ];
 }

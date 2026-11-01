@@ -17,7 +17,7 @@ export const TopicRowSchema = z.object({
   skill: nonEmpty,
   slug: nonEmpty,
   name: nonEmpty,
-  description: nonEmpty,
+  description: z.string(),
 });
 export const PassageRowSchema = z.object({
   id: nonEmpty,
@@ -79,10 +79,18 @@ export interface PublicRows {
 export function buildBundle(rows: PublicRows): ContentBundle {
   const sourceRows = z.array(SourceRowSchema).parse(rows.sources);
   const sourceByCode = new Map(sourceRows.map((s) => [s.code, s]));
-  const topicRows = z.array(TopicRowSchema).parse(rows.topics);
+  const testRows = z.array(TestRowSchema).parse(rows.tests);
+  // Topics that only exist through question classification have no tests (and an empty description);
+  // the public site never lists them, so they are dropped before validation.
+  const testedTopics = new Set(
+    testRows.map((t) => `${String(t.grade)}/${t.skill ?? ""}/${t.topic_slug ?? ""}`),
+  );
+  const topicRows = z
+    .array(TopicRowSchema)
+    .parse(rows.topics)
+    .filter((t) => testedTopics.has(`${String(t.grade)}/${t.skill}/${t.slug}`));
   const passageRows = z.array(PassageRowSchema).parse(rows.passages);
   const questionRows = z.array(QuestionRowSchema).parse(rows.questions);
-  const testRows = z.array(TestRowSchema).parse(rows.tests);
   const itemRows = z.array(TestItemRowSchema).parse(rows.testItems);
 
   const itemsByTest = new Map<string, { questionId: string; optionOrder: string }[]>();

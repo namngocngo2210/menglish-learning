@@ -134,6 +134,15 @@ describe("buildBundle", () => {
     expect(test?.topicSlug).toBeUndefined();
   });
 
+  it("drops topics that have no tests, even with an empty description (derived topics)", () => {
+    const input = rows();
+    input.topics = [
+      ...input.topics,
+      { grade: 6, skill: "tu-vung", slug: "an", name: "Chủ đề ẩn", description: "" },
+    ];
+    expect(buildBundle(input).topics.map((t) => t.slug)).toEqual(["thi-hien-tai-don"]);
+  });
+
   it("rejects a malformed row instead of building a broken bundle", () => {
     const broken = rows();
     broken.questions = [{ id: "q1" }];

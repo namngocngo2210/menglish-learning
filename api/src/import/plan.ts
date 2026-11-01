@@ -115,6 +115,28 @@ function overlay<T extends object>(base: T | undefined, next: T): T {
   return { ...base, ...defined };
 }
 
+/**
+ * Merged items in the order the public site shows them: first the published layer in its file order
+ * (so pool/list order equals the seed JSON), then quarantine-only items in quarantine order. The
+ * database ids (and the views' sort_key) follow this order on a fresh import.
+ */
+function publishedFirst<T extends { id: string }>(
+  merged: ReadonlyMap<string, T>,
+  files: readonly LayerFile[],
+  pick: (bundle: LayerFile["bundle"]) => readonly { id: string }[],
+): T[] {
+  const ordered = new Map<string, T>();
+  for (const file of files) {
+    if (file.layer !== "published") continue;
+    for (const { id } of pick(file.bundle)) {
+      const item = merged.get(id);
+      if (item !== undefined && !ordered.has(id)) ordered.set(id, item);
+    }
+  }
+  for (const [id, item] of merged) if (!ordered.has(id)) ordered.set(id, item);
+  return [...ordered.values()];
+}
+
 function mergeById<T extends { id: string }>(layers: readonly (readonly T[])[]): Map<string, T> {
   const out = new Map<string, T>();
   for (const items of layers) {
@@ -191,7 +213,7 @@ export function buildPlan(files: readonly LayerFile[]): ImportPlan {
 
   const questions: PlannedQuestion[] = [];
   const publishedAtByPassage = new Map<string, string>();
-  for (const q of questionMap.values()) {
+  for (const q of publishedFirst(questionMap, files, (b) => b.questions)) {
     if (!sourceMap.has(q.sourceId)) problems.push(`question ${q.id}: unknown source ${q.sourceId}`);
     if (q.passageId !== undefined && !passageMap.has(q.passageId)) {
       problems.push(`question ${q.id}: unknown passage ${q.passageId}`);
@@ -210,7 +232,7 @@ export function buildPlan(files: readonly LayerFile[]): ImportPlan {
   }
 
   const passages: PlannedPassage[] = [];
-  for (const p of passageMap.values()) {
+  for (const p of publishedFirst(passageMap, files, (b) => b.passages)) {
     if (!sourceMap.has(p.sourceId)) problems.push(`passage ${p.id}: unknown source ${p.sourceId}`);
     passages.push(planPassage(p, publishedAtByPassage.get(p.id) ?? null));
   }
@@ -241,7 +263,7 @@ export function buildPlan(files: readonly LayerFile[]): ImportPlan {
 
   if (problems.length > 0) throw new PlanError(problems);
   return {
-    sources: [...sourceMap.values()].map(planSource),
+    sources: publishedFirst(sourceMap, files, (b) => b.sources).map(planSource),
     topics: [...topics.values()],
     passages,
     questions,
