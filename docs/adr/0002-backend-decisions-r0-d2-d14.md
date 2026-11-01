@@ -18,7 +18,7 @@ Blueprint liệt kê các quyết định cần chủ. D1 đã tách thành ADR 
 | D3 | TOTP 2FA cho admin, tuỳ chọn bật từ S-C | Đề xuất |
 | D4 | Edge-cache nhỏ trong container `web`; đánh giá `use cache` ở S-B | Đề xuất |
 | D5 | Admin là SPA tĩnh do `api` phục vụ ở `/admin` | Đề xuất |
-| D6 | `pg_dump` 03:30 hằng ngày; giữ 14 ngày + 8 tuần + 6 tháng; kiểm khôi phục hằng tuần; thêm bản mã hoá ngoài máy | Đề xuất |
+| D6 | Sao lưu ngoài máy lên **Cloudflare R2** (chủ quyết định 1/11), bucket riêng, mã hoá phía client, giữ 14 ngày/8 tuần/6 tháng — [ADR 0003](0003-offsite-backup-r2.md) | Được chấp nhận (đích); chi tiết đề xuất |
 | D7 | Chủ chạy `deploy/gen-secrets.sh` một lần trên máy chủ; mật khẩu admin nhập qua TTY; agent không đọc | Đề xuất |
 | D8 | Cap: web 384 MB, api 160, postgres 256, worker 320 (≈ 1,12 GB); rooms +192 MB | Đề xuất |
 | D9 | Chấm điểm giữ ở trình duyệt; thêm `POST /attempts` sau nếu cần | Đề xuất |

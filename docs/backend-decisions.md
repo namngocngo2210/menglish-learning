@@ -10,7 +10,7 @@ Chi tiết: [backend-blueprint.md](backend-blueprint.md). Cột "Khuyến nghị
 | D3 | 2FA (TOTP) cho admin | **Có, tuỳ chọn bật ngay từ S-C** (thêm ≈ 1 ngày) | không muốn quản lý mã khôi phục |
 | D4 | Cách cài cache HTML của SSR | **Edge-cache nhỏ trong container `web`** (đã đo); đánh giá thêm `use cache` của Next ở S-B | Caddy dùng chung được phép thêm module cache |
 | D5 | Giao diện admin | **SPA tĩnh do `api` phục vụ ở `/admin`** (tách khỏi bundle công khai) | muốn dùng chung hoàn toàn component với `web` |
-| D6 | Sao lưu | `pg_dump` 03:30 hằng ngày → `~/backups/beejunior/`; giữ **14 ngày + 8 tuần + 6 tháng**; kiểm khôi phục hằng tuần; **thêm bản mã hoá ngoài máy** (nơi do bạn chọn) | không cần DR ngoài máy |
+| D6 | Sao lưu | **Cloudflare R2 đã chốt (1/11)**: `pg_dump` 03:30 hằng ngày → `~/backups/beejunior/` + bản mã hoá phía client tải lên bucket riêng; giữ 14 ngày + 8 tuần + 6 tháng; thiết kế/runbook: [backup-offsite-r2.md](backup-offsite-r2.md) | không cần DR ngoài máy |
 | D7 | Bí mật | Bạn chạy `deploy/gen-secrets.sh` **một lần trên máy chủ**, mật khẩu admin tự nhập qua TTY khi `admin:create`; agent không đọc | muốn ops làm thay (cần duyệt riêng) |
 | D8 | Giới hạn tài nguyên | web 384 MB/1 CPU, api 160, postgres 256, worker 320 ⇒ **cap 1,12 GB** (thường trực ≈ 0,4–0,5 GB [ước]); khi mở rooms +192 MB | bạn muốn trần ≤ 1 GB (giảm worker/web, chấp nhận rủi ro) |
 | D9 | Chấm điểm | **Giữ chấm ở trình duyệt** (như hôm nay; đáp án nằm trong trang) — docs cũ ghi "server chấm" nhưng chưa từng làm | muốn chống sao chép đáp án / thống kê chính xác → thêm `POST /attempts` giai đoạn sau |
