@@ -28,4 +28,4 @@ COPY --chown=app:app db/migrations ./db/migrations
 USER app
 EXPOSE 8080
 HEALTHCHECK --interval=15s --timeout=3s --start-period=10s CMD wget -qO- http://127.0.0.1:8080/healthz >/dev/null || exit 1
-CMD ["node", "--max-old-space-size=128", "dist/server/main.mjs"]
+CMD ["node", "--max-old-space-size=96", "--max-semi-space-size=2", "dist/server/main.mjs"]

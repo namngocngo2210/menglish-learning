@@ -34,7 +34,19 @@ Trạng thái: **một phần** (xem "Chưa làm"). Code do dev viết trực ti
 
 Không lỗi nào (0 mã khác 200). Mục tiêu p95 HIT < 100 ms đạt ở 1/10/50; ở 200 đồng thời p95 = 131,6 ms (vượt, do load generator cùng máy).
 
-**RSS (docker stats):** web (Next + edge) 155 MiB sau tải 200 đồng thời (cap 384 MB); api 31 MiB (cap 160 MB, **không vượt 160 MB**); postgres 98 MiB (cap 256 MB).
+**RSS (docker stats):** web (Next + edge) 155 MiB sau tải 200 đồng thời (cap 384 MB); api: xem mục "RSS api trong container thật" bên dưới (cgroup anon ≈ 31 MiB ≠ RSS tiến trình); postgres 98 MiB (cap 256 MB).
+
+## RSS api trong container thật (cap 160 MB, 0,5 CPU, memswap = mem)
+
+[đo] Ảnh `api/Dockerfile`, tải 50 đồng thời, 321 URL (grades/topics/316 đề), 0 non-200, Postgres throwaway cùng mạng `--internal`. RSS = `VmRSS` của tiến trình (gồm trang file-backed); cgroup `anon` ghi kèm.
+
+| Cấu hình | idle RSS | đỉnh RSS | cgroup anon sau tải | OOM |
+|---|---|---|---|---|
+| Trước: `--max-old-space-size=128`, chạy trên host không cap | 84,7 MB | 170,3 MB | n/a | n/a |
+| Trước: cùng cờ, container cap 160m (30 s) | 78,7 MB | 102 MB | 44 MB | 0 |
+| Sau: `--max-old-space-size=96 --max-semi-space-size=2`, container cap 160m (30 s) | 80,3 MB | 105 MB | 47 MB | 0 |
+
+Số 170 MB đo trên host không cap (V8 không bị áp lực bộ nhớ, load generator chung máy). Trong container đúng cap, đỉnh ≈ 105 MB < 160 MB ⇒ **giữ cap 160 MB**, không nâng. Cờ heap 96 + semi-space 2 để GC sớm, chừa dư địa. Soak 10 phút (cờ "Sau", 50 đồng thời, 65.457 request, 0 non-200, ~109 req/s): idle 80,1 MB → đỉnh `VmHWM` 107,3 MB, cgroup anon 49 MB, `oom_kill` 0, `OOMKilled=false`.
 
 ## Chưa làm (cần phiên tiếp theo)
 

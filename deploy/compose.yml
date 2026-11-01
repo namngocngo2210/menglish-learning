@@ -128,7 +128,7 @@ services:
     <<: *hardening
     image: beejunior-api:${TAG:-local}
     build: { context: .., dockerfile: api/Dockerfile }
-    command: ["node", "--max-old-space-size=128", "dist/server/main.mjs"]
+    command: ["node", "--max-old-space-size=96", "--max-semi-space-size=2", "dist/server/main.mjs"]
     mem_limit: 160m
     memswap_limit: 160m
     cpus: 0.5
