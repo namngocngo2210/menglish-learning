@@ -2,6 +2,7 @@ import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type pg from "pg";
 import { z } from "zod";
 import { HttpProblem } from "../server/problems";
+import { registerCrawlJobs } from "./crawl-jobs";
 import {
   ListQuerySchema,
   IdSchema,
@@ -100,6 +101,8 @@ export function adminPlugin(options: CmsOptions) {
         ),
       );
     }
+
+    registerCrawlJobs(app, pool, actor, send);
 
     app.get("/questions/:id/revisions", async (request, reply) => {
       const { id } = idParams.parse(request.params);

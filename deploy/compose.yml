@@ -99,7 +99,7 @@ services:
       PGUSER: postgres
     volumes:
       - ./db-init.sh:/deploy/db-init.sh:ro
-    secrets: [pgpass_superuser, pg_api, pg_web]
+    secrets: [pgpass_superuser, pg_api, pg_web, pg_worker]
     networks: [bj-internal]
     depends_on:
       postgres: { condition: service_healthy }
@@ -185,9 +185,37 @@ services:
       timeout: 5s
       retries: 3
 
+  # Same image as the api, different entrypoint: crawl queue + reaper + outbox dispatcher (D8: 320 MB).
+  # Role bj_worker can insert quarantine rows only; it cannot publish. No published ports, internal network only
+  # (crawl traffic leaves through the host's default route; the SSRF guard enforces the source allowlist).
+  worker:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    command: ["node", "--max-old-space-size=224", "dist/worker/main.mjs", "run"]
+    mem_limit: 320m
+    memswap_limit: 320m
+    cpus: 0.5
+    pids_limit: 128
+    tmpfs: ["/tmp:size=96m"]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_worker
+      EDGE_PURGE_URL: http://web:3100/_purge
+      EDGE_PURGE_TOKEN_FILE: /run/secrets/internal_token
+      CRAWL_DATA_DIR: /tmp/crawl
+    secrets: [db_url_worker, internal_token]
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [bj-internal, bj-egress]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8081/healthz >/dev/null"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
 networks:
   bj-internal: { internal: true }
   menglish-proxy: { external: true }
+  bj-egress: {} # outbound internet for the worker only (crawl); bj-internal has none
 
 volumes:
   bj-pgdata: {}
@@ -197,7 +225,9 @@ secrets:
   pgpass_superuser: { file: "${SECRETS_DIR}/pgpass_superuser" }
   pg_api: { file: "${SECRETS_DIR}/pg_api" }
   pg_web: { file: "${SECRETS_DIR}/pg_web" }
+  pg_worker: { file: "${SECRETS_DIR}/pg_worker" }
   db_url_superuser: { file: "${SECRETS_DIR}/db_url_superuser" }
   db_url_api: { file: "${SECRETS_DIR}/db_url_api" }
   db_url_web: { file: "${SECRETS_DIR}/db_url_web" }
+  db_url_worker: { file: "${SECRETS_DIR}/db_url_worker" }
   internal_token: { file: "${SECRETS_DIR}/internal_token" }

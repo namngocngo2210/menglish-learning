@@ -1,0 +1,5 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": { "types": ["node"], "paths": { "@crawler": ["./src/crawler-facade.d.ts"] } },
+  "include": ["src", "tests", "vitest.config.ts"]
+}

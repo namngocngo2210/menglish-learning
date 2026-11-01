@@ -47,7 +47,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # web is covered by ci.yml; core and api by the workspace-tests job below.
+        # web is covered by ci.yml; core, api and worker by the workspace-tests job below.
         dir: [rooms, crawler]
     defaults:
       run:
@@ -100,7 +100,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   workspace-tests:
-    name: Workspace tests (core, data, edge, api) + migrations
+    name: Workspace tests (core, data, edge, api, worker) + migrations
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -128,6 +128,7 @@ jobs:
           git diff --exit-code -- packages/db-types
       - run: npm test -w @bj/core -- --coverage
       - run: npm test -w @bj/api -- --coverage
+      - run: npm test -w @bj/worker -- --coverage
       - name: Migration files are immutable once on main
         if: github.event_name == 'pull_request'
         run: |

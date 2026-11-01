@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseSourceRef } from "../src/import/provenance";
+import { parseSourceRef } from "../src/provenance";
 
 describe("parseSourceRef", () => {
   it("splits an official exam reference into its parts when the six fields are present", () => {
