@@ -7,3 +7,6 @@ crawler/dist/
 coverage/
 .next/
 dist/
+admin/e2e/screenshots/
+admin/dist/
+admin/test-results/

@@ -9,6 +9,7 @@ import type { AuthDeps } from "../admin/auth";
 import { reportsPlugin } from "../cms/reports";
 import { adminPlugin } from "../cms/routes";
 import type { CmsOptions } from "../cms/routes";
+import { registerAdminStatic } from "./admin-static";
 import { buildOpenApi } from "./openapi";
 import { HttpProblem, problemBody, sendProblem } from "./problems";
 import { buildRouteSpecs, registerRoutes } from "./routes";
@@ -23,6 +24,8 @@ export interface AppOptions extends RouteDeps {
   cms?: CmsOptions;
   /** Admin login/session/CSRF/TOTP; omitted = admin routes stay deny-all. */
   auth?: AuthDeps;
+  /** Directory of the built admin SPA (admin/dist); omitted = /admin is not served. */
+  adminDist?: string;
 }
 
 export interface BuiltApp {
@@ -151,6 +154,7 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
     await app.register(adminPlugin(cms), { prefix: "/api/v1/admin" });
     await app.register(reportsPlugin(cms));
   }
+  if (options.adminDist) registerAdminStatic(app, options.adminDist);
   await app.ready();
   return { app, specs, routes };
 }
