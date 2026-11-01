@@ -17,7 +17,13 @@ const PURGE_MAX_BODY = 64 * 1024;
 const PASS_MAX_BODY = 1024 * 1024;
 const REQUEST_ID = /^[A-Za-z0-9-]{8,64}$/;
 /** Hop-by-hop and cookie headers are never copied between upstream and client. */
-const DROP_RESPONSE_HEADERS = new Set(["connection", "keep-alive", "transfer-encoding", "set-cookie", "content-length"]);
+const DROP_RESPONSE_HEADERS = new Set([
+  "connection",
+  "keep-alive",
+  "transfer-encoding",
+  "set-cookie",
+  "content-length",
+]);
 
 const PurgeBodySchema = z.strictObject({
   paths: z.array(z.string().max(512).startsWith("/")).max(500).optional(),
@@ -126,11 +132,20 @@ function readBody(req: http.IncomingMessage, limit: number): Promise<Buffer | un
 export function createEdge(options: EdgeOptions): Edge {
   const { config, fetchUpstream, logger } = options;
   const now = options.now ?? (() => Date.now());
-  const sleep = options.sleep ?? ((ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms)));
+  const sleep =
+    options.sleep ?? ((ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms)));
   const store = new LruStore(config.maxBytes);
   const gate = new RenderGate(config.maxConcurrentRenders, config.maxRenderQueue);
   const inflight = new Map<string, Promise<FillResult>>();
-  const stats: EdgeStats = { hit: 0, stale: 0, miss: 0, staleError: 0, shed: 0, unavailable: 0, passthrough: 0 };
+  const stats: EdgeStats = {
+    hit: 0,
+    stale: 0,
+    miss: 0,
+    staleError: 0,
+    shed: 0,
+    unavailable: 0,
+    passthrough: 0,
+  };
   let warming: Promise<WarmResult> | undefined;
 
   const upstreamHeaders = (req: http.IncomingMessage): Record<string, string> => {
@@ -184,7 +199,12 @@ export function createEdge(options: EdgeOptions): Edge {
     return promise;
   }
 
-  function sendEntry(req: http.IncomingMessage, res: http.ServerResponse, entry: Entry, tag: string): void {
+  function sendEntry(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    entry: Entry,
+    tag: string,
+  ): void {
     const cacheControl =
       entry.status === 200
         ? `public, max-age=0, s-maxage=${String(entry.ttl)}, stale-while-revalidate=${String(entry.stale)}`
@@ -201,7 +221,9 @@ export function createEdge(options: EdgeOptions): Edge {
     const notModified =
       entry.status === 200 &&
       ((typeof inm === "string" && inm.split(",").some((v) => v.trim() === entry.etag)) ||
-        (typeof inm !== "string" && typeof ims === "string" && Date.parse(ims) >= Math.floor(entry.at / 1000) * 1000));
+        (typeof inm !== "string" &&
+          typeof ims === "string" &&
+          Date.parse(ims) >= Math.floor(entry.at / 1000) * 1000));
     if (notModified) {
       res.writeHead(304, headers);
       res.end();
@@ -211,7 +233,11 @@ export function createEdge(options: EdgeOptions): Edge {
     res.end(req.method === "HEAD" ? undefined : entry.body);
   }
 
-  function sendUnavailable(req: http.IncomingMessage, res: http.ServerResponse, retryAfter: number): void {
+  function sendUnavailable(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    retryAfter: number,
+  ): void {
     res.writeHead(503, {
       "content-type": "text/html; charset=utf-8",
       "cache-control": "no-store",
@@ -221,7 +247,11 @@ export function createEdge(options: EdgeOptions): Edge {
     res.end(req.method === "HEAD" ? undefined : MAINTENANCE_HTML);
   }
 
-  function sendRaw(req: http.IncomingMessage, res: http.ServerResponse, raw: UpstreamResponse): void {
+  function sendRaw(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    raw: UpstreamResponse,
+  ): void {
     const headers: Record<string, string> = {};
     for (const [name, value] of Object.entries(raw.headers)) {
       if (!DROP_RESPONSE_HEADERS.has(name)) headers[name] = value;
@@ -231,10 +261,15 @@ export function createEdge(options: EdgeOptions): Edge {
     res.end(req.method === "HEAD" ? undefined : raw.body);
   }
 
-  async function passThrough(req: http.IncomingMessage, res: http.ServerResponse, path: string): Promise<void> {
+  async function passThrough(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    path: string,
+  ): Promise<void> {
     stats.passthrough++;
     const method = req.method ?? "GET";
-    const body = method === "GET" || method === "HEAD" ? undefined : await readBody(req, PASS_MAX_BODY);
+    const body =
+      method === "GET" || method === "HEAD" ? undefined : await readBody(req, PASS_MAX_BODY);
     if (body === undefined && method !== "GET" && method !== "HEAD") {
       res.writeHead(413, { "content-type": "text/plain" });
       res.end("payload too large");
@@ -256,22 +291,38 @@ export function createEdge(options: EdgeOptions): Edge {
       res.writeHead(status, { "content-type": "application/json", "cache-control": "no-store" });
       res.end(JSON.stringify(payload));
     };
-    if (req.method !== "POST") return json(405, { error: "method_not_allowed" });
+    if (req.method !== "POST") {
+      json(405, { error: "method_not_allowed" });
+      return;
+    }
     const auth = req.headers.authorization;
-    if (auth === undefined) return json(401, { error: "unauthenticated" });
-    if (config.token === undefined || !auth.startsWith("Bearer ") || !safeEqual(auth.slice(7), config.token)) {
-      return json(403, { error: "forbidden" });
+    if (auth === undefined) {
+      json(401, { error: "unauthenticated" });
+      return;
+    }
+    if (
+      config.token === undefined ||
+      !auth.startsWith("Bearer ") ||
+      !safeEqual(auth.slice(7), config.token)
+    ) {
+      json(403, { error: "forbidden" });
+      return;
     }
     const raw = await readBody(req, PURGE_MAX_BODY);
-    if (raw === undefined) return json(413, { error: "payload_too_large" });
+    if (raw === undefined) {
+      json(413, { error: "payload_too_large" });
+      return;
+    }
     let parsed: z.infer<typeof PurgeBodySchema>;
     try {
       parsed = PurgeBodySchema.parse(JSON.parse(raw.toString("utf8")));
     } catch {
-      return json(422, { error: "validation_failed" });
+      json(422, { error: "validation_failed" });
+      return;
     }
     const result = await purge(parsed);
-    return json(200, { removed: result.removed, refreshed: result.refreshed, warming: result.warming });
+    json(200, { removed: result.removed, refreshed: result.refreshed, warming: result.warming });
+    return;
   }
 
   async function purge(input: z.infer<typeof PurgeBodySchema>): Promise<PurgeResult> {
@@ -295,7 +346,11 @@ export function createEdge(options: EdgeOptions): Edge {
     let refreshed = false;
     if (config.token !== undefined) {
       try {
-        const res = await fetchUpstream({ method: "POST", path: "/internal/refresh", headers: { "x-internal-token": config.token } });
+        const res = await fetchUpstream({
+          method: "POST",
+          path: "/internal/refresh",
+          headers: { "x-internal-token": config.token },
+        });
         refreshed = res.status === 200;
       } catch {
         refreshed = false;
@@ -303,9 +358,19 @@ export function createEdge(options: EdgeOptions): Edge {
     }
     logger.info("purge", { removed, refreshed });
     const toWarm = config.warmEnabled ? (input.all === true ? undefined : [...removedPaths]) : [];
-    const done = toWarm === undefined ? warm().then(() => undefined) : toWarm.length > 0 ? warm(toWarm).then(() => undefined) : Promise.resolve();
+    const done =
+      toWarm === undefined
+        ? warm().then(() => undefined)
+        : toWarm.length > 0
+          ? warm(toWarm).then(() => undefined)
+          : Promise.resolve();
     done.catch(() => undefined);
-    return { removed, refreshed, warming: toWarm === undefined ? removedPaths.size : toWarm.length, done };
+    return {
+      removed,
+      refreshed,
+      warming: toWarm === undefined ? removedPaths.size : toWarm.length,
+      done,
+    };
   }
 
   async function sitemapPaths(): Promise<string[]> {
@@ -357,45 +422,63 @@ export function createEdge(options: EdgeOptions): Edge {
     return run;
   }
 
-  async function handleCached(req: http.IncomingMessage, res: http.ServerResponse, key: string): Promise<void> {
+  async function handleCached(
+    req: http.IncomingMessage,
+    res: http.ServerResponse,
+    key: string,
+  ): Promise<void> {
     const entry = store.get(key);
     const age = entry ? now() - entry.at : Infinity;
     const ttlMs = entry ? entry.ttl * 1000 : 0;
     const staleMs = entry ? entry.stale * 1000 : 0;
     if (entry && age < ttlMs) {
       stats.hit++;
-      return sendEntry(req, res, entry, "HIT");
+      sendEntry(req, res, entry, "HIT");
+      return;
     }
     const headers = upstreamHeaders(req);
     if (entry && age < ttlMs + staleMs) {
       stats.stale++;
       fill(key, headers).catch(() => undefined);
-      return sendEntry(req, res, entry, "STALE");
+      sendEntry(req, res, entry, "STALE");
+      return;
     }
     try {
       const result = await fill(key, headers);
       stats.miss++;
-      if ("entry" in result) return sendEntry(req, res, result.entry, "MISS");
-      return sendRaw(req, res, result.raw);
+      if ("entry" in result) {
+        sendEntry(req, res, result.entry, "MISS");
+        return;
+      }
+      sendRaw(req, res, result.raw);
+      return;
     } catch (error) {
       if (error instanceof ShedError) {
         stats.shed++;
         logger.warn("shed", { path: key });
       } else {
-        logger.warn("upstream_error", { path: key, reason: error instanceof Error ? error.message : "unknown" });
+        logger.warn("upstream_error", {
+          path: key,
+          reason: error instanceof Error ? error.message : "unknown",
+        });
       }
       if (entry) {
         stats.staleError++;
-        return sendEntry(req, res, entry, "STALE-ERROR");
+        sendEntry(req, res, entry, "STALE-ERROR");
+        return;
       }
       stats.unavailable++;
-      return sendUnavailable(req, res, error instanceof ShedError ? 5 : 30);
+      sendUnavailable(req, res, error instanceof ShedError ? 5 : 30);
+      return;
     }
   }
 
   async function handle(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     const given = req.headers["x-request-id"];
-    res.setHeader("x-request-id", typeof given === "string" && REQUEST_ID.test(given) ? given : randomUUID());
+    res.setHeader(
+      "x-request-id",
+      typeof given === "string" && REQUEST_ID.test(given) ? given : randomUUID(),
+    );
     const method = req.method ?? "GET";
     const { path, key } = cacheKey(req.url ?? "/");
     if (path === "/healthz") {
@@ -410,7 +493,8 @@ export function createEdge(options: EdgeOptions): Edge {
       return;
     }
     const bypass = path.startsWith("/_next/") || path.startsWith("/api/") || path === "/readyz";
-    if (bypass || (method !== "GET" && method !== "HEAD")) return passThrough(req, res, req.url ?? "/");
+    if (bypass || (method !== "GET" && method !== "HEAD"))
+      return passThrough(req, res, req.url ?? "/");
     return handleCached(req, res, key);
   }
 

@@ -91,9 +91,7 @@ describe("buildBundle", () => {
         crawled_at: new Date("2026-02-03T00:00:00.000Z"),
       },
     ];
-    input.questions = [
-      { ...(input.questions[0] as object), passage_id: "p1", source_code: "voa" },
-    ];
+    input.questions = [{ ...(input.questions[0] as object), passage_id: "p1", source_code: "voa" }];
     input.tests = [{ ...(input.tests[0] as object), seed: "s1" }];
     input.testItems = [
       {

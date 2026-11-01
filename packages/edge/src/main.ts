@@ -26,7 +26,11 @@ async function run(): Promise<void> {
   if (config.spawnNext) {
     next = spawn(process.execPath, ["web/server.js"], {
       stdio: "inherit",
-      env: { ...process.env, PORT: config.upstream.port || "3000", HOSTNAME: config.upstream.hostname },
+      env: {
+        ...process.env,
+        PORT: config.upstream.port || "3000",
+        HOSTNAME: config.upstream.hostname,
+      },
     });
     next.on("exit", (code) => {
       logger.warn("next_exited", { code: code ?? -1 });
@@ -42,7 +46,11 @@ async function run(): Promise<void> {
   process.on("SIGINT", shutdown);
 
   await new Promise<void>((resolve) => edge.server.listen(config.port, "0.0.0.0", resolve));
-  logger.info("start", { port: config.port, spawnNext: config.spawnNext, purge: config.token !== undefined });
+  logger.info("start", {
+    port: config.port,
+    spawnNext: config.spawnNext,
+    purge: config.token !== undefined,
+  });
 
   setInterval(() => {
     logger.info("stats", { ...edge.stats, entries: edge.store.size, bytes: edge.store.bytes });
@@ -51,7 +59,9 @@ async function run(): Promise<void> {
   if (config.warmEnabled) {
     const ready = await waitForUpstream(async () => {
       try {
-        return (await fetchUpstream({ method: "GET", path: "/readyz", headers: {} })).status === 200;
+        return (
+          (await fetchUpstream({ method: "GET", path: "/readyz", headers: {} })).status === 200
+        );
       } catch {
         return false;
       }

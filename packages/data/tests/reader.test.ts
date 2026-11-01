@@ -51,6 +51,11 @@ async function seed(db: pg.Pool): Promise<void> {
   await db.query(`INSERT INTO test_items (test_id, position, question_id, option_order)
     SELECT te.id, 1, q.id, 'ABCD' FROM tests te, questions q
     WHERE te.slug = 'lop-6/ngu-phap/ngoai-le/de-1' AND q.external_id = 'q3'`);
+  await db.query(`INSERT INTO tests (slug, grade, kind, title, review_status, published_at)
+    VALUES ('thi-vao-lop-10/de-1', 9, 'entrance10', 'Đề thi vào 10', 'published', now())`);
+  await db.query(`INSERT INTO test_items (test_id, position, question_id, option_order)
+    SELECT te.id, 1, q.id, 'ABCD' FROM tests te, questions q
+    WHERE te.slug = 'thi-vao-lop-10/de-1' AND q.external_id = 'q2'`);
 }
 
 describe.skipIf(ADMIN_URL === undefined)("createPublicReader", () => {
@@ -78,7 +83,10 @@ describe.skipIf(ADMIN_URL === undefined)("createPublicReader", () => {
   it("returns a validated bundle with only public content, in insertion order", async () => {
     const bundle = await reader.loadBundle();
     expect(bundle.questions.map((q) => q.id)).toEqual(["q1", "q2"]);
-    expect(bundle.tests.map((t) => t.slug)).toEqual(["lop-6/ngu-phap/thi-hien-tai-don/de-1"]);
+    expect(bundle.tests.map((t) => t.slug)).toEqual([
+      "lop-6/ngu-phap/thi-hien-tai-don/de-1",
+      "thi-vao-lop-10/de-1",
+    ]);
     expect(bundle.topics.map((t) => t.slug)).toEqual(["thi-hien-tai-don"]);
     expect(bundle.passages.map((p) => p.id)).toEqual(["voa-p-1"]);
     expect(bundle.sources.map((s) => s.id)).toEqual(["voa"]);
@@ -99,6 +107,40 @@ describe.skipIf(ADMIN_URL === undefined)("createPublicReader", () => {
     expect(first?.sourceName).toBe("VOA");
     expect(first?.reviewStatus).toBe("published");
     expect(bundle.passages[0]?.license).toBe("Public domain");
+  });
+
+  it("summarises grades and topics from the public views only", async () => {
+    expect(await reader.grades()).toEqual([
+      { grade: 6, tests: 1, questions: 2 },
+      { grade: 9, tests: 1, questions: 0 },
+    ]);
+    expect(await reader.topics({})).toEqual([
+      {
+        grade: 6,
+        skill: "ngu-phap",
+        slug: "thi-hien-tai-don",
+        name: "Thì hiện tại đơn",
+        description: "Mô tả",
+        tests: 1,
+      },
+    ]);
+    expect(await reader.topics({ grade: 7 })).toEqual([]);
+    expect(await reader.topics({ grade: 6, skill: "tu-vung" })).toEqual([]);
+  });
+
+  it("returns a test with options re-ordered and passages, and hides unpublished tests", async () => {
+    const test = await reader.test("lop-6/ngu-phap/thi-hien-tai-don/de-1");
+    expect(test?.questions.map((q) => q.id)).toEqual(["q2", "q1"]);
+    // BADC: the original B ("b") becomes A, and the correct answer B moves to position A.
+    expect(test?.questions[0]?.options.map((o) => o.text)).toEqual(["b", "a", "d", "c"]);
+    expect(test?.questions[0]?.correctKey).toBe("A");
+    expect(test?.passages.map((p) => p.id)).toEqual(["voa-p-1"]);
+    expect(test?.skill).toBe("ngu-phap");
+    expect(await reader.test("lop-6/ngu-phap/ngoai-le/de-1")).toBeUndefined();
+    expect(await reader.test("khong-co")).toBeUndefined();
+    const entrance = await reader.test("thi-vao-lop-10/de-1");
+    expect(entrance?.skill).toBeUndefined();
+    expect(entrance?.passages).toEqual([]);
   });
 
   it("answers ping", async () => {

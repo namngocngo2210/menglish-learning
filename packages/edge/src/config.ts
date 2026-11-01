@@ -8,7 +8,11 @@ const EnvSchema = z.strictObject({
   UPSTREAM_URL: z.url().default("http://127.0.0.1:3000"),
   INTERNAL_TOKEN: z.string().min(16).optional(),
   INTERNAL_TOKEN_FILE: z.string().min(1).optional(),
-  HTML_MAX_BYTES: z.coerce.number().int().positive().default(64 * 1024 * 1024),
+  HTML_MAX_BYTES: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(64 * 1024 * 1024),
   UPSTREAM_TIMEOUT_MS: z.coerce.number().int().positive().default(3000),
   MAX_CONCURRENT_RENDERS: z.coerce.number().int().positive().default(16),
   MAX_RENDER_QUEUE: z.coerce.number().int().min(0).default(64),
@@ -33,7 +37,9 @@ export interface EdgeConfig {
  * Reads the edge configuration once at startup. Errors name the variables, never their values.
  * Only the variables listed in EnvSchema are looked at (the process environment holds many others).
  */
-export function loadConfig(env: Readonly<Record<string, string | undefined>> = process.env): EdgeConfig {
+export function loadConfig(
+  env: Readonly<Record<string, string | undefined>> = process.env,
+): EdgeConfig {
   const picked: Record<string, string> = {};
   for (const key of Object.keys(EnvSchema.shape)) {
     const value = env[key];
@@ -45,7 +51,9 @@ export function loadConfig(env: Readonly<Record<string, string | undefined>> = p
     throw new Error(`Invalid environment: ${names}`);
   }
   const v = parsed.data;
-  const token = v.INTERNAL_TOKEN_FILE ? readFileSync(v.INTERNAL_TOKEN_FILE, "utf8").trim() : v.INTERNAL_TOKEN;
+  const token = v.INTERNAL_TOKEN_FILE
+    ? readFileSync(v.INTERNAL_TOKEN_FILE, "utf8").trim()
+    : v.INTERNAL_TOKEN;
   return {
     port: v.EDGE_PORT,
     upstream: new URL(v.UPSTREAM_URL),

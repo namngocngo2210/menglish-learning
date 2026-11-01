@@ -66,13 +66,22 @@ async function start(
   open.push(edge);
   await new Promise<void>((resolve) => edge.server.listen(0, "127.0.0.1", resolve));
   const port = (edge.server.address() as AddressInfo).port;
-  const send = (method: string, path: string, headers: Record<string, string>, payload?: string): Promise<Reply> =>
+  const send = (
+    method: string,
+    path: string,
+    headers: Record<string, string>,
+    payload?: string,
+  ): Promise<Reply> =>
     new Promise((resolve, reject) => {
       const req = http.request({ host: "127.0.0.1", port, path, method, headers }, (res) => {
         const chunks: Buffer[] = [];
         res.on("data", (c: Buffer) => chunks.push(c));
         res.on("end", () => {
-          resolve({ status: res.statusCode ?? 0, headers: res.headers, body: Buffer.concat(chunks).toString("utf8") });
+          resolve({
+            status: res.statusCode ?? 0,
+            headers: res.headers,
+            body: Buffer.concat(chunks).toString("utf8"),
+          });
         });
       });
       req.on("error", reject);
@@ -102,7 +111,9 @@ describe("cache state machine", () => {
     const first = await h.get(TOPIC);
     expect(first.status).toBe(200);
     expect(first.headers["x-cache"]).toBe("MISS");
-    expect(first.headers["cache-control"]).toBe("public, max-age=0, s-maxage=60, stale-while-revalidate=86400");
+    expect(first.headers["cache-control"]).toBe(
+      "public, max-age=0, s-maxage=60, stale-while-revalidate=86400",
+    );
     expect(first.headers.etag).toMatch(/^W\//);
     const second = await h.get(TOPIC);
     expect(second.headers["x-cache"]).toBe("HIT");
@@ -113,13 +124,21 @@ describe("cache state machine", () => {
   it("applies the TTL table per route", async () => {
     const h = await start((request) =>
       request.path === "/sitemap.xml"
-        ? { status: 200, headers: { "content-type": "application/xml" }, body: Buffer.from("<urlset/>") }
+        ? {
+            status: 200,
+            headers: { "content-type": "application/xml" },
+            body: Buffer.from("<urlset/>"),
+          }
         : html("x"),
     );
     expect((await h.get(TEST_PAGE)).headers["cache-control"]).toContain("s-maxage=300");
     expect((await h.get("/sitemap.xml")).headers["cache-control"]).toContain("s-maxage=300");
-    expect((await h.get("/thi-vao-lop-10/de-1")).headers["cache-control"]).toContain("s-maxage=300");
-    expect((await h.get("/pool/lop-6/ngu-phap/tong-hop")).headers["cache-control"]).toContain("s-maxage=300");
+    expect((await h.get("/thi-vao-lop-10/de-1")).headers["cache-control"]).toContain(
+      "s-maxage=300",
+    );
+    expect((await h.get("/pool/lop-6/ngu-phap/tong-hop")).headers["cache-control"]).toContain(
+      "s-maxage=300",
+    );
     expect((await h.get("/")).headers["cache-control"]).toContain("s-maxage=60");
   });
 
@@ -161,7 +180,9 @@ describe("cache state machine", () => {
     const first = await h.get(TOPIC);
     const byTag = await h.get(TOPIC, { "if-none-match": String(first.headers.etag) });
     expect(byTag.status).toBe(304);
-    const bySince = await h.get(TOPIC, { "if-modified-since": String(first.headers["last-modified"]) });
+    const bySince = await h.get(TOPIC, {
+      "if-modified-since": String(first.headers["last-modified"]),
+    });
     expect(bySince.status).toBe(304);
     expect((await h.get(TOPIC, { "if-none-match": 'W/"other"' })).status).toBe(200);
   });
@@ -202,12 +223,20 @@ describe("keys and cookies", () => {
 
   it("echoes a valid request id and generates one otherwise", async () => {
     const h = await start(() => html("x"));
-    expect((await h.get(TOPIC, { "x-request-id": "abcdef12-3456" })).headers["x-request-id"]).toBe("abcdef12-3456");
-    expect(String((await h.get(TOPIC, { "x-request-id": "bad id!" })).headers["x-request-id"])).toMatch(/^[0-9a-f-]{36}$/);
+    expect((await h.get(TOPIC, { "x-request-id": "abcdef12-3456" })).headers["x-request-id"]).toBe(
+      "abcdef12-3456",
+    );
+    expect(
+      String((await h.get(TOPIC, { "x-request-id": "bad id!" })).headers["x-request-id"]),
+    ).toMatch(/^[0-9a-f-]{36}$/);
   });
 
   it("passes /_next and /api through without caching", async () => {
-    const h = await start((request) => ({ status: 200, headers: { "content-type": "application/javascript" }, body: Buffer.from(request.path) }));
+    const h = await start((request) => ({
+      status: 200,
+      headers: { "content-type": "application/javascript" },
+      body: Buffer.from(request.path),
+    }));
     await h.get("/_next/static/a.js");
     await h.get("/_next/static/a.js");
     expect(h.calls).toHaveLength(2);
@@ -221,7 +250,8 @@ describe("failure handling", () => {
   it("serves stale-on-error for a 5xx and for a hung upstream", async () => {
     let mode: "ok" | "500" | "down" = "ok";
     const h = await start(() => {
-      if (mode === "500") return { status: 500, headers: { "content-type": "text/html" }, body: Buffer.from("boom") };
+      if (mode === "500")
+        return { status: 500, headers: { "content-type": "text/html" }, body: Buffer.from("boom") };
       if (mode === "down") return Promise.reject(new Error("upstream timeout"));
       return html("good");
     });
@@ -246,7 +276,11 @@ describe("failure handling", () => {
 
   it("never caches 5xx and recovers when the upstream returns", async () => {
     let healthy = false;
-    const h = await start(() => (healthy ? html("back") : { status: 500, headers: { "content-type": "text/html" }, body: Buffer.from("e") }));
+    const h = await start(() =>
+      healthy
+        ? html("back")
+        : { status: 500, headers: { "content-type": "text/html" }, body: Buffer.from("e") },
+    );
     expect((await h.get(TOPIC)).status).toBe(503);
     healthy = true;
     const ok = await h.get(TOPIC);
@@ -254,7 +288,11 @@ describe("failure handling", () => {
   });
 
   it("negative-caches a legitimate 404 for 30 s", async () => {
-    const h = await start(() => ({ status: 404, headers: { "content-type": "text/html" }, body: Buffer.from("nope") }));
+    const h = await start(() => ({
+      status: 404,
+      headers: { "content-type": "text/html" },
+      body: Buffer.from("nope"),
+    }));
     expect((await h.get("/lop-6/khong-co")).status).toBe(404);
     const again = await h.get("/lop-6/khong-co");
     expect([again.status, again.headers["x-cache"]]).toEqual([404, "HIT"]);
@@ -264,7 +302,11 @@ describe("failure handling", () => {
   });
 
   it("relays redirects without caching them", async () => {
-    const h = await start(() => ({ status: 308, headers: { location: "/new" }, body: Buffer.alloc(0) }));
+    const h = await start(() => ({
+      status: 308,
+      headers: { location: "/new" },
+      body: Buffer.alloc(0),
+    }));
     const reply = await h.get("/old");
     expect([reply.status, reply.headers.location]).toEqual([308, "/new"]);
     await h.get("/old");
@@ -327,9 +369,13 @@ describe("purge and warmer", () => {
   it("requires the internal token", async () => {
     const h = await start(() => html("x"));
     expect((await h.post("/_purge", { all: true })).status).toBe(401);
-    expect((await h.post("/_purge", { all: true }, { authorization: "Bearer wrong" })).status).toBe(403);
+    expect((await h.post("/_purge", { all: true }, { authorization: "Bearer wrong" })).status).toBe(
+      403,
+    );
     const noToken = await start(() => html("x"), { token: undefined });
-    expect((await noToken.post("/_purge", { all: true }, { authorization: `Bearer ${TOKEN}` })).status).toBe(403);
+    expect(
+      (await noToken.post("/_purge", { all: true }, { authorization: `Bearer ${TOKEN}` })).status,
+    ).toBe(403);
     expect((await h.get("/_purge")).status).toBe(405);
   });
 
@@ -341,14 +387,18 @@ describe("purge and warmer", () => {
   });
 
   it("purges by path and prefix, tells Next to reload and warms the removed paths", async () => {
-    const h = await start((request) => (request.path === "/internal/refresh" ? { status: 200, headers: {}, body: Buffer.from("{}") } : html(request.path)));
+    const h = await start((request) =>
+      request.path === "/internal/refresh"
+        ? { status: 200, headers: {}, body: Buffer.from("{}") }
+        : html(request.path),
+    );
     for (const p of ["/a", "/b?x=1", "/lop-6/x", "/lop-6/y"]) await h.get(p);
     const auth = { authorization: `Bearer ${TOKEN}` };
     const reply = await h.post("/_purge", { paths: ["/a", "/b"], prefixes: ["/lop-6/"] }, auth);
     expect(JSON.parse(reply.body)).toEqual({ removed: 4, refreshed: true, warming: 4 });
     const refresh = h.calls.find((c) => c.path === "/internal/refresh");
     expect(refresh?.headers["x-internal-token"]).toBe(TOKEN);
-    await vi_waitFor(() => h.edge.store.size === 4);
+    await waitUntil(() => h.edge.store.size === 4);
     expect(h.edge.store.size).toBe(4);
   });
 
@@ -360,8 +410,14 @@ describe("purge and warmer", () => {
       peak = Math.max(peak, active);
       await Promise.resolve();
       active--;
-      if (request.path === "/sitemap.xml") return { status: 200, headers: { "content-type": "application/xml" }, body: Buffer.from(sitemap) };
-      if (request.path === "/internal/refresh") return { status: 200, headers: {}, body: Buffer.from("{}") };
+      if (request.path === "/sitemap.xml")
+        return {
+          status: 200,
+          headers: { "content-type": "application/xml" },
+          body: Buffer.from(sitemap),
+        };
+      if (request.path === "/internal/refresh")
+        return { status: 200, headers: {}, body: Buffer.from("{}") };
       return html(request.path);
     });
     await h.get("/stale-one");
@@ -373,7 +429,11 @@ describe("purge and warmer", () => {
   });
 
   it("reports refreshed=false when Next cannot be reached, without failing the purge", async () => {
-    const h = await start((request) => (request.path === "/internal/refresh" ? Promise.reject(new Error("down")) : html("x")), { warmEnabled: false });
+    const h = await start(
+      (request) =>
+        request.path === "/internal/refresh" ? Promise.reject(new Error("down")) : html("x"),
+      { warmEnabled: false },
+    );
     const result = await h.edge.purge({ paths: ["/a"] });
     expect(result).toMatchObject({ removed: 0, refreshed: false, warming: 0 });
   });
@@ -400,6 +460,7 @@ describe("purge and warmer", () => {
   });
 });
 
-async function vi_waitFor(condition: () => boolean): Promise<void> {
-  for (let i = 0; i < 200 && !condition(); i++) await new Promise<void>((resolve) => setImmediate(resolve));
+async function waitUntil(condition: () => boolean): Promise<void> {
+  for (let i = 0; i < 200 && !condition(); i++)
+    await new Promise<void>((resolve) => setImmediate(resolve));
 }

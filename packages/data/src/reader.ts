@@ -3,6 +3,8 @@ import type { DB } from "@bj/db-types";
 import { Kysely, PostgresDialect, sql } from "kysely";
 import pg from "pg";
 import { buildBundle } from "./bundle";
+import { getTest, listGrades, listTopics } from "./queries";
+import type { GradeSummary, PublicTest, TopicSummary } from "./queries";
 
 export interface PublicReaderOptions {
   connectionString: string;
@@ -13,6 +15,9 @@ export interface PublicReaderOptions {
 export interface PublicReader {
   /** One consistent snapshot of everything the public site shows. */
   loadBundle(): Promise<ContentBundle>;
+  grades(): Promise<GradeSummary[]>;
+  topics(filter: { grade?: number; skill?: string }): Promise<TopicSummary[]>;
+  test(slug: string): Promise<PublicTest | undefined>;
   /** Cheap liveness probe of the database connection (readiness). */
   ping(): Promise<void>;
   close(): Promise<void>;
@@ -76,6 +81,9 @@ export function createPublicReader(options: PublicReaderOptions): PublicReader {
         });
       return buildBundle(rows);
     },
+    grades: () => listGrades(db),
+    topics: (filter) => listTopics(db, filter),
+    test: (slug) => getTest(db, slug),
     async ping() {
       await sql`SELECT 1`.execute(db);
     },

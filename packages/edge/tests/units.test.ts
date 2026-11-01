@@ -58,7 +58,12 @@ describe("policy", () => {
 describe("loadConfig", () => {
   it("applies defaults and rejects bad values without echoing them", () => {
     const config = loadConfig({ INTERNAL_TOKEN: "x".repeat(20) });
-    expect(config).toMatchObject({ port: 3100, maxRenderQueue: 64, maxConcurrentRenders: 16, warmEnabled: true });
+    expect(config).toMatchObject({
+      port: 3100,
+      maxRenderQueue: 64,
+      maxConcurrentRenders: 16,
+      warmEnabled: true,
+    });
     expect(() => loadConfig({ EDGE_PORT: "banana", INTERNAL_TOKEN: "short" })).toThrow(/EDGE_PORT/);
     try {
       loadConfig({ INTERNAL_TOKEN: "short" });
@@ -99,6 +104,10 @@ describe("createHttpUpstream", () => {
     expect([ok.status, ok.body.toString(), seen]).toEqual([200, "hello", "identity"]);
     await expect(fetchUp({ method: "GET", path: "/hang", headers: {} })).rejects.toThrow();
     server.closeAllConnections();
-    await new Promise<void>((resolve) => server.close(() => resolve()));
+    await new Promise<void>((resolve) => {
+      server.close(() => {
+        resolve();
+      });
+    });
   });
 });
