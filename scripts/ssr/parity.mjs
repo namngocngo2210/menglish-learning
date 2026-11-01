@@ -44,7 +44,8 @@ export function normalize(html) {
   return html
     .replace(/\/_next\/static\/[A-Za-z0-9_\-./%~]+/g, "/_next/static/*")
     .replace(/static\/[A-Za-z0-9_\-./%~]+\.(js|css|woff2|map)/g, "static/*")
-    .replace(/\\"h\\":\d+,/g, "")
+    .replace(/(?:\\)*"h(?:\\)*":\d+,/g, "")
+    .replace(/(?:\\)*"S(?:\\)*":(?:true|false),/g, "")
     .replace(/"h":\d+,/g, "")
     .replace(/"b":"[^"]*"/g, '"b":"*"')
     .replace(/\\"b\\":\\"[^"\\]*\\"/g, '\\"b\\":\\"*\\"')
