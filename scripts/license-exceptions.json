@@ -1,3 +1,4 @@
 {
-  "@img/sharp-*": "Prebuilt libvips binaries pulled in by Next.js image optimisation; LGPL, dynamically linked, not modified. See docs/adr/0001-stack-typescript.md."
+  "@img/sharp-*": "Prebuilt libvips binaries pulled in by Next.js image optimisation; LGPL, dynamically linked, not modified. See docs/adr/0001-stack-typescript.md.",
+  "rechoir": "rechoir@0.6.2 omits the license field in package.json; upstream repo is MIT. Dev-only transitive (kysely-codegen -> git-diff -> shelljs), never shipped. See docs/adr/0001-stack-typescript.md."
 }
