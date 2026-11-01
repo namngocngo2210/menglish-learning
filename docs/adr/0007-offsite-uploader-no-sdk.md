@@ -13,7 +13,7 @@ ADR 0003 cho phép `@aws-sdk/client-s3` cho script sao lưu. Thực tế script 
 1. Viết client S3 tối thiểu (`scripts/ops/s3.mjs`, ≈100 dòng, chỉ `node:crypto` + `node:http(s)`) ký **SigV4**, kiểm bằng **hai vector kiểm thử đã công bố của AWS** (khớp chữ ký từng bit) cộng một S3 giả trong bộ test. Không thêm dependency nào vào repo; không tăng bề mặt `npm audit`; không cần `npm ci` trên máy chủ.
 2. Phong bì mã hoá giữ nguyên thiết kế của ADR 0003 (X25519 + HKDF + AES-256-GCM theo khối, `node:crypto`).
 3. Ngoài phạm vi: multipart upload (một lần PUT tới 5 GB; DB hiện cỡ vài MB–vài chục MB), retry nhiều tầng (cron chạy lại hằng đêm + watchdog báo động).
-4. Cùng PR sửa lỗi dựng image `api` đã có trên `main` từ S-C: `@node-rs/argon2` là addon native (`.node`) nên esbuild không đóng gói được. Giữ `--external:@node-rs/argon2` và chép gói `@node-rs/*` (không có dependency con) từ stage `deps` vào image chạy. Đã kiểm: image dựng được và `hash/verify` argon2id chạy trong image.
+4. Cùng PR sửa lỗi dựng image `api` đã có trên `main` từ S-C: `@node-rs/argon2` là addon native (`.node`) nên esbuild không đóng gói được. Giữ `--external:@node-rs/argon2` và chép gói `@node-rs/*` (không có dependency con) từ stage `deps` vào image chạy. Cùng lỗi loại này từ S-E: `.dockerignore` còn dòng `admin` nên `COPY admin` trong Dockerfile api thất bại; đã xoá dòng đó. Đã kiểm sau khi rebase lên `main` có S-E: image dựng được, `hash/verify` argon2id chạy, `/app/admin/index.html` có trong image.
 5. `scripts/ops/*.mjs` bị loại khỏi `checkJs` của `tsconfig.json` (như `scripts/ssr`, tiền lệ có sẵn): script vận hành ngắn, kiểm bằng test hành vi (vector AWS, S3 giả, openssl thật) thay vì ≈125 chú thích JSDoc. Lint và prettier vẫn áp dụng. Nâng lên TS khi script lớn thêm.
 
 ## Hệ quả
