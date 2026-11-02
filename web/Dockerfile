@@ -36,8 +36,10 @@ COPY web ./web
 RUN mkdir -p web/public && npm run build --workspace web && npm run build --workspace @bj/edge
 
 FROM node:22-alpine AS runner
+ARG ROOMS_ENABLED=false
 WORKDIR /app
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0
+# ROOMS_ENABLED at runtime too: force-dynamic pages (home) read the flag per request.
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 ROOMS_ENABLED=$ROOMS_ENABLED
 RUN addgroup -S -g 1001 app && adduser -S -u 1001 -G app app
 # Standalone output is nested under web/ because the workspace root is the tracing root.
 COPY --from=build --chown=app:app /app/web/.next/standalone ./
