@@ -100,7 +100,7 @@ describe("pages and flag off", () => {
  });
  it("header auth link renders the anonymous login link on the server (cacheable HTML); no logout until /me succeeds", () => {
   const out = html(createElement(AuthNav));
-  expect(out).toContain('href="/dang-nhap"');
+  expect(out).toContain('href="/log-in"');
   expect(out).not.toContain("Đăng xuất");
  });
  it("header and footer show nothing account-related when off", () => {
