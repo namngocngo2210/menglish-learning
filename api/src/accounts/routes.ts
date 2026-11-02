@@ -250,7 +250,13 @@ export function accountsPlugin(deps: AccountsDeps) {
     await auth.audit("user.register", request, created.userId, {
       emailGiven: body.email !== undefined,
     });
-    return { ...session, recoveryCodes: created.codes, emailPending: body.email !== undefined };
+    const mailUnavailable = body.email !== undefined && deps.mailer.configured === false;
+    return {
+      ...session,
+      recoveryCodes: created.codes,
+      emailPending: body.email !== undefined && !mailUnavailable,
+      ...(mailUnavailable ? { mailUnavailable: true } : {}),
+    };
   }
 
   /** Logged-in parent adds or replaces the email; it is stored only after the link is opened. Always 202. */

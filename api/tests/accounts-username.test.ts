@@ -137,6 +137,17 @@ describe.skipIf(ADMIN_URL === undefined)("username login and recovery (PostgreSQ
   const login = (username: string, password: string, from = ip()) =>
     post("/login", { username, password }, from);
 
+  it("reports mailUnavailable (and no pending verification) when the mailer is unconfigured", async () => {
+    mailer.configured = false;
+    try {
+      const res = await reg("no.mail", { email: "nomail@example.com" });
+      expect(res.statusCode).toBe(201);
+      expect(res.json<object>()).toMatchObject({ emailPending: false, mailUnavailable: true });
+    } finally {
+      delete mailer.configured;
+    }
+  });
+
   it("registers with a username only: 10 codes, a session, no email stored, hashes only", async () => {
     const res = await reg("Hoa.Mai");
     expect(res.statusCode).toBe(201);

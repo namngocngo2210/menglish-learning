@@ -6,7 +6,7 @@ export interface Profile { id: string; nickname: string; grade: number; createdA
 export interface ConsentTexts { policyVersion: string; texts: Record<"account" | "child_progress", { text: string; textHash: string }> }
 export interface ConsentRef { policyVersion: string; textHash: string }
 
-export interface RegisterResult { csrfToken: string; recoveryCodes: string[]; emailPending: boolean }
+export interface RegisterResult { csrfToken: string; recoveryCodes: string[]; emailPending: boolean; mailUnavailable?: boolean }
 
 /** Same-origin client for /api/v1/account. The CSRF token comes from login/register or GET /me and is held in memory only. */
 export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: { baseUrl?: string; fetchImpl?: typeof fetch } = {}) {
@@ -30,11 +30,11 @@ export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: 
   const res = await raw(method, path, body, withCsrf);
   return (res.status === 204 ? undefined : await res.json()) as T;
  };
- const startSession = async (path: string, body: unknown) => { const r = await json<{ csrfToken: string }>("POST", path, body); csrf = r.csrfToken; };
- async function me(): Promise<Me> { const m = await json<Me>("GET", "/me"); csrf = m.csrfToken; return m; }
+ const startSession = async (path: string, body: unknown) => { const r = await json<{ csrfToken: string }>("POST", path, body); csrf = r.csrfToken; setHint(true); };
+ async function me(): Promise<Me> { try { const m = await json<Me>("GET", "/me"); csrf = m.csrfToken; setHint(true); return m; } catch (e) { if (e instanceof AccountApiError && e.status === 401) setHint(false); throw e; } }
  return {
   consentTexts: () => json<ConsentTexts>("GET", "/consent-texts"),
-  register: async (b: { username: string; password: string; email?: string; adult: true; consent: ConsentRef; captchaToken?: string }) => { const r = await json<RegisterResult>("POST", "/register", b); csrf = r.csrfToken; return r; },
+  register: async (b: { username: string; password: string; email?: string; adult: true; consent: ConsentRef; captchaToken?: string }) => { const r = await json<RegisterResult>("POST", "/register", b); csrf = r.csrfToken; setHint(true); return r; },
   verifyEmail: (token: string) => json("POST", "/verify-email", { token }),
   login: (username: string, password: string) => startSession("/login", { username, password }),
   resetRequest: (email: string) => json("POST", "/password-reset/request", { email }),
@@ -44,8 +44,8 @@ export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: 
   regenerateRecoveryCodes: async (password: string) => (await json<{ recoveryCodes: string[] }>("POST", "/recovery-codes", { password }, true)).recoveryCodes,
   resetConfirm: (token: string, password: string) => json("POST", "/password-reset/confirm", { token, password }),
   me,
-  logout: async () => { await json("POST", "/logout", {}, true); csrf = null; },
-  logoutAll: async () => { await json("POST", "/logout-all", {}, true); csrf = null; },
+  logout: async () => { try { await json("POST", "/logout", {}, true); } finally { setHint(false); } csrf = null; },
+  logoutAll: async () => { await json("POST", "/logout-all", {}, true); csrf = null; setHint(false); },
   changePassword: (currentPassword: string, newPassword: string) => json("POST", "/password", { currentPassword, newPassword }, true),
   profiles: async () => (await json<{ items: Profile[] }>("GET", "/profiles")).items,
   createProfile: (b: { nickname: string; grade: number; consent: ConsentRef }) => json<Profile>("POST", "/profiles", b, true),
@@ -53,7 +53,12 @@ export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: 
   importProgress: (profileId: string, items: { slug: string; best: number; last: number; total: number; at: string }[]) => json<{ imported: number }>("POST", `/profiles/${profileId}/progress`, { items }, true),
   deleteProfile: (id: string) => json<void>("DELETE", `/profiles/${id}`, undefined, true),
   exportData: async () => (await raw("GET", "/export")).blob(),
-  deleteAccount: async (password?: string) => { await json<void>("DELETE", "/account", password === undefined ? {} : { password }, true); csrf = null; },
+  deleteAccount: async (password?: string) => { await json<void>("DELETE", "/account", password === undefined ? {} : { password }, true); csrf = null; setHint(false); },
  };
 }
 export type AccountClient = ReturnType<typeof createAccountClient>;
+
+/** Non-HttpOnly marker (no secret): lets the header skip /me for visitors who never logged in. The session cookie stays HttpOnly. */
+const HINT = "bj_in";
+export const hasLoginHint = () => typeof document !== "undefined" && document.cookie.split("; ").includes(`${HINT}=1`);
+const setHint = (on: boolean) => { if (typeof document !== "undefined") document.cookie = `${HINT}=${on ? "1" : ""}; Path=/; Max-Age=${on ? 2592000 : 0}; SameSite=Lax; Secure`; };
