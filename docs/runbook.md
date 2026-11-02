@@ -83,3 +83,43 @@ Giới hạn trong `deploy/compose.yml`: web 384 MB/1 CPU, api 160 MB/0,5, postg
 ## 8. Quan sát
 
 Log JSON một dòng/sự kiện (pino; không PII, đã redact), xoay `json-file 10m×3`. `GET /healthz` (sống) và `/readyz` (sẵn sàng, phụ thuộc DB) trên api:8080 và web:3100 (không route ra Caddy). Watchdog là điểm báo động duy nhất; chưa có Prometheus (chưa cần ở quy mô này, thêm bằng ADR nếu cần).
+
+## 9. Bật đăng nhập Google (tài khoản phụ huynh) — mặc định TẮT
+
+**Trạng thái:** mã đã có (PR #38) nhưng tính năng giữ **TẮT** (`ACCOUNTS_ENABLED` không đặt/`false` ⇒ route tài khoản và Google trả 404) cho đến khi **chủ** cung cấp client ID/secret. Mục 5 trong [user-accounts.md](user-accounts.md) (tạo project, màn hình đồng ý, brand verification) là **việc của chủ**, dev/ops không làm thay. Tài liệu này chỉ ghi **tên** biến; không ghi giá trị nào ở repo, chat, card hay log.
+
+### 9.1 Tạo OAuth client (chủ, Google Cloud Console)
+1. Project `beejunior-prod` (staging dùng project riêng) → *Google Auth Platform → Clients → Create client* → loại **Web application**.
+2. Authorized JavaScript origin: `https://beejunior.meducation.vn`.
+3. Authorized redirect URI, **khớp từng ký tự**: `https://beejunior.meducation.vn/api/v1/account/oauth/google/callback`.
+4. Scope duy nhất: `openid email profile` (không thêm scope khác; app chỉ lưu `sub` + email).
+5. Tải client ID/secret và đặt vào tệp env/secret trên host (9.2) bằng tay, không dán vào chat/card.
+
+### 9.2 Biến môi trường (tên; mẫu ở `deploy/example.env`)
+Đặt trong tệp env quyền **600** của host (kiểm `stat -c %a <tệp>` = 600) hoặc dùng `*_FILE` trỏ tới Docker secret, rồi truyền vào dịch vụ `api`. Hiện `deploy/compose.yml` chưa chuyển các biến `ACCOUNTS_*`/`GOOGLE_*` vào `api`; đó là một thay đổi compose riêng cần làm trước khi bật.
+
+| Biến | Ghi chú |
+|---|---|
+| `ACCOUNTS_ENABLED` | `true` để bật; thiếu/`false` = tắt |
+| `ACCOUNTS_ORIGIN` | `https://beejunior.meducation.vn` |
+| `USER_SESSION_HMAC_KEY` hoặc `_FILE` | ≥32 ký tự, **khác** `SESSION_HMAC_KEY` của admin |
+| `GOOGLE_CLIENT_ID` | từ Console |
+| `GOOGLE_CLIENT_SECRET` hoặc `GOOGLE_CLIENT_SECRET_FILE` | từ Console; ưu tiên `_FILE` |
+| `GOOGLE_REDIRECT_URI` | đúng `ACCOUNTS_ORIGIN` + `/api/v1/account/oauth/google/callback` |
+
+Đặt đủ cả ba biến `GOOGLE_*` hoặc không đặt biến nào; thiếu một biến, api **không khởi động** (lỗi `Missing environment` nêu tên biến, không in giá trị). `GOOGLE_AUTH_URL/TOKEN_URL/JWKS_URL/ISSUER` chỉ dùng cho test, không đặt ở prod.
+
+### 9.3 Bật
+1. Chỉ khi Chính sách/Điều khoản mới đã lên và chủ đã duyệt; làm ngoài giờ học.
+2. `dc up -d --force-recreate api` (không build lại web nếu không đổi mã).
+3. Kiểm `dc logs --tail 30 api`: không có `Missing environment`; `GET /readyz` OK.
+
+### 9.4 Smoke test
+1. `curl -sI` tới `/api/v1/account/oauth/google/start?policyVersion=<ver>&textHash=<hash>` ⇒ `302`, `Location` bắt đầu bằng `https://accounts.google.com/` và chứa `code_challenge_method=S256`, `scope=openid+email+profile`, `redirect_uri` đúng mục 9.1; có `Set-Cookie: __Host-bj_oauth` (HttpOnly; Secure).
+2. Trình duyệt, tài khoản Google thử (nếu app còn *Testing*, dùng tài khoản trong danh sách thử): `start` ⇒ Google ⇒ callback ⇒ `/tai-khoan`. Lỗi ⇒ `/dang-nhap?loi=google_*`.
+3. Email trùng một tài khoản mật khẩu đã có ⇒ `loi=google_email_exists` (đúng thiết kế, không tự gộp).
+4. Luyện tập ẩn danh (`/lop-6/...`) vẫn chạy bình thường.
+5. Log api không chứa `code`, `id_token`, secret.
+
+### 9.5 Rollback
+Đặt `ACCOUNTS_ENABLED=false` (hoặc xóa dòng) trong tệp env ⇒ `dc up -d --force-recreate api`. Route tài khoản/Google về 404; dữ liệu đã tạo giữ nguyên (migration chỉ thêm bảng). Chỉ tắt Google, giữ email+mật khẩu: bỏ cả ba biến `GOOGLE_*`. Nghi lộ secret: thu hồi/tạo lại secret trong Console, cập nhật tệp, tạo lại `api`.

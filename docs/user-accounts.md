@@ -1,6 +1,6 @@
 # Tài khoản người dùng (đăng ký email + Google) — thiết kế & rủi ro pháp lý
 
-> **Trạng thái: THIẾT KẾ, chờ chủ duyệt. Chưa có mã, migration, ứng dụng OAuth hay bí mật nào.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
+> **Trạng thái: THIẾT KẾ; mã S-U1..S-U3 đã có sau cờ ACCOUNTS_ENABLED (mặc định TẮT, xem mục 10–11). Chưa có ứng dụng OAuth hay bí mật nào: mục 5 là việc của chủ; tính năng giữ TẮT đến khi chủ đặt secret. Bật/rollback: [runbook.md](runbook.md) mục 9.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
 > **Phạm vi chủ chốt (2/11):** đăng ký email + mật khẩu và đăng nhập Google. **Không Facebook** (chỉ ghi "có thể làm sau", mục 5.3). Luyện tập ẩn danh giữ nguyên, không có "tường đăng nhập".
 > Đây **không phải tư vấn pháp lý**. Mọi kết luận pháp lý đánh dấu **[cần xác nhận với luật sư]**; mục 9 liệt kê điều chưa kiểm chứng được.
 
@@ -193,3 +193,12 @@ Chưa làm (ngoài S-U1): Google OIDC (S-U3), giao diện (S-U2), job xóa tài 
 **Đo RAM (D9):** `api` bundle trong container `node:22-bookworm` (glibc, không phải alpine), `--memory=160m --cpus=0.5`, 32 request đăng nhập đồng thời × 40 s (cổng băm 2 đồng thời, hàng đợi 8, phần còn lại 429): RSS nhàn rỗi 96 MB (đỉnh khởi động 109 MB), `VmHWM` dưới tải **139 MB**, không OOM → chưa cần nâng 160→192 MB; dư ~21 MB, đo lại ở S-U4 cùng lưu lượng công khai.
 
 **Điều kiện bật cờ:** phải đặt `TRUST_PROXY` đúng (IP/CIDR của Caddy); nếu không, mọi người dùng chung một IP trong giới hạn đăng nhập (5 lần sai/15 phút) và đăng nhập sai của một người chặn tất cả. Cùng quy tắc đã áp dụng cho API admin.
+
+## 11. Trạng thái S-U3 (Google OIDC, nhánh `feat/accounts-google`)
+
+Chỉ chạy khi `ACCOUNTS_ENABLED=true` **và** có đủ `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET[_FILE]`, `GOOGLE_REDIRECT_URI` (đúng `ACCOUNTS_ORIGIN` + `/api/v1/account/oauth/google/callback`; thiếu một biến → lỗi lúc khởi động). Cờ tắt hoặc thiếu cấu hình Google: hai route trả 404, không đổi gì khác. Điểm cuối nhà cung cấp mặc định của Google; `GOOGLE_AUTH_URL`/`GOOGLE_TOKEN_URL`/`GOOGLE_JWKS_URL`/`GOOGLE_ISSUER` chỉ để trỏ test vào OIDC giả.
+
+- `GET /api/v1/account/oauth/google/start?policyVersion=…&textHash=…` → 302 tới Google: code + PKCE S256, `state`, `nonce`, scope đúng `openid email profile`. Trạng thái nằm trong cookie ký HMAC (khóa `USER_SESSION_HMAC_KEY`, tiền tố riêng) `__Host-bj_oauth`, 10 phút, HttpOnly/Secure/Lax, xóa sau callback. Hai tham số consent là lời đồng ý "account" của phụ huynh mới (cùng bản văn như `/register`).
+- `GET …/callback` kiểm `state` (so với cookie), đổi code (kèm `code_verifier`), kiểm ID token: chữ ký RS256 theo JWKS (theo `kid`, tự tải lại khi xoay khóa), `iss`, `aud` (đúng một giá trị = client id), `exp`/`iat` (lệch 60 s), `nonce`, `email_verified`. Thành công → cookie phiên phụ huynh + 302 `/tai-khoan`; lỗi → 302 `/dang-nhap?loi=google_{failed|denied|email_exists|consent_required}` (không lộ chi tiết nhà cung cấp; audit `user.google_failed` chỉ ghi lý do).
+- Khóa danh tính là `sub` (bảng `identities`). `sub` lạ + email chưa có → tạo tài khoản `active` (không mật khẩu, cần consent). `sub` lạ + email đã có tài khoản → **từ chối** (`email_exists`), không tự gộp. Liên kết Google vào tài khoản đang đăng nhập **chưa làm** (cần luồng xác nhận riêng).
+- Chưa làm: nút "Đăng nhập bằng Google" ở web (giao diện), `safeFetch` có chống SSRF (tiêu chuẩn V12/V13 chưa có; hiện gọi tới URL cố định do vận hành đặt, có `eslint-disable` một chỗ ghi rõ lý do).

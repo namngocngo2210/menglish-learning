@@ -6,6 +6,7 @@ import { ABSOLUTE_MS, cookieHeader, createUserAuth } from "./auth";
 import type { AccountsDeps, UserPrincipal } from "./auth";
 import { CONSENT_PURPOSES, CONSENT_TEXTS, POLICY_VERSION, consentMatches } from "./consent-texts";
 import type { ConsentPurpose } from "./consent-texts";
+import { googleRoutes } from "./google";
 import { existingAccountMessage, resetPasswordMessage, verifyEmailMessage } from "./mailer";
 import type { MailMessage } from "./mailer";
 import { cleanNickname } from "./nickname";
@@ -45,7 +46,11 @@ declare module "fastify" {
 /** The only account routes reachable without a parent session. The route inventory test pins this list. */
 export const PUBLIC_ROUTES: readonly string[] = [
   "GET /api/v1/account/consent-texts",
+  "GET /api/v1/account/oauth/google/callback",
+  "GET /api/v1/account/oauth/google/pending",
+  "GET /api/v1/account/oauth/google/start",
   "POST /api/v1/account/login",
+  "POST /api/v1/account/oauth/google/register",
   "POST /api/v1/account/password-reset/confirm",
   "POST /api/v1/account/password-reset/request",
   "POST /api/v1/account/register",
@@ -476,6 +481,29 @@ export function accountsPlugin(deps: AccountsDeps) {
       policyVersion: POLICY_VERSION,
       texts: CONSENT_TEXTS,
     }));
+    if (deps.google)
+      googleRoutes(app, {
+        pool,
+        hmacKey: deps.hmacKey,
+        origin: deps.origin,
+        google: deps.google,
+        auth,
+        principal: me,
+        now,
+        openRoute: open,
+        startSession,
+        insertConsent: (client, request, userId) =>
+          insertConsent(client, request, userId, "account", null),
+      });
+    else {
+      const notFound = (): never => {
+        throw new HttpProblem("not_found");
+      };
+      for (const path of ["/oauth/google/start", "/oauth/google/callback", "/oauth/google/pending"])
+        app.get(path, { config: { accountPublic: true } }, notFound);
+      app.post("/oauth/google/register", { config: { accountPublic: true } }, notFound);
+      app.post("/oauth/google/link", notFound);
+    }
     app.post("/register", open(10), async (request, reply) =>
       reply.code(202).send(await register(request)),
     );
