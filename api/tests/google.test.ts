@@ -124,6 +124,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
           res.end(JSON.stringify({ error: "invalid_grant" }));
           return;
         }
+        issued.delete(form.get("code") ?? ""); // authorization codes are single use
         const t = Math.floor(Date.now() / 1000);
         const claims = {
           iss: ISS,
@@ -600,5 +601,128 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     const cookie = cookiesOf(await start())[0]!;
     expect(cookie).not.toContain("bj_admin");
     expect(cookie.startsWith("__Host-bj_oauth=")).toBe(true);
+  });
+
+  // ---- security and takeover cases (S-U3c) ----
+  const flowOf = (oauthCookie: string): Record<string, unknown> =>
+    JSON.parse(
+      Buffer.from(oauthCookie.split("=")[1]!.split(".")[0]!, "base64url").toString(),
+    ) as Record<string, unknown>;
+  const sealFlow = (value: object): string => {
+    const payload = Buffer.from(JSON.stringify(value)).toString("base64url");
+    return `__Host-bj_oauth=${payload}.${hmacHex("u".repeat(48), `oauth:flow:${payload}`)}`;
+  };
+
+  it("rejects a callback whose signed state cookie has expired", async () => {
+    const s = await start();
+    const { code, state } = authorize(String(s.headers.location));
+    const old = sealFlow({ ...flowOf(cookiesOf(s)[0]!.split(";")[0]!), e: t() - 1 });
+    expectRejected(await callback(`code=${code}&state=${state}`, old), "failed");
+    expect(await count("users")).toBe(0);
+  });
+
+  it("rejects a missing or wrong PKCE verifier (the provider refuses the exchange)", async () => {
+    for (const v of ["", "not-the-verifier"]) {
+      const s = await start();
+      const { code, state } = authorize(String(s.headers.location));
+      const cookie = sealFlow({ ...flowOf(cookiesOf(s)[0]!.split(";")[0]!), v });
+      expectRejected(await callback(`code=${code}&state=${state}`, cookie), "failed");
+    }
+    expect(await count("users")).toBe(0);
+    expect(await count("user_sessions")).toBe(0);
+  });
+
+  it("rejects a callback without a code or with a code the provider never issued", async () => {
+    const s = await start();
+    const oauthCookie = cookiesOf(s)[0]!.split(";")[0]!;
+    const { state } = authorize(String(s.headers.location));
+    expectRejected(await callback(`state=${state}`, oauthCookie), "failed");
+    expectRejected(await callback(`code=forged&state=${state}`, oauthCookie), "failed");
+    expect(await count("users")).toBe(0);
+  });
+
+  it("does not sign in twice when the same code and state are replayed", async () => {
+    const { res, oauthCookie, code, state } = await flow();
+    expect(res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    const sessions = await count("user_sessions");
+    // the browser dropped the cookie: replay without it
+    expectRejected(await callback(`code=${code}&state=${state}`, "x=1"), "failed");
+    // an attacker who kept the cookie: the provider's one-time code is spent
+    expectRejected(await callback(`code=${code}&state=${state}`, oauthCookie), "failed");
+    expect(await count("user_sessions")).toBe(sessions);
+    expect(await count("users")).toBe(1);
+  });
+
+  it("never lets an unverified Google email reach an existing account with that email", async () => {
+    await pool.query(
+      "INSERT INTO users (email, status, password_hash) VALUES ('parent@example.test','active','x')",
+    );
+    claimsOverride = { email_verified: false };
+    const { res } = await flow();
+    expectRejected(res, "failed");
+    expect(await count("identities")).toBe(0);
+    expect(await count("user_sessions")).toBe(0);
+    expect(await count("users")).toBe(1);
+  });
+
+  it("takeover attempt: a new sub with the victim's verified email gets no session and cannot link alone", async () => {
+    await pool.query(
+      "INSERT INTO users (email, status, password_hash) VALUES ('parent@example.test','active','x')",
+    );
+    sub = "attacker-sub";
+    const { res } = await flow(); // boxes ticked, new sub, same email
+    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
+    expect(await count("user_sessions")).toBe(0);
+    expect(await count("identities")).toBe(0);
+    expect(await count("users")).toBe(1);
+    // the pending cookie alone cannot link: linking needs the victim's own logged-in session
+    const link = await post(
+      "link",
+      { confirm: true },
+      { cookie: cookieOf(res, PENDING)!, origin: ORIGIN },
+    );
+    expect(link.statusCode).toBe(401);
+    expect(await count("identities")).toBe(0);
+  });
+
+  it("registers nobody from Google until the boxes are ticked and the parent is an adult", async () => {
+    const pending = cookieOf((await flow("")).res, PENDING)!;
+    const consent = ticked.consent;
+    for (const body of [{ adult: false, consent }, { consent }, { adult: true }]) {
+      const res = await post("register", body, { cookie: pending });
+      expect([400, 422]).toContain(res.statusCode);
+    }
+    expect(await count("users")).toBe(0);
+    expect(await count("identities")).toBe(0);
+    expect(await count("consents")).toBe(0);
+  });
+
+  it("leaves anonymous practice and public routes untouched, with the flag on or off", async () => {
+    for (const app of [on.app, noGoogle.app, off.app]) {
+      const res = await app.inject({ method: "GET", url: "/healthz" });
+      expect(res.statusCode).toBe(200);
+      expect(cookiesOf(res)).toEqual([]);
+    }
+    expect(await count("users")).toBe(0);
+    expect(await count("user_sessions")).toBe(0);
+  });
+
+  it("answers 404 on every Google route when the flag is off, even with a valid-looking cookie", async () => {
+    for (const [method, path] of [
+      ["GET", "start"],
+      ["GET", "callback"],
+      ["GET", "pending"],
+      ["POST", "register"],
+      ["POST", "link"],
+    ] as const) {
+      const res = await off.app.inject({
+        method,
+        url: `${A}/oauth/google/${path}`,
+        headers: { cookie: sealed({ k: "register", sub: "s", email: "a@b.test", e: IN }) },
+        ...(method === "POST" ? { payload: ticked } : {}),
+      });
+      expect(res.statusCode).toBe(404);
+    }
   });
 });
