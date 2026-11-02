@@ -3,30 +3,17 @@ import type { JsonWebKey } from "node:crypto";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import type pg from "pg";
 import { hmacHex, newToken, safeEqual } from "../admin/crypto";
-import type { UserAuth } from "./auth";
+import { HttpProblem } from "../server/problems";
+import { readCookie } from "./auth";
+import type { UserAuth, UserPrincipal } from "./auth";
 import { consentMatches } from "./consent-texts";
-
-/** Google OIDC settings. Endpoints are configurable so tests can point at a fake provider. */
-export interface GoogleConfig {
-  clientId: string;
-  clientSecret: string;
-  /** Must equal `${ACCOUNTS_ORIGIN}/api/v1/account/oauth/google/callback` as registered at Google. */
-  redirectUri: string;
-  authUrl: string;
-  tokenUrl: string;
-  jwksUrl: string;
-  issuers: readonly string[];
-}
-
-export const GOOGLE_DEFAULTS = {
-  authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-  tokenUrl: "https://oauth2.googleapis.com/token",
-  jwksUrl: "https://www.googleapis.com/oauth2/v3/certs",
-  issuers: ["https://accounts.google.com", "accounts.google.com"],
-} as const;
+import type { GoogleConfig } from "./google-config";
+import { googleLinkBody, googleRegisterBody } from "./schemas";
 
 /** Parent-only cookie for the in-flight login; never the session cookie, never an admin cookie. */
 export const OAUTH_COOKIE = "__Host-bj_oauth";
+/** Holds a verified Google identity that is not yet an account or a link; nothing is stored server-side. */
+export const PENDING_COOKIE = "__Host-bj_gpend";
 const STATE_TTL_S = 600;
 const CLOCK_SKEW_S = 60;
 const HTTP_TIMEOUT_MS = 5000;
@@ -41,10 +28,20 @@ interface Flow {
   e: number;
 }
 
-type Failure = "failed" | "denied" | "email_exists" | "consent_required";
+/** `register`: new email, waiting for the ticked boxes. `link`: needs a logged-in parent to confirm. */
+interface Pending {
+  k: "register" | "link";
+  sub: string;
+  email: string;
+  e: number;
+}
+
+type Failure = "failed" | "denied";
 
 const b64 = (value: string | Buffer): string => Buffer.from(value).toString("base64url");
-const clearOauthCookie = `${OAUTH_COOKIE}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`;
+const clearCookie = (name: string): string =>
+  `${name}=; Max-Age=0; Path=/; HttpOnly; Secure; SameSite=Lax`;
+const clearOauthCookie = clearCookie(OAUTH_COOKIE);
 
 class IdTokenError extends Error {}
 
@@ -61,6 +58,7 @@ export function googleRoutes(
     origin: string;
     google: GoogleConfig;
     auth: UserAuth;
+    principal: (request: FastifyRequest) => UserPrincipal;
     now: () => Date;
     openRoute: (max: number) => { config: object };
     startSession: (
@@ -76,7 +74,7 @@ export function googleRoutes(
   },
 ): void {
   const { pool, google, auth, now } = deps;
-  const sign = (payload: string): string => hmacHex(deps.hmacKey, `oauth-flow:${payload}`);
+  const sign = (payload: string): string => hmacHex(deps.hmacKey, `oauth:${payload}`);
   const fail = (reply: FastifyReply, code: Failure): FastifyReply =>
     reply
       .code(302)
@@ -84,21 +82,38 @@ export function googleRoutes(
       .header("location", `${deps.origin}/dang-nhap?loi=google_${code}`)
       .send();
 
-  function readFlow(request: FastifyRequest): Flow | undefined {
+  /** A signed, unexpired cookie payload; `purpose` keeps the two cookies from standing in for each other. */
+  function readSigned(
+    request: FastifyRequest,
+    cookie: string,
+    purpose: string,
+  ): { e: number } | undefined {
     for (const part of (request.headers.cookie ?? "").split(";")) {
       const [name, ...rest] = part.trim().split("=");
-      if (name !== OAUTH_COOKIE) continue;
+      if (name !== cookie) continue;
       const [payload, mac] = rest.join("=").split(".");
-      if (!payload || !mac || !safeEqual(mac, sign(payload))) return undefined;
+      if (!payload || !mac || !safeEqual(mac, sign(`${purpose}:${payload}`))) return undefined;
       try {
-        const flow = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as Flow;
-        return flow.e * 1000 > now().getTime() ? flow : undefined;
+        const value = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as {
+          e: number;
+        };
+        return value.e * 1000 > now().getTime() ? value : undefined;
       } catch {
         return undefined;
       }
     }
     return undefined;
   }
+  const readFlow = (request: FastifyRequest): Flow | undefined =>
+    readSigned(request, OAUTH_COOKIE, "flow") as Flow | undefined;
+  const readPending = (request: FastifyRequest): Pending | undefined => {
+    const pending = readSigned(request, PENDING_COOKIE, "pending") as Pending | undefined;
+    return pending?.k === "register" || pending?.k === "link" ? pending : undefined;
+  };
+  const signedCookie = (name: string, purpose: string, value: object): string => {
+    const payload = b64(JSON.stringify(value));
+    return `${name}=${payload}.${sign(`${purpose}:${payload}`)}; Max-Age=${String(STATE_TTL_S)}; Path=/; HttpOnly; Secure; SameSite=Lax`;
+  };
 
   const timeout = (): AbortSignal => AbortSignal.timeout(HTTP_TIMEOUT_MS);
   let jwksCache: { at: number; keys: JsonWebKey[] } | undefined;
@@ -181,20 +196,11 @@ export function googleRoutes(
     return body.id_token;
   }
 
-  /** Sign in by Google `sub`; an unknown `sub` creates a parent only when the email is new. Never merges by email. */
-  async function resolveUser(
+  /** New parent + Google identity + the ticked consent, atomically. Undefined when the email or `sub` is already taken. */
+  async function createParent(
     request: FastifyRequest,
     claims: { sub: string; email: string },
-    consented: boolean,
-  ): Promise<{ userId: string; created: boolean } | Failure> {
-    const known = await pool.query<{ user_id: string }>(
-      "SELECT user_id::text FROM identities WHERE provider = 'google' AND subject = $1",
-      [claims.sub],
-    );
-    if (known.rows[0]) return { userId: known.rows[0].user_id, created: false };
-    const taken = await pool.query("SELECT 1 FROM users WHERE lower(email) = $1", [claims.email]);
-    if (taken.rowCount) return "email_exists";
-    if (!consented) return "consent_required";
+  ): Promise<string | undefined> {
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
@@ -206,7 +212,7 @@ export function googleRoutes(
       const userId = user.rows[0]?.id;
       if (userId === undefined) {
         await client.query("ROLLBACK");
-        return "email_exists";
+        return undefined;
       }
       await client.query(
         "INSERT INTO identities (user_id, provider, subject, email_at_link) VALUES ($1,'google',$2,$3)",
@@ -214,14 +220,35 @@ export function googleRoutes(
       );
       await deps.insertConsent(client, request, userId);
       await client.query("COMMIT");
-      return { userId, created: true };
+      return userId;
     } catch (error) {
       await client.query("ROLLBACK");
-      if ((error as { code?: string }).code === "23505") return "email_exists"; // concurrent callback, same sub or email
+      if ((error as { code?: string }).code === "23505") return undefined; // concurrent callback, same sub or email
       throw error;
     } finally {
       client.release();
     }
+  }
+
+  /**
+   * Sign in by Google `sub`. Never merges by email: an unknown `sub` either becomes a new parent (boxes already
+   * ticked, email free, nobody logged in) or waits as a pending identity for the register/link confirmation.
+   */
+  async function resolveUser(
+    request: FastifyRequest,
+    claims: { sub: string; email: string },
+    consented: boolean,
+  ): Promise<{ userId: string; created: boolean } | { pending: Pending["k"] }> {
+    const known = await pool.query<{ user_id: string }>(
+      "SELECT user_id::text FROM identities WHERE provider = 'google' AND subject = $1",
+      [claims.sub],
+    );
+    if (known.rows[0]) return { userId: known.rows[0].user_id, created: false };
+    const taken = await pool.query("SELECT 1 FROM users WHERE lower(email) = $1", [claims.email]);
+    if (taken.rowCount || readCookie(request) !== undefined) return { pending: "link" };
+    if (!consented) return { pending: "register" };
+    const userId = await createParent(request, claims);
+    return userId === undefined ? { pending: "link" } : { userId, created: true };
   }
 
   const query = (request: FastifyRequest): Record<string, string | undefined> => {
@@ -244,7 +271,6 @@ export function googleRoutes(
         consentMatches("account", { policyVersion: q["policyVersion"], textHash: q["textHash"] }),
       e: Math.floor(now().getTime() / 1000) + STATE_TTL_S,
     };
-    const payload = b64(JSON.stringify(flow));
     const url = new URL(google.authUrl);
     for (const [k, v] of Object.entries({
       response_type: "code",
@@ -259,10 +285,7 @@ export function googleRoutes(
       url.searchParams.set(k, v);
     return reply
       .code(302)
-      .header(
-        "set-cookie",
-        `${OAUTH_COOKIE}=${payload}.${sign(payload)}; Max-Age=${String(STATE_TTL_S)}; Path=/; HttpOnly; Secure; SameSite=Lax`,
-      )
+      .header("set-cookie", signedCookie(OAUTH_COOKIE, "flow", flow))
       .header("location", url.toString())
       .send();
   });
@@ -288,7 +311,21 @@ export function googleRoutes(
       return reject(error instanceof IdTokenError ? error.message : "provider_unreachable");
     }
     const outcome = await resolveUser(request, claims, flow.c);
-    if (typeof outcome === "string") return reject(outcome, outcome);
+    if ("pending" in outcome) {
+      const pending: Pending = {
+        k: outcome.pending,
+        ...claims,
+        e: Math.floor(now().getTime() / 1000) + STATE_TTL_S,
+      };
+      await auth.audit("user.google_pending", request, null, { kind: outcome.pending });
+      const page =
+        outcome.pending === "register" ? "dang-ky?google=xac-nhan" : "dang-nhap?google=lien-ket";
+      return reply
+        .code(302)
+        .header("set-cookie", [clearOauthCookie, signedCookie(PENDING_COOKIE, "pending", pending)])
+        .header("location", `${deps.origin}/${page}`)
+        .send();
+    }
     await deps.startSession(request, reply, outcome.userId);
     await auth.audit(
       outcome.created ? "user.google_register" : "user.google_login",
@@ -297,5 +334,49 @@ export function googleRoutes(
     );
     void reply.header("set-cookie", clearOauthCookie); // appended to the session cookie set above
     return reply.code(302).header("location", `${deps.origin}/tai-khoan`).send();
+  });
+
+  // What the confirmation page shows: the parent's own verified Google email, nothing else.
+  app.get("/oauth/google/pending", deps.openRoute(30), (request) => {
+    const pending = readPending(request);
+    if (!pending) throw new HttpProblem("not_found");
+    return { kind: pending.k, email: pending.email };
+  });
+
+  // New parent: only here, after the >=18 and consent boxes, is an account created.
+  app.post("/oauth/google/register", deps.openRoute(10), async (request, reply) => {
+    const body = googleRegisterBody.parse(request.body);
+    const pending = readPending(request);
+    if (!pending) throw new HttpProblem("not_found");
+    if (pending.k !== "register") throw new HttpProblem("conflict", "email_exists");
+    if (!consentMatches("account", body.consent))
+      throw new HttpProblem("conflict", "consent_text_outdated");
+    const userId = await createParent(request, pending);
+    if (userId === undefined) throw new HttpProblem("conflict", "email_exists");
+    const session = await deps.startSession(request, reply, userId);
+    await auth.audit("user.google_register", request, userId);
+    void reply.header("set-cookie", clearCookie(PENDING_COOKIE));
+    return reply.code(201).send(session);
+  });
+
+  // Link to the logged-in parent (session + CSRF via the account guard) after an explicit confirmation.
+  app.post("/oauth/google/link", async (request, reply) => {
+    const me = deps.principal(request);
+    googleLinkBody.parse(request.body);
+    const pending = readPending(request);
+    if (!pending) throw new HttpProblem("not_found");
+    try {
+      await pool.query(
+        "INSERT INTO identities (user_id, provider, subject, email_at_link) VALUES ($1,'google',$2,$3)",
+        [me.userId, pending.sub, pending.email],
+      );
+    } catch (error) {
+      if ((error as { code?: string }).code === "23505")
+        throw new HttpProblem("conflict", "google_already_linked");
+      throw error;
+    }
+    await auth.audit("user.google_linked", request, me.userId);
+    void reply.header("set-cookie", clearCookie(PENDING_COOKIE));
+    return { status: "linked" };
   });
 }

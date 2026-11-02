@@ -68,7 +68,7 @@ describe.skipIf(ADMIN_URL === undefined)("cli end to end", () => {
     const env = { DATABASE_URL: db.url };
     const migrateRun = capture();
     expect(await main(["migrate"], migrateRun.io, env)).toBe(0);
-    expect(migrateRun.out.join("")).toContain("up: 36 migration(s)");
+    expect(migrateRun.out.join("")).toContain("up: 37 migration(s)");
 
     const dry = capture();
     expect(await main(["import", "--content-dir", CONTENT_DIR, "--dry-run"], dry.io, env)).toBe(0);

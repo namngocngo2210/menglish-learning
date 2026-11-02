@@ -6,7 +6,9 @@ import type { PublicReader } from "@bj/data";
 import pg from "pg";
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { CONSENT_TEXTS, POLICY_VERSION } from "../src/accounts/consent-texts";
+import { hmacHex } from "../src/admin/crypto";
 import { createMemoryMailer } from "../src/accounts/mailer";
+import { hashPassword } from "../src/accounts/password";
 import { buildApp, loggerOptions } from "../src/server/app";
 import type { BuiltApp } from "../src/server/app";
 import { loadServerConfig } from "../src/server/config";
@@ -320,22 +322,200 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     ).toEqual([{ action: "user.google_register" }, { action: "user.google_login" }]);
   });
 
-  it("does not create an account without the ticked consent", async () => {
-    expectRejected((await flow("")).res, "consent_required");
-    expectRejected(
-      (await flow(`policyVersion=old&textHash=${CONSENT_TEXTS.account.textHash}`)).res,
-      "consent_required",
+  const cookieOf = (res: { headers: Record<string, unknown> }, name: string): string | undefined =>
+    cookiesOf(res)
+      .find((c) => c.startsWith(`${name}=`) && !c.includes("Max-Age=0"))
+      ?.split(";")[0];
+  const PENDING = "__Host-bj_gpend";
+  const sealed = (pending: object): string => {
+    const payload = Buffer.from(JSON.stringify(pending)).toString("base64url");
+    return `${PENDING}=${payload}.${hmacHex("u".repeat(48), `oauth:pending:${payload}`)}`;
+  };
+  const post = (url: string, body: object, headers: Record<string, string>) =>
+    on.app.inject({
+      method: "POST",
+      url: `${A}/oauth/google/${url}`,
+      payload: body,
+      headers: { "x-forwarded-for": ip(), ...headers },
+    });
+  const ticked = {
+    adult: true,
+    consent: { policyVersion: POLICY_VERSION, textHash: CONSENT_TEXTS.account.textHash },
+  };
+  const IN = 4_000_000_000; // far-future expiry (epoch s)
+  /** Password parent + parent session cookie and CSRF token. */
+  async function loggedIn(mail = "parent@example.test") {
+    await pool.query("INSERT INTO users (email, status, password_hash) VALUES ($1,'active',$2)", [
+      mail,
+      await hashPassword("a long enough passphrase"),
+    ]);
+    const res = await on.app.inject({
+      method: "POST",
+      url: `${A}/login`,
+      payload: { email: mail, password: "a long enough passphrase" },
+      headers: { "x-forwarded-for": ip() },
+    });
+    expect(res.statusCode).toBe(200);
+    return {
+      cookie: cookieOf(res, "__Host-bj_user")!,
+      csrf: res.json<{ csrfToken: string }>().csrfToken,
+    };
+  }
+
+  it("holds an unticked sign-up as pending and creates nothing", async () => {
+    for (const q of ["", `policyVersion=old&textHash=${CONSENT_TEXTS.account.textHash}`]) {
+      const { res } = await flow(q);
+      expect(res.statusCode).toBe(302);
+      expect(res.headers.location).toBe(`${ORIGIN}/dang-ky?google=xac-nhan`);
+      expect(cookieOf(res, PENDING)).toBeDefined();
+      expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
+    }
+    expect(await count("users")).toBe(0);
+    expect(await count("identities")).toBe(0);
+    expect(await count("consents")).toBe(0);
+  });
+
+  it("creates the parent only when register is called with the ticked boxes", async () => {
+    const pending = cookieOf((await flow("")).res, PENDING)!;
+    const shown = await on.app.inject({
+      method: "GET",
+      url: `${A}/oauth/google/pending`,
+      headers: { cookie: pending, "x-forwarded-for": ip() },
+    });
+    expect(shown.json()).toEqual({ kind: "register", email: "parent@example.test" });
+
+    const unticked = await post(
+      "register",
+      { adult: false, consent: ticked.consent },
+      { cookie: pending },
     );
+    expect(unticked.statusCode).toBe(422);
+    const stale = await post(
+      "register",
+      { adult: true, consent: { policyVersion: "old", textHash: "x" } },
+      { cookie: pending },
+    );
+    expect(stale.statusCode).toBe(409);
+    expect(await count("users")).toBe(0);
+
+    const ok = await post("register", ticked, { cookie: pending });
+    expect(ok.statusCode).toBe(201);
+    expect(cookieOf(ok, "__Host-bj_user")).toBeDefined();
+    expect((await pool.query("SELECT subject, email_at_link FROM identities")).rows).toEqual([
+      { subject: "sub-1", email_at_link: "parent@example.test" },
+    ]);
+    expect(await count("consents")).toBe(1);
+    expect((await post("register", ticked, { cookie: pending })).statusCode).toBe(409); // replay: email now taken
+    expect(await count("users")).toBe(1);
+  });
+
+  it("rejects register without, with a forged, expired or link-kind pending cookie", async () => {
+    expect((await post("register", ticked, {})).statusCode).toBe(404);
+    const base = { sub: "s", email: "x@example.test" };
+    const forged = `${PENDING}=${Buffer.from(JSON.stringify({ k: "register", ...base, e: IN })).toString("base64url")}.${"0".repeat(64)}`;
+    expect((await post("register", ticked, { cookie: forged })).statusCode).toBe(404);
+    expect(
+      (await post("register", ticked, { cookie: sealed({ k: "register", ...base, e: 1 }) }))
+        .statusCode,
+    ).toBe(404);
+    expect(
+      (await post("register", ticked, { cookie: sealed({ k: "link", ...base, e: IN }) }))
+        .statusCode,
+    ).toBe(409);
     expect(await count("users")).toBe(0);
   });
 
-  it("never merges into an existing account with the same email", async () => {
+  it("never merges by email: a matching password account gets a pending link, no session", async () => {
     await pool.query(
       "INSERT INTO users (email, status, password_hash) VALUES ('Parent@Example.test','active','x')",
     );
-    expectRejected((await flow()).res, "email_exists");
+    const { res } = await flow();
+    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
     expect(await count("identities")).toBe(0);
     expect(await count("user_sessions")).toBe(0);
+    const pending = cookieOf(res, PENDING)!;
+    expect((await post("register", ticked, { cookie: pending })).statusCode).toBe(409);
+    expect(await count("identities")).toBe(0);
+  });
+
+  it("links only for a logged-in parent who confirms, then signs in by sub", async () => {
+    const me = await loggedIn();
+    const pending = cookieOf((await flow()).res, PENDING)!;
+    const link = (headers: Record<string, string>, body: object = { confirm: true }) =>
+      post("link", body, headers);
+    const same = { origin: ORIGIN };
+    // no session, no CSRF token, no confirmation: nothing is linked
+    expect((await link({ cookie: pending, ...same })).statusCode).toBe(401);
+    expect((await link({ cookie: `${me.cookie}; ${pending}`, ...same })).statusCode).toBe(403);
+    expect(
+      (
+        await link(
+          { cookie: `${me.cookie}; ${pending}`, "x-csrf-token": me.csrf, ...same },
+          { confirm: false },
+        )
+      ).statusCode,
+    ).toBe(422);
+    expect((await link({ cookie: me.cookie, "x-csrf-token": me.csrf, ...same })).statusCode).toBe(
+      404,
+    ); // no pending
+    expect(await count("identities")).toBe(0);
+
+    const ok = await link({ cookie: `${me.cookie}; ${pending}`, "x-csrf-token": me.csrf, ...same });
+    expect(ok.statusCode).toBe(200);
+    expect((await pool.query("SELECT subject, email_at_link FROM identities")).rows).toEqual([
+      { subject: "sub-1", email_at_link: "parent@example.test" },
+    ]);
+    // a second link of the same sub, or a second Google for the same parent, is refused
+    expect(
+      (await link({ cookie: `${me.cookie}; ${pending}`, "x-csrf-token": me.csrf, ...same }))
+        .statusCode,
+    ).toBe(409);
+    // the linked sub now logs into that same parent
+    const again = await flow("");
+    expect(again.res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect(await count("users")).toBe(1);
+  });
+
+  it("refuses to link a sub that already belongs to another parent", async () => {
+    await flow(); // parent A registered with sub-1
+    const other = await loggedIn("other@example.test");
+    const pending = sealed({ k: "link", sub: "sub-1", email: "other@example.test", e: IN });
+    const res = await post(
+      "link",
+      { confirm: true },
+      { cookie: `${other.cookie}; ${pending}`, "x-csrf-token": other.csrf, origin: ORIGIN },
+    );
+    expect(res.statusCode).toBe(409);
+    expect(await count("identities")).toBe(1);
+  });
+
+  it("a logged-in parent signing in with a new Google gets a pending link, not a second account", async () => {
+    const me = await loggedIn("mine@example.test");
+    const s = await start();
+    const { code, state } = authorize(String(s.headers.location));
+    const res = await callback(
+      `code=${code}&state=${state}`,
+      `${cookieOf(s, "__Host-bj_oauth")!}; ${me.cookie}`,
+    );
+    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(await count("users")).toBe(1);
+    expect(await count("identities")).toBe(0);
+  });
+
+  it("logs no email or sub", async () => {
+    await flow("");
+    const rows = (await pool.query("SELECT details::text AS d FROM audit_log")).rows;
+    expect(JSON.stringify(rows)).not.toMatch(/example\.test|sub-1/);
+  });
+
+  it("enforces one Google identity per parent in the database", async () => {
+    await flow();
+    await expect(
+      pool.query(
+        "INSERT INTO identities (user_id, provider, subject, email_at_link) SELECT user_id, provider, 'other', 'a@b.test' FROM identities",
+      ),
+    ).rejects.toThrow(/identities_user_provider_key/);
   });
 
   it("rejects a wrong, missing, tampered or expired state", async () => {

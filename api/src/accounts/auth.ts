@@ -2,7 +2,7 @@ import type { FastifyRequest } from "fastify";
 import type pg from "pg";
 import { hmacHex, newToken, safeEqual, sha256Hex } from "../admin/crypto";
 import { HttpProblem } from "../server/problems";
-import type { GoogleConfig } from "./google";
+import type { GoogleConfig } from "./google-config";
 import type { Mailer } from "./mailer";
 
 /** Parent cookie. Never the admin cookie (__Host-bj_admin): the two principals share nothing. */

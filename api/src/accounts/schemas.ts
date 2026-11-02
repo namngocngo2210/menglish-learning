@@ -59,3 +59,6 @@ export const progressImportBody = z.strictObject({
     .min(1)
     .max(500),
 });
+
+export const googleRegisterBody = z.strictObject({ adult: z.literal(true), consent });
+export const googleLinkBody = z.strictObject({ confirm: z.literal(true) });

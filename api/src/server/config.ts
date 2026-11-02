@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { z } from "zod";
-import { GOOGLE_DEFAULTS } from "../accounts/google";
-import type { GoogleConfig } from "../accounts/google";
+import { GOOGLE_DEFAULTS } from "../accounts/google-config";
+import type { GoogleConfig } from "../accounts/google-config";
 
 const EnvSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(8080),
