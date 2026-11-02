@@ -21,6 +21,8 @@ export interface SectionedPracticeProps {
  footer?: ReactNode;
  /** Ask the layout to scroll to and focus a question (activate its section first). */
  focusRequest?: FocusRequest;
+ /** Visually hide the "Bài đọc n/m · title" heading (the tabs and the passage title already say it). */
+ compactHeading?: boolean;
 }
 const buttonClass = "inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-primary bg-surface px-4 py-2 font-bold text-primary motion-safe:transition-colors hover:bg-sky-soft disabled:border-navy-soft/30 disabled:text-navy-soft/60";
 const ctaClass = "inline-flex w-full sm:w-auto min-h-11 items-center justify-center gap-2 rounded-xl bg-cta px-5 py-3 font-bold text-navy motion-safe:transition-colors hover:bg-cta-hover disabled:bg-navy-soft disabled:text-surface";
@@ -54,9 +56,10 @@ function QuestionCard({ question, number, selected, revealed, feedback, onSelect
  * Server markup contains every section; inactive ones are hidden by CSS only, and the
  * <noscript> style stacks them again for visitors without JavaScript.
  */
-export function SectionedPractice({ sections, answers, checked, revealAll = false, feedback = "per-question", activeIndex, onActiveChange, onSelect, onCheck, footer, focusRequest }: SectionedPracticeProps) {
+export function SectionedPractice({ sections, answers, checked, revealAll = false, feedback = "per-question", activeIndex, onActiveChange, onSelect, onCheck, footer, focusRequest, compactHeading }: SectionedPracticeProps) {
  const numbers = numberQuestions(sections);
  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
+ const [expanded, setExpanded] = useState<Record<string, boolean>>({});
  const active = sections[activeIndex] ?? sections[0];
  const last = activeIndex >= sections.length - 1;
  useEffect(() => { if (focusRequest) requestAnimationFrame(() => jump(`question-${focusRequest.id}`, "center")); }, [focusRequest]);
@@ -80,7 +83,7 @@ export function SectionedPractice({ sections, answers, checked, revealAll = fals
  const activeProgress = active ? sectionProgress(active, answers) : { answered: 0, total: 0 };
  const allDone = activeProgress.answered === activeProgress.total;
  return <div data-quiz-sections className="space-y-4">
-  <noscript><style>{"[data-inactive]{display:block!important}[data-js-only]{display:none!important}"}</style></noscript>
+  <noscript><style>{"[data-inactive]{display:block!important}[data-js-only]{display:none!important}[data-clamp]{max-height:none!important;overflow:visible!important}"}</style></noscript>
   <nav id="quiz-nav" aria-label="Các phần của bài" className="scroll-mt-2">
    <ol className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:thin] lg:flex-wrap lg:overflow-visible">{sections.map((section, index) => {
     const progress = sectionProgress(section, answers);
@@ -90,15 +93,18 @@ export function SectionedPractice({ sections, answers, checked, revealAll = fals
   {sections.map((section, index) => {
    const passage = section.passage;
    const isCollapsed = Boolean(collapsed[section.id]);
+   const clamp = Boolean(passage && passage.wordCount > 90);
    return <section key={section.id} id={section.id} data-inactive={index === activeIndex ? undefined : "true"} aria-labelledby={`${section.id}-heading`} className="scroll-mt-4 data-inactive:hidden">
-    <h3 id={`${section.id}-heading`} tabIndex={-1} className="mb-3 scroll-mt-4 text-lg font-bold">{section.label}{passage ? <> · <span lang="en">{passage.title}</span></> : null}</h3>
+    <h3 id={`${section.id}-heading`} tabIndex={-1} className={`scroll-mt-4 text-lg font-bold ${compactHeading ? "sr-only" : "mb-3"}`}>{section.label}{passage ? <> · <span lang="en">{passage.title}</span></> : null}</h3>
     <div className={passage ? "space-y-4 lg:grid lg:h-[calc(100dvh-17rem)] lg:min-h-[28rem] lg:grid-cols-2 lg:gap-6 lg:space-y-0" : "mx-auto max-w-3xl"}>
      {passage && <section id={`passage-pane-${passage.id}`} aria-labelledby={`passage-${passage.id}`} tabIndex={0} className={`${paneClass} border border-navy-soft/20 bg-warm`}>
       <div className="flex items-center justify-between gap-3 border-b border-navy-soft/20 bg-warm p-4 lg:sticky lg:top-0 lg:z-10 lg:px-6">
        <div lang="en" className="min-w-0"><h4 tabIndex={-1} id={`passage-${passage.id}`} className="scroll-mt-4 text-xl font-bold max-lg:sr-only">{passage.title}</h4><p lang="vi" className="text-sm font-semibold text-primary">Bài đọc · {passage.wordCount} từ</p></div>
        <button type="button" data-js-only="" aria-expanded={!isCollapsed} aria-controls={`passage-body-${passage.id}`} onClick={() => setCollapsed(c => ({ ...c, [section.id]: !isCollapsed }))} className={`${buttonClass} shrink-0 lg:hidden`}>{isCollapsed ? "Xem bài đọc" : "Ẩn bài đọc"}</button>
       </div>
-      <div id={`passage-body-${passage.id}`} lang="en" className={`p-4 lg:px-6 ${isCollapsed ? "max-lg:hidden" : ""}`}><p className="max-w-prose whitespace-pre-line leading-8">{passage.body}</p></div>
+      {/* Long passages are clamped on mobile (full text stays in the DOM; no-JS styles undo the clamp) so question 1 is not pushed far down. */}
+      <div id={`passage-body-${passage.id}`} lang="en" {...(clamp && !expanded[section.id] ? { "data-clamp": "" } : {})} className={`p-4 lg:px-6 ${isCollapsed ? "max-lg:hidden" : clamp && !expanded[section.id] ? "max-lg:max-h-56 max-lg:overflow-hidden" : ""}`}><p className="max-w-prose whitespace-pre-line leading-8">{passage.body}</p></div>
+      {clamp && !isCollapsed && <div data-js-only="" className="px-4 pb-4 lg:hidden"><button type="button" aria-expanded={Boolean(expanded[section.id])} aria-controls={`passage-body-${passage.id}`} onClick={() => setExpanded(e => ({ ...e, [section.id]: !e[section.id] }))} className={buttonClass}>{expanded[section.id] ? "Thu gọn bài đọc" : "Đọc hết bài"}</button></div>}
      </section>}
      <section aria-label={passage ? `Câu hỏi của ${section.label}` : `Câu hỏi: ${section.label}`} tabIndex={0} className={`${paneClass} space-y-6 lg:p-1 lg:pr-3`}>
       {section.questions.map(question => <QuestionCard key={question.id} question={question} number={numbers[question.id]} selected={answers[question.id]} revealed={revealAll || Boolean(checked[question.id])} feedback={feedback === "per-question"} onSelect={onSelect} onCheck={onCheck}/>)}

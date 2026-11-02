@@ -10,5 +10,5 @@ export function PreviousResult({ slug }: { slug: string }) {
   const p = readProgress(slug);
   return p ? `Lần trước: ${p.last}/${p.total} (${(p.last / p.total * 10).toLocaleString("vi-VN", { maximumFractionDigits: 1 })} điểm)` : "";
  }, () => "");
- return label ? <p className="mt-2 text-sm font-semibold text-primary">{label}</p> : null;
+ return label ? <span> · {label}</span> : null;
 }

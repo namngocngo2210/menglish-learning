@@ -62,7 +62,7 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  const officialIds = new Set(official.map(q => q.id));
  // Official items feed only the fixed per-year papers and the entrance mixer, so existing topic/mixed sets stay stable.
  const regular = merged.questions.filter(q => !officialIds.has(q.id));
- const topics = merged.topics.filter(t => t.skill !== "ngu-phap" && t.skill !== "tu-vung").map(t => ({ ...t, name: t.slug === "chung" ? "Tổng hợp" : t.name, description: `Bài luyện ${SKILL_NAMES[t.skill].toLowerCase()} lớp ${t.grade} chủ đề ${(t.slug === "chung" ? "Tổng hợp" : t.name).toLowerCase()}.` }));
+ const topics = merged.topics.filter(t => t.skill !== "ngu-phap" && t.skill !== "tu-vung").map(t => t.slug === "chung" ? { ...t, name: "Đề dài", description: "Đề đọc hiểu dài, khoảng 20 câu từ 2–4 bài đọc, để luyện đọc kỹ và tìm ý trong thời gian dài hơn." } : { ...t, description: `Bài luyện ${SKILL_NAMES[t.skill].toLowerCase()} lớp ${t.grade} chủ đề ${t.name.toLowerCase()}.` });
  for (const grade of GRADES) for (const skill of ["ngu-phap", "tu-vung"] as const) {
   for (const def of TOPIC_REGISTRY[skill]) {
    topics.push({ grade, skill, slug: def.slug, name: def.name, description: `${def.summary} Lớp ${grade}.` });
@@ -82,10 +82,12 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  for (const grade of GRADES) for (const skill of SKILLS) {
   const pool = regular.filter(q => q.grade === grade && q.skill === skill);
   if (pool.length < 10) continue;
-  const topic: Topic = { grade, skill, slug: "tong-hop", name: `Tổng hợp ${SKILL_NAMES[skill]}`, description: `Bài luyện ${SKILL_NAMES[skill].toLowerCase()} tổng hợp lớp ${grade}.` };
+  // Reading's mixed set is the same question bank cut into short sets: show it as "Đề ngắn" beside "Đề dài" (display names only, URLs unchanged).
+  const short = skill === "doc-hieu";
+  const topic: Topic = { grade, skill, slug: "tong-hop", name: short ? "Đề ngắn" : `Tổng hợp ${SKILL_NAMES[skill]}`, description: short ? "Đề đọc hiểu ngắn, khoảng 10 câu, để làm quen bài đọc và ôn nhanh trong khoảng 5 phút." : `Bài luyện ${SKILL_NAMES[skill].toLowerCase()} tổng hợp lớp ${grade}.` };
   topics.push(topic);
   add(partitionTests(pool, { seedPrefix: `${grade}/${skill}/tong-hop`, size: 10, minSize: 6, difficultyMix: { 1: 1 / 3, 2: 1 / 3, 3: 1 / 3 } }), k => ({
-   slug: `lop-${grade}/${skill}/tong-hop/de-${k}`, grade, skill, topicSlug: "tong-hop", kind: "mixed", title: `Tổng hợp ${SKILL_NAMES[skill]} lớp ${grade} - Đề ${k}`,
+   slug: `lop-${grade}/${skill}/tong-hop/de-${k}`, grade, skill, topicSlug: "tong-hop", kind: "mixed", title: `${topic.name}${short ? "" : ` lớp ${grade}`} - Đề ${k}`,
   }));
  }
  add(partitionTests(merged.questions.filter(q => q.grade === 8 || q.grade === 9), {

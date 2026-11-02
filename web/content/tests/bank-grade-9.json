@@ -159,15 +159,15 @@
       "grade": 9,
       "skill": "doc-hieu",
       "slug": "chung",
-      "name": "Tổng hợp",
-      "description": "Bài luyện đọc hiểu lớp 9 chủ đề tổng hợp."
+      "name": "Đề dài",
+      "description": "Đề đọc hiểu dài, khoảng 20 câu từ 2–4 bài đọc, để luyện đọc kỹ và tìm ý trong thời gian dài hơn."
     },
     {
       "grade": 9,
       "skill": "doc-hieu",
       "slug": "tong-hop",
-      "name": "Tổng hợp Đọc hiểu",
-      "description": "Bài luyện đọc hiểu tổng hợp lớp 9."
+      "name": "Đề ngắn",
+      "description": "Đề đọc hiểu ngắn, khoảng 10 câu, để làm quen bài đọc và ôn nhanh trong khoảng 5 phút."
     },
     {
       "grade": 9,
@@ -13065,7 +13065,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 1",
+      "title": "Đề dài - Đề 1",
       "seed": "9/doc-hieu/chung/de-1",
       "questionIds": [
         "voa-9a419d61",
@@ -13119,7 +13119,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 2",
+      "title": "Đề dài - Đề 2",
       "seed": "9/doc-hieu/chung/de-2",
       "questionIds": [
         "voa-7fea12c8",
@@ -13173,7 +13173,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 3",
+      "title": "Đề dài - Đề 3",
       "seed": "9/doc-hieu/chung/de-3",
       "questionIds": [
         "voa-f21768f3",
@@ -13237,7 +13237,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 1",
+      "title": "Đề ngắn - Đề 1",
       "seed": "9/doc-hieu/tong-hop/de-1",
       "questionIds": [
         "voa-3db78688",
@@ -13271,7 +13271,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 2",
+      "title": "Đề ngắn - Đề 2",
       "seed": "9/doc-hieu/tong-hop/de-2",
       "questionIds": [
         "voa-5b8c53a0",
@@ -13317,7 +13317,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 3",
+      "title": "Đề ngắn - Đề 3",
       "seed": "9/doc-hieu/tong-hop/de-3",
       "questionIds": [
         "voa-a0b62702",
@@ -13359,7 +13359,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 4",
+      "title": "Đề ngắn - Đề 4",
       "seed": "9/doc-hieu/tong-hop/de-4",
       "questionIds": [
         "voa-7fea12c8",
@@ -13395,7 +13395,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 5",
+      "title": "Đề ngắn - Đề 5",
       "seed": "9/doc-hieu/tong-hop/de-5",
       "questionIds": [
         "voa-f21768f3",
@@ -13431,7 +13431,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 9 - Đề 6",
+      "title": "Đề ngắn - Đề 6",
       "seed": "9/doc-hieu/tong-hop/de-6",
       "questionIds": [
         "voa-cfc27eca",

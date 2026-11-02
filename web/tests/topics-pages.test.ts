@@ -12,7 +12,6 @@ import sitemap from "../app/sitemap";
 import TopicPage, { generateMetadata } from "../app/[grade]/[skill]/[topic]/page";
 import { buildBank, serializeBundle, classifyEligibleQuestions } from "../scripts/lib/build-bank";
 import { generateClassificationReport, generateLegacyRedirects } from "../scripts/lib/topic-artifacts";
-import { SKILL_NAMES } from "../lib/routes";
 import { SITE } from "../lib/site-config";
 vi.mock("next/navigation", () => ({ usePathname: () => "/", notFound: () => { throw new Error("Not found"); } }));
 const fragments = readdirSync("content/quarantine").filter(f => f.endsWith(".json")).sort().map(f => ContentBundleSchema.parse(JSON.parse(readFileSync(join("content/quarantine", f), "utf8"))));
@@ -80,8 +79,8 @@ it("renders knowledge, counts and related links while mixed topics keep their de
  const def = getTopicDef(topic.skill, topic.slug)!;
  for (const paragraph of def.intro) expect(html).toContain(renderToStaticMarkup(createElement("p", null, paragraph)));
  for (const example of def.examples!) expect(html).toContain(renderToStaticMarkup(createElement("span", { lang: "en" }, example.en)));
- expect(html).toContain(`Chủ đề khác trong ${SKILL_NAMES[topic.skill]} lớp ${topic.grade}`);
- expect(html).toContain("Chủ đề này ở lớp khác"); expect(html).toContain("câu hỏi ·");
+expect(html).toContain("Bộ đề khác");
+ expect(html).toContain("2 đề ·"); expect(html).toContain(`${topic.name} lớp 7`);
  expect(html).toContain("BreadcrumbList"); expect(html).toContain("FAQPage"); expect(html).toContain("Câu hỏi thường gặp");
  expect(html).toContain('href="/lop-6/ngu-phap/tong-hop"');
  const mixed = bundle.topics.find(t => t.grade === topic.grade && t.skill === topic.skill && t.slug === "tong-hop")!;

@@ -19,15 +19,15 @@
       "grade": 7,
       "skill": "doc-hieu",
       "slug": "chung",
-      "name": "Tổng hợp",
-      "description": "Bài luyện đọc hiểu lớp 7 chủ đề tổng hợp."
+      "name": "Đề dài",
+      "description": "Đề đọc hiểu dài, khoảng 20 câu từ 2–4 bài đọc, để luyện đọc kỹ và tìm ý trong thời gian dài hơn."
     },
     {
       "grade": 7,
       "skill": "doc-hieu",
       "slug": "tong-hop",
-      "name": "Tổng hợp Đọc hiểu",
-      "description": "Bài luyện đọc hiểu tổng hợp lớp 7."
+      "name": "Đề ngắn",
+      "description": "Đề đọc hiểu ngắn, khoảng 10 câu, để làm quen bài đọc và ôn nhanh trong khoảng 5 phút."
     },
     {
       "grade": 7,
@@ -41652,7 +41652,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 1",
+      "title": "Đề dài - Đề 1",
       "seed": "7/doc-hieu/chung/de-1",
       "questionIds": [
         "voa-018fd49e",
@@ -41714,7 +41714,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 10",
+      "title": "Đề dài - Đề 10",
       "seed": "7/doc-hieu/chung/de-10",
       "questionIds": [
         "voa-5ecd354a",
@@ -41770,7 +41770,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 11",
+      "title": "Đề dài - Đề 11",
       "seed": "7/doc-hieu/chung/de-11",
       "questionIds": [
         "voa-c5eeb5ef",
@@ -41832,7 +41832,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 12",
+      "title": "Đề dài - Đề 12",
       "seed": "7/doc-hieu/chung/de-12",
       "questionIds": [
         "voa-b3581a2d",
@@ -41898,7 +41898,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 13",
+      "title": "Đề dài - Đề 13",
       "seed": "7/doc-hieu/chung/de-13",
       "questionIds": [
         "voa-8ac51729",
@@ -41958,7 +41958,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 14",
+      "title": "Đề dài - Đề 14",
       "seed": "7/doc-hieu/chung/de-14",
       "questionIds": [
         "voa-0cfbe3be",
@@ -42024,7 +42024,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 15",
+      "title": "Đề dài - Đề 15",
       "seed": "7/doc-hieu/chung/de-15",
       "questionIds": [
         "voa-8d511a73",
@@ -42066,7 +42066,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 2",
+      "title": "Đề dài - Đề 2",
       "seed": "7/doc-hieu/chung/de-2",
       "questionIds": [
         "voa-f11fed45",
@@ -42126,7 +42126,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 3",
+      "title": "Đề dài - Đề 3",
       "seed": "7/doc-hieu/chung/de-3",
       "questionIds": [
         "voa-0af18b2c",
@@ -42190,7 +42190,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 4",
+      "title": "Đề dài - Đề 4",
       "seed": "7/doc-hieu/chung/de-4",
       "questionIds": [
         "voa-076a052c",
@@ -42244,7 +42244,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 5",
+      "title": "Đề dài - Đề 5",
       "seed": "7/doc-hieu/chung/de-5",
       "questionIds": [
         "voa-7d88e006",
@@ -42312,7 +42312,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 6",
+      "title": "Đề dài - Đề 6",
       "seed": "7/doc-hieu/chung/de-6",
       "questionIds": [
         "voa-379f6dde",
@@ -42380,7 +42380,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 7",
+      "title": "Đề dài - Đề 7",
       "seed": "7/doc-hieu/chung/de-7",
       "questionIds": [
         "voa-09595ab3",
@@ -42442,7 +42442,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 8",
+      "title": "Đề dài - Đề 8",
       "seed": "7/doc-hieu/chung/de-8",
       "questionIds": [
         "voa-f5f0022d",
@@ -42500,7 +42500,7 @@
       "skill": "doc-hieu",
       "topicSlug": "chung",
       "kind": "topic",
-      "title": "Tổng hợp - Đề 9",
+      "title": "Đề dài - Đề 9",
       "seed": "7/doc-hieu/chung/de-9",
       "questionIds": [
         "voa-c414f0b4",
@@ -42556,7 +42556,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 1",
+      "title": "Đề ngắn - Đề 1",
       "seed": "7/doc-hieu/tong-hop/de-1",
       "questionIds": [
         "voa-160a0778",
@@ -42598,7 +42598,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 10",
+      "title": "Đề ngắn - Đề 10",
       "seed": "7/doc-hieu/tong-hop/de-10",
       "questionIds": [
         "voa-752a1161",
@@ -42632,7 +42632,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 11",
+      "title": "Đề ngắn - Đề 11",
       "seed": "7/doc-hieu/tong-hop/de-11",
       "questionIds": [
         "voa-b1327754",
@@ -42676,7 +42676,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 12",
+      "title": "Đề ngắn - Đề 12",
       "seed": "7/doc-hieu/tong-hop/de-12",
       "questionIds": [
         "voa-3cca7bfd",
@@ -42716,7 +42716,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 13",
+      "title": "Đề ngắn - Đề 13",
       "seed": "7/doc-hieu/tong-hop/de-13",
       "questionIds": [
         "voa-a86169fe",
@@ -42760,7 +42760,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 14",
+      "title": "Đề ngắn - Đề 14",
       "seed": "7/doc-hieu/tong-hop/de-14",
       "questionIds": [
         "voa-637ce7f2",
@@ -42802,7 +42802,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 15",
+      "title": "Đề ngắn - Đề 15",
       "seed": "7/doc-hieu/tong-hop/de-15",
       "questionIds": [
         "voa-6cd3e71d",
@@ -42840,7 +42840,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 16",
+      "title": "Đề ngắn - Đề 16",
       "seed": "7/doc-hieu/tong-hop/de-16",
       "questionIds": [
         "voa-1ed2da21",
@@ -42880,7 +42880,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 17",
+      "title": "Đề ngắn - Đề 17",
       "seed": "7/doc-hieu/tong-hop/de-17",
       "questionIds": [
         "voa-58095b54",
@@ -42914,7 +42914,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 18",
+      "title": "Đề ngắn - Đề 18",
       "seed": "7/doc-hieu/tong-hop/de-18",
       "questionIds": [
         "voa-379f6dde",
@@ -42954,7 +42954,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 19",
+      "title": "Đề ngắn - Đề 19",
       "seed": "7/doc-hieu/tong-hop/de-19",
       "questionIds": [
         "voa-f15c952f",
@@ -43000,7 +43000,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 2",
+      "title": "Đề ngắn - Đề 2",
       "seed": "7/doc-hieu/tong-hop/de-2",
       "questionIds": [
         "voa-7757ee68",
@@ -43046,7 +43046,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 20",
+      "title": "Đề ngắn - Đề 20",
       "seed": "7/doc-hieu/tong-hop/de-20",
       "questionIds": [
         "voa-6186c5a1",
@@ -43084,7 +43084,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 21",
+      "title": "Đề ngắn - Đề 21",
       "seed": "7/doc-hieu/tong-hop/de-21",
       "questionIds": [
         "voa-ebd5817e",
@@ -43124,7 +43124,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 22",
+      "title": "Đề ngắn - Đề 22",
       "seed": "7/doc-hieu/tong-hop/de-22",
       "questionIds": [
         "voa-70d91776",
@@ -43160,7 +43160,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 23",
+      "title": "Đề ngắn - Đề 23",
       "seed": "7/doc-hieu/tong-hop/de-23",
       "questionIds": [
         "voa-e037f10d",
@@ -43206,7 +43206,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 24",
+      "title": "Đề ngắn - Đề 24",
       "seed": "7/doc-hieu/tong-hop/de-24",
       "questionIds": [
         "voa-16d9863c",
@@ -43240,7 +43240,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 25",
+      "title": "Đề ngắn - Đề 25",
       "seed": "7/doc-hieu/tong-hop/de-25",
       "questionIds": [
         "voa-6ec2ff88",
@@ -43284,7 +43284,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 26",
+      "title": "Đề ngắn - Đề 26",
       "seed": "7/doc-hieu/tong-hop/de-26",
       "questionIds": [
         "voa-7f707abe",
@@ -43330,7 +43330,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 27",
+      "title": "Đề ngắn - Đề 27",
       "seed": "7/doc-hieu/tong-hop/de-27",
       "questionIds": [
         "voa-9f61aa4d",
@@ -43366,7 +43366,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 3",
+      "title": "Đề ngắn - Đề 3",
       "seed": "7/doc-hieu/tong-hop/de-3",
       "questionIds": [
         "voa-13434142",
@@ -43406,7 +43406,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 4",
+      "title": "Đề ngắn - Đề 4",
       "seed": "7/doc-hieu/tong-hop/de-4",
       "questionIds": [
         "voa-0b9171b7",
@@ -43452,7 +43452,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 5",
+      "title": "Đề ngắn - Đề 5",
       "seed": "7/doc-hieu/tong-hop/de-5",
       "questionIds": [
         "voa-9aba24b8",
@@ -43498,7 +43498,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 6",
+      "title": "Đề ngắn - Đề 6",
       "seed": "7/doc-hieu/tong-hop/de-6",
       "questionIds": [
         "voa-56497bc7",
@@ -43540,7 +43540,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 7",
+      "title": "Đề ngắn - Đề 7",
       "seed": "7/doc-hieu/tong-hop/de-7",
       "questionIds": [
         "voa-076a052c",
@@ -43586,7 +43586,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 8",
+      "title": "Đề ngắn - Đề 8",
       "seed": "7/doc-hieu/tong-hop/de-8",
       "questionIds": [
         "voa-f6a10e14",
@@ -43634,7 +43634,7 @@
       "skill": "doc-hieu",
       "topicSlug": "tong-hop",
       "kind": "mixed",
-      "title": "Tổng hợp Đọc hiểu lớp 7 - Đề 9",
+      "title": "Đề ngắn - Đề 9",
       "seed": "7/doc-hieu/tong-hop/de-9",
       "questionIds": [
         "voa-660d72fe",

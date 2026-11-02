@@ -65,7 +65,11 @@ export function getGrades(): readonly Grade[] { return GRADES; }
 export function getSkills(grade: Grade): Skill[] { return GRADES.includes(grade) ? [...SKILLS] : []; }
 export function getTopics(grade: Grade, skill: Skill) { return loadBundle().topics.filter(t => t.grade === grade && t.skill === skill).sort((a, b) => topicOrder(skill, a.slug) - topicOrder(skill, b.slug)); }
 export function getTest(slug: string) { return loadBundle().tests.find(t => t.slug === slug); }
-export function getTestsForTopic(grade: Grade, skill: Skill, topicSlug: string) { return loadBundle().tests.filter(t => t.grade === grade && t.skill === skill && t.topicSlug === topicSlug); }
+const testNumber = (slug: string) => Number(slug.match(/(\d+)$/)?.[1] ?? 0);
+/** Tests in numeric order (de-2 before de-10). */
+export function getTestsForTopic(grade: Grade, skill: Skill, topicSlug: string) { return loadBundle().tests.filter(t => t.grade === grade && t.skill === skill && t.topicSlug === topicSlug).sort((a, b) => testNumber(a.slug) - testNumber(b.slug)); }
+/** About 0.7 minute per question, rounded to 5 minutes (at least 5). */
+export const estimateMinutes = (questionCount: number) => Math.max(5, Math.round(questionCount * 0.7 / 5) * 5);
 export function getTestWithQuestions(slug: string) {
  const test = getTest(slug); if (!test) return undefined;
  const bundle = loadBundle(); const byId = new Map(bundle.questions.map(q => [q.id, q]));
