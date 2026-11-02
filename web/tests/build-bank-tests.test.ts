@@ -6,7 +6,7 @@ vi.setConfig({ testTimeout: 60000 });
 import { ContentBundleSchema } from "@/lib/content/types";
 import { loadBundle } from "@/lib/content/load";
 import { parseEntranceSlug, parseTestSlug } from "@/lib/routes";
-import { buildBank, serializeBundle, isOfficialExam } from "@/scripts/lib/build-bank";
+import { buildBank, serializeBundle, isOfficialExam, ruleOnly } from "@/scripts/lib/build-bank";
 const rawFragments = readdirSync("content/quarantine").filter(f => f.endsWith(".json")).sort().map(f => ContentBundleSchema.parse(JSON.parse(readFileSync(join("content/quarantine", f), "utf8"))));
 const fragments = rawFragments;
 const generated = () => buildBank(fragments);
@@ -62,7 +62,7 @@ it("records owner approval on copies while preserving every source field and qua
   const raw = original.get(q.id)!;
   const passage = fragments.flatMap(f => f.passages).find(p => q.passageId ? p.id === q.passageId : p.sourceId === q.sourceId && p.sourceUrl === q.sourceUrl);
   const topicSlug = q.skill === "ngu-phap" || q.skill === "tu-vung" ? classifyQuestion(raw, passage).topic ?? "tong-hop" : raw.topicSlug;
-  expect(q).toEqual({ ...raw, ...(isOfficialExam(raw) ? { explanation: q.explanation } : {}), topicSlug, reviewStatus: "published", reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: "2026-10-31T00:00:00.000Z" });
+  expect(q).toEqual({ ...raw, explanation: isOfficialExam(raw) ? q.explanation : ruleOnly(raw.explanation), topicSlug, reviewStatus: "published", reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: "2026-10-31T00:00:00.000Z" });
  }
  expect(fragments).toEqual(before);
 });

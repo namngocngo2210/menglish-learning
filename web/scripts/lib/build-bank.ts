@@ -31,7 +31,9 @@ const officialRef = (q: { sourceRef?: string }) => {
  return { year: parts[0], number: Number((parts.find(p => /^Question \d+$/.test(p)) ?? "").replace("Question ", "")) };
 };
 /** The owner-facing review note replaces the internal "awaiting approval" explanation; the key is unchanged. */
-const officialExplanation = (q: Question) => `Đáp án đúng là ${q.correctKey} (theo đáp án chính thức của đề thi).`;
+const officialExplanation = () => "Theo đáp án chính thức của đề thi.";
+/** The UI states the key once, so the stored explanation is the rule only (no “Đáp án đúng là x:” prefix). */
+export const ruleOnly = (explanation: string) => explanation.replace(/^Đáp án đúng là “[^”]*”: /, "");
 export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (report: GuardReport) => void): Record<string, ContentBundle> {
  const merged = emptyBundle();
  for (const fragment of fragments) {
@@ -102,7 +104,7 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  }
  unique(tests, t => t.slug);
  const used = new Set(tests.flatMap(t => t.questionIds));
- const questions = merged.questions.filter(q => used.has(q.id)).map(q => ({ ...q, ...(officialIds.has(q.id) ? { explanation: officialExplanation(q) } : {}), reviewStatus: "published" as const, reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: PUBLISHED_AT }));
+ const questions = merged.questions.filter(q => used.has(q.id)).map(q => ({ ...q, ...({ explanation: officialIds.has(q.id) ? officialExplanation() : ruleOnly(q.explanation) }), reviewStatus: "published" as const, reviewNote: "owner-approved-bulk 2026-10-31", reviewedAt: PUBLISHED_AT }));
  const usedPassages = new Set(questions.map(q => q.passageId));
  const passages = merged.passages.filter(p => usedPassages.has(p.id)).map(p => {
   const body = stripVoaEmailCallsToAction(p.body);
