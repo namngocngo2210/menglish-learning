@@ -15,7 +15,7 @@ import { createAdmin } from "../src/admin/create";
 import { ACCOUNT_OPERATIONS } from "../src/server/account-openapi";
 import { buildApp, loggerOptions } from "../src/server/app";
 import type { BuiltApp } from "../src/server/app";
-import { ADMIN_URL, createMigratedDb } from "./helpers";
+import { ADMIN_URL, createMigratedDb, uname } from "./helpers";
 import type { TestDb } from "./helpers";
 
 const ORIGIN = "https://site.example.test";
@@ -139,6 +139,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
     });
 
   const registerBody = (email: string, password = PW) => ({
+    username: uname(email),
     email,
     password,
     adult: true,
@@ -153,9 +154,9 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
 
   async function signup(email = `parent${String((n += 1))}@example.test`): Promise<Session> {
     const from = ip();
-    expect((await post("/register", registerBody(email), from)).statusCode).toBe(202);
-    const res = await post("/verify-email", { token: tokenOf(email) }, from);
-    expect(res.statusCode).toBe(200);
+    const res = await post("/register", registerBody(email), from);
+    expect(res.statusCode).toBe(201);
+    expect((await post("/verify-email", { token: tokenOf(email) }, from)).statusCode).toBe(200);
     return {
       email,
       cookie: cookieOf(res),
@@ -164,7 +165,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
     };
   }
   const login = async (email: string, password = PW, from = ip()): Promise<Session> => {
-    const res = await post("/login", { email, password }, from);
+    const res = await post("/login", { username: uname(email), password }, from);
     expect(res.statusCode).toBe(200);
     return {
       email,
@@ -240,16 +241,20 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       const email = "mom@example.test";
       const from = ip();
       const reg = await post("/register", registerBody(email), from);
-      expect(reg.statusCode).toBe(202);
+      expect(reg.statusCode).toBe(201);
       expect(reg.headers["cache-control"]).toBe("no-store");
+      expect(reg.json<{ recoveryCodes: string[] }>().recoveryCodes).toHaveLength(10);
       expect(mailer.outbox).toHaveLength(1);
       expect(mailer.outbox[0]?.subject).toContain("Xác minh");
       const token = tokenOf(email);
-      // unverified: cannot log in yet
-      expect((await post("/login", { email, password: PW })).statusCode).toBe(401);
+      // unverified email: nothing is stored on the account yet
+      expect(await pool.query("SELECT 1 FROM users WHERE email IS NOT NULL")).toHaveProperty(
+        "rowCount",
+        0,
+      );
       const res = await post("/verify-email", { token }, from);
       expect(res.statusCode).toBe(200);
-      const cookie = String(res.headers["set-cookie"]);
+      const cookie = String(reg.headers["set-cookie"]);
       expect(cookie).toMatch(new RegExp(`^${USER_COOKIE}=[A-Za-z0-9_-]{43};`));
       for (const attr of ["HttpOnly", "Secure", "SameSite=Lax", "Path=/"])
         expect(cookie).toContain(attr);
@@ -284,11 +289,14 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       ]);
       const s: Session = {
         email,
-        cookie: cookieOf(res),
-        csrf: res.json<{ csrfToken: string }>().csrfToken,
+        cookie: cookieOf(reg),
+        csrf: reg.json<{ csrfToken: string }>().csrfToken,
         ip: from,
       };
       expect((await authed(s, "GET", "/me")).json()).toMatchObject({
+        username: uname(email),
+        emailVerified: true,
+        recoveryCodesLeft: 10,
         email,
         hasPassword: true,
         googleLinked: false,
@@ -325,15 +333,15 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       expect(mailer.outbox).toHaveLength(0);
     });
 
-    it("answers new, pending and already registered emails identically (no enumeration)", async () => {
-      const first = await post("/register", registerBody("same@example.test"));
-      const pending = await post("/register", registerBody("same@example.test"));
-      const other = await post("/register", registerBody("fresh@example.test"));
-      await post("/verify-email", { token: tokenOf("same@example.test") });
-      const existing = await post("/register", registerBody("same@example.test"));
-      for (const r of [first, pending, other, existing]) expect(r.statusCode).toBe(202);
-      expect(strip(first)).toEqual(strip(existing));
-      expect(strip(first)).toEqual(strip(other));
+    it("never reveals through register whether an email is already registered", async () => {
+      await signup("same@example.test");
+      mailer.outbox.length = 0;
+      const dup = await post("/register", {
+        ...registerBody("other@example.test"),
+        email: "same@example.test",
+      });
+      expect(dup.statusCode).toBe(201);
+      expect(dup.json<object>()).toMatchObject({ emailPending: true });
       const notice = mailer.outbox.filter((m) => m.to === "same@example.test").at(-1);
       expect(notice?.subject).toContain("đã có tài khoản");
       expect(notice?.text).not.toContain("token=");
@@ -342,31 +350,36 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       ).toHaveProperty("rowCount", 1);
     });
 
-    it("lets a re-submitted pending signup replace the password and invalidates the older token", async () => {
+    it("answers a taken username with 409 and never overwrites the existing account", async () => {
+      await signup("taken@example.test");
+      const res = await post("/register", { ...registerBody("x@example.test"), username: "TAKEN" });
+      expect(res.statusCode).toBe(409);
+      expect(res.json<{ detail: string }>().detail).toBe("username_taken");
+      expect((await login("taken@example.test")).email).toBe("taken@example.test");
+    });
+
+    it("lets a later verification link replace the pending one", async () => {
       const email = "again@example.test";
-      await post("/register", registerBody(email, "first-password-123"));
+      const s = await signup("again2@example.test");
+      await authed(s, "POST", "/email", { email });
       const oldToken = tokenOf(email);
-      await post("/register", registerBody(email, "second-password-456"));
+      await authed(s, "POST", "/email", { email });
       expect((await post("/verify-email", { token: oldToken })).statusCode).toBe(422);
       expect((await post("/verify-email", { token: tokenOf(email) })).statusCode).toBe(200);
-      expect((await post("/login", { email, password: "first-password-123" })).statusCode).toBe(
-        401,
-      );
-      expect((await post("/login", { email, password: "second-password-456" })).statusCode).toBe(
-        200,
-      );
+      expect((await authed(s, "GET", "/me")).json()).toMatchObject({ email, emailVerified: true });
     });
 
     it("limits verification mail per address and per IP, and survives a mail outage silently", async () => {
       const email = "spam@example.test";
+      const s = await signup("spamer@example.test");
       for (let i = 0; i < 3; i++)
-        expect((await post("/register", registerBody(email))).statusCode).toBe(202);
-      const blocked = await post("/register", registerBody(email));
+        expect((await authed(s, "POST", "/email", { email })).statusCode).toBe(202);
+      const blocked = await authed(s, "POST", "/email", { email });
       expect(blocked.statusCode).toBe(429);
       expect(Number(blocked.headers["retry-after"])).toBeGreaterThan(0);
       failingMail = true;
       const res = await post("/register", registerBody("down@example.test"));
-      expect(res.statusCode).toBe(202);
+      expect(res.statusCode).toBe(201);
       await new Promise((resolve) => setImmediate(resolve));
       expect(logs).toContain("mail_send_failed");
       expect(logs).not.toContain("down@example.test");
@@ -374,18 +387,17 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
   });
 
   describe("login, sessions and CSRF", () => {
-    it("answers wrong password, unknown email and unverified email identically", async () => {
+    it("answers wrong password, unknown username and an email used as username identically", async () => {
       await signup("real@example.test");
-      await post("/register", registerBody("unverified@example.test"));
       const wrong = await post("/login", {
-        email: "real@example.test",
+        username: uname("real@example.test"),
         password: "nope-nope-nope",
       });
       const unknown = await post("/login", {
-        email: "ghost@example.test",
+        username: uname("ghost@example.test"),
         password: "nope-nope-nope",
       });
-      const unverified = await post("/login", { email: "unverified@example.test", password: PW });
+      const unverified = await post("/login", { username: "real@example.test", password: PW });
       for (const r of [wrong, unknown, unverified]) {
         expect(r.statusCode).toBe(401);
         expect(r.headers["set-cookie"]).toBeUndefined();
@@ -398,29 +410,43 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       const from = ip();
       for (let i = 0; i < 5; i++)
         expect(
-          (await post("/login", { email: "rate@example.test", password: "bad-bad-bad-1" }, from))
-            .statusCode,
+          (
+            await post(
+              "/login",
+              { username: uname("rate@example.test"), password: "bad-bad-bad-1" },
+              from,
+            )
+          ).statusCode,
         ).toBe(401);
-      const locked = await post("/login", { email: "rate@example.test", password: PW }, from);
+      const locked = await post(
+        "/login",
+        { username: uname("rate@example.test"), password: PW },
+        from,
+      );
       expect(locked.statusCode).toBe(429);
       expect(Number(locked.headers["retry-after"])).toBeGreaterThan(0);
       clock = new Date(clock.getTime() + 16 * 60_000);
       expect(
-        (await post("/login", { email: "rate@example.test", password: PW }, from)).statusCode,
+        (await post("/login", { username: uname("rate@example.test"), password: PW }, from))
+          .statusCode,
       ).toBe(200);
 
       for (let i = 0; i < 10; i++)
-        await post("/login", { email: "rate@example.test", password: "bad-bad-bad-1" }, ip());
-      const byMail = await post("/login", { email: "rate@example.test", password: PW });
+        await post(
+          "/login",
+          { username: uname("rate@example.test"), password: "bad-bad-bad-1" },
+          ip(),
+        );
+      const byMail = await post("/login", { username: uname("rate@example.test"), password: PW });
       expect(byMail.statusCode).toBe(429);
-      const ghost = await post("/login", { email: "ghost2@example.test", password: "x" });
+      const ghost = await post("/login", { username: uname("ghost2@example.test"), password: "x" });
       expect(ghost.statusCode).toBe(401); // same limiter keys exist for unknown emails, only after failures
       expect(await audits()).toContain("user.login_locked");
     });
 
     it("rotates the session on login (old token revoked, never reused) and logs out only this session", async () => {
       const s1 = await signup("rot@example.test");
-      const relog = await post("/login", { email: s1.email, password: PW }, ip(), {
+      const relog = await post("/login", { username: uname(s1.email), password: PW }, ip(), {
         cookie: s1.cookie,
       });
       const s2: Session = {
@@ -483,7 +509,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
         (await bare({ origin: ORIGIN, "sec-fetch-site": "cross-site", "x-csrf-token": s.csrf }))
           .statusCode,
       ).toBe(403);
-      const publicCross = await post("/login", { email: s.email, password: PW }, ip(), {
+      const publicCross = await post("/login", { username: uname(s.email), password: PW }, ip(), {
         origin: "https://evil.test",
       });
       expect(publicCross.statusCode).toBe(403);
@@ -514,9 +540,12 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
           .statusCode,
       ).toBe(422);
       expect((await authed(s, "GET", "/me")).statusCode).toBe(401);
-      expect((await post("/login", { email: s.email, password: PW })).statusCode).toBe(401);
+      expect((await post("/login", { username: uname(s.email), password: PW })).statusCode).toBe(
+        401,
+      );
       expect(
-        (await post("/login", { email: s.email, password: "brand-new-password-1" })).statusCode,
+        (await post("/login", { username: uname(s.email), password: "brand-new-password-1" }))
+          .statusCode,
       ).toBe(200);
       expect(await audits()).toContain("user.password_reset");
     });
@@ -618,7 +647,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
     });
 
     it("blocks reading, changing, deleting or withdrawing another parent's profile (IDOR)", async () => {
-      const a = await signup("owner@example.test");
+      const a = await signup("mum@example.test");
       const b = await signup("intruder@example.test");
       const profile = (await addProfile(a)).json<{ id: string }>();
       const consentId =
@@ -773,19 +802,19 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
         "SELECT * FROM audit_log WHERE action = 'user.account_deleted'",
       );
       expect(JSON.stringify(log.rows)).not.toContain("bye@");
-      expect((await post("/login", { email: "bye@example.test", password: PW })).statusCode).toBe(
-        401,
-      );
+      expect(
+        (await post("/login", { username: uname("bye@example.test"), password: PW })).statusCode,
+      ).toBe(401);
     });
   });
 
   describe("admin and parent are different principals", () => {
     it("rejects an admin cookie on parent routes and a parent cookie on admin routes", async () => {
-      await createAdmin(db.url, "owner@example.test", PW);
+      await createAdmin(db.url, "mum@example.test", PW);
       const adminLogin = await built.app.inject({
         method: "POST",
         url: "/api/v1/admin/auth/login",
-        payload: { email: "owner@example.test", password: PW },
+        payload: { email: "mum@example.test", password: PW },
         headers: {
           "content-type": "application/json",
           origin: ADMIN_ORIGIN,
@@ -833,7 +862,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
 
     it("keeps account audit rows free of admin ids and personal data", async () => {
       const s = await signup("audit@example.test");
-      await post("/login", { email: s.email, password: "bad-bad-bad-1" });
+      await post("/login", { username: uname(s.email), password: "bad-bad-bad-1" });
       const rows = await pool.query<{
         admin_user_id: string | null;
         entity_type: string;
@@ -858,16 +887,17 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
     it("never logs passwords, tokens, cookies, emails or IP addresses through the whole lifecycle", async () => {
       const email = "logcheck@example.test";
       const from = "198.51.100.77";
-      await post("/register", registerBody(email, "s3cret-Pass-Phrase!"), from);
+      const registered = await post("/register", registerBody(email, "s3cret-Pass-Phrase!"), from);
+      const codes = registered.json<{ recoveryCodes: string[] }>().recoveryCodes;
       const verifyToken = tokenOf(email);
-      const verified = await post("/verify-email", { token: verifyToken }, from);
+      await post("/verify-email", { token: verifyToken }, from);
       const s: Session = {
         email,
-        cookie: cookieOf(verified),
-        csrf: verified.json<{ csrfToken: string }>().csrfToken,
+        cookie: cookieOf(registered),
+        csrf: registered.json<{ csrfToken: string }>().csrfToken,
         ip: from,
       };
-      await post("/login", { email, password: "wrong-Pass-Phrase!" }, from);
+      await post("/login", { username: uname(email), password: "wrong-Pass-Phrase!" }, from);
       await post("/password-reset/request", { email }, from);
       const resetToken = tokenOf(email);
       await addProfile(s);
@@ -881,8 +911,13 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
         { token: resetToken, password: "r3set-Pass-Phrase-88" },
         from,
       );
+      await post(
+        "/password-reset/recovery",
+        { username: uname(email), code: codes[0], password: "rec0ver-Pass-Phrase-99" },
+        from,
+      );
       failingMail = true;
-      await post("/register", registerBody("second@example.test"), from);
+      await post("/register", registerBody("second@example.test"), ip());
       await new Promise((resolve) => setImmediate(resolve));
       await authed(s, "DELETE", "/account", { password: "n3w-Pass-Phrase-77" });
       expect(logs).toContain(`${A}/login`); // requests are logged...
@@ -891,6 +926,8 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
         "wrong-Pass-Phrase!",
         "n3w-Pass-Phrase-77",
         "r3set-Pass-Phrase-88",
+        "rec0ver-Pass-Phrase-99",
+        ...codes,
         verifyToken,
         resetToken,
         s.cookie.split("=")[1] ?? "",
@@ -1000,7 +1037,7 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
       expect((await post("/register", { ...registerBody(email), role: "admin" })).statusCode).toBe(
         422,
       );
-      const big = await post("/login", { email, password: "x".repeat(70_000) });
+      const big = await post("/login", { username: uname(email), password: "x".repeat(70_000) });
       expect(big.statusCode).toBe(413);
     });
   });

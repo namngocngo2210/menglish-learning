@@ -255,6 +255,14 @@ export interface RawDocuments {
   url: string;
 }
 
+export interface RecoveryCodes {
+  code_sha256: string;
+  created_at: Generated<Timestamp>;
+  id: Generated<Int8>;
+  used_at: Timestamp | null;
+  user_id: Int8;
+}
+
 export interface Sources {
   allowed_hosts: Generated<string[]>;
   attribution: string;
@@ -304,12 +312,14 @@ export interface Topics {
 
 export interface Users {
   created_at: Generated<Timestamp>;
-  email: string;
+  email: string | null;
   email_verified_at: Timestamp | null;
   id: Generated<Int8>;
   last_login_at: Timestamp | null;
   password_hash: string | null;
   status: Generated<string>;
+  username: string;
+  username_generated: Generated<boolean>;
 }
 
 export interface UserSessions {
@@ -328,6 +338,7 @@ export interface UserSessions {
 
 export interface UserTokens {
   created_at: Generated<Timestamp>;
+  email: string | null;
   expires_at: Timestamp;
   id: Generated<Int8>;
   purpose: string;
@@ -427,6 +438,7 @@ export interface DB {
   question_revisions: QuestionRevisions;
   questions: Questions;
   raw_documents: RawDocuments;
+  recovery_codes: RecoveryCodes;
   sources: Sources;
   test_items: TestItems;
   tests: Tests;

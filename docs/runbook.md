@@ -183,3 +183,49 @@ Tạo tài khoản + xác minh tên miền (SPF/DKIM), lấy thông tin SMTP c�
 
 ### 11.6 Rollback
 Đặt `MAIL_TRANSPORT=none` (hoặc xóa dòng) ⇒ `dc up -d --force-recreate api`: không gửi thư. Nghi lộ mật khẩu: xóa mật khẩu ứng dụng trong Google, tạo lại, ghi đè `smtp_pass`.
+
+## 12. Tài khoản username: Turnstile, khóa đăng nhập, tài khoản mất mã, migration 0039
+
+Chỉ áp dụng khi `ACCOUNTS_ENABLED=true`. Thiết kế: [user-accounts.md](user-accounts.md) mục 13, [ADR 0010](adr/0010-username-login-optional-email.md). Chỉ ghi **tên** biến, không ghi giá trị ở repo/chat/card/log. `psql` như mục 10.1 (`docker exec beejunior-postgres-1 psql -U postgres -d beejunior`); DB prod chỉ đọc, trừ thao tác ghi nêu rõ cần chủ duyệt.
+
+### 12.1 Bật Cloudflare Turnstile (mặc định TẮT)
+
+Chỉ bật khi thấy lạm dụng đăng ký (ngưỡng: [pentest F10](pentest-asvs-l2-accounts.md)). Cập nhật CSP và Chính sách (script bên thứ ba) trước.
+
+1. Chủ tạo widget trong Cloudflare (Turnstile → Add widget, hostname `beejunior.meducation.vn`) ⇒ có _site key_ (công khai) và _secret key_ (bí mật).
+2. `api`: đặt `TURNSTILE_SECRET_FILE` trỏ tới Docker secret (ưu tiên) hoặc `TURNSTILE_SECRET`, tệp quyền 600; không dán secret vào chat/card.
+3. `web`: đặt `NEXT_PUBLIC_TURNSTILE_SITE_KEY`. Biến `NEXT_PUBLIC_*` được nhúng lúc **build** ⇒ phải build lại và deploy `web` (không chỉ khởi động lại).
+4. Tạo lại `api` (`dc up -d --force-recreate api`) và triển khai `web` mới. Kiểm: `/dang-ky` hiện widget; đăng ký không token ⇒ 422 `captcha_failed`; có token ⇒ 201.
+5. Cloudflare/siteverify lỗi ⇒ **mọi đăng ký bị từ chối** (fail-closed). Tắt khẩn cấp: bỏ `TURNSTILE_SECRET*` khỏi `api` rồi tạo lại `api` (api bỏ qua token); bỏ site key ở lần build kế tiếp.
+
+### 12.2 Người dùng bị chặn đăng nhập/khôi phục/đăng ký (429)
+
+Giới hạn nằm ở bảng `login_attempts` (cột `key_hash` là băm của khóa nên **không đọc được username/IP thô**). Khóa logic: `reg-ip` (3/giờ), `reg-cool` (60 giây), `user-ip` (5 sai/15 phút), `user-name` (10 sai/giờ), `rec-ip` (5/15 phút), `rec-name` (10/giờ), `user-pw` (10/giờ). Không có cờ khóa trong DB: **hết cửa sổ là tự mở** (429 có `Retry-After`).
+
+1. Hỏi người dùng đã sai mấy lần và cách đây bao lâu; thường chỉ cần chờ đúng `Retry-After`.
+2. Nhiều người cùng bị chặn ⇒ kiểm `TRUST_PROXY` (sai ⇒ mọi người chung một IP, chung bộ đếm `user-ip`/`rec-ip`/`reg-*`; deploy-plan-accounts O5). Sửa cấu hình, không xóa bảng.
+3. Quan sát (chỉ đọc): `SELECT count(*), min(created_at), max(created_at) FROM login_attempts WHERE created_at > now() - interval '1 hour';` và `SELECT action, count(*) FROM audit_log WHERE entity_type='user' AND created_at > now() - interval '1 hour' GROUP BY 1;` (`user.login_failed`, `user.login_locked`, `user.recovery_failed`, `user.register`). `user.register` tăng đột biến ⇒ nghi bot, cân nhắc bật Turnstile (12.1).
+4. Mở khóa sớm: vì khóa là băm, thực tế chỉ có thể xóa dòng theo thời gian, ví dụ `DELETE FROM login_attempts WHERE created_at > now() - interval '15 minutes'`, việc này mở khóa **mọi** người và mọi bộ đếm ⇒ ghi vào prod, **cần chủ duyệt** và ghi nhật ký. Mặc định: chờ hết cửa sổ.
+
+### 12.3 Nghi tài khoản bị đoán mật khẩu
+
+Dấu hiệu: nhiều `user.login_failed` cùng khoảng giờ. Bộ đếm theo username chặn cả kẻ tấn công lẫn chủ tài khoản đến hết cửa sổ (không khóa vĩnh viễn). Nghi đã bị chiếm: chủ tài khoản tự đặt lại bằng mã khôi phục hoặc link email (hủy mọi phiên); hỗ trợ không đặt lại hộ.
+
+### 12.4 Tài khoản không khôi phục được (mất mật khẩu + mã, không có email)
+
+Theo thiết kế **không khôi phục được** và hỗ trợ **không được** đặt lại thủ công: không có dữ liệu nào chứng minh chủ sở hữu (ADR 0010 R2). Hướng dẫn người dùng: (a) thử các mã còn lại (10 mã, mỗi mã một lần; không phân biệt hoa/thường, dấu `-` hay khoảng trắng); (b) nếu có email đã xác minh ⇒ "Quên mật khẩu" qua link; (c) nếu không ⇒ tạo tài khoản mới. Dữ liệu cũ có thể xóa theo yêu cầu qua `/xoa-du-lieu` (kênh liên hệ của chủ). Không hứa khôi phục.
+
+### 12.5 Kiểm tra migration 0039 trước deploy
+
+Chỉ khi chủ duyệt deploy; migration chạy trước khi `api` mới khởi động (mục 2).
+
+1. Cờ vẫn TẮT, chưa có người dùng thật: `SELECT count(*) FROM users;` (dự kiến 0). Nếu >0 thì **dừng** và hỏi chủ: migration đặt `email = NULL` cho email chưa xác minh và gán tên `user<id>` cho tài khoản cũ.
+2. Có backup mới nhất (mục 5) trước khi migrate.
+3. Chạy thử `up` → `down` → `up` trên DB tạm từ backup. Test tự động: `api/tests/migrations.test.ts`.
+4. Sau migrate: `\d users` có `username citext NOT NULL` và ràng buộc `users_email_verified`; `SELECT to_regclass('recovery_codes');` khác null.
+
+### 12.6 Rollback
+
+- **Nhanh, không mất dữ liệu:** `ACCOUNTS_ENABLED=false` rồi `dc up -d --force-recreate api web` ⇒ route tài khoản 404, luyện tập ẩn danh không đổi; giữ nguyên schema 0039.
+- **Gỡ migration (`down`):** chỉ khi **không còn** tài khoản `email IS NULL`; nếu còn, `down` dừng với lỗi `cannot restore users.email NOT NULL: accounts without email exist` và không đổi gì. Khi đã có người dùng thật, ưu tiên rollback nhanh; gỡ schema cần chủ quyết định số phận các tài khoản không email (xóa kèm `deletion_requests`), không tự làm.
+- Image `api` cũ không chạy đúng với schema 0039 khi đã có tài khoản không email ⇒ rollback mã phải đi cùng tắt cờ.

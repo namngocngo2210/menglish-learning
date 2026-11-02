@@ -24,6 +24,9 @@ const EnvSchema = z.object({
   USER_SESSION_HMAC_KEY: z.string().min(32).optional(),
   USER_SESSION_HMAC_KEY_FILE: z.string().min(1).optional(),
   ACCOUNTS_ORIGIN: z.url().optional(),
+  // Optional Cloudflare Turnstile on registration; unset = no CAPTCHA (enable only if abuse is seen).
+  TURNSTILE_SECRET: z.string().min(1).optional(),
+  TURNSTILE_SECRET_FILE: z.string().min(1).optional(),
   GOOGLE_CLIENT_ID: z.string().min(1).optional(),
   GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
   GOOGLE_CLIENT_SECRET_FILE: z.string().min(1).optional(),
@@ -52,7 +55,9 @@ export interface ServerConfig {
   /** ADMIN_DIST: directory of the built admin SPA; unset = /admin is not served. */
   adminDist: string | undefined;
   /** Parent accounts; undefined unless ACCOUNTS_ENABLED=true (default off: no routes, nothing visible). */
-  accounts: { hmacKey: string; origin: string; google?: GoogleConfig } | undefined;
+  accounts:
+    | { hmacKey: string; origin: string; google?: GoogleConfig; turnstileSecret?: string }
+    | undefined;
   /** SMTP settings (MAIL_TRANSPORT=smtp); only read when accounts are enabled. */
   mail: SmtpConfig | undefined;
   rateLimitPerMinute: number;
@@ -105,6 +110,8 @@ export function loadServerConfig(
       );
     const origin = new URL(v.ACCOUNTS_ORIGIN).origin;
     accounts = { hmacKey: userKey, origin };
+    const turnstile = read(v.TURNSTILE_SECRET_FILE, v.TURNSTILE_SECRET);
+    if (turnstile !== undefined) accounts.turnstileSecret = turnstile;
     const secret = read(v.GOOGLE_CLIENT_SECRET_FILE, v.GOOGLE_CLIENT_SECRET);
     const given = [v.GOOGLE_CLIENT_ID, secret, v.GOOGLE_REDIRECT_URI].filter(
       (x) => x !== undefined,

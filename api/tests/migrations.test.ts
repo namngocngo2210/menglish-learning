@@ -8,7 +8,7 @@ import { CONTENT_DIR } from "./content-dir";
 import { ADMIN_URL, createMigratedDb, createTestDb } from "./helpers";
 import type { TestDb } from "./helpers";
 
-const MIGRATION_COUNT = 38;
+const MIGRATION_COUNT = 39;
 
 async function tables(db: TestDb): Promise<string[]> {
   const { rows } = await db.admin.query<{ table_name: string }>(
@@ -50,6 +50,7 @@ describe.skipIf(ADMIN_URL === undefined)("migrations on an empty database", () =
       "question_revisions",
       "questions",
       "raw_documents",
+      "recovery_codes",
       "sources",
       "test_items",
       "tests",
@@ -153,7 +154,7 @@ describe.skipIf(ADMIN_URL === undefined)("migration down/up", () => {
       }
       expect(await tables(db)).toEqual([]);
       expect(await migrate(db.url, { direction: "up" })).toHaveLength(MIGRATION_COUNT);
-      expect((await tables(db)).length).toBe(27);
+      expect((await tables(db)).length).toBe(28);
     } finally {
       await db.remove();
     }
@@ -190,6 +191,45 @@ describe.skipIf(ADMIN_URL === undefined)("migration down/up", () => {
       expect(rows.map((r) => r.table_name)).toEqual(["pgmigrations", "sources"]);
       const applied = await db.admin.query("SELECT 1 FROM pgmigrations");
       expect(applied.rowCount).toBe(0);
+    } finally {
+      await db.remove();
+    }
+  });
+});
+
+describe.skipIf(ADMIN_URL === undefined)("0039 username login on a populated database", () => {
+  it("backfills usernames, drops unverified emails, and refuses to go down while an account has no email", async () => {
+    const db = await createTestDb();
+    try {
+      await migrate(db.url, { direction: "up", count: 38 });
+      await db.admin.query(
+        `INSERT INTO users (email, email_verified_at, status) VALUES ('a@example.test', now(), 'active'), ('b@example.test', NULL, 'pending')`,
+      );
+      await migrate(db.url, { direction: "up" });
+      const { rows } = await db.admin.query<{ username: string; email: string | null }>(
+        "SELECT username::text, email FROM users ORDER BY id",
+      );
+      expect(rows).toEqual([
+        { username: "user1", email: "a@example.test" },
+        { username: "user2", email: null },
+      ]);
+      await expect(
+        db.admin.query(
+          "INSERT INTO users (username, email, email_verified_at) VALUES ('USER1', NULL, NULL)",
+        ),
+      ).rejects.toThrow(/users_username_key/); // case-insensitive unique
+      await expect(
+        db.admin.query("INSERT INTO users (username, email) VALUES ('nomail', 'x@example.test')"),
+      ).rejects.toThrow(/users_email_verified/); // an email is always a verified one
+      await expect(migrate(db.url, { direction: "down", count: 1 })).rejects.toThrow(
+        /accounts without email/,
+      );
+      await db.admin.query("DELETE FROM users WHERE email IS NULL");
+      await migrate(db.url, { direction: "down", count: 1 });
+      const cols = await db.admin.query(
+        "SELECT 1 FROM information_schema.columns WHERE table_name='users' AND column_name='username'",
+      );
+      expect(cols.rowCount).toBe(0);
     } finally {
       await db.remove();
     }

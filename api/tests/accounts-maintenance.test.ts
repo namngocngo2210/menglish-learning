@@ -25,7 +25,7 @@ describe.skipIf(ADMIN_URL === undefined)("account maintenance (PostgreSQL)", () 
     const now = new Date("2026-12-01T00:00:00Z");
     const day = (d: number): Date => new Date(now.getTime() - d * 24 * 3600_000);
     const u = await pool.query<{ id: string }>(
-      "INSERT INTO users (email, status) VALUES ('m@example.test','active') RETURNING id::text",
+      "INSERT INTO users (username, email, email_verified_at, status) VALUES ('muser','m@example.test',now(),'active') RETURNING id::text",
     );
     const uid = u.rows[0]?.id;
     for (const [d, ok] of [
@@ -81,7 +81,7 @@ describe.skipIf(ADMIN_URL === undefined)("account maintenance (PostgreSQL)", () 
       ids.push(
         (
           await pool.query<{ id: string }>(
-            "INSERT INTO users (email, status) VALUES ($1,'active') RETURNING id::text",
+            "INSERT INTO users (username, email, email_verified_at, status) VALUES ('user' || split_part($1,'@',1),$1,now(),'active') RETURNING id::text",
             [email],
           )
         ).rows[0]?.id ?? "",

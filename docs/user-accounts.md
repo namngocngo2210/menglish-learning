@@ -1,5 +1,6 @@
-# Tài khoản người dùng (đăng ký email + Google) — thiết kế & rủi ro pháp lý
+# Tài khoản người dùng (đăng nhập username + Google) — thiết kế & rủi ro pháp lý
 
+> **Cập nhật 2/11 ([ADR 0010](adr/0010-username-login-optional-email.md)): đăng nhập bằng USERNAME, email tùy chọn, có mã khôi phục. Mục 13 là thiết kế HIỆN HÀNH và thắng mọi chỗ mâu thuẫn ở mục 2–4, 7, 10–12 (giữ làm lịch sử: "email + mật khẩu" ở đó nay đọc là "username + mật khẩu"). Có thể không có email nên rủi ro pháp lý tăng — [cần xác nhận với luật sư].**
 > **Trạng thái: THIẾT KẾ; mã S-U1..S-U4 đã có sau cờ ACCOUNTS_ENABLED (mặc định TẮT, xem mục 10–11). Chưa có ứng dụng OAuth hay bí mật nào: mục 5 là việc của chủ; tính năng giữ TẮT đến khi chủ đặt secret. Bật/rollback: [runbook.md](runbook.md) mục 9.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
 > **Phạm vi chủ chốt (2/11):** đăng ký email + mật khẩu và đăng nhập Google. **Không Facebook** (chỉ ghi "có thể làm sau", mục 5.3). Luyện tập ẩn danh giữ nguyên, không có "tường đăng nhập".
 > Đây **không phải tư vấn pháp lý**. Mọi kết luận pháp lý đánh dấu **[cần xác nhận với luật sư]**; mục 9 liệt kê điều chưa kiểm chứng được.
@@ -206,3 +207,82 @@ Chỉ chạy khi `ACCOUNTS_ENABLED=true` **và** có đủ `GOOGLE_CLIENT_ID`, `
 ## 12. Trạng thái S-U4 (cứng hóa, nhánh `feat/accounts-hardening`)
 
 Pen-test ASVS L2 theo tính năng (0 High; chặn bật cờ duy nhất là chưa có nhà gửi email): [pentest-asvs-l2-accounts.md](pentest-asvs-l2-accounts.md). Đo tải: `api` đỉnh 157 MB khi bị dội 128 đăng nhập song song ⇒ trần `api` nâng 160 → 192 MB (quyết định 9). Mới: `deletion_requests.target_ref` + `accounts:reapply-deletions` (xóa lại sau khôi phục backup), `accounts:purge-expired` (dọn theo thời hạn lưu giữ), dịch vụ `accounts-maint`, secret `user_session_hmac_key`/`google_client_secret` trong `gen-secrets.sh`, compose truyền biến tài khoản. Runbook vi phạm dữ liệu + sao lưu/xóa: [runbook.md](runbook.md) mục 10. Kế hoạch triển khai và việc của chủ: [deploy-plan-accounts.md](deploy-plan-accounts.md). Turnstile: không bật (chưa đo được lạm dụng). **Chưa làm:** adapter email thật, xóa tài khoản nhàn rỗi 24 tháng.
+
+## 13. Đăng nhập bằng username, email tùy chọn, mã khôi phục (hiện hành — PR #41)
+
+Quyết định của chủ 2/11, lý do và đánh đổi: [ADR 0010](adr/0010-username-login-optional-email.md). Cờ `ACCOUNTS_ENABLED` vẫn mặc định **TẮT**. Test: `api/tests/accounts-username.test.ts`, `api/tests/pentest-accounts.test.ts`.
+
+### 13.1 Username
+
+- `users.username` kiểu `citext` (không phân biệt hoa/thường), duy nhất (`users_username_key`). Server chuẩn hóa NFKC + trim + chữ thường rồi kiểm (`api/src/accounts/username.ts`).
+- Luật: 3–20 ký tự, `^[a-z0-9][a-z0-9._-]{2,19}$` (bắt đầu bằng chữ/số; CHECK `users_username_format` ở DB). Từ chối: toàn số hoặc có ≥6 chữ số liền (giống số điện thoại); đuôi giống địa chỉ (`.com`, `.vn`, `.net`, `.org`, `.edu`, `.info`); tên dành riêng (`admin`, `support`, `beejunior`, `meducation`, … sau khi bỏ `._-`); từ cấm (cùng `nickname-blocklist.json`). Lỗi `validation_failed` / `username_rejected`; trùng `conflict` / `username_taken`.
+- **Không đăng nhập bằng email.** Email chỉ dùng để xác minh, nhận link đặt lại mật khẩu và thông báo.
+- Mật khẩu không được chứa username (và email nếu có).
+
+### 13.2 Email tùy chọn, chỉ lưu khi đã xác minh
+
+- `users.email` nullable; ràng buộc `users_email_verified`: `email IS NULL OR email_verified_at IS NOT NULL`. Địa chỉ **chưa xác minh không bao giờ nằm trong `users`**: nó chỉ nằm trong `user_tokens.email` (token `verify_email`, sha256, hạn 24 giờ, một lần).
+- Đăng ký có thể kèm email → link `/xac-minh-email?token=…`. Người đã đăng nhập thêm/đổi email: `POST /email` (luôn 202). `POST /verify-email` đặt `users.email` + `email_verified_at`. **`/verify-email` không tạo phiên.** Token cũ trước 0039 (không có email) bị từ chối.
+- Địa chỉ đã thuộc tài khoản khác: người xin nhận thư "đã có tài khoản" (link tới đặt lại mật khẩu), phản hồi HTTP vẫn giống nhau (chống dò email). Hai người cùng xác minh một địa chỉ: người thứ hai thua do unique `lower(email)`.
+- Hệ quả: email chưa xác minh **không thể** nhận link đặt lại (`password-reset/request` chỉ tìm trong `users.email`).
+
+### 13.3 Mã khôi phục
+
+- Lúc đăng ký sinh **10 mã** (`recovery_codes`: `code_sha256` unique, `used_at`, ON DELETE CASCADE). Mã 20 ký tự dạng `XXXXX-XXXXX-XXXXX-XXXXX`, bảng chữ 31 ký tự không có `0/O/1/I/L`, không lệch modulo. Server chỉ lưu sha256 của dạng chuẩn hóa (hoa, bỏ `-` và khoảng trắng); bản rõ **chỉ hiện một lần** (`recoveryCodes` trong phản hồi `/register` hoặc `/recovery-codes`).
+- **Dùng một lần**: `UPDATE … SET used_at … WHERE used_at IS NULL` nguyên tử, hai request song song chỉ một thắng.
+- **Tạo lại**: `POST /recovery-codes` (đăng nhập; nhập lại mật khẩu nếu tài khoản có mật khẩu, tính vào bộ đếm `user-pw` 10 lần/giờ) xóa toàn bộ mã cũ, cấp 10 mã mới.
+- **Mất mã + quên mật khẩu + không có email xác minh = mất tài khoản.** Không có câu hỏi bảo mật; xem runbook 12.4.
+
+### 13.4 Hai đường đặt lại mật khẩu
+
+1. **Link email** (chỉ khi có email đã xác minh): `POST /password-reset/request` (luôn 202) → thư → `POST /password-reset/confirm` (token một lần, hạn 1 giờ).
+2. **Mã khôi phục**: `POST /password-reset/recovery` `{username, code, password}`. Username lạ, mã sai và mã đã dùng trả cùng lỗi `invalid_recovery`; thất bại bị giới hạn theo IP (khóa `rec-ip`) và theo username (`rec-name`); mật khẩu mới được băm trước khi tra mã để mọi nhánh tốn thời gian như nhau.
+
+Cả hai đường: thành công hủy mọi phiên của tài khoản.
+
+### 13.5 Google
+
+Email Google (`email_verified=true`) được lưu như email đã xác minh. Tài khoản tạo bằng Google có **username sinh tự động** (`bj` + 8 ký tự, `username_generated=true`); phụ huynh được **đổi đúng một lần** (`POST /username`, sau đó `username_not_changeable`). **Không tự gộp theo email**: nếu email Google đã thuộc một tài khoản, hoặc đang có phiên, danh tính chờ trong cookie `pending` ký HMAC và chỉ liên kết khi phụ huynh đã đăng nhập xác nhận (`POST /oauth/google/link`); email mới đã tick đồng ý thì tạo tài khoản, chưa tick thì chờ `POST /oauth/google/register`.
+
+### 13.6 Chống bot và giới hạn đăng nhập
+
+| Khóa trong `login_attempts` | Ngưỡng | Áp dụng |
+|---|---|---|
+| `reg-ip:<ipHash>` | 3 đăng ký / giờ / IP | `POST /register` |
+| `reg-cool:<ipHash>` | 1 đăng ký / 60 giây / IP | `POST /register` |
+| `user-ip:<ipHash>` | 5 lần sai / 15 phút | `POST /login` |
+| `user-name:<hmac(username)>` | 10 lần sai / giờ | `POST /login` |
+| `rec-ip:<ipHash>` | 5 lần sai / 15 phút | `POST /password-reset/recovery` |
+| `rec-name:<hmac(username)>` | 10 lần sai / giờ | `POST /password-reset/recovery` |
+| `user-pw:<userRef>` | 10 lần sai / giờ | đổi mật khẩu, tạo lại mã |
+
+Đăng ký được đếm **trước** mọi việc khác vì tài khoản không email rất rẻ với bot. Gửi email: 3/giờ/địa chỉ, 10/giờ/IP. Vượt ngưỡng ⇒ 429 + `Retry-After`, cùng phản hồi dù username có tồn tại hay không; đăng nhập đúng xóa bộ đếm của cặp khóa. "Khóa mềm": chỉ cửa sổ thời gian, không có cờ khóa trong DB (không thể khóa vĩnh viễn một người). Khóa theo username dùng HMAC nên DB/log không chứa username thô.
+
+**Turnstile (hook, mặc định TẮT):** đặt `TURNSTILE_SECRET` hoặc `TURNSTILE_SECRET_FILE` cho `api` **và** `NEXT_PUBLIC_TURNSTILE_SITE_KEY` cho `web` (biến `NEXT_PUBLIC_*` cần lúc **build**). Có secret ⇒ `POST /register` bắt buộc `captchaToken` hợp lệ (siteverify tới Cloudflare, timeout 3 giây, lỗi mạng = từ chối), sai trả `captcha_failed`; không có secret ⇒ bỏ qua. Bật phải cập nhật CSP và Chính sách (script bên thứ ba). Ngưỡng nên bật: pentest F10.
+
+### 13.7 Route mới/đổi (`/api/v1/account/*`, chỉ khi cờ bật)
+
+| Route | Đăng nhập? | Ghi chú |
+|---|---|---|
+| `POST /register` | không | `{username, password, email?, consent, captchaToken?}` → 201 + phiên + `recoveryCodes` (một lần) + `emailPending` |
+| `POST /login` | không | `{username, password}`; không nhận email |
+| `POST /verify-email` | không | không tạo phiên |
+| `POST /password-reset/request` | không | `{email}` → 202 |
+| `POST /password-reset/confirm` | không | `{token, password}` |
+| `POST /password-reset/recovery` | không | `{username, code, password}` |
+| `POST /email` | có | thêm/đổi email, 202 |
+| `POST /recovery-codes` | có | tạo lại 10 mã |
+| `POST /username` | có | một lần cho tài khoản Google |
+| `POST /password`, `/logout`, `/logout-all`, hồ sơ, đồng ý, `GET /export`, `DELETE /account` | có | như trước |
+
+Trang web: `/dang-ky`, `/dang-nhap`, `/dat-lai-mat-khau` (cả hai đường), `/xac-minh-email`, `/tai-khoan` (đều `noindex`). Hợp đồng đầy đủ: `api/openapi.accounts.v1.json`.
+
+### 13.8 Schema: migration `0039_username_login.sql` (expand/contract)
+
+- **Up (expand):** bật `citext`; `users.email` bỏ NOT NULL và **đặt NULL cho email chưa xác minh** (mất dữ liệu có chủ ý: đăng ký cũ chưa xác minh không dùng được); thêm `username` (backfill `user<id>`, rồi NOT NULL), `username_generated`, CHECK định dạng, unique index; CHECK `users_email_verified`; `status` mặc định `active`; `user_tokens.email`; bảng `recovery_codes` + GRANT cho `bj_api`. Prod chưa từng bật cờ nên dự kiến không có dòng người dùng.
+- **Down:** **từ chối** (`RAISE EXCEPTION`) khi còn tài khoản `email IS NULL`, vì không thể đưa `email` về NOT NULL mà không xóa dữ liệu. Khi đó: tắt cờ và giữ migration, hoặc xóa các tài khoản đó (cần chủ duyệt). Khi chạy được, `down` xóa `recovery_codes`, `username`, `user_tokens.email`.
+- **Contract (thẻ riêng, sau):** bỏ nhánh đọc token cũ không có `email`. Kiểm tra trước deploy: runbook 12.5.
+
+### 13.9 Rủi ro mới (chi tiết ở ADR 0010)
+
+Không có email ⇒ không liên lạc được với phụ huynh (thông báo vi phạm, rút đồng ý) và bằng chứng đồng ý yếu hơn — **[cần xác nhận với luật sư]** trước khi bật cho công chúng. Mất mã khôi phục = mất tài khoản. Bot đăng ký rẻ hơn ⇒ giới hạn 13.6 + Turnstile. Bản nháp Chính sách/Điều khoản mới: `web/components/account/Legal.tsx` (mục 7 ở trên).

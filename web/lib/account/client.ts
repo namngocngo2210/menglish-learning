@@ -1,12 +1,14 @@
 export class AccountApiError extends Error {
  constructor(public status: number, public code: string, public detail?: string, public retryAfter?: number) { super(detail ?? code); this.name = "AccountApiError"; }
 }
-export interface Me { email: string; hasPassword: boolean; googleLinked: boolean; profileCount: number; profileLimit: number; csrfToken: string }
+export interface Me { username: string; email: string | null; emailVerified: boolean; usernameChangeable: boolean; recoveryCodesLeft: number; hasPassword: boolean; googleLinked: boolean; profileCount: number; profileLimit: number; csrfToken: string }
 export interface Profile { id: string; nickname: string; grade: number; createdAt: string }
 export interface ConsentTexts { policyVersion: string; texts: Record<"account" | "child_progress", { text: string; textHash: string }> }
 export interface ConsentRef { policyVersion: string; textHash: string }
 
-/** Same-origin client for /api/v1/account. The CSRF token comes from login/verify or GET /me and is held in memory only. */
+export interface RegisterResult { csrfToken: string; recoveryCodes: string[]; emailPending: boolean }
+
+/** Same-origin client for /api/v1/account. The CSRF token comes from login/register or GET /me and is held in memory only. */
 export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: { baseUrl?: string; fetchImpl?: typeof fetch } = {}) {
  if (!/^\/(?!\/)[A-Za-z0-9/_-]*$/.test(baseUrl)) throw new Error("Account baseUrl must be a same-origin path");
  const base = baseUrl.replace(/\/+$/, "");
@@ -32,10 +34,14 @@ export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: 
  async function me(): Promise<Me> { const m = await json<Me>("GET", "/me"); csrf = m.csrfToken; return m; }
  return {
   consentTexts: () => json<ConsentTexts>("GET", "/consent-texts"),
-  register: (b: { email: string; password: string; adult: true; consent: ConsentRef }) => json("POST", "/register", b),
-  verifyEmail: (token: string) => startSession("/verify-email", { token }),
-  login: (email: string, password: string) => startSession("/login", { email, password }),
+  register: async (b: { username: string; password: string; email?: string; adult: true; consent: ConsentRef; captchaToken?: string }) => { const r = await json<RegisterResult>("POST", "/register", b); csrf = r.csrfToken; return r; },
+  verifyEmail: (token: string) => json("POST", "/verify-email", { token }),
+  login: (username: string, password: string) => startSession("/login", { username, password }),
   resetRequest: (email: string) => json("POST", "/password-reset/request", { email }),
+  resetWithRecovery: (username: string, code: string, password: string) => json("POST", "/password-reset/recovery", { username, code, password }),
+  setEmail: (email: string) => json("POST", "/email", { email }, true),
+  setUsername: (username: string) => json("POST", "/username", { username }, true),
+  regenerateRecoveryCodes: async (password: string) => (await json<{ recoveryCodes: string[] }>("POST", "/recovery-codes", { password }, true)).recoveryCodes,
   resetConfirm: (token: string, password: string) => json("POST", "/password-reset/confirm", { token, password }),
   me,
   logout: async () => { await json("POST", "/logout", {}, true); csrf = null; },

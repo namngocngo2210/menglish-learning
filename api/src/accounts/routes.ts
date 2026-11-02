@@ -10,6 +10,8 @@ import { googleRoutes } from "./google";
 import { existingAccountMessage, resetPasswordMessage, verifyEmailMessage } from "./mailer";
 import type { MailMessage } from "./mailer";
 import { cleanNickname } from "./nickname";
+import { consumeCode, regenerateCodes } from "./recovery";
+import { cleanUsername } from "./username";
 import { checkPasswordHash, hashPassword, passwordProblem } from "./password";
 import {
   changePasswordBody,
@@ -19,8 +21,12 @@ import {
   profileCreateBody,
   progressImportBody,
   profileUpdateBody,
+  regenerateCodesBody,
   registerBody,
   resetConfirmBody,
+  resetRecoveryBody,
+  emailBody,
+  usernameBody,
   resetRequestBody,
   verifyBody,
 } from "./schemas";
@@ -30,7 +36,11 @@ const VERIFY_TTL_MS = 24 * 3600_000;
 const RESET_TTL_MS = 3600_000;
 const DELETE_DUE_MS = 72 * 3600_000;
 const LOGIN_IP = { max: 5, windowMs: 15 * 60_000 };
-const LOGIN_MAIL = { max: 10, windowMs: 3600_000 };
+const LOGIN_NAME = { max: 10, windowMs: 3600_000 };
+const REGISTER_IP = { max: 3, windowMs: 3600_000 };
+const REGISTER_COOLDOWN = { max: 1, windowMs: 60_000 };
+const RECOVERY_IP = { max: 5, windowMs: 15 * 60_000 };
+const RECOVERY_NAME = { max: 10, windowMs: 3600_000 };
 const SEND_MAIL = { max: 3, windowMs: 3600_000 };
 const SEND_IP = { max: 10, windowMs: 3600_000 };
 const EXPORT = { max: 3, windowMs: 3600_000 };
@@ -52,6 +62,7 @@ export const PUBLIC_ROUTES: readonly string[] = [
   "POST /api/v1/account/login",
   "POST /api/v1/account/oauth/google/register",
   "POST /api/v1/account/password-reset/confirm",
+  "POST /api/v1/account/password-reset/recovery",
   "POST /api/v1/account/password-reset/request",
   "POST /api/v1/account/register",
   "POST /api/v1/account/verify-email",
@@ -113,6 +124,7 @@ export function accountsPlugin(deps: AccountsDeps) {
     userId: string,
     purpose: "verify_email" | "reset_password",
     ttlMs: number,
+    email?: string,
   ): Promise<string> {
     const raw = newToken();
     await client.query(
@@ -120,8 +132,8 @@ export function accountsPlugin(deps: AccountsDeps) {
       [userId, purpose, now()],
     );
     await client.query(
-      "INSERT INTO user_tokens (user_id, purpose, token_sha256, expires_at) VALUES ($1,$2,$3,$4)",
-      [userId, purpose, sha256Hex(raw), new Date(now().getTime() + ttlMs)],
+      "INSERT INTO user_tokens (user_id, purpose, token_sha256, expires_at, email) VALUES ($1,$2,$3,$4,$5)",
+      [userId, purpose, sha256Hex(raw), new Date(now().getTime() + ttlMs), email ?? null],
     );
     return raw;
   }
@@ -131,13 +143,14 @@ export function accountsPlugin(deps: AccountsDeps) {
     client: pg.PoolClient,
     raw: string,
     purpose: "verify_email" | "reset_password",
-  ): Promise<string | undefined> {
-    const { rows } = await client.query<{ user_id: string }>(
+  ): Promise<{ userId: string; email: string | null } | undefined> {
+    const { rows } = await client.query<{ user_id: string; email: string | null }>(
       `UPDATE user_tokens SET used_at = $3
-       WHERE token_sha256 = $1 AND purpose = $2 AND used_at IS NULL AND expires_at > $3 RETURNING user_id::text`,
+       WHERE token_sha256 = $1 AND purpose = $2 AND used_at IS NULL AND expires_at > $3 RETURNING user_id::text, email`,
       [sha256Hex(raw), purpose, now()],
     );
-    return rows[0]?.user_id;
+    const row = rows[0];
+    return row ? { userId: row.user_id, email: row.email } : undefined;
   }
 
   const insertConsent = (
@@ -172,104 +185,134 @@ export function accountsPlugin(deps: AccountsDeps) {
     return { csrfToken: session.csrfToken };
   }
 
-  async function register(request: FastifyRequest): Promise<object> {
+  const uniqueViolation = (error: unknown): boolean =>
+    (error as { code?: string }).code === "23505";
+
+  /** Sends the verification link, or the "already registered" notice when another account owns the address. */
+  async function mailVerification(
+    request: FastifyRequest,
+    userId: string,
+    email: string,
+  ): Promise<void> {
+    const owner = await pool.query<{ id: string }>(
+      "SELECT id::text FROM users WHERE lower(email) = $1",
+      [email],
+    );
+    const ownerId = owner.rows[0]?.id;
+    if (ownerId === undefined) {
+      const token = await tx((client) =>
+        issueToken(client, userId, "verify_email", VERIFY_TTL_MS, email),
+      );
+      sendMail(request, verifyEmailMessage(email, `${deps.origin}/xac-minh-email?token=${token}`));
+    } else if (ownerId !== userId)
+      sendMail(request, existingAccountMessage(email, `${deps.origin}/dat-lai-mat-khau`));
+  }
+
+  async function register(request: FastifyRequest, reply: FastifyReply): Promise<object> {
     const body = registerBody.parse(request.body);
-    const problem = passwordProblem(body.password, body.email);
+    const username = cleanUsername(body.username);
+    if (username === undefined) throw new HttpProblem("validation_failed", "username_rejected");
+    const problem = passwordProblem(
+      body.password,
+      username,
+      ...(body.email === undefined ? [] : [body.email]),
+    );
     if (problem) throw new HttpProblem("validation_failed", problem);
     if (!consentMatches("account", body.consent))
       throw new HttpProblem("conflict", "consent_text_outdated");
-    await sendBudget(request, body.email);
-    const hash = await hashPassword(body.password); // always hashed so new and existing emails cost the same
-    const origin = deps.origin;
-    const outcome = await tx(async (client) => {
-      const created = await client.query<{ id: string }>(
-        "INSERT INTO users (email, password_hash) VALUES ($1,$2) ON CONFLICT (lower(email)) DO NOTHING RETURNING id::text",
-        [body.email, hash],
-      );
-      let userId = created.rows[0]?.id;
-      let kind: "new" | "pending" | "existing" = "new";
-      if (userId === undefined) {
-        const found = await client.query<{ id: string; status: string }>(
-          "SELECT id::text, status FROM users WHERE lower(email) = $1 FOR UPDATE",
-          [body.email],
+    // No-email signup is cheap for bots: one per minute and a few per hour per IP, counted before anything else.
+    const ip = auth.ipHash(request);
+    await auth.limit(`reg-cool:${ip}`, REGISTER_COOLDOWN.max, REGISTER_COOLDOWN.windowMs);
+    await auth.limit(`reg-ip:${ip}`, REGISTER_IP.max, REGISTER_IP.windowMs);
+    await Promise.all([auth.recordEvent(`reg-cool:${ip}`), auth.recordEvent(`reg-ip:${ip}`)]);
+    if (deps.captcha && !(await deps.captcha.verify(body.captchaToken, request.ip)))
+      throw new HttpProblem("validation_failed", "captcha_failed");
+    if (body.email !== undefined) await sendBudget(request, body.email);
+    const hash = await hashPassword(body.password);
+    let created: { userId: string; codes: string[] };
+    try {
+      created = await tx(async (client) => {
+        const row = await client.query<{ id: string }>(
+          "INSERT INTO users (username, password_hash, status) VALUES ($1,$2,'active') RETURNING id::text",
+          [username, hash],
         );
-        const user = found.rows[0];
-        if (!user) return undefined;
-        userId = user.id;
-        kind = user.status === "pending" ? "pending" : "existing";
-        // A pending signup re-submitted by its owner replaces the password (the latest registrant wins).
-        if (kind === "pending")
-          await client.query("UPDATE users SET password_hash = $2 WHERE id = $1", [userId, hash]);
-      }
-      if (kind === "existing") return { kind, userId, token: undefined };
-      await client.query("DELETE FROM consents WHERE user_id = $1 AND purpose = 'account'", [
-        userId,
-      ]);
-      await insertConsent(client, request, userId, "account", null);
-      return {
-        kind,
-        userId,
-        token: await issueToken(client, userId, "verify_email", VERIFY_TTL_MS),
-      };
-    });
-    if (outcome) {
-      if (outcome.token !== undefined)
-        sendMail(
-          request,
-          verifyEmailMessage(body.email, `${origin}/xac-minh-email?token=${outcome.token}`),
-        );
-      else sendMail(request, existingAccountMessage(body.email, `${origin}/dat-lai-mat-khau`));
-      await auth.audit("user.register", request, outcome.userId, { outcome: outcome.kind });
+        const userId = row.rows[0]?.id;
+        if (userId === undefined) throw new HttpProblem("internal");
+        await insertConsent(client, request, userId, "account", null);
+        return { userId, codes: await regenerateCodes(client, userId) };
+      });
+    } catch (error) {
+      if (uniqueViolation(error)) throw new HttpProblem("conflict", "username_taken");
+      throw error;
     }
+    if (body.email !== undefined) await mailVerification(request, created.userId, body.email);
+    const session = await startSession(request, reply, created.userId);
+    await auth.audit("user.register", request, created.userId, {
+      emailGiven: body.email !== undefined,
+    });
+    return { ...session, recoveryCodes: created.codes, emailPending: body.email !== undefined };
+  }
+
+  /** Logged-in parent adds or replaces the email; it is stored only after the link is opened. Always 202. */
+  async function addEmail(request: FastifyRequest, me: UserPrincipal): Promise<object> {
+    const { email } = emailBody.parse(request.body);
+    await sendBudget(request, email);
+    await mailVerification(request, me.userId, email);
+    await auth.audit("user.email_requested", request, me.userId);
     return generic();
   }
 
-  async function verifyEmail(request: FastifyRequest, reply: FastifyReply): Promise<object> {
+  async function verifyEmail(request: FastifyRequest): Promise<object> {
     const { token } = verifyBody.parse(request.body);
-    const userId = await tx(async (client) => {
-      const id = await consumeToken(client, token, "verify_email");
-      if (id === undefined) return undefined;
-      await client.query(
-        "UPDATE users SET status = 'active', email_verified_at = COALESCE(email_verified_at, $2) WHERE id = $1",
-        [id, now()],
-      );
-      return id;
-    });
+    let userId: string | undefined;
+    try {
+      userId = await tx(async (client) => {
+        const found = await consumeToken(client, token, "verify_email");
+        if (!found?.email) return undefined; // unknown, used, expired, or a pre-0039 token
+        await client.query("UPDATE users SET email = $2, email_verified_at = $3 WHERE id = $1", [
+          found.userId,
+          found.email,
+          now(),
+        ]);
+        return found.userId;
+      });
+    } catch (error) {
+      if (!uniqueViolation(error)) throw error; // somebody else verified this address first
+    }
     if (userId === undefined) throw new HttpProblem("validation_failed", "invalid_token");
-    const session = await startSession(request, reply, userId);
     await auth.audit("user.verify_email", request, userId);
-    return session;
+    return generic();
   }
 
   async function login(request: FastifyRequest, reply: FastifyReply): Promise<object> {
     const body = loginBody.parse(request.body);
     const ipKey = `user-ip:${auth.ipHash(request)}`;
-    const mailKey = `user-mail:${hmacHex(deps.hmacKey, body.email)}`;
-    const [byIp, byMail] = await Promise.all([
+    const nameKey = `user-name:${hmacHex(deps.hmacKey, body.username)}`;
+    const [byIp, byName] = await Promise.all([
       auth.countEvents(ipKey, LOGIN_IP.windowMs),
-      auth.countEvents(mailKey, LOGIN_MAIL.windowMs),
+      auth.countEvents(nameKey, LOGIN_NAME.windowMs),
     ]);
     const { rows } = await pool.query<{ id: string; password_hash: string | null; status: string }>(
-      "SELECT id::text, password_hash, status FROM users WHERE lower(email) = $1",
-      [body.email],
+      "SELECT id::text, password_hash, status FROM users WHERE username = $1",
+      [body.username],
     );
     const user = rows[0];
-    if (byIp.n >= LOGIN_IP.max || byMail.n >= LOGIN_MAIL.max) {
+    if (byIp.n >= LOGIN_IP.max || byName.n >= LOGIN_NAME.max) {
       // Same 429 whether or not the account exists. Soft lock: no stored lock flag, so nobody can be locked out for good.
       const retry = Math.max(
         byIp.n >= LOGIN_IP.max ? byIp.retry : 1,
-        byMail.n >= LOGIN_MAIL.max ? byMail.retry : 1,
+        byName.n >= LOGIN_NAME.max ? byName.retry : 1,
       );
       await auth.audit("user.login_locked", request, user?.id ?? null);
       throw new HttpProblem("rate_limited", `Retry after ${String(retry)} s`, undefined, retry);
     }
     const passwordOk = await checkPasswordHash(user?.password_hash, body.password);
     if (user?.status !== "active" || !passwordOk) {
-      await Promise.all([auth.recordEvent(ipKey), auth.recordEvent(mailKey)]);
+      await Promise.all([auth.recordEvent(ipKey), auth.recordEvent(nameKey)]);
       await auth.audit("user.login_failed", request, user?.id ?? null);
       throw new HttpProblem("unauthenticated", "Invalid credentials");
     }
-    await Promise.all([auth.recordEvent(ipKey, true), auth.recordEvent(mailKey, true)]);
+    await Promise.all([auth.recordEvent(ipKey, true), auth.recordEvent(nameKey, true)]);
     const session = await startSession(request, reply, user.id);
     await auth.audit("user.login_success", request, user.id);
     return session;
@@ -278,6 +321,7 @@ export function accountsPlugin(deps: AccountsDeps) {
   async function requestReset(request: FastifyRequest): Promise<object> {
     const { email } = resetRequestBody.parse(request.body);
     await sendBudget(request, email);
+    // users.email only ever holds a verified address, so an unverified one can never receive a reset link.
     const { rows } = await pool.query<{ id: string }>(
       "SELECT id::text FROM users WHERE lower(email) = $1 AND status = 'active'",
       [email],
@@ -298,21 +342,25 @@ export function accountsPlugin(deps: AccountsDeps) {
 
   async function confirmReset(request: FastifyRequest): Promise<object> {
     const body = resetConfirmBody.parse(request.body);
-    const preview = await pool.query<{ email: string }>(
-      `SELECT u.email FROM user_tokens t JOIN users u ON u.id = t.user_id
+    const preview = await pool.query<{ email: string | null; username: string }>(
+      `SELECT u.email, u.username FROM user_tokens t JOIN users u ON u.id = t.user_id
        WHERE t.token_sha256 = $1 AND t.purpose = 'reset_password' AND t.used_at IS NULL AND t.expires_at > $2`,
       [sha256Hex(body.token), now()],
     );
-    const email = preview.rows[0]?.email;
-    if (email === undefined) throw new HttpProblem("validation_failed", "invalid_token");
-    const problem = passwordProblem(body.password, email);
+    const found = preview.rows[0];
+    if (found === undefined) throw new HttpProblem("validation_failed", "invalid_token");
+    const problem = passwordProblem(
+      body.password,
+      found.username,
+      ...(found.email === null ? [] : [found.email]),
+    );
     if (problem) throw new HttpProblem("validation_failed", problem);
     const hash = await hashPassword(body.password);
     const userId = await tx(async (client) => {
-      const id = await consumeToken(client, body.token, "reset_password");
-      if (id === undefined) return undefined;
-      await client.query("UPDATE users SET password_hash = $2 WHERE id = $1", [id, hash]);
-      return id;
+      const used = await consumeToken(client, body.token, "reset_password");
+      if (used === undefined) return undefined;
+      await client.query("UPDATE users SET password_hash = $2 WHERE id = $1", [used.userId, hash]);
+      return used.userId;
     });
     if (userId === undefined) throw new HttpProblem("validation_failed", "invalid_token");
     await auth.revokeSessions(userId);
@@ -320,21 +368,104 @@ export function accountsPlugin(deps: AccountsDeps) {
     return generic();
   }
 
+  /**
+   * Password reset with a one-time recovery code. Unknown username, wrong code and used code give the
+   * same answer; failures are limited per IP and per username; the new password is hashed up front
+   * so every path costs the same.
+   */
+  async function recoveryReset(request: FastifyRequest): Promise<object> {
+    const body = resetRecoveryBody.parse(request.body);
+    const ipKey = `rec-ip:${auth.ipHash(request)}`;
+    const nameKey = `rec-name:${hmacHex(deps.hmacKey, body.username)}`;
+    await auth.limit(ipKey, RECOVERY_IP.max, RECOVERY_IP.windowMs);
+    await auth.limit(nameKey, RECOVERY_NAME.max, RECOVERY_NAME.windowMs);
+    const problem = passwordProblem(body.password, body.username);
+    if (problem) throw new HttpProblem("validation_failed", problem);
+    const hash = await hashPassword(body.password);
+    const userId = await tx(async (client) => {
+      const found = await client.query<{ id: string }>(
+        "SELECT id::text FROM users WHERE username = $1 AND status = 'active' FOR UPDATE",
+        [body.username],
+      );
+      const id = found.rows[0]?.id;
+      if (id === undefined || !(await consumeCode(client, id, body.code, now()))) return undefined;
+      await client.query("UPDATE users SET password_hash = $2 WHERE id = $1", [id, hash]);
+      return id;
+    });
+    if (userId === undefined) {
+      await Promise.all([auth.recordEvent(ipKey), auth.recordEvent(nameKey)]);
+      await auth.audit("user.recovery_failed", request, null);
+      throw new HttpProblem("validation_failed", "invalid_recovery");
+    }
+    await auth.revokeSessions(userId);
+    await auth.audit("user.password_reset_recovery", request, userId);
+    return generic();
+  }
+
+  async function regenerateRecoveryCodes(
+    request: FastifyRequest,
+    me: UserPrincipal,
+  ): Promise<object> {
+    const body = regenerateCodesBody.parse(request.body ?? {});
+    const { rows } = await pool.query<{ password_hash: string | null }>(
+      "SELECT password_hash FROM users WHERE id = $1",
+      [me.userId],
+    );
+    const hash = rows[0]?.password_hash ?? null;
+    if (hash !== null) {
+      const key = `user-pw:${auth.userRef(me.userId)}`;
+      await auth.limit(key, PASSWORD_FAILS.max, PASSWORD_FAILS.windowMs);
+      if (body.password === undefined || !(await checkPasswordHash(hash, body.password))) {
+        await auth.recordEvent(key);
+        throw new HttpProblem("forbidden", "Invalid credentials");
+      }
+    }
+    const recoveryCodes = await tx((client) => regenerateCodes(client, me.userId));
+    await auth.audit("user.recovery_codes_regenerated", request, me.userId);
+    return { recoveryCodes };
+  }
+
+  /** Google-created accounts get a generated username; the parent may replace it exactly once. */
+  async function changeUsername(request: FastifyRequest, me: UserPrincipal): Promise<object> {
+    const body = usernameBody.parse(request.body);
+    const username = cleanUsername(body.username);
+    if (username === undefined) throw new HttpProblem("validation_failed", "username_rejected");
+    let changed: boolean;
+    try {
+      const result = await pool.query(
+        "UPDATE users SET username = $2, username_generated = false WHERE id = $1 AND username_generated",
+        [me.userId, username],
+      );
+      changed = result.rowCount === 1;
+    } catch (error) {
+      if (uniqueViolation(error)) throw new HttpProblem("conflict", "username_taken");
+      throw error;
+    }
+    if (!changed) throw new HttpProblem("conflict", "username_not_changeable");
+    await auth.audit("user.username_changed", request, me.userId);
+    return generic();
+  }
+
   async function changePassword(request: FastifyRequest, me: UserPrincipal): Promise<object> {
     const body = changePasswordBody.parse(request.body);
     const key = `user-pw:${auth.userRef(me.userId)}`;
     await auth.limit(key, PASSWORD_FAILS.max, PASSWORD_FAILS.windowMs);
-    const { rows } = await pool.query<{ email: string; password_hash: string | null }>(
-      "SELECT email, password_hash FROM users WHERE id = $1",
-      [me.userId],
-    );
+    const { rows } = await pool.query<{
+      email: string | null;
+      username: string;
+      password_hash: string | null;
+    }>("SELECT email, username, password_hash FROM users WHERE id = $1", [me.userId]);
     const user = rows[0];
     if (!user) throw new HttpProblem("unauthenticated");
     if (!(await checkPasswordHash(user.password_hash, body.currentPassword))) {
       await auth.recordEvent(key);
       throw new HttpProblem("forbidden", "Invalid credentials");
     }
-    const problem = passwordProblem(body.newPassword, user.email);
+    const problem = passwordProblem(
+      body.newPassword,
+      user.username,
+      ...(user.email === null ? [] : [user.email]),
+    );
     if (problem) throw new HttpProblem("validation_failed", problem);
     const hash = await hashPassword(body.newPassword);
     await pool.query("UPDATE users SET password_hash = $2 WHERE id = $1", [me.userId, hash]);
@@ -412,7 +543,7 @@ export function accountsPlugin(deps: AccountsDeps) {
       pool.query<T>(sql, [me.userId]).then((result) => result.rows);
     const [account, identities, profiles, consents] = await Promise.all([
       q(
-        'SELECT email, email_verified_at AS "emailVerifiedAt", created_at AS "createdAt" FROM users WHERE id = $1',
+        'SELECT username, email, email_verified_at AS "emailVerifiedAt", created_at AS "createdAt" FROM users WHERE id = $1',
       ),
       q(
         'SELECT provider, email_at_link AS "emailAtLink", created_at AS "createdAt" FROM identities WHERE user_id = $1 ORDER BY id',
@@ -510,9 +641,15 @@ export function accountsPlugin(deps: AccountsDeps) {
       app.post("/oauth/google/link", notFound);
     }
     app.post("/register", open(10), async (request, reply) =>
-      reply.code(202).send(await register(request)),
+      reply.code(201).send(await register(request, reply)),
     );
-    app.post("/verify-email", open(10), (request, reply) => verifyEmail(request, reply));
+    app.post("/verify-email", open(10), (request) => verifyEmail(request));
+    app.post("/password-reset/recovery", open(10), (request) => recoveryReset(request));
+    app.post("/email", async (request, reply) =>
+      reply.code(202).send(await addEmail(request, me(request))),
+    );
+    app.post("/recovery-codes", (request) => regenerateRecoveryCodes(request, me(request)));
+    app.post("/username", (request) => changeUsername(request, me(request)));
     app.post("/login", open(10), (request, reply) => login(request, reply));
     app.post("/password-reset/request", open(10), async (request, reply) =>
       reply.code(202).send(await requestReset(request)),
@@ -539,12 +676,16 @@ export function accountsPlugin(deps: AccountsDeps) {
     app.get("/me", async (request) => {
       const p = me(request);
       const { rows } = await pool.query<{
-        email: string;
+        username: string;
+        email: string | null;
+        username_generated: boolean;
+        codes_left: string;
         has_password: boolean;
         google: boolean;
         profiles: string;
       }>(
-        `SELECT u.email, u.password_hash IS NOT NULL AS has_password,
+        `SELECT u.username, u.email, u.username_generated, u.password_hash IS NOT NULL AS has_password,
+                (SELECT count(*) FROM recovery_codes r WHERE r.user_id = u.id AND r.used_at IS NULL) AS codes_left,
                 EXISTS (SELECT 1 FROM identities i WHERE i.user_id = u.id AND i.provider = 'google') AS google,
                 (SELECT count(*) FROM profiles WHERE user_id = u.id) AS profiles
          FROM users u WHERE u.id = $1`,
@@ -553,7 +694,11 @@ export function accountsPlugin(deps: AccountsDeps) {
       const row = rows[0];
       if (!row) throw new HttpProblem("unauthenticated");
       return {
-        email: row.email,
+        username: row.username,
+        email: row.email, // only ever a verified address
+        emailVerified: row.email !== null,
+        usernameChangeable: row.username_generated,
+        recoveryCodesLeft: Number(row.codes_left),
         hasPassword: row.has_password,
         googleLinked: row.google,
         profileCount: Number(row.profiles),
