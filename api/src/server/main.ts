@@ -1,11 +1,18 @@
 import { createPublicReader } from "@bj/data";
 import pg from "pg";
 import { createUnconfiguredMailer } from "../accounts/mailer";
+import { createSmtpMailer } from "../accounts/smtp";
+import type { MailLog } from "../accounts/smtp";
 import { buildApp, loggerOptions } from "./app";
 import { loadServerConfig } from "./config";
 
 async function run(): Promise<void> {
   const config = loadServerConfig();
+  const mailConfig = config.mail;
+  const mailLog: MailLog = (event, errorClass) =>
+    process.stderr.write(
+      `${JSON.stringify({ level: event === "mail_sent" ? 30 : 50, event, ...(errorClass ? { errorClass } : {}) })}\n`,
+    );
   const reader = createPublicReader({ connectionString: config.databaseUrl, poolMax: 10 });
   const cmsPool =
     config.reportSalt || config.adminAuth || config.accounts
@@ -21,8 +28,10 @@ async function run(): Promise<void> {
           accounts: {
             pool: cmsPool,
             ...config.accounts,
-            // No mail provider is chosen yet (docs/user-accounts.md decision 5): sends fail and are logged.
-            mailer: createUnconfiguredMailer(),
+            // MAIL_TRANSPORT=smtp -> queued SMTP (ADR 0009); otherwise sends fail and are logged.
+            mailer: mailConfig
+              ? createSmtpMailer(mailConfig, { log: mailLog })
+              : createUnconfiguredMailer(),
           },
         }
       : {}),

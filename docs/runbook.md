@@ -152,3 +152,34 @@ Ghi giờ từng bước vào nhật ký sự cố (tệp riêng của chủ, kh
   5. `dc up -d api`; kiểm đăng nhập một tài khoản thử còn tồn tại.
   6. **Khoảng hở còn lại:** yêu cầu xóa xảy ra sau backup cuối mà không xuất được `deletions.json` sẽ không tự áp lại. Chủ đối chiếu các yêu cầu xóa nhận qua kênh liên hệ kể từ giờ bản backup và xóa tay bằng `psql`; ghi vào nhật ký.
 - **Kiểm định kỳ:** mỗi quý chạy diễn tập trên DB tạm: khôi phục một bản, áp `deletions.json` từ DB sống, kiểm số tài khoản đã xóa không còn (đã có test tự động `api/tests/accounts-maintenance.test.ts`).
+
+## 11. Gửi email tạm bằng Gmail
+
+**Trạng thái:** mã đã có (ADR [0009](adr/0009-smtp-mailer-nodemailer.md)); mặc định `MAIL_TRANSPORT=none` ⇒ không gửi thư nào. Đây là giải pháp **tạm** cho tài khoản phụ huynh (`ACCOUNTS_ENABLED`, mục 9). Không dán mật khẩu vào chat, card, repo hay log.
+
+### 11.1 Chuẩn bị Gmail (chủ)
+1. Tạo một Gmail **riêng** cho BeeJunior (không dùng Gmail cá nhân: người dùng sẽ thấy địa chỉ này ở ô *Từ*).
+2. Bật **Xác minh 2 bước** cho tài khoản đó.
+3. Vào myaccount.google.com/apppasswords, tạo *Mật khẩu ứng dụng* (tên "BeeJunior api"); Google hiện 16 ký tự chia nhóm, khoảng trắng được bỏ tự động.
+
+### 11.2 Cấu hình trên host
+1. `bash deploy/gen-secrets.sh` (bổ sung tệp `smtp_pass` rỗng, không ghi đè tệp có sẵn).
+2. Dán mật khẩu ứng dụng vào `~/beejunior-secrets/smtp_pass` bằng trình soạn thảo, rồi `chmod 600 ~/beejunior-secrets/smtp_pass`.
+3. Trong `deploy/.env` đặt (chỉ tên/địa chỉ, không có mật khẩu):
+   `MAIL_TRANSPORT=smtp`, `SMTP_HOST=smtp.gmail.com`, `SMTP_PORT=587` (hoặc `465`), `SMTP_USER=<gmail đó>`, `MAIL_FROM=BeeJunior <gmail đó>` (**phải trùng** địa chỉ Gmail, nếu không Google ghi đè), `MAIL_REPLY_TO` tùy chọn.
+4. `dc up -d --force-recreate api` (api được nối `bj-egress` để ra Internet; xem ADR 0009 về đánh đổi).
+
+### 11.3 Kiểm tra
+`dc run --rm api node dist/main.mjs mail:test <email-của-bạn>` ⇒ in `ok` (thư tới hộp thư, kiểm cả mục Spam) hoặc `fail <mã>`: `EAUTH` sai tài khoản/mật khẩu ứng dụng, `ETIMEDOUT`/`ECONNECTION` không ra được mạng/cổng, `ESOCKET` lỗi TLS/chứng chỉ. Log api chỉ có `mail_sent`, `mail_retry`, `mail_send_failed` kèm mã lỗi, không có địa chỉ hay nội dung.
+
+### 11.4 Giới hạn của Gmail
+- ~500 người nhận/ngày (tài khoản thường); vượt hạn mức thì gửi lỗi tới hôm sau.
+- Thư có thể vào Spam (không có SPF/DKIM của tên miền riêng).
+- Ô *Từ* luôn là địa chỉ Gmail.
+- Google có thể chặn truy cập tự động hoặc thu hồi mật khẩu ứng dụng (đổi mật khẩu Google cũng thu hồi); khi đó `mail:test` báo `EAUTH`.
+
+### 11.5 Chuyển sang Resend/Brevo (không đổi mã)
+Tạo tài khoản + xác minh tên miền (SPF/DKIM), lấy thông tin SMTP của nhà cung cấp; thay `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `MAIL_FROM` (địa chỉ trên tên miền đã xác minh) trong `deploy/.env`, ghi khóa SMTP vào `smtp_pass`, `dc up -d --force-recreate api`, chạy lại `mail:test`. Xóa mật khẩu ứng dụng Gmail trong tài khoản Google.
+
+### 11.6 Rollback
+Đặt `MAIL_TRANSPORT=none` (hoặc xóa dòng) ⇒ `dc up -d --force-recreate api`: không gửi thư. Nghi lộ mật khẩu: xóa mật khẩu ứng dụng trong Google, tạo lại, ghi đè `smtp_pass`.

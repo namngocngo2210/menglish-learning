@@ -171,11 +171,20 @@ services:
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-} # Google sign-in needs all three GOOGLE_* values, or none
       GOOGLE_CLIENT_SECRET_FILE: ${GOOGLE_CLIENT_SECRET_FILE:-} # /run/secrets/google_client_secret once the owner fills it
       GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
-    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key, user_session_hmac_key, google_client_secret]
+      # Outbound mail (ADR 0009): MAIL_TRANSPORT=none (default) sends nothing; names only, the password is a secret file.
+      MAIL_TRANSPORT: ${MAIL_TRANSPORT:-none}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS_FILE: /run/secrets/smtp_pass
+      MAIL_FROM: ${MAIL_FROM:-}
+      MAIL_REPLY_TO: ${MAIL_REPLY_TO:-}
+    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key, user_session_hmac_key, google_client_secret, smtp_pass]
     depends_on:
       postgres: { condition: service_healthy }
     networks:
       bj-internal: {}
+      bj-egress: {} # outbound SMTP to the mail provider (ADR 0009); only api and worker have it
       # Caddy: /api/*, /admin* -> bj-api:8080. The alias is unique on the shared network (a bare "api" could collide).
       menglish-proxy: { aliases: [bj-api] }
     healthcheck:
@@ -275,7 +284,7 @@ services:
 networks:
   bj-internal: { internal: true }
   menglish-proxy: { external: true }
-  bj-egress: {} # outbound internet for the worker only (crawl); bj-internal has none
+  bj-egress: {} # outbound internet for the worker (crawl) and the api (SMTP, ADR 0009); bj-internal has none
 
 volumes:
   bj-pgdata: {}
@@ -296,3 +305,4 @@ secrets:
   totp_enc_key: { file: "${SECRETS_DIR}/totp_enc_key" }
   user_session_hmac_key: { file: "${SECRETS_DIR}/user_session_hmac_key" }
   google_client_secret: { file: "${SECRETS_DIR}/google_client_secret" }
+  smtp_pass: { file: "${SECRETS_DIR}/smtp_pass" } # empty until the owner pastes the app password (runbook §11)

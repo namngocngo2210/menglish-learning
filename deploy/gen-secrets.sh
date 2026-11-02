@@ -48,6 +48,8 @@ if [ ! -e "$dir/google_client_secret" ]; then
   chmod 600 "$dir/google_client_secret"
   echo "create google_client_secret (EMPTY: paste the Google Cloud Console value)"
 fi
+# SMTP password: created EMPTY so compose can mount it; the owner pastes the provider's app password (runbook §11).
+put smtp_pass ""
 
 # Off-host backup settings live in their OWN directory (mounted into the uploader container, never next to the
 # DB secrets). Only an empty 600 template is created; the owner fills in the R2 values and copies the PUBLIC key.

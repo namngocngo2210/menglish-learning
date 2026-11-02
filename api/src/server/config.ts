@@ -2,6 +2,8 @@ import { readFileSync } from "node:fs";
 import { z } from "zod";
 import { GOOGLE_DEFAULTS } from "../accounts/google-config";
 import type { GoogleConfig } from "../accounts/google-config";
+import { loadMailConfig } from "../accounts/smtp";
+import type { SmtpConfig } from "../accounts/smtp";
 
 const EnvSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(8080),
@@ -51,6 +53,8 @@ export interface ServerConfig {
   adminDist: string | undefined;
   /** Parent accounts; undefined unless ACCOUNTS_ENABLED=true (default off: no routes, nothing visible). */
   accounts: { hmacKey: string; origin: string; google?: GoogleConfig } | undefined;
+  /** SMTP settings (MAIL_TRANSPORT=smtp); only read when accounts are enabled. */
+  mail: SmtpConfig | undefined;
   rateLimitPerMinute: number;
   /** TRUST_PROXY: "true" or a proxy IP/CIDR list; unset = do not trust X-Forwarded-For. */
   trustProxy: boolean | string;
@@ -131,6 +135,7 @@ export function loadServerConfig(
   }
   return {
     accounts,
+    mail: accounts ? loadMailConfig(env) : undefined,
     adminAuth:
       hmacKey && totpKey && v.ADMIN_ORIGIN
         ? {
