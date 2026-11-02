@@ -91,3 +91,14 @@ it("renders the home mascot outside questions and publishes BeeJunior organizati
  expect(html.match(/<h1[ >]/g)).toHaveLength(1);
  expect(html).toContain('href="/thi-vao-lop-10"');
 });
+
+it("shows the home group-practice CTA only when ROOMS_ENABLED is on", async () => {
+ const { default: Home } = await import("@/app/page");
+ vi.stubEnv("ROOMS_ENABLED", "true");
+ const on = renderToStaticMarkup(await Home());
+ expect(on).toContain('href="/luyen-tap-nhom"');
+ expect(on).toContain('href="/luyen-tap-nhom/vao"');
+ vi.stubEnv("ROOMS_ENABLED", "false");
+ expect(renderToStaticMarkup(await Home())).not.toContain("luyen-tap-nhom");
+ vi.unstubAllEnvs();
+});
