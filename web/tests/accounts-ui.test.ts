@@ -129,7 +129,7 @@ describe("consent boxes and legal drafts", () => {
    const out = html(el);
    expect(out).not.toMatch(/\[[A-ZÊÁÂ ]{3,}\]|luật sư|BẢN NHÁP/);
    expect(out).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/i);
-   expect(out).toContain('href="/lien-he"');
+   expect(out).toContain('href="/contact"');
   }
   expect(html(createElement(PrivacyPolicyDraft))).toContain(`${LEGAL.entity}.`);
  });
