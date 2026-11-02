@@ -6,6 +6,8 @@ export interface MailMessage {
 }
 
 export interface Mailer {
+  /** False for the placeholder mailer: sends are known to fail. */
+  configured?: boolean;
   send(message: MailMessage): Promise<void>;
 }
 
@@ -23,7 +25,10 @@ export function createMemoryMailer(): Mailer & { outbox: MailMessage[] } {
 
 /** Placeholder adapter: fails every send until a provider (Resend, Brevo, SES) is wired in. */
 export function createUnconfiguredMailer(): Mailer {
-  return { send: () => Promise.reject(new Error("mail provider is not configured")) };
+  return {
+    configured: false,
+    send: () => Promise.reject(new Error("mail provider is not configured")),
+  };
 }
 
 const SIGNATURE = "\n\nBeeJunior";

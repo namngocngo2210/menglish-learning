@@ -7,7 +7,7 @@ import { POLICY_VERSION, CONSENT_TEXTS } from "../../api/src/accounts/consent-te
 import { AccountApiError, createAccountClient } from "@/lib/account/client";
 import { ACCOUNT_CONSENT_TEXT, CHILD_CONSENT_TEXT } from "@/lib/account/consent-copy";
 import { accountsEnabled } from "@/lib/account/flag";
-import { DRAFT_NOTICE, LEGAL } from "@/lib/account/legal";
+import { LEGAL } from "@/lib/account/legal";
 import { accountErrorMessage } from "@/lib/account/messages";
 import { ACCOUNT_PRIVATE_PATHS } from "@/lib/account/paths";
 import { AccountPage, privateMetadata } from "@/components/account/AccountPage";
@@ -16,6 +16,7 @@ import { DeleteDataGuide } from "@/components/account/DeleteDataGuide";
 import { PrivacyPolicyDraft, TermsDraft } from "@/components/account/Legal";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { SiteHeader } from "@/components/chrome/SiteHeader";
+import { AuthNav } from "@/components/chrome/AuthNav";
 
 const notFound = vi.hoisted(() => vi.fn(() => { throw new Error("NEXT_NOT_FOUND"); }));
 vi.mock("next/navigation", () => ({ notFound, useRouter: () => ({ replace: vi.fn() }), usePathname: () => "/", useSearchParams: () => new URLSearchParams() }));
@@ -97,6 +98,11 @@ describe("pages and flag off", () => {
   const urls = (await sitemap()).map(e => e.url);
   for (const p of [...ACCOUNT_PRIVATE_PATHS, "/delete-data"]) expect(urls.some(u => u.endsWith(p))).toBe(false);
  });
+ it("header auth link renders the anonymous login link on the server (cacheable HTML); no logout until /me succeeds", () => {
+  const out = html(createElement(AuthNav));
+  expect(out).toContain('href="/log-in"');
+  expect(out).not.toContain("Đăng xuất");
+ });
  it("header and footer show nothing account-related when off", () => {
   const off = html(createElement(SiteHeader)) + html(createElement(SiteFooter));
   expect(off).not.toMatch(/log-in|Điều khoản|cookie chức năng/);
@@ -118,14 +124,14 @@ describe("consent boxes and legal drafts", () => {
   expect(out).toContain("Chính sách quyền riêng tư</a> và <a");
   expect(out).toContain("Điều khoản sử dụng</a> của BeeJunior.");
  });
- it("legal drafts are marked DRAFT and use owner placeholders, not invented contacts", () => {
+ it("legal pages have no placeholders, draft banner or invented contact; they link to the contact page", () => {
   for (const el of [createElement(PrivacyPolicyDraft), createElement(TermsDraft), createElement(DeleteDataGuide)]) {
    const out = html(el);
-   expect(out).toContain(DRAFT_NOTICE);
-   expect(out).toContain("[EMAIL LIÊN HỆ]");
+   expect(out).not.toMatch(/\[[A-ZÊÁÂ ]{3,}\]|luật sư|BẢN NHÁP/);
    expect(out).not.toMatch(/@[a-z0-9-]+\.[a-z]{2,}/i);
+   expect(out).toContain('href="/contact"');
   }
-  expect(html(createElement(PrivacyPolicyDraft))).toContain("[TÊN PHÁP NHÂN]");
+  expect(html(createElement(PrivacyPolicyDraft))).toContain(`${LEGAL.entity}.`);
  });
 });
 

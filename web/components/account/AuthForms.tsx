@@ -27,7 +27,7 @@ export function RegisterForm() {
  const [adult, setAdult] = useState(false); const [policy, setPolicy] = useState(false);
  const [captcha, setCaptcha] = useState<string | undefined>();
  const [errs, setErrs] = useState<{ username?: string; email?: string; password?: string; consent?: string; captcha?: string }>({});
- const [result, setResult] = useState<{ codes: string[]; emailPending: boolean } | null>(null);
+ const [result, setResult] = useState<{ codes: string[]; emailPending: boolean; mailUnavailable: boolean } | null>(null);
  const [codesDone, setCodesDone] = useState(false);
  async function submit(e: React.FormEvent) {
   e.preventDefault();
@@ -49,9 +49,10 @@ export function RegisterForm() {
    const t = await client.consentTexts(); // the server owns the text hash that proves what was shown
    return client.register({ username: name, password, ...(email.trim() ? { email: email.trim() } : {}), adult: true, consent: { policyVersion: t.policyVersion, textHash: t.texts.account.textHash }, ...(captcha ? { captchaToken: captcha } : {}) });
   });
-  if (res.ok) { setResult({ codes: res.value.recoveryCodes, emailPending: res.value.emailPending }); setPassword(""); }
+  if (res.ok) { setResult({ codes: res.value.recoveryCodes, emailPending: res.value.emailPending, mailUnavailable: res.value.mailUnavailable === true }); setPassword(""); }
  }
- if (result && !codesDone) return <RecoveryCodes codes={result.codes} doneLabel="Tiếp tục" onDone={() => { if (result.emailPending) { setResult({ ...result, codes: [] }); setCodesDone(true); } else router.replace(accountPath()); }}/>;
+ if (result && !codesDone) return <RecoveryCodes codes={result.codes} doneLabel="Tôi đã lưu" onDone={() => { if (result.emailPending || result.mailUnavailable) { setResult({ ...result, codes: [] }); setCodesDone(true); } else router.replace(accountPath()); }}/>;
+ if (result?.mailUnavailable) return <section className={`${card} space-y-3`} role="status"><h2 className="text-xl font-extrabold">Chưa gửi được email xác minh lúc này</h2><p>Tài khoản đã được tạo. BeeJunior chưa gửi được email xác minh lúc này nên email chưa được lưu. Bạn vẫn dùng được tài khoản, và có thể thêm lại email trong trang Tài khoản sau.</p><Link className={ctaCls} href={accountPath()}>Vào tài khoản</Link></section>;
  if (result) return <section className={`${card} space-y-3`} role="status"><MailCheck aria-hidden="true" className="size-8 text-primary"/><h2 className="text-xl font-extrabold">Hãy kiểm tra email</h2><p>BeeJunior đã gửi một liên kết xác minh (hiệu lực 24 giờ). Mở liên kết đó để xác minh email; sau đó bạn có thể dùng email để đặt lại mật khẩu.</p><Link className={ctaCls} href={accountPath()}>Vào tài khoản</Link></section>;
  return <form onSubmit={submit} noValidate className={`${card} space-y-5`} aria-label="Đăng ký tài khoản phụ huynh">
   <p>Tài khoản dành cho <strong>cha/mẹ hoặc người giám hộ</strong>. Con em sẽ có hồ sơ riêng chỉ gồm biệt danh và lớp.</p>
