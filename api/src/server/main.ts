@@ -1,5 +1,6 @@
 import { createPublicReader } from "@bj/data";
 import pg from "pg";
+import { createUnconfiguredMailer } from "../accounts/mailer";
 import { buildApp, loggerOptions } from "./app";
 import { loadServerConfig } from "./config";
 
@@ -7,7 +8,7 @@ async function run(): Promise<void> {
   const config = loadServerConfig();
   const reader = createPublicReader({ connectionString: config.databaseUrl, poolMax: 10 });
   const cmsPool =
-    config.reportSalt || config.adminAuth
+    config.reportSalt || config.adminAuth || config.accounts
       ? new pg.Pool({ connectionString: config.databaseUrl, max: 5, statement_timeout: 30_000 })
       : undefined;
   const { app } = await buildApp({
@@ -15,6 +16,16 @@ async function run(): Promise<void> {
     internalToken: config.internalToken,
     ...(cmsPool && config.reportSalt ? { cms: { pool: cmsPool, salt: config.reportSalt } } : {}),
     ...(cmsPool && config.adminAuth ? { auth: { pool: cmsPool, ...config.adminAuth } } : {}),
+    ...(cmsPool && config.accounts
+      ? {
+          accounts: {
+            pool: cmsPool,
+            ...config.accounts,
+            // No mail provider is chosen yet (docs/user-accounts.md decision 5): sends fail and are logged.
+            mailer: createUnconfiguredMailer(),
+          },
+        }
+      : {}),
     ...(config.adminDist ? { adminDist: config.adminDist } : {}),
     rateLimitPerMinute: config.rateLimitPerMinute,
     trustProxy: config.trustProxy,

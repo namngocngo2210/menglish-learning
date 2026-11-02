@@ -3,9 +3,9 @@ export interface ExtraOperation {
   /** OpenAPI path (`{id}` style). */
   path: string;
   summary: string;
-  tag: "admin" | "admin-auth" | "public";
+  tag: "admin" | "admin-auth" | "public" | "account" | "account-public";
   /** Success status code. */
-  ok: 200 | 201 | 202;
+  ok: 200 | 201 | 202 | 204;
 }
 
 const P = "/api/v1/admin";

@@ -6,9 +6,13 @@ import type { FastifyInstance, FastifyServerOptions } from "fastify";
 import { ZodError } from "zod";
 import { createAdminAuth } from "../admin/auth";
 import type { AuthDeps } from "../admin/auth";
+import { accountsPlugin } from "../accounts/routes";
+import type { AccountsDeps } from "../accounts/auth";
 import { reportsPlugin } from "../cms/reports";
 import { adminPlugin } from "../cms/routes";
 import type { CmsOptions } from "../cms/routes";
+import { ACCOUNT_OPERATIONS } from "./account-openapi";
+import { EXTRA_OPERATIONS } from "./admin-openapi";
 import { registerAdminStatic } from "./admin-static";
 import { buildOpenApi } from "./openapi";
 import { HttpProblem, problemBody, sendProblem } from "./problems";
@@ -26,6 +30,8 @@ export interface AppOptions extends RouteDeps {
   auth?: AuthDeps;
   /** Directory of the built admin SPA (admin/dist); omitted = /admin is not served. */
   adminDist?: string;
+  /** Parent accounts (ACCOUNTS_ENABLED); omitted = no /api/v1/account routes at all. */
+  accounts?: AccountsDeps;
 }
 
 export interface BuiltApp {
@@ -51,6 +57,9 @@ export function loggerOptions(
         'req.headers["x-csrf-token"]',
         "req.body",
         "*.password",
+        "*.currentPassword",
+        "*.newPassword",
+        "*.email",
         "*.token",
         "*.totp",
         "*.code",
@@ -140,7 +149,7 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
       .send(problemBody("not_found", request.url.split("?")[0] ?? "/", request.id)),
   );
 
-  const specs = allSpecs(options);
+  const specs = allSpecs({ ...options, accountsDocs: options.accounts !== undefined });
   const routes: string[] = [];
   app.addHook("onRoute", (route) => {
     routes.push(`${String(route.method)} ${route.url}`);
@@ -154,6 +163,8 @@ export async function buildApp(options: AppOptions): Promise<BuiltApp> {
     await app.register(adminPlugin(cms), { prefix: "/api/v1/admin" });
     await app.register(reportsPlugin(cms));
   }
+  if (options.accounts)
+    await app.register(accountsPlugin(options.accounts), { prefix: "/api/v1/account" });
   if (options.adminDist) registerAdminStatic(app, options.adminDist);
   await app.ready();
   return { app, specs, routes };
@@ -170,7 +181,14 @@ export function allSpecs(deps: RouteDeps): RouteSpec[] {
     tag: "meta",
     responses: { 200: { description: "OpenAPI 3.1 document" } },
     cacheControl: "public, max-age=300",
-    handler: () => Promise.resolve(buildOpenApi([...specs, openapi])),
+    handler: () =>
+      Promise.resolve(
+        buildOpenApi(
+          [...specs, openapi],
+          undefined,
+          deps.accountsDocs ? [...EXTRA_OPERATIONS, ...ACCOUNT_OPERATIONS] : EXTRA_OPERATIONS,
+        ),
+      ),
   };
   specs.push(openapi);
   return specs;
