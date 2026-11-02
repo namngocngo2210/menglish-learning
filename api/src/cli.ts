@@ -1,6 +1,10 @@
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import pg from "pg";
 import { createAdmin, readHidden } from "./admin/create";
+import { purgeExpired, reapplyDeletions } from "./accounts/maintenance";
+import type { DeletionRef } from "./accounts/maintenance";
 import type { TtyIn, TtyOut } from "./admin/create";
 import { loadConfig } from "./config";
 import { connect } from "./db/connection";
@@ -27,6 +31,9 @@ Commands:
   parity [--content-dir DIR]                  Import-parity report; exit 1 on any difference
   export-snapshot --out DIR                   Write the published content as a ContentBundle
   admin:create <email>                        Create the single owner account (password typed at the TTY)
+  accounts:purge-expired                      Delete account data past retention (run daily as the owner DB role)
+  accounts:reapply-deletions --file F.json    After restoring an OLD backup: re-delete accounts/profiles listed in F
+                                              (needs USER_SESSION_HMAC_KEY or USER_SESSION_HMAC_KEY_FILE)
 
 Environment: DATABASE_URL or DATABASE_URL_FILE.`;
 
@@ -56,6 +63,10 @@ export async function main(
         return await runExport(rest, io, env);
       case "admin:create":
         return await runAdminCreate(rest, io, env, tty);
+      case "accounts:purge-expired":
+        return await runAccountsMaintenance(rest, io, env, "purge");
+      case "accounts:reapply-deletions":
+        return await runAccountsMaintenance(rest, io, env, "reapply");
       default:
         io.err(`Unknown command: ${command}\n${USAGE}`);
         return 2;
@@ -149,6 +160,40 @@ async function runParity(
   } finally {
     await handle.close();
   }
+}
+
+/** `accounts:purge-expired` and `accounts:reapply-deletions`: run as the owner DB role (audit_log DELETE). */
+async function runAccountsMaintenance(
+  args: readonly string[],
+  io: Io,
+  env: Readonly<Record<string, string | undefined>>,
+  task: "purge" | "reapply",
+): Promise<number> {
+  const { values } = parseArgs({
+    args: [...args],
+    options: { file: { type: "string" } },
+    strict: true,
+  });
+  let key = "";
+  let refs: DeletionRef[] = [];
+  if (task === "reapply") {
+    const keyFile = env["USER_SESSION_HMAC_KEY_FILE"];
+    key = (keyFile ? readFileSync(keyFile, "utf8") : (env["USER_SESSION_HMAC_KEY"] ?? "")).trim();
+    if (key.length < 32)
+      throw new Error("Missing environment: USER_SESSION_HMAC_KEY or USER_SESSION_HMAC_KEY_FILE");
+    if (values.file === undefined) throw new Error("--file is required");
+    refs = JSON.parse(readFileSync(values.file, "utf8")) as DeletionRef[];
+    if (!Array.isArray(refs)) throw new Error("--file must hold a JSON array");
+  }
+  const pool = new pg.Pool({ connectionString: loadConfig(env).databaseUrl, max: 1 });
+  try {
+    io.out(
+      json(task === "purge" ? await purgeExpired(pool) : await reapplyDeletions(pool, key, refs)),
+    );
+  } finally {
+    await pool.end();
+  }
+  return 0;
 }
 
 /** `admin:create <email>`: the password is read from the TTY only (D7), never from argv, env or files. */

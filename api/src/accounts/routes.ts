@@ -390,8 +390,13 @@ export function accountsPlugin(deps: AccountsDeps) {
       );
       if (result.rowCount !== 1) return false;
       await client.query(
-        "INSERT INTO deletion_requests (user_ref, scope, requested_at, due_at, done_at) VALUES ($1,'profile',$2,$3,$2)",
-        [auth.userRef(me.userId), now(), new Date(now().getTime() + DELETE_DUE_MS)],
+        "INSERT INTO deletion_requests (user_ref, scope, requested_at, due_at, done_at, target_ref) VALUES ($1,'profile',$2,$3,$2,$4)",
+        [
+          auth.userRef(me.userId),
+          now(),
+          new Date(now().getTime() + DELETE_DUE_MS),
+          auth.profileRef(externalId),
+        ],
       );
       return true;
     });

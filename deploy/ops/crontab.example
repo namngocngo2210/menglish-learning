@@ -5,3 +5,5 @@ BJ_REPO=/home/menglish/menglish-learning
 30 3 * * *  $BJ_REPO/deploy/ops/backup.sh       >> $HOME/backups/beejunior/backup.log 2>&1
 30 4 * * 0  $BJ_REPO/deploy/ops/restore-test.sh >> $HOME/backups/beejunior/backup.log 2>&1
 */5 * * * * $BJ_REPO/deploy/ops/watchdog.sh     >> $HOME/backups/beejunior/watchdog.log 2>&1
+# Account data retention (needs ACCOUNTS_ENABLED data to exist; harmless otherwise). dc = docker compose -f deploy/compose.yml --env-file deploy/.env
+15 4 * * *  cd $BJ_REPO/deploy && SECRETS_DIR=$HOME/beejunior-secrets docker compose --profile tools run --rm accounts-maint accounts:purge-expired >> $HOME/backups/beejunior/accounts-purge.log 2>&1

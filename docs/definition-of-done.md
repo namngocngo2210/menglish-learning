@@ -44,7 +44,7 @@ Dùng cho dev (tự kiểm trước khi mở PR), tester và reviewer (kiểm l�
 
 ## G. Vận hành và hiệu năng (khi áp dụng)
 - [ ] Config qua zod lúc khởi động; `/healthz` + `/readyz`
-- [ ] Trong ngân sách: p95 HIT < 100 ms; RSS web ≤ 384 MB, api ≤ 160 MB, worker ≤ 320 MB; Lighthouse SEO 100 / Perf ≥ 90 / A11y ≥ 95 / BP ≥ 95
+- [ ] Trong ngân sách: p95 HIT < 100 ms; RSS web ≤ 384 MB, api ≤ 192 MB (160 khi tắt tài khoản; đo 157 MB đỉnh khi bật), worker ≤ 320 MB; Lighthouse SEO 100 / Perf ≥ 90 / A11y ≥ 95 / BP ≥ 95
 - [ ] Container tạm của agent đã dừng (`--rm --label hermes.task=…`)
 
 ## H. Nội dung, SEO, tài liệu

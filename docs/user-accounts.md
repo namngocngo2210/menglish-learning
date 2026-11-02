@@ -1,6 +1,6 @@
 # Tài khoản người dùng (đăng ký email + Google) — thiết kế & rủi ro pháp lý
 
-> **Trạng thái: THIẾT KẾ; mã S-U1..S-U3 đã có sau cờ ACCOUNTS_ENABLED (mặc định TẮT, xem mục 10–11). Chưa có ứng dụng OAuth hay bí mật nào: mục 5 là việc của chủ; tính năng giữ TẮT đến khi chủ đặt secret. Bật/rollback: [runbook.md](runbook.md) mục 9.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
+> **Trạng thái: THIẾT KẾ; mã S-U1..S-U4 đã có sau cờ ACCOUNTS_ENABLED (mặc định TẮT, xem mục 10–11). Chưa có ứng dụng OAuth hay bí mật nào: mục 5 là việc của chủ; tính năng giữ TẮT đến khi chủ đặt secret. Bật/rollback: [runbook.md](runbook.md) mục 9.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
 > **Phạm vi chủ chốt (2/11):** đăng ký email + mật khẩu và đăng nhập Google. **Không Facebook** (chỉ ghi "có thể làm sau", mục 5.3). Luyện tập ẩn danh giữ nguyên, không có "tường đăng nhập".
 > Đây **không phải tư vấn pháp lý**. Mọi kết luận pháp lý đánh dấu **[cần xác nhận với luật sư]**; mục 9 liệt kê điều chưa kiểm chứng được.
 
@@ -202,3 +202,7 @@ Chỉ chạy khi `ACCOUNTS_ENABLED=true` **và** có đủ `GOOGLE_CLIENT_ID`, `
 - `GET …/callback` kiểm `state` (so với cookie), đổi code (kèm `code_verifier`), kiểm ID token: chữ ký RS256 theo JWKS (theo `kid`, tự tải lại khi xoay khóa), `iss`, `aud` (đúng một giá trị = client id), `exp`/`iat` (lệch 60 s), `nonce`, `email_verified`. Thành công → cookie phiên phụ huynh + 302 `/tai-khoan`; lỗi → 302 `/dang-nhap?loi=google_{failed|denied|email_exists|consent_required}` (không lộ chi tiết nhà cung cấp; audit `user.google_failed` chỉ ghi lý do).
 - Khóa danh tính là `sub` (bảng `identities`). `sub` lạ + email chưa có → tạo tài khoản `active` (không mật khẩu, cần consent). `sub` lạ + email đã có tài khoản → **từ chối** (`email_exists`), không tự gộp. Liên kết Google vào tài khoản đang đăng nhập **chưa làm** (cần luồng xác nhận riêng).
 - Chưa làm: nút "Đăng nhập bằng Google" ở web (giao diện), `safeFetch` có chống SSRF (tiêu chuẩn V12/V13 chưa có; hiện gọi tới URL cố định do vận hành đặt, có `eslint-disable` một chỗ ghi rõ lý do).
+
+## 12. Trạng thái S-U4 (cứng hóa, nhánh `feat/accounts-hardening`)
+
+Pen-test ASVS L2 theo tính năng (0 High; chặn bật cờ duy nhất là chưa có nhà gửi email): [pentest-asvs-l2-accounts.md](pentest-asvs-l2-accounts.md). Đo tải: `api` đỉnh 157 MB khi bị dội 128 đăng nhập song song ⇒ trần `api` nâng 160 → 192 MB (quyết định 9). Mới: `deletion_requests.target_ref` + `accounts:reapply-deletions` (xóa lại sau khôi phục backup), `accounts:purge-expired` (dọn theo thời hạn lưu giữ), dịch vụ `accounts-maint`, secret `user_session_hmac_key`/`google_client_secret` trong `gen-secrets.sh`, compose truyền biến tài khoản. Runbook vi phạm dữ liệu + sao lưu/xóa: [runbook.md](runbook.md) mục 10. Kế hoạch triển khai và việc của chủ: [deploy-plan-accounts.md](deploy-plan-accounts.md). Turnstile: không bật (chưa đo được lạm dụng). **Chưa làm:** adapter email thật, xóa tài khoản nhàn rỗi 24 tháng.

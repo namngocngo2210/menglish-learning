@@ -115,6 +115,7 @@ export interface DeletionRequests {
   id: Generated<Int8>;
   requested_at: Generated<Timestamp>;
   scope: string;
+  target_ref: string | null;
   user_ref: string;
 }
 
