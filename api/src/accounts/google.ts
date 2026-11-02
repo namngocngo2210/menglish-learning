@@ -7,6 +7,7 @@ import { HttpProblem } from "../server/problems";
 import { readCookie } from "./auth";
 import type { UserAuth, UserPrincipal } from "./auth";
 import { consentMatches } from "./consent-texts";
+import { generateUsername } from "./username";
 import type { GoogleConfig } from "./google-config";
 import { googleLinkBody, googleRegisterBody } from "./schemas";
 
@@ -204,10 +205,11 @@ export function googleRoutes(
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
+      // Generated username (40 random bits; the parent may change it once). A clash is a 23505 handled below.
       const user = await client.query<{ id: string }>(
-        `INSERT INTO users (email, email_verified_at, status) VALUES ($1,$2,'active')
+        `INSERT INTO users (username, username_generated, email, email_verified_at, status) VALUES ($1,true,$2,$3,'active')
          ON CONFLICT (lower(email)) DO NOTHING RETURNING id::text`,
-        [claims.email, now()],
+        [generateUsername(), claims.email, now()],
       );
       const userId = user.rows[0]?.id;
       if (userId === undefined) {

@@ -13,15 +13,29 @@ const consent = z.strictObject({
   textHash: z.string().max(128),
 });
 
+// Format and policy are checked by cleanUsername() so the reason code is stable; this only bounds the payload.
+const username = z.string().min(1).max(64);
+const loginName = username.transform((value) => value.trim().toLowerCase());
+
 export const registerBody = z.strictObject({
-  email,
+  username,
   password,
+  email: email.optional(),
   adult: z.literal(true),
   consent,
+  captchaToken: z.string().max(2048).optional(),
 });
 export const verifyBody = z.strictObject({ token });
-export const loginBody = z.strictObject({ email, password });
+export const loginBody = z.strictObject({ username: loginName, password });
 export const resetRequestBody = z.strictObject({ email });
+export const resetRecoveryBody = z.strictObject({
+  username: loginName,
+  code: z.string().min(8).max(64),
+  password,
+});
+export const emailBody = z.strictObject({ email });
+export const usernameBody = z.strictObject({ username });
+export const regenerateCodesBody = z.strictObject({ password: password.optional() });
 export const resetConfirmBody = z.strictObject({ token, password });
 export const changePasswordBody = z.strictObject({
   currentPassword: password,

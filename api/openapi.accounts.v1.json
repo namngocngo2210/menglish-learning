@@ -3086,12 +3086,12 @@
     },
     "/api/v1/account/register": {
       "post": {
-        "summary": "Register a parent (always 202, never reveals if the email exists)",
+        "summary": "Register a parent with a username (email optional): logs in and returns the 10 recovery codes once",
         "tags": [
           "account-public"
         ],
         "responses": {
-          "202": {
+          "201": {
             "description": "Success"
           },
           "400": {
@@ -3119,7 +3119,7 @@
     },
     "/api/v1/account/verify-email": {
       "post": {
-        "summary": "Verify the email token, activate the account and log in",
+        "summary": "Verify an email token; the address is stored only now",
         "tags": [
           "account-public"
         ],
@@ -3152,7 +3152,7 @@
     },
     "/api/v1/account/login": {
       "post": {
-        "summary": "Log in with email and password",
+        "summary": "Log in with username and password",
         "tags": [
           "account-public"
         ],
@@ -3172,6 +3172,183 @@
           },
           "429": {
             "description": "Rate limited",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/account/password-reset/recovery": {
+      "post": {
+        "summary": "Set a new password with username + one-time recovery code; revokes all sessions",
+        "tags": [
+          "account-public"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/account/email": {
+      "post": {
+        "summary": "Add or replace the email; stored after the link is opened",
+        "tags": [
+          "account"
+        ],
+        "security": [
+          {
+            "userSession": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No valid session",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or bad CSRF",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/account/recovery-codes": {
+      "post": {
+        "summary": "Regenerate the 10 recovery codes (old ones stop working)",
+        "tags": [
+          "account"
+        ],
+        "security": [
+          {
+            "userSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No valid session",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or bad CSRF",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/account/username": {
+      "post": {
+        "summary": "Change the generated username once (Google sign-ups)",
+        "tags": [
+          "account"
+        ],
+        "security": [
+          {
+            "userSession": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Validation failed",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No valid session",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden or bad CSRF",
             "content": {
               "application/problem+json": {
                 "schema": {

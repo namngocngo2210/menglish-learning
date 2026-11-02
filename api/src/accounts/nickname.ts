@@ -19,6 +19,18 @@ const blockedBy = (form: string, words: string): boolean =>
       : form === e.compact || ` ${words} `.includes(` ${e.spaced} `),
   );
 
+/** Shared with usernames: platform names, blocklist words and their leet/spacing variants. */
+export function isBlockedName(name: string): boolean {
+  const form = compact(name);
+  if (/http|www|zalo|facebook|fb|tiktok|telegram|whatsapp|instagram|snapchat|discord/.test(form))
+    return true;
+  const words = spaced(name);
+  for (const digit of ["i", "l"]) {
+    if (blockedBy(form.replace(/1/g, digit), words.replace(/1/g, digit))) return true;
+  }
+  return false;
+}
+
 /** Returns the cleaned nickname, or undefined when it is too short/long, has odd characters or is blocked. */
 export function cleanNickname(input: string): string | undefined {
   const name = input.normalize("NFKC").trim().replace(/ +/g, " ");
@@ -26,12 +38,5 @@ export function cleanNickname(input: string): string | undefined {
   if (length < 2 || length > 20) return undefined;
   if (!/^[\p{L}\p{M}\p{N} ._-]+$/u.test(name) || !/\p{L}/u.test(name) || /\d{6}/.test(name))
     return undefined;
-  const form = compact(name);
-  if (/http|www|zalo|facebook|fb|tiktok|telegram|whatsapp|instagram|snapchat|discord/.test(form))
-    return undefined;
-  const words = spaced(name);
-  for (const digit of ["i", "l"]) {
-    if (blockedBy(form.replace(/1/g, digit), words.replace(/1/g, digit))) return undefined;
-  }
-  return name;
+  return isBlockedName(name) ? undefined : name;
 }

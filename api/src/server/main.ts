@@ -1,6 +1,7 @@
 import { createPublicReader } from "@bj/data";
 import pg from "pg";
 import { createUnconfiguredMailer } from "../accounts/mailer";
+import { createTurnstileVerifier } from "../accounts/captcha";
 import { createSmtpMailer } from "../accounts/smtp";
 import type { MailLog } from "../accounts/smtp";
 import { buildApp, loggerOptions } from "./app";
@@ -27,7 +28,12 @@ async function run(): Promise<void> {
       ? {
           accounts: {
             pool: cmsPool,
-            ...config.accounts,
+            hmacKey: config.accounts.hmacKey,
+            origin: config.accounts.origin,
+            ...(config.accounts.google ? { google: config.accounts.google } : {}),
+            ...(config.accounts.turnstileSecret
+              ? { captcha: createTurnstileVerifier(config.accounts.turnstileSecret) }
+              : {}),
             // MAIL_TRANSPORT=smtp -> queued SMTP (ADR 0009); otherwise sends fail and are logged.
             mailer: mailConfig
               ? createSmtpMailer(mailConfig, { log: mailLog })

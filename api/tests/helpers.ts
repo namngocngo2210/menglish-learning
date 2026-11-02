@@ -43,3 +43,11 @@ export async function createMigratedDb(): Promise<TestDb> {
   await migrate(db.url, { direction: "up" });
   return db;
 }
+
+/** Test usernames are derived from the old email fixtures: "parent3@example.test" -> "parent3". */
+export const uname = (email: string): string =>
+  email
+    .split("@")[0]!
+    .replace(/[^a-z0-9]/gi, "")
+    .toLowerCase()
+    .padEnd(3, "x");

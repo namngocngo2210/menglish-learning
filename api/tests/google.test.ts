@@ -12,7 +12,7 @@ import { hashPassword } from "../src/accounts/password";
 import { buildApp, loggerOptions } from "../src/server/app";
 import type { BuiltApp } from "../src/server/app";
 import { loadServerConfig } from "../src/server/config";
-import { ADMIN_URL, createMigratedDb } from "./helpers";
+import { ADMIN_URL, createMigratedDb, uname } from "./helpers";
 import type { TestDb } from "./helpers";
 
 const ORIGIN = "https://site.example.test";
@@ -346,14 +346,14 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
   const IN = 4_000_000_000; // far-future expiry (epoch s)
   /** Password parent + parent session cookie and CSRF token. */
   async function loggedIn(mail = "parent@example.test") {
-    await pool.query("INSERT INTO users (email, status, password_hash) VALUES ($1,'active',$2)", [
-      mail,
-      await hashPassword("a long enough passphrase"),
-    ]);
+    await pool.query(
+      "INSERT INTO users (username, email, email_verified_at, status, password_hash) VALUES ($3,$1,now(),'active',$2)",
+      [mail, await hashPassword("a long enough passphrase"), uname(mail)],
+    );
     const res = await on.app.inject({
       method: "POST",
       url: `${A}/login`,
-      payload: { email: mail, password: "a long enough passphrase" },
+      payload: { username: uname(mail), password: "a long enough passphrase" },
       headers: { "x-forwarded-for": ip() },
     });
     expect(res.statusCode).toBe(200);
@@ -428,7 +428,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
 
   it("never merges by email: a matching password account gets a pending link, no session", async () => {
     await pool.query(
-      "INSERT INTO users (email, status, password_hash) VALUES ('Parent@Example.test','active','x')",
+      "INSERT INTO users (username, email, email_verified_at, status, password_hash) VALUES ('parentx','Parent@Example.test',now(),'active','x')",
     );
     const { res } = await flow();
     expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
@@ -655,7 +655,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
 
   it("never lets an unverified Google email reach an existing account with that email", async () => {
     await pool.query(
-      "INSERT INTO users (email, status, password_hash) VALUES ('parent@example.test','active','x')",
+      "INSERT INTO users (username, email, email_verified_at, status, password_hash) VALUES ('parentx','parent@example.test',now(),'active','x')",
     );
     claimsOverride = { email_verified: false };
     const { res } = await flow();
@@ -667,7 +667,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
 
   it("takeover attempt: a new sub with the victim's verified email gets no session and cannot link alone", async () => {
     await pool.query(
-      "INSERT INTO users (email, status, password_hash) VALUES ('parent@example.test','active','x')",
+      "INSERT INTO users (username, email, email_verified_at, status, password_hash) VALUES ('parentx','parent@example.test',now(),'active','x')",
     );
     sub = "attacker-sub";
     const { res } = await flow(); // boxes ticked, new sub, same email

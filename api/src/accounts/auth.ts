@@ -2,6 +2,7 @@ import type { FastifyRequest } from "fastify";
 import type pg from "pg";
 import { hmacHex, newToken, safeEqual, sha256Hex } from "../admin/crypto";
 import { HttpProblem } from "../server/problems";
+import type { Captcha } from "./captcha";
 import type { GoogleConfig } from "./google-config";
 import type { Mailer } from "./mailer";
 
@@ -20,6 +21,8 @@ export interface AccountsDeps {
   mailer: Mailer;
   /** Google sign-in; undefined = the /oauth/google routes answer 404. */
   google?: GoogleConfig;
+  /** Turnstile on registration; undefined = off (default). */
+  captcha?: Captcha;
   now?: () => Date;
 }
 

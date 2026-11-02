@@ -33,14 +33,15 @@ const COMMON = new Set([
 ]);
 
 /** Returns a machine-readable reason when the password is unacceptable (NIST/ASVS 2.1: length, no composition rules). */
-export function passwordProblem(password: string, email: string): string | undefined {
+export function passwordProblem(password: string, ...identities: string[]): string | undefined {
   const length = Array.from(password).length;
   if (length < PASSWORD_MIN) return "password_too_short";
   if (length > PASSWORD_MAX) return "password_too_long";
   const lower = password.toLowerCase();
   if (COMMON.has(lower) || /^(.)\1+$/u.test(password)) return "password_too_common";
-  if (lower === email.toLowerCase() || lower === email.split("@")[0])
-    return "password_matches_email";
+  for (const id of identities)
+    if (lower === id.toLowerCase() || lower === id.split("@")[0]?.toLowerCase())
+      return "password_matches_email";
   return undefined;
 }
 
