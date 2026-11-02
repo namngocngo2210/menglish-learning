@@ -17,6 +17,8 @@ import {
 export interface RouteDeps {
   reader: PublicReader;
   internalToken: string | undefined;
+  /** Include the parent-account operations in the served OpenAPI document (ACCOUNTS_ENABLED). */
+  accountsDocs?: boolean;
 }
 
 export interface RouteContext {

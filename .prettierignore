@@ -29,3 +29,4 @@ package-lock.json
 *.md
 *.generated.ts
 api/openapi.v1.json
+api/openapi.accounts.v1.json

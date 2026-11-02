@@ -177,3 +177,17 @@ Cap hiện tại ≈1,12 GB (`backend-decisions.md` D8: web 384, api 160, postgr
 - Hiệu lực của Điều 24 Luật 91 với tài khoản học tập thông thường; nghĩa vụ báo vi phạm/đánh giá tác động/chuyển dữ liệu ra nước ngoài hiện hành.
 - Thời gian brand verification của Google cho app chỉ-đăng-nhập; điều khoản độ tuổi Facebook (nguyên văn); giá email có thể đã đổi.
 - Bất kỳ con số RAM/thời gian nào ghi [ước] chưa được đo.
+
+## 10. Trạng thái S-U1 (lõi, đã làm — nhánh `feat/accounts-core`)
+
+Cờ `ACCOUNTS_ENABLED` mặc định tắt: khi tắt **không đăng ký route nào** `/api/v1/account/*` và OpenAPI phục vụ không liệt kê chúng (`api/openapi.v1.json` không đổi; bản bật cờ ở `api/openapi.accounts.v1.json`). Bật cần `USER_SESSION_HMAC_KEY[_FILE]` (≠ `SESSION_HMAC_KEY`, kiểm lúc khởi động) và `ACCOUNTS_ORIGIN`. Chưa nối vào `deploy/compose.yml`/secret; chưa chọn nhà gửi email (adapter giả cho test, adapter thật là stub báo lỗi).
+
+Đã có: đăng ký/xác minh email/đăng nhập/đăng xuất/đăng xuất mọi thiết bị, đặt lại và đổi mật khẩu, phiên (7 ngày nhàn rỗi, 30 ngày tuyệt đối, sha256 trong DB, xoay vòng khi đăng nhập), CSRF (Origin + Sec-Fetch-Site + `X-CSRF-Token`), giới hạn (5 sai/15 phút/IP, 10 sai/giờ/email, 3 mail/giờ/địa chỉ, 10/giờ/IP, 3 lần xuất/giờ), hồ sơ con ≤5 với đồng ý riêng, xem/rút đồng ý (rút = xóa hồ sơ), xuất JSON, xóa hồ sơ/tài khoản (xóa cứng + `deletion_requests`), audit `user.*`.
+
+Khác với bản thiết kế (đã cân nhắc): email lưu `text` + unique `lower(email)` thay `citext` (không cần extension); thêm bảng `user_tokens` (token xác minh/đặt lại, chỉ lưu sha256); `deletion_requests.user_ref` là HMAC của id (không phải `user_id`); "khóa mềm" = giới hạn theo cửa sổ thời gian, không có cờ khóa lưu DB (không thể khóa-DoS vĩnh viễn), Turnstile chưa làm; bảng nằm trong role `bj_api` (chưa tách role DB riêng); văn bản đồng ý do server giữ (`POLICY_VERSION` bản nháp `2026-11-draft-1`, chờ luật sư) và client gửi lại `policyVersion` + `textHash`.
+
+Chưa làm (ngoài S-U1): Google OIDC (S-U3), giao diện (S-U2), job xóa tài khoản nhàn rỗi 24 tháng / dọn `login_attempts` & `user_tokens` quá hạn, nhà gửi email thật, ghi `profile_attempts` từ luồng làm bài.
+
+**Đo RAM (D9):** `api` bundle trong container `node:22-bookworm` (glibc, không phải alpine), `--memory=160m --cpus=0.5`, 32 request đăng nhập đồng thời × 40 s (cổng băm 2 đồng thời, hàng đợi 8, phần còn lại 429): RSS nhàn rỗi 96 MB (đỉnh khởi động 109 MB), `VmHWM` dưới tải **139 MB**, không OOM → chưa cần nâng 160→192 MB; dư ~21 MB, đo lại ở S-U4 cùng lưu lượng công khai.
+
+**Điều kiện bật cờ:** phải đặt `TRUST_PROXY` đúng (IP/CIDR của Caddy); nếu không, mọi người dùng chung một IP trong giới hạn đăng nhập (5 lần sai/15 phút) và đăng nhập sai của một người chặn tất cả. Cùng quy tắc đã áp dụng cho API admin.

@@ -67,7 +67,10 @@ export function buildOpenApi(
     };
   }
   for (const e of extra) {
-    const needsAuth = e.tag !== "public" && !e.path.endsWith("/auth/login");
+    const account = e.tag === "account" || e.tag === "account-public";
+    const needsAuth = account
+      ? e.tag === "account"
+      : e.tag !== "public" && !e.path.endsWith("/auth/login");
     const problem = (description: string): unknown => ({
       description,
       content: { "application/problem+json": { schema: { $ref: "#/components/schemas/Problem" } } },
@@ -78,14 +81,16 @@ export function buildOpenApi(
       ...(e.path.includes("{id}")
         ? { parameters: [{ name: "id", in: "path", required: true, schema: { type: "string" } }] }
         : {}),
-      ...(needsAuth ? { security: [{ adminSession: [] }] } : {}),
+      ...(needsAuth ? { security: [{ [account ? "userSession" : "adminSession"]: [] }] } : {}),
       responses: {
         [e.ok]: { description: "Success" },
         400: problem("Validation failed"),
         ...(needsAuth
           ? { 401: problem("No valid session"), 403: problem("Forbidden or bad CSRF") }
           : {}),
-        ...(e.tag === "public" ? { 429: problem("Rate limited") } : {}),
+        ...(e.tag === "public" || e.tag === "account-public"
+          ? { 429: problem("Rate limited") }
+          : {}),
       },
     };
   }
@@ -97,6 +102,9 @@ export function buildOpenApi(
       securitySchemes: {
         internalToken: { type: "http", scheme: "bearer" },
         adminSession: { type: "apiKey", in: "cookie", name: "__Host-bj_admin" },
+        ...(extra.some((e) => e.tag === "account")
+          ? { userSession: { type: "apiKey", in: "cookie", name: "__Host-bj_user" } }
+          : {}),
       },
       schemas: { Problem: json(ProblemSchema) },
     },
