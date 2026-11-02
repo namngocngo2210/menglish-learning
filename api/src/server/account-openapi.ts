@@ -62,6 +62,11 @@ export const ACCOUNT_OPERATIONS: readonly ExtraOperation[] = [
   ),
   op("patch", `${P}/profiles/{id}`, "Update a child profile"),
   op("delete", `${P}/profiles/{id}`, "Delete a child profile and its data", "account", 204),
+  op(
+    "post",
+    `${P}/profiles/{id}/progress`,
+    "Import the child's local progress after parent confirmation",
+  ),
   op("get", `${P}/consents`, "List consents"),
   op(
     "post",

@@ -8,7 +8,7 @@ import { CONTENT_DIR } from "./content-dir";
 import { ADMIN_URL, createMigratedDb, createTestDb } from "./helpers";
 import type { TestDb } from "./helpers";
 
-const MIGRATION_COUNT = 35;
+const MIGRATION_COUNT = 36;
 
 async function tables(db: TestDb): Promise<string[]> {
   const { rows } = await db.admin.query<{ table_name: string }>(
@@ -44,6 +44,7 @@ describe.skipIf(ADMIN_URL === undefined)("migrations on an empty database", () =
       "outbox_events",
       "passages",
       "profile_attempts",
+      "profile_progress",
       "profiles",
       "question_reports",
       "question_revisions",
@@ -152,7 +153,7 @@ describe.skipIf(ADMIN_URL === undefined)("migration down/up", () => {
       }
       expect(await tables(db)).toEqual([]);
       expect(await migrate(db.url, { direction: "up" })).toHaveLength(MIGRATION_COUNT);
-      expect((await tables(db)).length).toBe(26);
+      expect((await tables(db)).length).toBe(27);
     } finally {
       await db.remove();
     }

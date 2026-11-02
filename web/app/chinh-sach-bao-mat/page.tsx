@@ -5,7 +5,9 @@ import { PageShell, Breadcrumbs } from "@/components/ui-kit";
 import { homePath, privacyPath } from "@/lib/routes";
 import { accountsEnabled } from "@/lib/account/flag";
 import { PrivacyPolicyDraft } from "@/components/account/Legal";
-export const metadata = buildMetadata({ title: "Chính sách bảo mật", description: "Thông tin về cách xử lý câu trả lời, quyền riêng tư và dự kiến quảng cáo không cá nhân hóa dành cho trẻ em.", path: privacyPath() });
+const base = buildMetadata({ title: "Chính sách bảo mật", description: "Thông tin về cách xử lý câu trả lời, quyền riêng tư và dự kiến quảng cáo không cá nhân hóa dành cho trẻ em.", path: privacyPath() });
+// With accounts on, the page shows the DRAFT policy (placeholders, pending lawyer review): keep it out of search until approved.
+export const metadata = accountsEnabled() ? { ...base, robots: { index: false, follow: true } } : base;
 export const revalidate = 3600;
 export default function PrivacyPage() {
  if (accountsEnabled()) return <PageShell title="Chính sách quyền riêng tư"><JsonLd data={breadcrumbJsonLd([{name:"Trang chủ",path:homePath()},{name:"Chính sách quyền riêng tư",path:privacyPath()}])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:"Chính sách quyền riêng tư"}]}/><PrivacyPolicyDraft/></PageShell>;

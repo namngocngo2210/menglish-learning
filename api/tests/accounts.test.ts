@@ -668,6 +668,45 @@ describe.skipIf(ADMIN_URL === undefined)("parent accounts (PostgreSQL)", () => {
     });
   });
 
+  describe("progress import", () => {
+    const item = (slug: string, best: number, last: number, at = "2026-11-01T10:00:00.000Z") => ({
+      slug,
+      best,
+      last,
+      total: 10,
+      at,
+    });
+
+    it("imports the caller's local progress, keeps the better score, exports it and rejects other parents", async () => {
+      const a = await signup("prog-a@example.test");
+      const b = await signup("prog-b@example.test");
+      const profile = (await addProfile(a)).json<{ id: string }>();
+      const path = `/profiles/${profile.id}/progress`;
+      expect((await authed(a, "POST", path, { items: [item("t1", 7, 5)] })).json()).toEqual({
+        imported: 1,
+      });
+      await authed(a, "POST", path, {
+        items: [item("t1", 6, 6, "2026-11-02T10:00:00.000Z"), item("t2", 3, 3)],
+      });
+      const rows = (
+        await pool.query("SELECT test_slug, best, last FROM profile_progress ORDER BY test_slug")
+      ).rows;
+      expect(rows).toEqual([
+        { test_slug: "t1", best: 7, last: 6 },
+        { test_slug: "t2", best: 3, last: 3 },
+      ]);
+      const exported = (await authed(a, "GET", "/export")).json<{
+        profiles: { progress: { slug: string }[] }[];
+      }>();
+      expect(exported.profiles[0]?.progress.map((p) => p.slug)).toEqual(["t1", "t2"]);
+      expect((await authed(b, "POST", path, { items: [item("t9", 1, 1)] })).statusCode).toBe(404);
+      expect((await authed(a, "POST", path, { items: [item("t1", 99, 5)] })).statusCode).toBe(422);
+      expect((await authed(a, "POST", path, { items: [] })).statusCode).toBe(422);
+      expect((await authed(a, "DELETE", `/profiles/${profile.id}`)).statusCode).toBe(204);
+      expect((await pool.query("SELECT 1 FROM profile_progress")).rowCount).toBe(0);
+    });
+  });
+
   describe("export and account deletion", () => {
     it("exports only the caller's data, without secrets, and rate limits the export", async () => {
       const a = await signup("exp-a@example.test");

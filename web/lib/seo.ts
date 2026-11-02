@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
 import { getGrades, getSkills, getTopics, getTestsForTopic, getEntranceTests } from "@/lib/content/load";
 import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath, roomsLandingPath } from "@/lib/routes";
+import { accountsEnabled } from "@/lib/account/flag";
 import { roomsEnabled } from "@/lib/rooms/flag";
 
 export function absoluteUrl(path: string): string {
@@ -64,7 +65,7 @@ export function getAllRoutes(): PublicRoute[] {
  routes.push(...entrance.map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
  routes.unshift({ path: "/", lastModified: newest(all), changeFrequency: "weekly", priority: 1 });
  routes.push({ path: "/nguon-du-lieu", lastModified: newest(all), changeFrequency: "monthly", priority: 0.3 });
- routes.push(...[aboutPath(), privacyPath(), contactPath()].map(path => ({ path, lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "yearly" as const, priority: 0.3 })));
+ routes.push(...[aboutPath(), ...(accountsEnabled() ? [] : [privacyPath()]), contactPath()].map(path => ({ path, lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "yearly" as const, priority: 0.3 })));
  // Room URLs (/luyen-tap-nhom/phong/*, /vao) are never listed; the landing only when the feature is on.
  if (roomsEnabled()) routes.push({ path: roomsLandingPath(), lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "monthly", priority: 0.6 });
  return routes;

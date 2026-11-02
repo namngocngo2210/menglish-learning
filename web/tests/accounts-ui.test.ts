@@ -128,3 +128,21 @@ describe("consent boxes and legal drafts", () => {
   expect(html(createElement(PrivacyPolicyDraft))).toContain("[TÊN PHÁP NHÂN]");
  });
 });
+
+describe("draft privacy page and progress invite", () => {
+ it("privacy page is noindex only while the draft is shown (flag ON), and leaves the sitemap", async () => {
+  vi.resetModules(); vi.stubEnv("ACCOUNTS_ENABLED", "true");
+  const on = (await import("@/app/chinh-sach-bao-mat/page")).metadata as { robots?: { index?: boolean } };
+  expect(on.robots?.index).toBe(false);
+  expect((await (await import("@/app/sitemap")).default()).some(e => e.url.endsWith("/chinh-sach-bao-mat"))).toBe(false);
+  vi.resetModules(); vi.stubEnv("ACCOUNTS_ENABLED", undefined);
+  const off = (await import("@/app/chinh-sach-bao-mat/page")).metadata as { robots?: unknown };
+  expect((off.robots as { index: boolean }).index).toBe(true);
+ });
+ it("signed-out visitors see only the plain invitation (the import prompt needs a session and local results)", async () => {
+  const { SaveProgressInvite } = await import("@/components/account/SaveProgressInvite");
+  const out = html(createElement(SaveProgressInvite));
+  expect(out).toContain("Lưu tiến độ");
+  expect(out).not.toContain("Lưu vào hồ sơ");
+ });
+});

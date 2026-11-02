@@ -40,3 +40,22 @@ export const profileUpdateBody = z
   })
   .refine((body) => body.nickname !== undefined || body.grade !== undefined, "nothing to update");
 export const idParam = z.strictObject({ id: z.uuid() });
+export const progressImportBody = z.strictObject({
+  items: z
+    .array(
+      z
+        .strictObject({
+          slug: z.string().min(1).max(200),
+          best: z.number().int().min(0),
+          last: z.number().int().min(0),
+          total: z.number().int().min(1).max(1000),
+          at: z.iso.datetime(),
+        })
+        .refine(
+          (i) => i.last <= i.total && i.best >= i.last && i.best <= i.total,
+          "inconsistent score",
+        ),
+    )
+    .min(1)
+    .max(500),
+});

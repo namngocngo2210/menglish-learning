@@ -44,6 +44,7 @@ export function createAccountClient({ baseUrl = "/api/v1/account", fetchImpl }: 
   profiles: async () => (await json<{ items: Profile[] }>("GET", "/profiles")).items,
   createProfile: (b: { nickname: string; grade: number; consent: ConsentRef }) => json<Profile>("POST", "/profiles", b, true),
   updateProfile: (id: string, b: { nickname?: string; grade?: number }) => json<Profile>("PATCH", `/profiles/${id}`, b, true),
+  importProgress: (profileId: string, items: { slug: string; best: number; last: number; total: number; at: string }[]) => json<{ imported: number }>("POST", `/profiles/${profileId}/progress`, { items }, true),
   deleteProfile: (id: string) => json<void>("DELETE", `/profiles/${id}`, undefined, true),
   exportData: async () => (await raw("GET", "/export")).blob(),
   deleteAccount: async (password?: string) => { await json<void>("DELETE", "/account", password === undefined ? {} : { password }, true); csrf = null; },

@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { PROGRESS_KEY, readProgress, saveProgress } from "@/lib/progress";
+import { PROGRESS_KEY, readAllProgress, readProgress, saveProgress } from "@/lib/progress";
 function fakeStorage() { const values = new Map<string, string>(); return { getItem: (key: string) => values.get(key) ?? null, setItem: (key: string, value: string) => { values.set(key, value); } }; }
 it("stores last and best scores per slug in a versioned record", () => {
  const store = fakeStorage(); expect(readProgress("test", store)).toBeUndefined();
@@ -16,4 +16,10 @@ it("tolerates inaccessible, malformed and invalid storage", () => {
   store.setItem(PROGRESS_KEY, value); expect(readProgress("test", store)).toBeUndefined();
  }
  saveProgress("test", 3, 2, store); expect(readProgress("test", store)).toBeUndefined();
+});
+it("lists only valid stored results for the parent-confirmed import", () => {
+ const store = fakeStorage(); saveProgress("a", 3, 5, store); saveProgress("b", 1, 2, store);
+ store.setItem(PROGRESS_KEY, JSON.stringify({ ...JSON.parse(store.getItem(PROGRESS_KEY)!), bad: { best: 9, last: 1, total: 2, at: "x" } }));
+ expect(readAllProgress(store).map(i => i.slug)).toEqual(["a", "b"]);
+ expect(readAllProgress({ getItem() { throw new Error("blocked"); }, setItem() {} })).toEqual([]);
 });
