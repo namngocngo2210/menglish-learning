@@ -1,6 +1,6 @@
 import { ContentBundleSchema, type ContentBundle, type Test, type Topic, type Question, type Passage } from "../../lib/content/types";
 import { partitionTests, type MixedTest } from "../../lib/mixer";
-import { entranceTestPath, officialEntranceSlug, GRADES, SKILLS, SKILL_NAMES } from "../../lib/routes";
+import { entranceTestSlug, officialEntranceSlug, GRADES, SKILLS, SKILL_NAMES } from "../../lib/routes";
 import { guardQuestions, type GuardReport } from "./guards";
 import { stripVoaEmailCallsToAction } from "./passage-filter";
 import { classifyQuestion } from "../../lib/topics/classify";
@@ -92,7 +92,7 @@ export function buildBank(fragments: readonly ContentBundle[], reportGuards?: (r
  }
  add(partitionTests(merged.questions.filter(q => q.grade === 8 || q.grade === 9), {
   seedPrefix: "thi-vao-lop-10", size: 40, minSize: 20, skillMix: { "tu-vung": .3, "ngu-phap": .3, "doc-hieu": .3, "viet-cau": .1 },
- }), k => ({ slug: entranceTestPath(k).slice(1), grade: 9, kind: "entrance10", title: `Đề luyện thi vào lớp 10 - Đề ${k}` }));
+ }), k => ({ slug: entranceTestSlug(k), grade: 9, kind: "entrance10", title: `Đề luyện thi vào lớp 10 - Đề ${k}` }));
  // Fixed official papers: one test per exam year, questions in paper order (reading passages stay adjacent), original option order.
  const papers = new Map<string, Question[]>();
  for (const q of official) { const year = officialRef(q).year; papers.set(year, [...(papers.get(year) ?? []), q]); }

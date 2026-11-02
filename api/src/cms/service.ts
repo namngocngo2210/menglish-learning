@@ -1,5 +1,6 @@
 import { createHmac } from "node:crypto";
 import type pg from "pg";
+import { testSlugToPath } from "@bj/core";
 import { HttpProblem } from "../server/problems";
 import { SCHEMAS } from "./schemas";
 import { canTransition } from "./transitions";
@@ -313,7 +314,10 @@ async function moveRows(
       c,
       "INSERT INTO outbox_events (kind, payload) VALUES ($1, $2::jsonb)",
       entity === "test"
-        ? ["purge_paths", JSON.stringify({ paths: touched.map((r) => `/${r.slug ?? ""}`) })]
+        ? [
+            "purge_paths",
+            JSON.stringify({ paths: touched.flatMap((r) => testSlugToPath(r.slug ?? "") ?? []) }),
+          ]
         : ["rebuild", JSON.stringify({ entity, ids: touched.map((r) => r.id) })],
     );
   await audit(

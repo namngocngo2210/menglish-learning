@@ -5,7 +5,7 @@ import { Loader2, PlusCircle } from "lucide-react";
 import { createRoomsClient } from "@/lib/rooms/client";
 import { availableCount, buildCreateInput, describeRoomError, parseTestInput, PLAYER_OPTIONS, validateCreate, type CreateDraft, type CreateErrors, type Difficulty, type RoomCatalog } from "@/lib/rooms/form";
 import type { Skill } from "@/lib/rooms/types";
-import { roomPath, SKILL_NAMES } from "@/lib/routes";
+import { roomPath, testSlugPath, SKILL_NAMES } from "@/lib/routes";
 import { ChoiceGroup, ctaCls, Field, FieldError, inputCls } from "./fields";
 
 const GRADE_OPTIONS = [6, 7, 8, 9].map(g => ({ value: g as 6 | 7 | 8 | 9, label: `Lớp ${g}` }));
@@ -19,7 +19,7 @@ export function CreateRoomForm({ catalog, initialSlug = null }: { catalog: RoomC
  const router = useRouter();
  const client = useRef(createRoomsClient()).current;
  const [d, setD] = useState<CreateDraft>({ name: "", kind: initialSlug ? "fixed" : "mix", slug: initialSlug, grade: 7, skills: ["ngu-phap"], topic: null, size: 20, difficulty: "balanced", time: null, maxPlayers: 10 });
- const [paste, setPaste] = useState(initialSlug ? `/${initialSlug}` : "");
+ const [paste, setPaste] = useState(initialSlug ? testSlugPath(initialSlug) : "");
  const [errors, setErrors] = useState<CreateErrors>({});
  const [serverError, setServerError] = useState<{ message: string; field: string } | null>(null);
  const [busy, setBusy] = useState(false);
@@ -31,7 +31,7 @@ export function CreateRoomForm({ catalog, initialSlug = null }: { catalog: RoomC
   const de = new URLSearchParams(window.location.search).get("de");
   const slug = de ? parseTestInput(de) : null;
   // eslint-disable-next-line react-hooks/set-state-in-effect -- one-off sync from the URL after hydration
-  if (slug && catalog.tests.some(t => t.slug === slug)) { setD(p => ({ ...p, kind: "fixed", slug })); setPaste(`/${slug}`); }
+  if (slug && catalog.tests.some(t => t.slug === slug)) { setD(p => ({ ...p, kind: "fixed", slug })); setPaste(testSlugPath(slug)); }
  }, [initialSlug, catalog.tests]);
 
  const topics = useMemo(() => d.skills.length === 1 ? catalog.topics.filter(t => t.grade === d.grade && t.skill === d.skills[0]) : [], [catalog.topics, d.grade, d.skills]);
@@ -73,11 +73,11 @@ export function CreateRoomForm({ catalog, initialSlug = null }: { catalog: RoomC
   </fieldset>
 
   {d.kind === "fixed" ? <div className="space-y-4">
-   <Field id="tao-test" label="Chọn đề" error={errors.test}>{a => <select {...a} className={inputCls} value={d.slug ?? ""} onChange={e => { set({ slug: e.target.value || null }); setPaste(e.target.value ? `/${e.target.value}` : ""); setErrors(p => ({ ...p, test: undefined })); }}>
+   <Field id="tao-test" label="Chọn đề" error={errors.test}>{a => <select {...a} className={inputCls} value={d.slug ?? ""} onChange={e => { set({ slug: e.target.value || null }); setPaste(e.target.value ? testSlugPath(e.target.value) : ""); setErrors(p => ({ ...p, test: undefined })); }}>
     <option value="">— Chọn một đề —</option>
     {([6, 7, 8, 9] as const).map(g => <optgroup key={g} label={`Lớp ${g}`}>{catalog.tests.filter(t => t.grade === g).map(t => <option key={t.slug} value={t.slug}>{t.title} ({t.size} câu)</option>)}</optgroup>)}
    </select>}</Field>
-   <Field id="tao-dan" label="Hoặc dán đường dẫn đề" hint="Ví dụ: /lop-7/ngu-phap/thi-hien-tai-don/de-1" error={pasteInvalid ? "Đường dẫn không phải một đề hợp lệ." : pasteUnknown ? "Không có đề này trong thư viện." : null}>{a => <input {...a} className={inputCls} inputMode="url" autoComplete="off" spellCheck={false} value={paste} onChange={e => { setPaste(e.target.value); const s = parseTestInput(e.target.value, window.location.host); set({ slug: s && catalog.tests.some(t => t.slug === s) ? s : null }); }}/>}</Field>
+   <Field id="tao-dan" label="Hoặc dán đường dẫn đề" hint="Ví dụ: /grade-7/grammar/present-simple/test-1" error={pasteInvalid ? "Đường dẫn không phải một đề hợp lệ." : pasteUnknown ? "Không có đề này trong thư viện." : null}>{a => <input {...a} className={inputCls} inputMode="url" autoComplete="off" spellCheck={false} value={paste} onChange={e => { setPaste(e.target.value); const s = parseTestInput(e.target.value, window.location.host); set({ slug: s && catalog.tests.some(t => t.slug === s) ? s : null }); }}/>}</Field>
    <div aria-live="polite" data-slot="test-preview" className="rounded-xl border-2 border-navy/20 bg-sky-soft p-3">
     {picked ? <p><span className="font-bold">{picked.title}</span><br/><span className="text-navy-soft">{picked.size} câu · Lớp {picked.grade}{picked.skill ? ` · ${SKILL_NAMES[picked.skill]}` : ""}</span></p> : <p className="text-navy-soft">Chưa chọn đề.</p>}
    </div>

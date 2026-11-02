@@ -24,7 +24,7 @@ export const TopicSummarySchema = z.strictObject({
 });
 export const TopicsResponseSchema = z.strictObject({ items: z.array(TopicSummarySchema) });
 
-/** Test slug as it appears in public URLs, e.g. lop-6/ngu-phap/thi-hien-tai-don/de-1 or thi-vao-lop-10/de-1. */
+/** Content test slug (internal id; public URLs are English, see docs/url-map.md), e.g. lop-6/ngu-phap/thi-hien-tai-don/de-1 or thi-vao-lop-10/de-1. */
 export const TestParamsSchema = z.strictObject({
   "*": z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*(\/[a-z0-9]+(-[a-z0-9]+)*){1,3}$/),
 });

@@ -31,7 +31,7 @@ it("orders tests numerically and estimates minutes at 0.7/question rounded to 5"
  expect([10, 22, 26, 3].map(estimateMinutes)).toEqual([5, 15, 20, 5]);
 });
 it("collapses breadcrumbs to the last two levels on mobile but keeps every level in the DOM", () => {
- const html = renderToStaticMarkup(createElement(Breadcrumbs, { items: [{ label: "Trang chủ", href: "/" }, { label: "Lớp 6", href: "/lop-6" }, { label: "Đọc hiểu", href: "/lop-6/doc-hieu" }, { label: "Đề dài", href: "/x" }, { label: "Đề 1" }] }));
+ const html = renderToStaticMarkup(createElement(Breadcrumbs, { items: [{ label: "Trang chủ", href: "/" }, { label: "Lớp 6", href: "/grade-6" }, { label: "Đọc hiểu", href: "/grade-6/reading" }, { label: "Đề dài", href: "/x" }, { label: "Đề 1" }] }));
  expect(html).toContain('aria-label="Lên Đọc hiểu"'); expect(html.match(/max-sm:hidden/g)).toHaveLength(3);
  for (const label of ["Trang chủ", "Lớp 6", "Đọc hiểu", "Đề dài", "Đề 1"]) expect(html).toContain(label);
 });
@@ -40,15 +40,15 @@ it("reserves a status line on every exam tile", () => {
  expect(html).toContain("min-h-5"); expect(html).toContain('data-progress-style="tile"'); expect(html).toContain("grid-cols-2");
 });
 it("skill page lists the two reading sets once; single-set skills list exams directly", async () => {
- const reading = renderToStaticMarkup(await SkillPage({ params: Promise.resolve({ grade: "lop-6", skill: "doc-hieu" }) }));
+ const reading = renderToStaticMarkup(await SkillPage({ params: Promise.resolve({ grade: "grade-6", skill: "reading" }) }));
  expect(reading).toContain("Đề dài"); expect(reading).toContain("Đề ngắn"); expect(reading).not.toContain("BeeJunior · Luyện tập tiếng Anh");
- expect(reading).toContain('href="/lop-6/doc-hieu/chung"');
- const vocab = renderToStaticMarkup(await SkillPage({ params: Promise.resolve({ grade: "lop-6", skill: "tu-vung" }) }));
- expect(vocab).toContain('href="/lop-6/tu-vung/tong-hop/de-1"'); expect(vocab).not.toContain('href="/lop-6/tu-vung/tong-hop"');
+ expect(reading).toContain('href="/grade-6/reading/long-tests"');
+ const vocab = renderToStaticMarkup(await SkillPage({ params: Promise.resolve({ grade: "grade-6", skill: "vocabulary" }) }));
+ expect(vocab).toContain('href="/grade-6/vocabulary/mixed/test-1"'); expect(vocab).not.toContain('href="/grade-6/vocabulary/mixed"');
 });
 it("test page: one H1, one context line, one Cách làm, no repeated intro", async () => {
  const slug = loadBundle().tests.find(t => t.slug === "lop-6/doc-hieu/chung/de-1")!.slug;
- const html = renderToStaticMarkup(await TestPage({ params: Promise.resolve({ grade: "lop-6", skill: "doc-hieu", topic: "chung", test: "de-1" }) }));
+ const html = renderToStaticMarkup(await TestPage({ params: Promise.resolve({ grade: "grade-6", skill: "reading", topic: "long-tests", test: "test-1" }) }));
  expect(slug).toBeTruthy(); expect(html.match(/<h1/g)).toHaveLength(1); expect(html).toContain("Đọc hiểu lớp 6 · Đề dài 1");
  expect(html.match(/Cách làm/g)).toHaveLength(1); expect(html).not.toContain("Bài luyện của em");
  expect(html).toContain("BreadcrumbList"); expect(html).toContain('"Quiz"'); expect(html).toContain('role="progressbar"');

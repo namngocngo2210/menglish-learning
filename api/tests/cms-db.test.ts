@@ -199,7 +199,7 @@ describe.skipIf(ADMIN_URL === undefined)("CMS API (database)", () => {
     const outbox = await pool.query(
       "SELECT kind, payload FROM outbox_events WHERE kind = 'purge_paths'",
     );
-    expect(outbox.rows[0].payload.paths).toEqual(["/lop-6/ngu-phap/thi/de-1"]);
+    expect(outbox.rows[0].payload.paths).toEqual(["/grade-6/grammar/thi/test-1"]);
   });
 
   it("lists questions with filters and keyset pagination", async () => {

@@ -3,7 +3,7 @@ import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { ContentBundleSchema } from "@/lib/content/types";
 import { loadBundle, getGrades, getSkills, getTopics, getTest, getTestsForTopic, getTestWithQuestions, getAllTestSlugs } from "@/lib/content/load";
-import { parseTestSlug, testPath } from "@/lib/routes";
+import { parseTestSlug, testPath, publicPathToTestSlug } from "@/lib/routes";
 const dirs:string[]=[];
 afterEach(()=>{ for(const dir of dirs.splice(0)) rmSync(dir,{recursive:true,force:true}); });
 function fixture() {
@@ -16,7 +16,7 @@ it("loads published bank tests with consistent routes and references",()=>{
  expect(new Set(bundle.questions.map(q=>q.id)).size).toBe(bundle.questions.length);
  for(const test of bundle.tests){
  if(test.kind!=="entrance10") {
-  const parts=parseTestSlug(test.slug)!; expect(testPath(parts.grade,parts.skill,parts.topic,parts.test).slice(1)).toBe(test.slug);
+  const parts=parseTestSlug(test.slug)!; expect(publicPathToTestSlug(testPath(parts.grade,parts.skill,parts.topic,parts.test))).toBe(test.slug);
   expect(getSkills(test.grade)).toContain(test.skill); expect(getTopics(test.grade,parts.skill).some(t=>t.slug===test.topicSlug)).toBe(true);
   expect(getTestsForTopic(test.grade,parts.skill,parts.topic)).toContainEqual(test);
  }

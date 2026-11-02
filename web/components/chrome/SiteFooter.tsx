@@ -10,7 +10,7 @@ import { NavLink } from "./NavLink";
 
 const linkClass = "inline-flex min-h-11 items-center rounded-xl py-2 text-surface! hover:decoration-2 focus-visible:outline-brand! aria-[current=page]:font-bold";
 export function SiteFooter() {
- const info = [[ENTRANCE_PATH, "Thi vào lớp 10"], ...(roomsEnabled() ? [[roomsLandingPath(), "Luyện tập nhóm"]] : []), ["/nguon-du-lieu", "Nguồn dữ liệu"], [aboutPath(), "Giới thiệu"], [privacyPath(), "Bảo mật"], ...(accountsEnabled() ? [[termsPath(), "Điều khoản"]] : []), [contactPath(), "Liên hệ"]];
+ const info = [[ENTRANCE_PATH, "Thi vào lớp 10"], ...(roomsEnabled() ? [[roomsLandingPath(), "Luyện tập nhóm"]] : []), ["/data-sources", "Nguồn dữ liệu"], [aboutPath(), "Giới thiệu"], [privacyPath(), "Bảo mật"], ...(accountsEnabled() ? [[termsPath(), "Điều khoản"]] : []), [contactPath(), "Liên hệ"]];
  return <footer className="bg-navy text-surface">
   <div className="mx-auto max-w-6xl px-5 py-6 sm:px-8">
    <nav aria-label="Thông tin ở chân trang"><ul className="flex flex-wrap gap-x-5">{info.map(([href, label]) => <li key={href}><NavLink href={href} className={linkClass}>{label}</NavLink></li>)}</ul></nav>

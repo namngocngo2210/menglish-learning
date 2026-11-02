@@ -7,9 +7,9 @@ afterEach(() => vi.unstubAllEnvs());
 describe("SEO metadata", () => {
  it("uses absolute canonical and social URLs", () => {
   vi.stubEnv("SEO_NOINDEX", undefined);
-  const metadata = buildMetadata({title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",path:"/lop-6"});
-  expect(absoluteUrl("/lop-6")).toBe(`${SITE.baseUrl.replace(/\/+$/, "")}/lop-6`);
-  expect(metadata).toMatchObject({title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",alternates:{canonical:absoluteUrl("/lop-6")},openGraph:{title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",url:absoluteUrl("/lop-6"),siteName:SITE.name,locale:"vi_VN",type:"website"},twitter:{card:"summary_large_image",title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6"},robots:{index:true,follow:true}});
+  const metadata = buildMetadata({title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",path:"/grade-6"});
+  expect(absoluteUrl("/grade-6")).toBe(`${SITE.baseUrl.replace(/\/+$/, "")}/grade-6`);
+  expect(metadata).toMatchObject({title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",alternates:{canonical:absoluteUrl("/grade-6")},openGraph:{title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6",url:absoluteUrl("/grade-6"),siteName:SITE.name,locale:"vi_VN",type:"website"},twitter:{card:"summary_large_image",title:"Tiếng Anh lớp 6",description:"Luyện tập lớp 6"},robots:{index:true,follow:true}});
   expect(buildMetadata({title:"Bài tập",description:"Mẫu",path:"/",type:"article"}).openGraph).toMatchObject({type:"article"});
  });
  it("disables indexing only for the exact opt-in switch", () => {
@@ -22,10 +22,10 @@ describe("SEO metadata", () => {
 });
 describe("JSON-LD", () => {
  it("builds absolute, ordered breadcrumbs including the current page", () => {
-  const data = breadcrumbJsonLd([{name:"Trang chủ",path:"/"},{name:"Lớp 6",path:"/lop-6"}]);
+  const data = breadcrumbJsonLd([{name:"Trang chủ",path:"/"},{name:"Lớp 6",path:"/grade-6"}]);
   expect(data["@context"]).toBe("https://schema.org");
   expect(data["@type"]).toBe("BreadcrumbList");
-  expect(data.itemListElement).toEqual([{ "@type":"ListItem",position:1,name:"Trang chủ",item:absoluteUrl("/")},{"@type":"ListItem",position:2,name:"Lớp 6",item:absoluteUrl("/lop-6")}]);
+  expect(data.itemListElement).toEqual([{ "@type":"ListItem",position:1,name:"Trang chủ",item:absoluteUrl("/")},{"@type":"ListItem",position:2,name:"Lớp 6",item:absoluteUrl("/grade-6")}]);
   expect(breadcrumbJsonLd([{name:"Trang chủ",path:"/"},{name:"Hiện tại"}]).itemListElement[1].item).toBeUndefined();
  });
  it("describes a free Vietnamese learning quiz using schema properties", () => {

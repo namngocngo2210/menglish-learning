@@ -203,9 +203,9 @@ export function accountsPlugin(deps: AccountsDeps) {
       const token = await tx((client) =>
         issueToken(client, userId, "verify_email", VERIFY_TTL_MS, email),
       );
-      sendMail(request, verifyEmailMessage(email, `${deps.origin}/xac-minh-email?token=${token}`));
+      sendMail(request, verifyEmailMessage(email, `${deps.origin}/verify-email?token=${token}`));
     } else if (ownerId !== userId)
-      sendMail(request, existingAccountMessage(email, `${deps.origin}/dat-lai-mat-khau`));
+      sendMail(request, existingAccountMessage(email, `${deps.origin}/reset-password`));
   }
 
   async function register(request: FastifyRequest, reply: FastifyReply): Promise<object> {
@@ -333,7 +333,7 @@ export function accountsPlugin(deps: AccountsDeps) {
       );
       sendMail(
         request,
-        resetPasswordMessage(email, `${deps.origin}/dat-lai-mat-khau?token=${token}`),
+        resetPasswordMessage(email, `${deps.origin}/reset-password?token=${token}`),
       );
       await auth.audit("user.password_reset_requested", request, user.id);
     }

@@ -10,7 +10,7 @@ import { getSkills } from "@/lib/content/load";
 import { GRADES, gradePath, skillPath } from "@/lib/routes";
 import { SITE } from "@/lib/site-config";
 
-vi.mock("next/navigation", () => ({ usePathname: () => "/lop-6" }));
+vi.mock("next/navigation", () => ({ usePathname: () => "/grade-6" }));
 
 it("renders one closed 'Chọn lớp' popover with every grade link and no mobile menu or grade pills", () => {
  const html = renderToStaticMarkup(createElement(SiteHeader));
@@ -37,7 +37,7 @@ it("renders a compact footer with only known public routes and every grade/skill
   expect(links).toContain(gradePath(grade));
   for (const skill of getSkills(grade)) expect(links).toContain(skillPath(grade, skill));
  }
- for (const href of ["/gioi-thieu", "/chinh-sach-bao-mat", "/lien-he"]) expect(links).toContain(href);
+ for (const href of ["/about", "/privacy-policy", "/contact"]) expect(links).toContain(href);
  expect(html).toContain(SITE.tagline);
  expect(html).toContain(`© ${new Date().getFullYear()} ${SITE.name}.`);
 });

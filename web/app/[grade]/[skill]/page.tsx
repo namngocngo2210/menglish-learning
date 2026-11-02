@@ -5,19 +5,19 @@ import { fitTitle, buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, PageTitle, SetCardList, TestTileList } from "@/components/ui-kit";
 import { getSkills, getTopics, getTestsForTopic, estimateMinutes } from "@/lib/content/load";
-import { skillPath, parseGradeSlug, parseSkill, parseTestSlug, homePath, gradePath, topicPath, testPath, SKILL_NAMES } from "@/lib/routes";
+import { skillPath, parseGradeSlug, parseSkillUrl, parseTestSlug, homePath, gradePath, topicPath, testPath, SKILL_NAMES } from "@/lib/routes";
 import { FaqSection } from "@/components/faq-section";
 import { buildSkillFaq, skillStats, SKILL_INTROS } from "@/lib/seo-content";
 export const dynamic = "force-dynamic";
 export async function generateMetadata({ params }: { params: Promise<{ grade: string; skill: string }> }) {
  await ensureContent();
- const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
+ const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkillUrl(p.skill);
  if (!grade || !skill || !getSkills(grade).includes(skill)) return {};
  return buildMetadata({ title: fitTitle(`${SKILL_NAMES[skill]} lớp ${grade}`, ": bài tập có đáp án"), description: `Luyện ${SKILL_NAMES[skill].toLowerCase()} tiếng Anh lớp ${grade}: ${skillStats(grade, skill).tests} đề, ${skillStats(grade, skill).questions} câu hỏi${skillStats(grade, skill).topics > 1 ? ` theo ${skillStats(grade, skill).topics} chủ đề` : ""}, có đáp án và giải thích tiếng Việt.`, path: skillPath(grade, skill) });
 }
 export default async function SkillPage({ params }: { params: Promise<{ grade: string; skill: string }> }) {
  await ensureContent();
- const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
+ const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkillUrl(p.skill);
  if (!grade || !skill || !getSkills(grade).includes(skill)) notFound();
  const stats = skillStats(grade, skill); const topics = getTopics(grade, skill);
  const tile = (topicSlug: string) => getTestsForTopic(grade, skill, topicSlug).map(test => ({ label: `Đề ${parseTestSlug(test.slug)!.test.replace("de-", "")}`, meta: `${test.questionIds.length} câu · ~${estimateMinutes(test.questionIds.length)} phút`, href: testPath(grade, skill, topicSlug, parseTestSlug(test.slug)!.test), progressKey: test.slug }));

@@ -11,7 +11,7 @@ import {
 
 describe("entrance routes", () => {
   it("builds numbered entrance paths when the number is a positive safe integer", () => {
-    expect(entranceTestPath(3)).toBe(`${ENTRANCE_PATH}/de-3`);
+    expect(entranceTestPath(3)).toBe(`${ENTRANCE_PATH}/test-3`);
     expect(() => entranceTestPath(0)).toThrow();
     expect(() => entranceTestPath(1.5)).toThrow();
   });

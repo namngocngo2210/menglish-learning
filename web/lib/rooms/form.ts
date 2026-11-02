@@ -1,7 +1,7 @@
 import { RoomsApiError } from "./client";
 import { normalizeRoomCode } from "./code";
 import type { CreateRoomInput, Skill, TestSpec } from "./types";
-import { parseEntranceSlug, parseTestSlug } from "@/lib/routes";
+import { parseEntranceSlug, parseTestSlug, publicPathToTestSlug } from "@/lib/routes";
 
 export interface CatalogTest { slug: string; title: string; grade: number; skill: Skill | null; size: number }
 export interface CatalogTopic { grade: number; skill: Skill; slug: string; name: string }
@@ -33,7 +33,8 @@ export function parseTestInput(input: string, siteHost?: string): string | null 
   } catch { return null; }
  }
  const slug = text.replace(/[?#].*$/, "").replace(/^\/+|\/+$/g, "");
- return parseTestSlug(slug) || parseEntranceSlug(slug) ? slug : null;
+ const internal = publicPathToTestSlug(`/${slug}`) ?? slug;
+ return parseTestSlug(internal) || parseEntranceSlug(internal) ? internal : null;
 }
 
 /** Display name rules mirror the server (2-20 chars); blocklist/uniqueness are server-side only. */
@@ -103,9 +104,9 @@ export function checkCodeInput(raw: string): { code: string } | { error: string 
  const code = normalizeRoomCode(raw);
  return code ? { code } : { error: "Mã gồm 6 ký tự (chữ và số, không có 0, 1, I, L, O). Hãy kiểm tra lại." };
 }
-/** Accepts a code or a full room link, e.g. host/luyen-tap-nhom/phong/K7M2QX. */
+/** Accepts a code or a full room link, e.g. host/group-practice/room/K7M2QX. */
 export function extractRoomCode(raw: string): string {
- const m = /\/phong\/([^/?#\s]+)/i.exec(raw) ?? /[?&]ma=([^&#\s]+)/i.exec(raw);
+ const m = /\/(?:room|phong)\/([^/?#\s]+)/i.exec(raw) ?? /[?&]ma=([^&#\s]+)/i.exec(raw);
  return m ? decodeURIComponent(m[1]) : raw;
 }
 

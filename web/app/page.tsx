@@ -18,7 +18,7 @@ export default async function Home() {
  await ensureContent();
  const grades = getGrades();
  const quick = [
-  { href: "/luyen-nhanh", Icon: Shuffle, label: "Luyện nhanh 10 phút", hint: "Đề trộn ngẫu nhiên", hot: true },
+  { href: "/quick-practice", Icon: Shuffle, label: "Luyện nhanh 10 phút", hint: "Đề trộn ngẫu nhiên", hot: true },
   { href: ENTRANCE_PATH, Icon: GraduationCap, label: "Thi vào lớp 10", hint: "Đề thi và đề luyện", hot: false },
   ...(roomsEnabled() ? [{ href: roomsLandingPath(), Icon: Users, label: "Luyện tập nhóm", hint: "Tạo phòng, gửi mã cho bạn", hot: false }] : []),
  ];

@@ -17,7 +17,7 @@ if (a === "--tests") {
         console.log(
           [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)]
             .map((m) => new URL(m[1]).pathname)
-            .filter((p) => /\/de-\d+$/.test(p))
+            .filter((p) => /\/test-\d+$/.test(p))
             .slice(0, 2)
             .join(" "),
         ),

@@ -1,6 +1,4 @@
 import type { NextConfig } from "next";
-import { readFileSync } from "node:fs";
-import { join } from "node:path";
 import { accountsEnabled } from "./lib/account/flag";
 import { ACCOUNT_PRIVATE_PATHS } from "./lib/account/paths";
 
@@ -22,16 +20,8 @@ const config: NextConfig = {
   compress: roomsDevProxy() === null,
   transpilePackages: ["@bj/core", "@bj/data", "@bj/db-types"],
   serverExternalPackages: ["pg"],
-  async redirects() {
-    let raw: string;
-    try { raw = readFileSync(join(process.cwd(), "content/legacy-redirects.json"), "utf8"); }
-    catch (error) {
-      if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
-      throw error;
-    }
-    const redirects: { source: string; destination: string }[] = JSON.parse(raw);
-    return redirects.map(({ source, destination }) => ({ source, destination, permanent: true }));
-  },
+  // Redirects live in proxy.ts (single-hop 301, trailing slash folded in); the built-in 308 pass would add a hop.
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     const target = roomsDevProxy();
     return target ? [{ source: "/rt/:path*", destination: `${target}/rt/:path*` }] : [];
@@ -47,8 +37,8 @@ const config: NextConfig = {
     const account = accountsEnabled() ? ACCOUNT_PRIVATE_PATHS.map(source => ({ source, headers: rooms })) : [];
     return [
       ...account,
-      { source: "/luyen-tap-nhom/phong/:path*", headers: rooms },
-      { source: "/luyen-tap-nhom/vao", headers: rooms },
+      { source: "/group-practice/room/:path*", headers: rooms },
+      { source: "/group-practice/join", headers: rooms },
     ];
   },
   outputFileTracingIncludes: { "/*": ["./content/tests/*.json"] },

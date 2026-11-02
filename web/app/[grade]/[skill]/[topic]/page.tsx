@@ -6,7 +6,7 @@ import { fitTitle, buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, PageTitle, TestTileList, ChipList } from "@/components/ui-kit";
 import { getGrades, getTopics, getTestsForTopic, loadBundle, estimateMinutes } from "@/lib/content/load";
-import { topicPath, gradeSlug, parseGradeSlug, parseSkill, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES, type Grade, type Skill } from "@/lib/routes";
+import { topicPath, parseTopicSegment, skillSegment, topicSegment, gradeSlug, parseGradeSlug, parseSkillUrl, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES, type Grade, type Skill } from "@/lib/routes";
 import { FaqSection } from "@/components/faq-section";
 import { buildTopicFaq } from "@/lib/seo-content";
 import { getTopicDef } from "@/lib/topics/registry";
@@ -15,16 +15,16 @@ export const dynamic = "force-dynamic";
 const topicHeading = (skill: Skill, grade: Grade, name: string) => skill === "doc-hieu" ? `${SKILL_NAMES[skill]} lớp ${grade}: ${name.toLowerCase()}` : `${name} lớp ${grade}`;
 export async function generateMetadata({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
  await ensureContent();
- const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
+ const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkillUrl(p.skill);
  if (!grade || !skill) return {};
- const topic = getTopics(grade, skill).find(t => t.slug === p.topic); if (!topic) return {};
+ const topic = getTopics(grade, skill).find(t => t.slug === parseTopicSegment(skill, p.topic)); if (!topic) return {};
  return buildMetadata({ title: fitTitle(topicHeading(skill, grade, topic.name), ": bài tập có đáp án", ": bài tập"), description: `${getTopicDef(skill, topic.slug)?.summary ?? topic.description} Bài tập ${SKILL_NAMES[skill].toLowerCase()} lớp ${grade} có đáp án và giải thích.`, path: topicPath(grade, skill, topic.slug) });
 }
 export default async function TopicPage({ params }: { params: Promise<{ grade: string; skill: string; topic: string }> }) {
  await ensureContent();
- const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
+ const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkillUrl(p.skill);
  if (!grade || !skill) notFound();
- const topic = getTopics(grade,skill).find(t=>t.slug===p.topic); if (!topic) notFound();
+ const topic = getTopics(grade,skill).find(t=>t.slug===parseTopicSegment(skill, p.topic)); if (!topic) notFound();
  const def = getTopicDef(skill, topic.slug);
  const tests = getTestsForTopic(grade, skill, topic.slug);
  const questionCount = loadBundle().questions.filter(q => q.grade === grade && q.skill === skill && (topic.slug === "tong-hop" || q.topicSlug === topic.slug)).length;
@@ -38,7 +38,7 @@ export default async function TopicPage({ params }: { params: Promise<{ grade: s
    {def.examples && <><h2 className="text-xl font-bold">Ví dụ</h2><ul className="list-disc space-y-2 pl-6">{def.examples.map(example => <li key={example.en}><span lang="en">{example.en}</span><br/>{example.vi}</li>)}</ul></>}
    {def.tips && <details className="rounded-xl border border-navy-soft/20 bg-surface p-4"><summary className="flex min-h-11 cursor-pointer items-center"><h2 className="text-lg font-bold">Lưu ý khi làm bài</h2></summary><ul className="mt-3 list-disc space-y-2 pl-6">{def.tips.map(tip => <li key={tip}>{tip}</li>)}</ul></details>}
   </section>}
-  <RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}>
+  <RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skillSegment(skill)}/${topicSegment(skill, topic.slug)}`} afterResult={<AdSlot slot="footer"/>}>
    {tests.length ? <TestTileList items={tests.map(test => ({ label: `Đề ${parseTestSlug(test.slug)!.test.replace("de-", "")}`, meta: `${test.questionIds.length} câu · ~${estimateMinutes(test.questionIds.length)} phút`, href: testPath(grade, skill, topic.slug, parseTestSlug(test.slug)!.test), progressKey: test.slug }))}/> : <p>Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé.</p>}
   </RandomQuiz>
   <section aria-labelledby="bo-de-khac" className="space-y-3"><h2 id="bo-de-khac" className="text-lg font-bold">Bộ đề khác</h2>

@@ -1,6 +1,7 @@
 // Public entry of @bj/core. Import from "@bj/core" only; never from deep paths.
 export * from "./slug";
 export * from "./routes";
+export * from "./url-map";
 export * from "./schemas";
 export * from "./public-view";
 export * from "./scoring";

@@ -1,17 +1,18 @@
+import { publicPathToTestSlug } from "@/lib/routes";
 import { testParams, entranceParams } from "@/lib/content/params";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it, vi } from "vitest";
 import * as fixed from "@/app/[grade]/[skill]/[topic]/[test]/page";
-import * as entrance from "@/app/thi-vao-lop-10/[test]/page";
-import Credits from "@/app/nguon-du-lieu/page";
+import * as entrance from "@/app/grade-10-entrance/[test]/page";
+import Credits from "@/app/data-sources/page";
 import { getAllTestSlugs, loadBundle } from "@/lib/content/load";
 import { getQuizPool } from "@/lib/content/pool";
 import { buildRandomQuiz } from "@/lib/random-quiz";
 import { AdSlot } from "@/components/ads/AdSlot";
 vi.mock("next/navigation", () => ({ usePathname: () => "/", notFound: () => { throw new Error("Not found"); } }));
 it("generates exactly all 370+ bank test routes across both route families", () => {
- const paths = [...testParams().map(p => `${p.grade}/${p.skill}/${p.topic}/${p.test}`), ...entranceParams().map(p => `thi-vao-lop-10/${p.test}`)];
+ const paths = [...testParams().map(p => publicPathToTestSlug(`/${p.grade}/${p.skill}/${p.topic}/${p.test}`)!), ...entranceParams().map(p => publicPathToTestSlug(`/grade-10-entrance/${p.test}`)!)];
  expect(paths.sort()).toEqual(getAllTestSlugs().sort()); expect(paths.length).toBeGreaterThanOrEqual(300);
  expect(fixed.dynamic).toBe("force-dynamic"); expect(entrance.dynamic).toBe("force-dynamic");
 });

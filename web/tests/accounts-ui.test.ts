@@ -78,12 +78,12 @@ describe("pages and flag off", () => {
   expect(() => AccountPage({ title: "Đăng nhập", children: null })).not.toThrow();
  });
  it("every account page is noindex", () => {
-  const m = privateMetadata("Đăng nhập", "/dang-nhap", "x");
+  const m = privateMetadata("Đăng nhập", "/log-in", "x");
   expect(m.robots).toEqual({ index: false, follow: false });
  });
  it("private paths get noindex, no-referrer, no-store headers only when enabled and are not in the sitemap", async () => {
   const sources = async () => (await config.headers!()).map(r => r.source);
-  expect(await sources()).not.toContain("/dang-nhap");
+  expect(await sources()).not.toContain("/log-in");
   vi.stubEnv("ACCOUNTS_ENABLED", "true");
   const rules = await config.headers!();
   for (const path of ACCOUNT_PRIVATE_PATHS) {
@@ -95,15 +95,15 @@ describe("pages and flag off", () => {
    expect(h["Cache-Control"]).toBe("no-store");
   }
   const urls = (await sitemap()).map(e => e.url);
-  for (const p of [...ACCOUNT_PRIVATE_PATHS, "/xoa-du-lieu"]) expect(urls.some(u => u.endsWith(p))).toBe(false);
+  for (const p of [...ACCOUNT_PRIVATE_PATHS, "/delete-data"]) expect(urls.some(u => u.endsWith(p))).toBe(false);
  });
  it("header and footer show nothing account-related when off", () => {
   const off = html(createElement(SiteHeader)) + html(createElement(SiteFooter));
-  expect(off).not.toMatch(/dang-nhap|Điều khoản|cookie chức năng/);
+  expect(off).not.toMatch(/log-in|Điều khoản|cookie chức năng/);
   vi.stubEnv("ACCOUNTS_ENABLED", "true");
   const on = html(createElement(SiteHeader)) + html(createElement(SiteFooter));
-  expect(on).toContain('href="/dang-nhap"');
-  expect(on).toContain('href="/dieu-khoan"');
+  expect(on).toContain('href="/log-in"');
+  expect(on).toContain('href="/terms"');
   expect(on).toContain("cookie chức năng");
  });
 });
@@ -132,11 +132,11 @@ describe("consent boxes and legal drafts", () => {
 describe("draft privacy page and progress invite", () => {
  it("privacy page is noindex only while the draft is shown (flag ON), and leaves the sitemap", async () => {
   vi.resetModules(); vi.stubEnv("ACCOUNTS_ENABLED", "true");
-  const on = (await import("@/app/chinh-sach-bao-mat/page")).metadata as { robots?: { index?: boolean } };
+  const on = (await import("@/app/privacy-policy/page")).metadata as { robots?: { index?: boolean } };
   expect(on.robots?.index).toBe(false);
-  expect((await (await import("@/app/sitemap")).default()).some(e => e.url.endsWith("/chinh-sach-bao-mat"))).toBe(false);
+  expect((await (await import("@/app/sitemap")).default()).some(e => e.url.endsWith("/privacy-policy"))).toBe(false);
   vi.resetModules(); vi.stubEnv("ACCOUNTS_ENABLED", undefined);
-  const off = (await import("@/app/chinh-sach-bao-mat/page")).metadata as { robots?: unknown };
+  const off = (await import("@/app/privacy-policy/page")).metadata as { robots?: unknown };
   expect((off.robots as { index: boolean }).index).toBe(true);
  });
  it("signed-out visitors see only the plain invitation (the import prompt needs a session and local results)", async () => {

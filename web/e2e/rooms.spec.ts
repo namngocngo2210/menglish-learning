@@ -17,7 +17,7 @@ async function createRoom(page: Page, name: string, max: "2 (đấu đôi)" | "5
   await page.getByText(max, { exact: true }).click();
   await expect(page.getByRole("button", { name: "Tạo phòng" })).toBeEnabled();
   await page.getByRole("button", { name: "Tạo phòng" }).click();
-  await page.waitForURL(/\/luyen-tap-nhom\/phong\/[A-Z0-9]{6}$/);
+  await page.waitForURL(/\/group-practice\/room\/[A-Z0-9]{6}$/);
   await expect(page.locator("[data-slot=lobby]")).toBeVisible();
   return page.url().split("/").pop()!;
 }
@@ -27,7 +27,7 @@ async function joinByCode(page: Page, code: string, name: string, viaLanding: bo
     await page.goto(ROOMS);
     await page.getByLabel("Mã phòng hoặc đường dẫn").first().fill(code.toLowerCase());
     await page.getByRole("button", { name: "Vào phòng" }).first().click();
-  } else await page.goto(`${ROOMS}/phong/${code}`);
+  } else await page.goto(`${ROOMS}/room/${code}`);
   await page.locator("[data-slot=join]").waitFor();
   await page.getByLabel("Tên hiển thị").fill(name);
   await page.getByRole("button", { name: "Vào phòng" }).click();

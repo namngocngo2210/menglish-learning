@@ -62,7 +62,7 @@ async function pathList() {
   const sitemap = (await request("/sitemap.xml")).body.toString("utf8");
   const all = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
   const tests = all.filter(
-    (p) => /\/de-\d+$|\/thi-vao-lop-10\/[a-z0-9-]+$/.test(p) && p !== "/thi-vao-lop-10",
+    (p) => /\/test-\d+$|\/grade-10-entrance\/[a-z0-9-]+$/.test(p) && p !== "/grade-10-entrance",
   );
   // Deterministic spread: every k-th test page, plus the list pages.
   const n = Number(values.sample ?? 80);

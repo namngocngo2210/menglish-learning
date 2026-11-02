@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SITE } from "@/lib/site-config";
 import { getGrades, getSkills, getTopics, getTestsForTopic, getEntranceTests } from "@/lib/content/load";
-import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath, roomsLandingPath } from "@/lib/routes";
+import { gradePath, skillPath, topicPath, aboutPath, privacyPath, contactPath, roomsLandingPath, testSlugPath } from "@/lib/routes";
 import { accountsEnabled } from "@/lib/account/flag";
 import { roomsEnabled } from "@/lib/rooms/flag";
 
@@ -48,7 +48,7 @@ export function getAllRoutes(): PublicRoute[] {
     const tests = getTestsForTopic(grade, skill, topic.slug);
     const testDates = tests.map(t => new Date(t.publishedAt));
     skillRoutes.push({ path: topicPath(grade, skill, topic.slug), lastModified: newest(testDates), changeFrequency: "weekly", priority: 0.6 });
-    for (const test of tests) skillRoutes.push({ path: `/${test.slug}`, lastModified: new Date(test.publishedAt), changeFrequency: "monthly", priority: 0.5 });
+    for (const test of tests) skillRoutes.push({ path: testSlugPath(test.slug), lastModified: new Date(test.publishedAt), changeFrequency: "monthly", priority: 0.5 });
     skillDates.push(...testDates);
    }
    gradeRoutes.push({ path: skillPath(grade, skill), lastModified: newest(skillDates), changeFrequency: "weekly", priority: 0.7 }, ...skillRoutes);
@@ -60,13 +60,13 @@ export function getAllRoutes(): PublicRoute[] {
  const entrance = getEntranceTests();
  const entranceDates = entrance.map(t => new Date(t.publishedAt));
  all.push(...entranceDates);
- routes.push({ path: "/luyen-nhanh", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.6 });
- routes.push({ path: "/thi-vao-lop-10", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.8 });
- routes.push(...entrance.map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
+ routes.push({ path: "/quick-practice", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.6 });
+ routes.push({ path: "/grade-10-entrance", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.8 });
+ routes.push(...entrance.map(t => ({ path: testSlugPath(t.slug), lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
  routes.unshift({ path: "/", lastModified: newest(all), changeFrequency: "weekly", priority: 1 });
- routes.push({ path: "/nguon-du-lieu", lastModified: newest(all), changeFrequency: "monthly", priority: 0.3 });
+ routes.push({ path: "/data-sources", lastModified: newest(all), changeFrequency: "monthly", priority: 0.3 });
  routes.push(...[aboutPath(), ...(accountsEnabled() ? [] : [privacyPath()]), contactPath()].map(path => ({ path, lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "yearly" as const, priority: 0.3 })));
- // Room URLs (/luyen-tap-nhom/phong/*, /vao) are never listed; the landing only when the feature is on.
+ // Room URLs (/group-practice/room/*, /join) are never listed; the landing only when the feature is on.
  if (roomsEnabled()) routes.push({ path: roomsLandingPath(), lastModified: STATIC_PAGES_LASTMOD, changeFrequency: "monthly", priority: 0.6 });
  return routes;
 }

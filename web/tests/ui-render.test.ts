@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, expect, it, vi } from "vitest";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { Breadcrumbs, LinkCardList, PageShell } from "@/components/ui-kit";
-import { GRADES, gradePath, skillPath } from "@/lib/routes";
+import { skillSegment, topicSegment, testSegment, GRADES, gradePath, skillPath } from "@/lib/routes";
 import { getGrades, getSkills } from "@/lib/content/load";
 import { SITE } from "@/lib/site-config";
 
@@ -18,9 +18,9 @@ it("renders shared navigation and the accessible content destination without cli
  for (const grade of GRADES) expect(html).toContain(`href="${gradePath(grade)}"`);
 });
 it("marks the final breadcrumb as current and provides an empty card state", () => {
- const html = renderToStaticMarkup(createElement(Breadcrumbs,{items:[{label:"Trang chủ",href:"/"},{label:"Lớp 6",href:"/lop-6"}]}));
+ const html = renderToStaticMarkup(createElement(Breadcrumbs,{items:[{label:"Trang chủ",href:"/"},{label:"Lớp 6",href:"/grade-6"}]}));
  expect(html).toContain('aria-current="page"');
- expect(html).not.toContain('href="/lop-6"');
+ expect(html).not.toContain('href="/grade-6"');
  expect(renderToStaticMarkup(createElement(LinkCardList,{items:[],emptyMessage:"Chưa có chủ đề."}))).toContain("Chưa có chủ đề.");
 });
 it("reserves an aria-hidden ad placeholder if configuration is incomplete", () => {
@@ -48,7 +48,7 @@ it("keeps source and license provenance off test pages", async () => {
  const { default: TestPage } = await import("@/app/[grade]/[skill]/[topic]/[test]/page");
  const slug = getAllTestSlugs().find(slug => parseTestSlug(slug))!;
  const route = parseTestSlug(slug)!; const test = getTestWithQuestions(slug)!;
- const page = await TestPage({ params: Promise.resolve({ grade: gradeSlug(route.grade), skill: route.skill, topic: route.topic, test: route.test }) });
+ const page = await TestPage({ params: Promise.resolve({ grade: gradeSlug(route.grade), skill: skillSegment(route.skill), topic: topicSegment(route.skill, route.topic), test: testSegment(route.test) }) });
  const { Quiz } = await import("@/components/quiz/Quiz");
  let questionPropsChecked = false;
  function checkQuizProps(node: ReactNode) {
@@ -90,19 +90,19 @@ it("renders the home mascot outside questions and publishes BeeJunior organizati
  expect(html).toContain('alt="Chú ong BeeJunior đeo kính cầm bút và sách"');
  expect(html).toContain('"@type":"Organization","name":"BeeJunior"');
  expect(html.match(/<h1[ >]/g)).toHaveLength(1);
- expect(html).toContain('href="/thi-vao-lop-10"');
+ expect(html).toContain('href="/grade-10-entrance"');
 });
 
 it("renders the skill-first home: one grade picker, current grades only, every grade and skill link reachable", async () => {
  const { default: Home } = await import("@/app/page");
  const html = renderToStaticMarkup(await Home());
- const links = [...html.matchAll(/href="(\/lop-[^"]+)"/g)].map(m => m[1]);
+ const links = [...html.matchAll(/href="(\/grade-[6-9][^"]*)"/g)].map(m => m[1]);
  for (const grade of getGrades()) {
   expect(links).toContain(gradePath(grade));
   for (const skill of getSkills(grade)) expect(links).toContain(skillPath(grade, skill));
  }
  expect(links.length).toBeLessThanOrEqual(29);
- expect(html).toContain('href="/luyen-nhanh"');
+ expect(html).toContain('href="/quick-practice"');
  expect(html.match(/id="chon-lop"/g)).toHaveLength(1);
  expect(html).not.toMatch(/sắp có|Lớp [1-5]\b/);
  expect(html).not.toContain("mobile-navigation");
@@ -112,7 +112,7 @@ it("shows the home group-practice CTA only when ROOMS_ENABLED is on", async () =
  const { default: Home } = await import("@/app/page");
  vi.stubEnv("ROOMS_ENABLED", "true");
  const on = renderToStaticMarkup(await Home());
- expect(on).toContain('href="/luyen-tap-nhom"');
+ expect(on).toContain('href="/group-practice"');
  vi.stubEnv("ROOMS_ENABLED", "false");
  expect(renderToStaticMarkup(await Home())).not.toContain("luyen-tap-nhom");
  vi.unstubAllEnvs();

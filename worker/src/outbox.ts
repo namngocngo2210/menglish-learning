@@ -48,8 +48,8 @@ async function purgeFor(
       `SELECT DISTINCT grade FROM questions WHERE ${column} = ANY($1::bigint[])`,
       [ids.map(String)],
     );
-    const prefixes = ["/pool", ...rows.map((r) => `/lop-${String(r.grade)}`)];
-    if (rows.some((r) => r.grade === 9)) prefixes.push("/thi-vao-lop-10");
+    const prefixes = ["/pool", ...rows.map((r) => `/grade-${String(r.grade)}`)];
+    if (rows.some((r) => r.grade === 9)) prefixes.push("/grade-10-entrance");
     return { paths: ALWAYS, prefixes };
   }
   return undefined;

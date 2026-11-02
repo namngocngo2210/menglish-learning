@@ -37,14 +37,14 @@ it("builds valid FAQPage data for every grade, skill and topic page", () => {
 it("rejects empty FAQ data instead of emitting an invalid FAQPage", () => { expect(() => faqJsonLd([])).toThrow(); });
 
 it("keeps breadcrumb positions sequential with absolute URLs", () => {
- const ld = breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Lớp 6", path: "/lop-6" }, { name: "Ngữ pháp" }]) as { itemListElement: { position: number; name: string; item?: string }[] };
+ const ld = breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Lớp 6", path: "/grade-6" }, { name: "Ngữ pháp" }]) as { itemListElement: { position: number; name: string; item?: string }[] };
  expect(ld.itemListElement.map(i => i.position)).toEqual([1, 2, 3]);
  expect(ld.itemListElement[0].item).toBe(absoluteUrl("/"));
  expect(ld.itemListElement[2].item).toBeUndefined();
 });
 
 it("emits complete Quiz, Organization and WebSite data", () => {
- const quiz = quizJsonLd({ name: "Đề 1", description: "Mô tả", path: "/lop-6/ngu-phap/x/de-1", grade: 6, skillName: "Ngữ pháp", topicName: "X", questionCount: 10, datePublished: "2026-10-31T00:00:00.000Z" }) as Record<string, unknown>;
+ const quiz = quizJsonLd({ name: "Đề 1", description: "Mô tả", path: "/grade-6/grammar/x/test-1", grade: 6, skillName: "Ngữ pháp", topicName: "X", questionCount: 10, datePublished: "2026-10-31T00:00:00.000Z" }) as Record<string, unknown>;
  for (const key of ["name", "url", "educationalLevel", "teaches", "inLanguage", "datePublished"]) expect(quiz[key]).toBeTruthy();
  expect(String(quiz.url).startsWith("https://")).toBe(true);
  const org = organizationJsonLd(); expect(org.logo.startsWith("https://")).toBe(true);
@@ -103,5 +103,5 @@ it("indexes by default, never emits noindex in production code and robots blocks
 
 it("404 page links to home, every grade and the entrance exam", () => {
  const hrefs = NOT_FOUND_LINKS.map(l => l.href);
- expect(hrefs).toEqual(expect.arrayContaining(["/", "/lop-6", "/lop-7", "/lop-8", "/lop-9", "/thi-vao-lop-10"]));
+ expect(hrefs).toEqual(expect.arrayContaining(["/", "/grade-6", "/grade-7", "/grade-8", "/grade-9", "/grade-10-entrance"]));
 });

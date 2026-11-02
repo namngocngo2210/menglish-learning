@@ -8,6 +8,10 @@
 //   2. a structured digest: title, meta description, canonical, robots, Open Graph, JSON-LD blocks,
 //      headings, visible text, ordered internal links, number of questions.
 // It also compares both sitemaps (URLs and lastmod) and the /pool/* JSON bodies. Exit code 1 on any difference.
+//
+// URL migration check (2/11): run with `npx tsx scripts/ssr/parity.mjs --migrate --base <OLD build> --head <NEW build>`.
+// Every base path is mapped old -> new with legacyToPublicPath (packages/core/src/url-map.ts) and every old URL inside
+// the base HTML/JSON is rewritten the same way, so only the URLs may differ; anything else is reported.
 import { writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 
@@ -18,6 +22,7 @@ const { values } = parseArgs({
     out: { type: "string" },
     limit: { type: "string" },
     concurrency: { type: "string" },
+    migrate: { type: "boolean" },
   },
 });
 if (!values.base || !values.head)
@@ -25,6 +30,21 @@ if (!values.base || !values.head)
 const base = values.base.replace(/\/$/, "");
 const head = values.head.replace(/\/$/, "");
 const concurrency = Number(values.concurrency ?? 4);
+
+let mapPath = (p) => p;
+let rewrite = (text) => text;
+if (values.migrate) {
+  const { legacyToPublicPath } = await import("../../packages/core/src/url-map.ts");
+  mapPath = (p) => legacyToPublicPath(p) ?? p;
+  const names =
+    "lop-[6-9]|thi-vao-lop-10|luyen-nhanh|luyen-tap-nhom|gioi-thieu|lien-he|chinh-sach-bao-mat|dieu-khoan|nguon-du-lieu|xoa-du-lieu|dang-ky|dang-nhap|dat-lai-mat-khau|xac-minh-email|tai-khoan";
+  const inPath = new RegExp(`/(?:${names})(?:/[A-Za-z0-9-]+)*`, "g");
+  const inQuery = new RegExp(`de=((?:${names})(?:/[A-Za-z0-9-]+)*)`, "g");
+  rewrite = (text) =>
+    text
+      .replace(inPath, (m) => legacyToPublicPath(m) ?? m)
+      .replace(inQuery, (m, p) => `de=${(legacyToPublicPath(`/${p}`) ?? `/${p}`).slice(1)}`);
+}
 
 async function get(origin, path) {
   const res = await fetch(origin + path, {
@@ -34,26 +54,42 @@ async function get(origin, path) {
   return {
     status: res.status,
     type: res.headers.get("content-type") ?? "",
-    location: res.headers.get("location") ?? "",
-    body: await res.text(),
+    location:
+      origin === base
+        ? rewrite(res.headers.get("location") ?? "")
+        : (res.headers.get("location") ?? ""),
+    body: origin === base && path !== "/sitemap.xml" ? rewrite(await res.text()) : await res.text(),
   };
 }
 
 /** Removes only what legitimately differs between two builds of the same pages. */
-export function normalize(html) {
-  return html
-    .replace(/\/_next\/static\/[A-Za-z0-9_\-./%~]+/g, "/_next/static/*")
-    .replace(/static\/[A-Za-z0-9_\-./%~]+\.(js|css|woff2|map)/g, "static/*")
-    .replace(/(?:\\)*"h(?:\\)*":\d+,/g, "")
-    .replace(/(?:\\)*"S(?:\\)*":(?:true|false),/g, "")
-    .replace(/"h":\d+,/g, "")
-    .replace(/"b":"[^"]*"/g, '"b":"*"')
-    .replace(/\\"b\\":\\"[^"\\]*\\"/g, '\\"b\\":\\"*\\"')
-    .replace(/"buildId":"[^"]*"/g, '"buildId":"*"')
-    .replace(/<link[^>]+rel="(preload|modulepreload|stylesheet)"[^>]*>/g, "")
-    .replace(/<script[^>]+src="[^"]*"[^>]*><\/script>/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
+export function normalize(rawHtml) {
+  // --migrate: the inline RSC flight scripts embed build-internal ids and route-tree keys that change with the URL rename;
+  // the rendered HTML, JSON-LD (checked by digest()) and visible text are what must stay equal.
+  const html = values.migrate
+    ? rawHtml.replace(/<script>self\.__next_f[\s\S]*?<\/script>/g, "")
+    : rawHtml;
+  return (
+    html
+      .replace(/\/_next\/static\/[A-Za-z0-9_\-./%~]+/g, "/_next/static/*")
+      .replace(/static\/[A-Za-z0-9_\-./%~]+\.(js|css|woff2|map)/g, "static/*")
+      .replace(/(?:\\)*"h(?:\\)*":\d+,/g, "")
+      .replace(/(?:\\)*"S(?:\\)*":(?:true|false),/g, "")
+      .replace(/"h":\d+,/g, "")
+      .replace(/"b":"[^"]*"/g, '"b":"*"')
+      .replace(/\\"b\\":\\"[^"\\]*\\"/g, '\\"b\\":\\"*\\"')
+      .replace(/"buildId":"[^"]*"/g, '"buildId":"*"')
+      .replace(/<link[^>]+rel="(preload|modulepreload|stylesheet)"[^>]*>/g, "")
+      .replace(/<script[^>]+src="[^"]*"[^>]*><\/script>/g, "")
+      // RSC flight rows are numbered per build (an extra client module shifts every id): drop ids and $L references.
+      .replace(/(?:\\)*n[0-9a-f]{1,3}:(?=[A-Z[{"$])/g, "n*:")
+      .replace(/\$L[0-9a-f]{1,3}\b/g, "$L*")
+      // Route-tree segment keys are the URL segment itself (renamed by design).
+      .replace(/s(\\+)":\1"[^"\\]*\1"/g, 's$1":$1"*$1"')
+      .replace(/c(\\+)":\[[^\]]*\]/g, 'c$1":[*]')
+      .replace(/\s+/g, " ")
+      .trim()
+  );
 }
 
 const attr = (html, re) => (html.match(re) ?? [])[1] ?? "";
@@ -115,8 +151,17 @@ const [baseMap, headMap] = await Promise.all([
   get(base, "/sitemap.xml"),
   get(head, "/sitemap.xml"),
 ]);
-const baseEntries = sitemapEntries(baseMap.body);
+const byLoc = (a, b) => (a.loc < b.loc ? -1 : 1);
+// Base is queried with the old path (the reverse of mapPath), head with the new one.
+const oldOf = new Map();
+const rawBase = sitemapEntries(baseMap.body);
+for (const e of rawBase) oldOf.set(mapPath(e.loc), e.loc);
+const baseEntries = rawBase.map((e) => ({ ...e, loc: mapPath(e.loc) }));
 const headEntries = sitemapEntries(headMap.body);
+if (values.migrate) {
+  baseEntries.sort(byLoc);
+  headEntries.sort(byLoc);
+}
 report.sitemap = {
   baseUrls: baseEntries.length,
   headUrls: headEntries.length,
@@ -135,8 +180,8 @@ report.sitemap = {
     .map((e) => e.loc),
 };
 
-const paths = baseEntries.map((e) => e.loc);
-const extras = [
+const paths = baseEntries.map((e) => e.loc); // already new paths in --migrate mode
+const oldExtras = [
   "/",
   "/robots.txt",
   "/lop-5",
@@ -144,17 +189,28 @@ const extras = [
   "/lop-6/ngu-phap/khong-co/de-1",
   "/thi-vao-lop-10/khong-co",
 ];
-const pools = [
+const extras = oldExtras.map((p) => {
+  oldOf.set(mapPath(p), p);
+  return mapPath(p);
+});
+const oldPools = [
   ...new Set(
-    paths.filter((p) => /^\/lop-\d\/[a-z-]+\/[a-z0-9-]+$/.test(p)).map((p) => `/pool${p}`),
+    rawBase
+      .map((e) => e.loc)
+      .filter((p) => /^\/lop-\d\/[a-z-]+\/[a-z0-9-]+$/.test(p))
+      .map((p) => `/pool${p}`),
   ),
   "/pool/thi-vao-lop-10",
 ];
+const pools = oldPools.map((p) => {
+  oldOf.set(mapPath(p), p);
+  return mapPath(p);
+});
 const limit = values.limit ? Number(values.limit) : Infinity;
 const queue = [...new Set([...paths, ...extras])].slice(0, limit);
 
 async function comparePage(path) {
-  const [a, b] = await Promise.all([get(base, path), get(head, path)]);
+  const [a, b] = await Promise.all([get(base, oldOf.get(path) ?? path), get(head, path)]);
   report.pages.compared++;
   if (a.status !== b.status || a.location !== b.location) {
     report.pages.structuralDiffs.push({
@@ -191,7 +247,7 @@ async function comparePage(path) {
 }
 
 async function comparePool(path) {
-  const [a, b] = await Promise.all([get(base, path), get(head, path)]);
+  const [a, b] = await Promise.all([get(base, oldOf.get(path) ?? path), get(head, path)]);
   report.pools.compared++;
   if (a.status !== b.status || a.body !== b.body)
     report.pools.diffs.push({

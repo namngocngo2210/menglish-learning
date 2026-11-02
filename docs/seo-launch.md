@@ -36,7 +36,7 @@ Truy cập <https://search.google.com/search-console> bằng tài khoản Google
 
 ## 4. Yêu cầu lập chỉ mục trang chính
 
-Dùng **Kiểm tra URL** (ô tìm kiếm trên cùng) lần lượt cho: trang chủ, `/lop-6` … `/lop-9`, `/thi-vao-lop-10`, một trang chủ đề và một trang đề. Với mỗi URL: bấm **Kiểm tra URL trực tiếp** → xem "URL có thể được lập chỉ mục" → **Yêu cầu lập chỉ mục**.
+Dùng **Kiểm tra URL** (ô tìm kiếm trên cùng) lần lượt cho: trang chủ, `/grade-6` … `/grade-9`, `/grade-10-entrance`, một trang chủ đề và một trang đề. Với mỗi URL: bấm **Kiểm tra URL trực tiếp** → xem "URL có thể được lập chỉ mục" → **Yêu cầu lập chỉ mục**.
 
 ## 5. Theo dõi sau ra mắt
 
@@ -51,4 +51,22 @@ Dùng **Kiểm tra URL** (ô tìm kiếm trên cùng) lần lượt cho: trang c
 
 - Không dùng dịch vụ mua backlink/lập chỉ mục tự động.
 - Không bật `SEO_NOINDEX` trên production; biến này chỉ để khóa môi trường thử nghiệm.
-- Không hiển thị nguồn/giấy phép trên trang câu hỏi; ghi nhận nguồn tập trung ở `/nguon-du-lieu`.
+- Không hiển thị nguồn/giấy phép trên trang câu hỏi; ghi nhận nguồn tập trung ở `/data-sources`.
+
+## 7. Chuyển URL sang tiếng Anh (2/11/2026)
+
+Toàn bộ URL công khai đổi từ tiếng Việt sang tiếng Anh (bảng đầy đủ: `docs/url-map.md`). Ví dụ:
+`/lop-6/ngu-phap/thi-hien-tai-don/de-1` → `/grade-6/grammar/present-simple/test-1`, `/thi-vao-lop-10` → `/grade-10-entrance`,
+`/luyen-nhanh` → `/quick-practice`, `/gioi-thieu` → `/about`, `/lien-he` → `/contact`, `/luyen-tap-nhom/phong/ABCDEF` → `/group-practice/room/ABCDEF`.
+Tiêu đề, H1, mô tả trang vẫn là tiếng Việt.
+
+- Mọi URL cũ trả **một** lần `301` tới URL mới (giữ query `?utm_...`, không chuỗi, không vòng). Redirect do ứng dụng Next xử lý (`web/proxy.ts`), **vĩnh viễn, không bao giờ gỡ**.
+- `sitemap.xml` chỉ liệt kê URL mới (cùng số lượng URL như trước). Canonical, og:url, JSON-LD đều là URL mới.
+- Trang tài khoản/phòng vẫn `noindex` ở đường dẫn mới.
+
+Việc chủ site làm trong Google Search Console (cùng tên miền nên **không** dùng Change of Address):
+1. Vào thuộc tính `beejunior.meducation.vn` → **Sơ đồ trang web** → gửi lại `https://beejunior.meducation.vn/sitemap.xml` (nay chỉ chứa URL mới). Không cần xóa sitemap cũ, nó là cùng một URL.
+2. **Kiểm tra URL** cho: trang chủ, `/grade-6` … `/grade-9`, `/grade-10-entrance`, một trang đề; bấm *Yêu cầu lập chỉ mục*.
+3. Với vài URL cũ (ví dụ `/lop-6`), Kiểm tra URL phải báo "Trang chuyển hướng" và trỏ đúng URL mới.
+4. Theo dõi 4–8 tuần: **Lập chỉ mục → Trang** (mục "Trang có chuyển hướng" tăng rồi giảm; "Đã lập chỉ mục" chuyển dần sang URL mới), **Hiệu suất** (so sánh theo trang), báo cáo **Cải tiến**/Core Web Vitals. Không đặt lại lịch sử bằng công cụ Xóa URL.
+5. Các bài đăng Facebook đã lên lịch (`~/beejunior-social/queue`) dùng link đường dẫn cũ kèm UTM: vẫn hoạt động nhờ 301, nên cập nhật sang link mới khi có thể.
