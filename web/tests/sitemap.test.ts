@@ -6,7 +6,7 @@ import { getGrades, getSkills, getTopics, getAllTestSlugs, getTestWithQuestions 
 import { gradePath, skillPath, topicPath } from "@/lib/routes";
 afterEach(() => vi.unstubAllEnvs());
 it("lists exactly every public content route with absolute URLs and publication dates", async () => {
- const paths = ["/","/lien-he","/gioi-thieu","/chinh-sach-bao-mat","/thi-vao-lop-10","/nguon-du-lieu",...getGrades().flatMap(grade => [gradePath(grade),...getSkills(grade).flatMap(skill => [skillPath(grade,skill),...getTopics(grade,skill).map(topic=>topicPath(grade,skill,topic.slug))])]),...getAllTestSlugs().map(slug=>`/${slug}`)];
+ const paths = ["/","/lien-he","/gioi-thieu","/chinh-sach-bao-mat","/thi-vao-lop-10","/luyen-nhanh","/nguon-du-lieu",...getGrades().flatMap(grade => [gradePath(grade),...getSkills(grade).flatMap(skill => [skillPath(grade,skill),...getTopics(grade,skill).map(topic=>topicPath(grade,skill,topic.slug))])]),...getAllTestSlugs().map(slug=>`/${slug}`)];
  const routes = getAllRoutes(); const entries = await sitemap();
  expect(routes.map(route=>route.path).sort()).toEqual(paths.sort());
  expect(entries.map(entry=>entry.url).sort()).toEqual(paths.map(absoluteUrl).sort());
