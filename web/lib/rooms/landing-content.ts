@@ -1,7 +1,7 @@
 import type { Faq } from "@/lib/seo-content";
 
 export const ROOMS_TITLE = "Luyện tập nhóm tiếng Anh";
-export const ROOMS_DESCRIPTION = "Cùng bạn bè làm một đề tiếng Anh lớp 6–9 cùng lúc, xếp hạng khi nộp bài. Tạo phòng 1v1 hoặc cả lớp, miễn phí, không cần tài khoản.";
+export const ROOMS_DESCRIPTION = "Cùng bạn bè làm một đề tiếng Anh cùng lúc, xếp hạng khi nộp bài. Tạo phòng 1v1 hoặc cả lớp, miễn phí, không cần tài khoản.";
 export const ROOMS_STEPS = [
  { title: "Tạo phòng", text: "Chọn đề có sẵn hoặc trộn câu theo lớp, kỹ năng và chủ đề." },
  { title: "Gửi mã hoặc đường dẫn", text: "Bạn bè nhập mã 6 ký tự hoặc mở đường dẫn, đặt tên hiển thị rồi vào phòng." },

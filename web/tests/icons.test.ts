@@ -12,7 +12,7 @@ function pngSize(path: string) {
 }
 it("provides a Vietnamese manifest with existing regular and maskable icons", () => {
  const data = manifest();
- expect(data).toMatchObject({ name:`${SITE.name} – Luyện tiếng Anh lớp 6–9`, short_name:SITE.wordmark, lang:"vi", start_url:"/", display:"standalone", background_color:"#fffdf5", theme_color:"#ffc001" });
+ expect(data).toMatchObject({ name:`${SITE.name} – Luyện tiếng Anh miễn phí`, short_name:SITE.wordmark, lang:"vi", start_url:"/", display:"standalone", background_color:"#fffdf5", theme_color:"#ffc001" });
  for (const size of [192, 512]) for (const purpose of ["any", "maskable"]) {
   const icon = data.icons?.find(icon => icon.sizes === `${size}x${size}` && icon.purpose === purpose);
   expect(icon).toMatchObject({ type:"image/png", src: `/icon-${purpose === "maskable" ? "maskable-" : ""}${size}.png` });

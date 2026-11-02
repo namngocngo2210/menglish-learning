@@ -42,7 +42,7 @@ it("renders footer navigation with only known public routes and all published sk
 });
 
 it("removes retired branding from application source", () => {
- const retired = ["Luyện Tiếng Anh THCS", "Tên tạm", "Tên thương hiệu tạm thời", "Góc tiếng Anh", "Góc luyện tập tiếng Anh"];
+ const retired = ["Luyện Tiếng Anh THCS", "Dành cho học sinh THCS", "Tên tạm", "Tên thương hiệu tạm thời", "Góc tiếng Anh", "Góc luyện tập tiếng Anh"];
  function inspect(directory: string) {
   for (const entry of readdirSync(directory, { withFileTypes: true })) {
    const path = join(directory, entry.name);
