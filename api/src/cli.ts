@@ -6,6 +6,7 @@ import { createAdmin, readHidden } from "./admin/create";
 import { purgeExpired, reapplyDeletions } from "./accounts/maintenance";
 import type { DeletionRef } from "./accounts/maintenance";
 import type { TtyIn, TtyOut } from "./admin/create";
+import { createSmtpMailer, errorClass, loadMailConfig } from "./accounts/smtp";
 import { loadConfig } from "./config";
 import { connect } from "./db/connection";
 import { readContentDir } from "./import/files";
@@ -34,8 +35,9 @@ Commands:
   accounts:purge-expired                      Delete account data past retention (run daily as the owner DB role)
   accounts:reapply-deletions --file F.json    After restoring an OLD backup: re-delete accounts/profiles listed in F
                                               (needs USER_SESSION_HMAC_KEY or USER_SESSION_HMAC_KEY_FILE)
+  mail:test <to>                              Send one test email through the SMTP settings; prints ok/fail only
 
-Environment: DATABASE_URL or DATABASE_URL_FILE.`;
+Environment: DATABASE_URL or DATABASE_URL_FILE; mail:test needs MAIL_TRANSPORT=smtp, SMTP_HOST, SMTP_USER, SMTP_PASS_FILE, MAIL_FROM.`;
 
 const json = (value: unknown): string => JSON.stringify(value, null, 2);
 
@@ -67,6 +69,8 @@ export async function main(
         return await runAccountsMaintenance(rest, io, env, "purge");
       case "accounts:reapply-deletions":
         return await runAccountsMaintenance(rest, io, env, "reapply");
+      case "mail:test":
+        return await runMailTest(rest, io, env);
       default:
         io.err(`Unknown command: ${command}\n${USAGE}`);
         return 2;
@@ -74,6 +78,39 @@ export async function main(
   } catch (error) {
     io.err(error instanceof Error ? error.message : String(error));
     return 1;
+  }
+}
+
+/** Prints only ok/fail and an error class: no address, server reply or secret reaches the terminal. */
+async function runMailTest(
+  args: readonly string[],
+  io: Io,
+  env: Readonly<Record<string, string | undefined>>,
+): Promise<number> {
+  const to = args[0];
+  if (!to?.includes("@")) {
+    io.err("Usage: bj mail:test <to>");
+    return 2;
+  }
+  const config = loadMailConfig(env);
+  if (!config) {
+    io.err("fail MAIL_TRANSPORT_NOT_SMTP");
+    return 1;
+  }
+  const mailer = createSmtpMailer(config, { maxRetries: 0 });
+  try {
+    await mailer.deliver({
+      to,
+      subject: "BeeJunior: email thử",
+      text: "Đây là email thử từ BeeJunior. Nếu bạn đọc được thư này, cấu hình gửi email đã đúng.",
+    });
+    io.out("ok");
+    return 0;
+  } catch (error) {
+    io.err(`fail ${errorClass(error)}`);
+    return 1;
+  } finally {
+    await mailer.close();
   }
 }
 

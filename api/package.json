@@ -26,6 +26,7 @@
     "fastify": "^5.12.7",
     "kysely": "^0.28.0",
     "node-pg-migrate": "^8.0.0",
+    "nodemailer": "^10.3.1",
     "pg": "^8.13.0",
     "zod": "^4.6.7"
   },
