@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { accountsEnabled } from "./lib/account/flag";
+import { ACCOUNT_PRIVATE_PATHS } from "./lib/account/paths";
 
 /** ROOMS_DEV_PROXY: local-only upstream for same-origin /rt/* (production routing is a separate sprint). */
 function roomsDevProxy(env: Record<string, string | undefined> = process.env): string | null {
@@ -41,7 +43,10 @@ const config: NextConfig = {
       { key: "Referrer-Policy", value: "no-referrer" },
       { key: "Cache-Control", value: "no-store" },
     ];
+    // Account pages (built only when ACCOUNTS_ENABLED): private, and one-time token links must not leak via Referer.
+    const account = accountsEnabled() ? ACCOUNT_PRIVATE_PATHS.map(source => ({ source, headers: rooms })) : [];
     return [
+      ...account,
       { source: "/luyen-tap-nhom/phong/:path*", headers: rooms },
       { source: "/luyen-tap-nhom/vao", headers: rooms },
     ];

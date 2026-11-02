@@ -178,6 +178,15 @@ export interface ProfileAttempts {
   profile_id: Int8;
 }
 
+export interface ProfileProgress {
+  best: number;
+  last: number;
+  played_at: Timestamp;
+  profile_id: Int8;
+  test_slug: string;
+  total: number;
+}
+
 export interface Profiles {
   created_at: Generated<Timestamp>;
   external_id: Generated<string>;
@@ -411,6 +420,7 @@ export interface DB {
   outbox_events: OutboxEvents;
   passages: Passages;
   profile_attempts: ProfileAttempts;
+  profile_progress: ProfileProgress;
   profiles: Profiles;
   question_reports: QuestionReports;
   question_revisions: QuestionRevisions;

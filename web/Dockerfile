@@ -22,13 +22,15 @@ ARG NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR
 ARG NEXT_PUBLIC_ADSENSE_SLOT_FOOTER
 ARG SEO_NOINDEX=false
 ARG ROOMS_ENABLED=false
+ARG ACCOUNTS_ENABLED=false
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_PUBLIC_ADSENSE_CLIENT=$NEXT_PUBLIC_ADSENSE_CLIENT \
     NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT=$NEXT_PUBLIC_ADSENSE_SLOT_IN_CONTENT \
     NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR=$NEXT_PUBLIC_ADSENSE_SLOT_SIDEBAR \
     NEXT_PUBLIC_ADSENSE_SLOT_FOOTER=$NEXT_PUBLIC_ADSENSE_SLOT_FOOTER \
     SEO_NOINDEX=$SEO_NOINDEX \
-    ROOMS_ENABLED=$ROOMS_ENABLED
+    ROOMS_ENABLED=$ROOMS_ENABLED \
+    ACCOUNTS_ENABLED=$ACCOUNTS_ENABLED
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
 COPY packages ./packages
@@ -37,9 +39,10 @@ RUN mkdir -p web/public && npm run build --workspace web && npm run build --work
 
 FROM node:22-alpine AS runner
 ARG ROOMS_ENABLED=false
+ARG ACCOUNTS_ENABLED=false
 WORKDIR /app
 # ROOMS_ENABLED at runtime too: force-dynamic pages (home) read the flag per request.
-ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 ROOMS_ENABLED=$ROOMS_ENABLED
+ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PORT=3000 HOSTNAME=0.0.0.0 ROOMS_ENABLED=$ROOMS_ENABLED ACCOUNTS_ENABLED=$ACCOUNTS_ENABLED
 RUN addgroup -S -g 1001 app && adduser -S -u 1001 -G app app
 # Standalone output is nested under web/ because the workspace root is the tracing root.
 COPY --from=build --chown=app:app /app/web/.next/standalone ./

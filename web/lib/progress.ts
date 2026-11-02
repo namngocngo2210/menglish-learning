@@ -22,3 +22,8 @@ export function saveProgress(slug: string, score: number, total: number, store?:
   if (typeof window !== "undefined") window.dispatchEvent(new Event("ml:progress"));
  } catch { /* Practice remains available when storage is disabled or full. */ }
 }
+export interface ProgressItem extends Progress { slug: string }
+/** Every valid anonymous result stored on this device, for the parent-confirmed import. */
+export function readAllProgress(store?: StorageLike): ProgressItem[] {
+ try { const data = JSON.parse((store ?? storage()).getItem(PROGRESS_KEY) ?? "{}"); return Object.entries(data ?? {}).filter(([, v]) => valid(v)).map(([slug, v]) => ({ slug, ...(v as Progress) })).slice(0, 500); } catch { return []; }
+}

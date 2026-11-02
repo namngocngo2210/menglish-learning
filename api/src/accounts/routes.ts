@@ -16,6 +16,7 @@ import {
   idParam,
   loginBody,
   profileCreateBody,
+  progressImportBody,
   profileUpdateBody,
   registerBody,
   resetConfirmBody,
@@ -408,7 +409,8 @@ export function accountsPlugin(deps: AccountsDeps) {
       ),
       q(
         `SELECT p.external_id AS id, p.nickname, p.grade, p.created_at AS "createdAt",
-                COALESCE((SELECT array_agg(a.attempt_id ORDER BY a.created_at) FROM profile_attempts a WHERE a.profile_id = p.id), '{}') AS "attemptIds"
+                COALESCE((SELECT array_agg(a.attempt_id ORDER BY a.created_at) FROM profile_attempts a WHERE a.profile_id = p.id), '{}') AS "attemptIds",
+                COALESCE((SELECT json_agg(json_build_object('slug', g.test_slug, 'best', g.best, 'last', g.last, 'total', g.total, 'at', g.played_at) ORDER BY g.test_slug) FROM profile_progress g WHERE g.profile_id = p.id), '[]') AS progress
          FROM profiles p WHERE p.user_id = $1 ORDER BY p.id`,
       ),
       q(
@@ -559,6 +561,38 @@ export function accountsPlugin(deps: AccountsDeps) {
       if (!(await deleteProfile(request, me(request), paramId(request))))
         throw new HttpProblem("not_found");
       return reply.code(204).send();
+    });
+
+    // Parent-confirmed import of the child's browser progress; keeps the better score per test.
+    app.post("/profiles/:id/progress", async (request) => {
+      const p = me(request);
+      const id = paramId(request);
+      const { items } = progressImportBody.parse(request.body);
+      const owned = await pool.query<{ id: string }>(
+        "SELECT id FROM profiles WHERE external_id = $1 AND user_id = $2",
+        [id, p.userId],
+      );
+      const profileId = owned.rows[0]?.id;
+      if (profileId === undefined) throw new HttpProblem("not_found");
+      await pool.query(
+        `INSERT INTO profile_progress (profile_id, test_slug, best, last, total, played_at)
+         SELECT $1, s, b, l, t, a::timestamptz
+         FROM unnest($2::text[], $3::int[], $4::int[], $5::int[], $6::text[]) AS x(s, b, l, t, a)
+         ON CONFLICT (profile_id, test_slug) DO UPDATE SET
+           best = CASE WHEN EXCLUDED.total = profile_progress.total THEN GREATEST(profile_progress.best, EXCLUDED.best) ELSE EXCLUDED.best END,
+           last = EXCLUDED.last, total = EXCLUDED.total, played_at = EXCLUDED.played_at
+         WHERE EXCLUDED.played_at >= profile_progress.played_at`,
+        [
+          profileId,
+          items.map((i) => i.slug),
+          items.map((i) => i.best),
+          items.map((i) => i.last),
+          items.map((i) => i.total),
+          items.map((i) => i.at),
+        ],
+      );
+      await auth.audit("user.progress_imported", request, p.userId);
+      return { imported: items.length };
     });
 
     app.get("/consents", async (request) => {

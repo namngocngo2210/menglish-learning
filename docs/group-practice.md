@@ -105,13 +105,13 @@ Trạng thái của từng người chơi: `joined` (trong phòng chờ) → `pl
 - Tên hiển thị 2–20 ký tự, lọc từ cấm, không số điện thoại/link/tài khoản mạng xã hội ([tech §7](group-practice-tech.md#7-lạm-dụng-và-bảo-vệ-trẻ-em)).
 - Không thu thập email, họ tên thật, số điện thoại, vị trí.
 
-## 5. Quyền riêng tư (Nghị định 13/2023/NĐ-CP) — tóm tắt
+## 5. Quyền riêng tư (Luật 91/2025/QH15, NĐ 356/2025/NĐ-CP) — tóm tắt
 - Không tài khoản, không cookie theo dõi; chỉ có token vào lại gắn với một phòng, lưu trong trình duyệt của người chơi, xóa khi phòng kết thúc.
 - Dữ liệu duy nhất do người chơi nhập: **tên hiển thị tạm**; đáp án đã chọn. Chỉ nằm trong **bộ nhớ** tiến trình, **không ghi cơ sở dữ liệu**, xóa khi phòng đóng (tối đa ~3 giờ kể cả trường hợp xấu nhất; thường 10–30 phút sau khi xong).
 - Log không chứa tên, đáp án; IP chỉ dạng băm có salt xoay theo ngày.
 - Chỉ số tổng hợp ẩn danh (số phòng/ngày, kích thước phòng, điểm trung bình) được phép, không gắn tên.
 - Không quảng cáo trong bất kỳ trang phòng nào (landing `/luyen-tap-nhom` được phép có quảng cáo trẻ em/không cá nhân hóa như các trang khác). Chi tiết: [tech §7–8](group-practice-tech.md#8-quyền-riêng-tư-và-lưu-giữ-dữ-liệu).
-- Cần cập nhật trang Chính sách quyền riêng tư (mục "Luyện tập nhóm") trước khi mở.
+- Mục "Luyện tập nhóm" của Chính sách quyền riêng tư đã có trong bản nháp (hiện khi bật `ACCOUNTS_ENABLED`, [user-accounts.md](user-accounts.md) mục 7.1); cần luật sư duyệt trước khi mở.
 
 ## 6. SEO
 - `/luyen-tap-nhom`: trang tĩnh, **index**, có `title`/`description`/canonical/OG, `BreadcrumbList` + `FAQPage` (cách chơi, miễn phí, không cần tài khoản, an toàn cho học sinh), liên kết từ trang chủ, trang lớp và footer; có trong sitemap.

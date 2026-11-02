@@ -12,6 +12,8 @@ import { TITLE_MAX, buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/se
 import { notFound } from "next/navigation";
 import { PageShell, Breadcrumbs, ChipList } from "@/components/ui-kit";
 import { roomsEnabled } from "@/lib/rooms/flag";
+import { accountsEnabled } from "@/lib/account/flag";
+import { SaveProgressInvite } from "@/components/account/SaveProgressInvite";
 import { getTestWithQuestions, getTopics, getTestsForTopic, estimateMinutes } from "@/lib/content/load";
 import { isSlug, roomsLandingPath, gradeSlug, parseGradeSlug, parseSkill, testPath, homePath, gradePath, skillPath, topicPath, SKILL_NAMES } from "@/lib/routes";
 export const dynamic = "force-dynamic";
@@ -48,5 +50,6 @@ export default async function TestPage({ params }: { params: Promise<{ grade: st
    <div className="flex flex-col gap-3 sm:flex-row">{roomsEnabled() && <Link data-slot="create-room-from-test" href={roomHref} className={secondary}>Tạo phòng từ đề này</Link>}<RandomTrigger className={secondary}/></div>
   </nav>
  </RandomQuiz>
+ {accountsEnabled() && <SaveProgressInvite/>}
  </PageShell>;
 }

@@ -106,7 +106,7 @@ Port sang Go (C) chỉ nên làm khi (a) kiến trúc Go `api` đã có, và (b)
 
 ## 8. Quyền riêng tư và lưu giữ dữ liệu
 
-Phù hợp [security.md §Dữ liệu trẻ em](security.md#dữ-liệu-trẻ-em-nghị-định-132023nđ-cp):
+Phù hợp [security.md §Dữ liệu trẻ em](security.md#dữ-liệu-trẻ-em-luật-912025qh15-nđ-3562025nđ-cp):
 
 | Dữ liệu | Nơi lưu | Thời gian giữ | Ghi chú |
 |---------|---------|---------------|---------|
@@ -117,7 +117,7 @@ Phù hợp [security.md §Dữ liệu trẻ em](security.md#dữ-liệu-trẻ-em
 | IP | RAM bộ đếm giới hạn tốc độ | ≤ vài giờ, dạng băm | không vào log thô |
 | Log | stdout (slog JSON) | theo chính sách log hiện có | chỉ id yêu cầu, mã trạng thái, kích thước phòng; **không** tên, đáp án, IP thô |
 
-- Không tài khoản, email, họ tên, số điện thoại, vị trí, ảnh. Không cookie phân tích/quảng cáo. Cookie token chức năng được nêu trong Chính sách quyền riêng tư (cập nhật trước khi mở tính năng).
+- Không tài khoản, email, họ tên, số điện thoại, vị trí, ảnh. Không cookie phân tích/quảng cáo. Cookie token chức năng được nêu trong Chính sách quyền riêng tư (mục 9–10 của bản nháp, [user-accounts.md](user-accounts.md) mục 7.1).
 - **Quảng cáo:** `AdSlot` không được render ở mọi route `/luyen-tap-nhom/phong/*` (kiểm bằng test); landing và trang kết quả của chính site (không phải phòng) giữ cấu hình trẻ em/không cá nhân hóa. Trong thiết kế ảnh, màn kết quả có một ô quảng cáo *giữ chỗ* — **chờ chủ quyết định D9** có cho phép ở màn kết quả hay chỉ ở landing.
 - Quyền xóa: không có dữ liệu bền vững để xóa; phòng tự xóa khi đóng. Người chơi rời phòng → xóa tên và đáp án ngay (trừ khi điểm đã tính vào bảng hạng đang chờ; sau `results` bảng hạng giữ đến khi phòng đóng).
 - Cần xác nhận pháp lý với chủ: có coi "tên hiển thị tạm trong RAM" là dữ liệu cá nhân của trẻ (NĐ 13) hay không; thiết kế đã giảm thiểu tối đa (D10).
