@@ -1,6 +1,6 @@
 # Tài khoản người dùng (đăng ký email + Google) — thiết kế & rủi ro pháp lý
 
-> **Trạng thái: THIẾT KẾ, chờ chủ duyệt. Chưa có mã, migration, ứng dụng OAuth hay bí mật nào.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
+> **Trạng thái: THIẾT KẾ; mã S-U1..S-U3 đã có sau cờ ACCOUNTS_ENABLED (mặc định TẮT, xem mục 10–11). Chưa có ứng dụng OAuth hay bí mật nào: mục 5 là việc của chủ; tính năng giữ TẮT đến khi chủ đặt secret. Bật/rollback: [runbook.md](runbook.md) mục 9.** Quyết định liên quan: [ADR 0008](adr/0008-user-accounts-parent-first.md).
 > **Phạm vi chủ chốt (2/11):** đăng ký email + mật khẩu và đăng nhập Google. **Không Facebook** (chỉ ghi "có thể làm sau", mục 5.3). Luyện tập ẩn danh giữ nguyên, không có "tường đăng nhập".
 > Đây **không phải tư vấn pháp lý**. Mọi kết luận pháp lý đánh dấu **[cần xác nhận với luật sư]**; mục 9 liệt kê điều chưa kiểm chứng được.
 
