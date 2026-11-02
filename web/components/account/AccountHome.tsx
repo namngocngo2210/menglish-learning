@@ -2,7 +2,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Download, KeyRound, Loader2, LogOut, Pencil, Trash2, UserPlus } from "lucide-react";
+import { Download, KeyRound, Loader2, LogOut, Pencil, ShieldCheck, Trash2, UserPlus } from "lucide-react";
+import { EMAIL_RE, USERNAME_HINT, USERNAME_RE } from "./AuthForms";
+import { RecoveryCodes } from "./RecoveryCodes";
 import { createAccountClient, type Me, type Profile } from "@/lib/account/client";
 import { CHILD_AFTER, CHILD_BEFORE, CHILD_BOLD, CHILD_HINT } from "@/lib/account/consent-copy";
 import { deleteDataPath, loginPath, registerPath } from "@/lib/account/paths";
@@ -30,13 +32,78 @@ export function AccountHome() {
  if (state.kind === "out") return <section className={`${card} space-y-4`}><p className="font-semibold">Bạn chưa đăng nhập hoặc phiên đã hết hạn.</p><div className="flex flex-col gap-3 sm:flex-row"><Link className={ctaCls} href={loginPath()}>Đăng nhập</Link><Link className={ghostCls} href={registerPath()}>Tạo tài khoản</Link></div></section>;
  const { me, profiles } = state;
  return <div className="space-y-6">
-  <section className={`${card} flex flex-wrap items-center justify-between gap-3`} aria-labelledby="tk-email"><div><h2 id="tk-email" className="text-lg font-extrabold">Tài khoản phụ huynh</h2><p className="break-all">{me.email}</p></div>
+  <section className={`${card} flex flex-wrap items-center justify-between gap-3`} aria-labelledby="tk-email"><div><h2 id="tk-email" className="text-lg font-extrabold">Tài khoản phụ huynh</h2><p className="break-all">Tên đăng nhập: <strong>{me.username}</strong></p></div>
    <SessionButtons client={client} onOut={() => router.replace(loginPath())}/></section>
   {notice && <p role="status" className="rounded-xl border-2 border-green-700/40 bg-green-50 p-3 font-semibold text-green-900">{notice}</p>}
+  <RecoverySection client={client} me={me} onChange={async (msg) => { setNotice(msg); await load(); }}/>
   <Profiles client={client} me={me} profiles={profiles} onChange={async (msg) => { setNotice(msg); await load(); }}/>
   <PasswordSection client={client} me={me} onDone={setNotice}/>
   <DataSection client={client} me={me} onDeleted={() => router.replace(deleteDataPath())}/>
  </div>;
+}
+
+type Client = ReturnType<typeof createAccountClient>;
+
+/** Username (one rename), email + verification, and recovery codes. */
+function RecoverySection({ client, me, onChange }: { client: Client; me: Me; onChange: (msg: string) => Promise<void> }) {
+ const un = useAction(); const em = useAction(); const rc = useAction();
+ const [username, setUsername] = useState(""); const [email, setEmail] = useState(""); const [password, setPassword] = useState("");
+ const [errs, setErrs] = useState<{ username?: string; email?: string; password?: string }>({});
+ const [codes, setCodes] = useState<string[] | null>(null);
+ const [askPw, setAskPw] = useState(false);
+ if (codes) return <RecoveryCodes codes={codes} doneLabel="Xong" onDone={() => { setCodes(null); void onChange("Đã tạo 10 mã khôi phục mới. Các mã cũ không còn dùng được."); }}/>;
+ const verified = !!me.email && me.emailVerified;
+ async function saveUsername(e: React.FormEvent) {
+  e.preventDefault();
+  const name = username.trim().toLowerCase();
+  const bad = USERNAME_RE.test(name) ? undefined : "Tên đăng nhập dài 3–20 ký tự, chỉ gồm a-z, 0-9, dấu . _ -.";
+  setErrs(p => ({ ...p, username: bad }));
+  if (bad) return document.getElementById("tk-ten-moi")?.focus();
+  if ((await un.run(() => client.setUsername(name))).ok) { setUsername(""); await onChange("Đã đổi tên đăng nhập. Bạn không đổi lại được nữa."); }
+ }
+ async function saveEmail(e: React.FormEvent) {
+  e.preventDefault();
+  const bad = EMAIL_RE.test(email.trim()) ? undefined : "Hãy nhập email hợp lệ.";
+  setErrs(p => ({ ...p, email: bad }));
+  if (bad) return document.getElementById("tk-email-moi")?.focus();
+  if ((await em.run(() => client.setEmail(email.trim()))).ok) { setEmail(""); await onChange("Đã gửi liên kết xác minh. Hãy mở email (cả mục Spam)."); }
+ }
+ async function regenerate(e: React.FormEvent) {
+  e.preventDefault();
+  if (!password) { setErrs(p => ({ ...p, password: "Hãy nhập mật khẩu để xác nhận." })); return document.getElementById("tk-mk-ma")?.focus(); }
+  setErrs(p => ({ ...p, password: undefined }));
+  const res = await rc.run(() => client.regenerateRecoveryCodes(password));
+  if (res.ok) { setPassword(""); setAskPw(false); setCodes(res.value); }
+ }
+ return <section className={`${card} space-y-5`} aria-labelledby="tk-khoi-phuc">
+  <h2 id="tk-khoi-phuc" className="flex items-center gap-2 text-lg font-extrabold"><ShieldCheck aria-hidden="true" className="size-5"/>Đăng nhập và khôi phục</h2>
+  {!verified && <p role="note" className="rounded-xl border-2 border-amber-600/50 bg-amber-50 p-3 font-semibold text-amber-950">Bạn chưa có email đã xác minh. {me.recoveryCodesLeft > 0 ? "Nếu quên mật khẩu, bạn chỉ khôi phục được bằng mã khôi phục." : "Bạn cũng không còn mã khôi phục, nên nếu quên mật khẩu sẽ KHÔNG khôi phục được tài khoản. Hãy thêm email hoặc tạo mã mới."}</p>}
+  {me.usernameChangeable && <form onSubmit={saveUsername} noValidate className="space-y-3" aria-label="Đổi tên đăng nhập">
+   <Field id="tk-ten-moi" label="Đổi tên đăng nhập (chỉ một lần)" hint={USERNAME_HINT} error={errs.username}>{a => <input {...a} autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={20} value={username} onChange={e => setUsername(e.target.value)} className={inputCls}/>}</Field>
+   <ErrorLine message={un.error}/>
+   <button type="submit" disabled={un.pending || !username} className={`${ghostCls} w-full sm:w-auto`}>{un.pending ? "Đang lưu…" : "Đổi tên"}</button>
+  </form>}
+  <div className="space-y-1"><h3 className="font-bold">Email</h3>
+   {me.email ? <p className="break-all">{me.email} — <strong className={me.emailVerified ? "text-green-800" : "text-amber-900"}>{me.emailVerified ? "đã xác minh" : "chưa xác minh"}</strong></p> : <p>Chưa có email.</p>}</div>
+  <form onSubmit={saveEmail} noValidate className="space-y-3" aria-label={me.email ? "Đổi email" : "Thêm email"}>
+   <Field id="tk-email-moi" label={me.email ? "Email mới" : "Thêm email"} hint="Email đã xác minh dùng để đặt lại mật khẩu. Chúng tôi sẽ gửi liên kết xác minh." error={errs.email}>{a => <input {...a} type="email" autoComplete="email" inputMode="email" value={email} onChange={e => setEmail(e.target.value)} className={inputCls}/>}</Field>
+   <ErrorLine message={em.error}/>
+   <div className="flex flex-col gap-2 sm:flex-row">
+    <button type="submit" disabled={em.pending || !email} className={`${ghostCls} w-full sm:w-auto`}>{em.pending ? "Đang gửi…" : me.email ? "Đổi và gửi xác minh" : "Thêm và gửi xác minh"}</button>
+    {me.email && !me.emailVerified && <button type="button" disabled={em.pending} className={`${ghostCls} w-full sm:w-auto`} onClick={async () => { if ((await em.run(() => client.setEmail(me.email!))).ok) await onChange("Đã gửi lại liên kết xác minh."); }}>Gửi lại liên kết xác minh</button>}
+   </div>
+  </form>
+  <div className="space-y-3"><h3 className="flex items-center gap-2 font-bold"><KeyRound aria-hidden="true" className="size-5"/>Mã khôi phục</h3>
+   <p>Còn <strong>{me.recoveryCodesLeft}</strong> mã dùng được. Tạo lại sẽ cấp 10 mã mới và vô hiệu các mã cũ.</p>
+   {askPw
+    ? <form onSubmit={regenerate} noValidate className="space-y-3" aria-label="Tạo lại mã khôi phục">
+      <Field id="tk-mk-ma" label="Nhập mật khẩu để xác nhận" error={errs.password}>{a => <input {...a} type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className={inputCls}/>}</Field>
+      <ErrorLine message={rc.error}/>
+      <div className="flex flex-col gap-2 sm:flex-row"><button type="button" className={ghostCls} onClick={() => { setAskPw(false); setPassword(""); }}>Hủy</button><button type="submit" disabled={rc.pending} className={`${ctaCls} sm:w-auto`}>{rc.pending ? "Đang tạo…" : "Tạo 10 mã mới"}</button></div>
+     </form>
+    : <button type="button" className={`${ghostCls} w-full sm:w-auto`} onClick={() => setAskPw(true)}>Tạo lại 10 mã khôi phục</button>}
+  </div>
+ </section>;
 }
 
 function SessionButtons({ client, onOut }: { client: ReturnType<typeof createAccountClient>; onOut: () => void }) {
@@ -169,7 +236,7 @@ function DataSection({ client, me, onDeleted }: { client: ReturnType<typeof crea
    <button ref={trigger} type="button" className={danger} onClick={() => setOpen(true)}><Trash2 aria-hidden="true" className="size-5"/>Xóa tài khoản</button>
   </div>
   <ConfirmDialog open={open} title="Xóa tài khoản vĩnh viễn?" onClose={() => { setOpen(false); setPassword(""); trigger.current?.focus(); }}>
-   <p>Tài khoản <strong className="break-all">{me.email}</strong>, mọi hồ sơ của con và kết quả đã lưu sẽ bị xóa và không khôi phục được.</p>
+   <p>Tài khoản <strong className="break-all">{me.username}</strong>, mọi hồ sơ của con và kết quả đã lưu sẽ bị xóa và không khôi phục được.</p>
    {me.hasPassword && <Field id="xoa-mat-khau" label="Nhập mật khẩu để xác nhận">{a => <input {...a} type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} className={inputCls}/>}</Field>}
    <ErrorLine message={del.error}/>
    <div className="flex flex-col gap-3 sm:flex-row"><button type="button" className={ghostCls} onClick={() => setOpen(false)}>Giữ tài khoản</button>
