@@ -9,7 +9,7 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { getGrades } from "@/lib/content/load";
 import { gradePath } from "@/lib/routes";
 import { SITE } from "@/lib/site-config";
-export const metadata = buildMetadata({ title: "Luyện tiếng Anh lớp 6–9", description: "Khám phá nội dung tiếng Anh lớp 6–9 theo kỹ năng, chủ đề và bài luyện tập. Không cần đăng nhập.", path: "/" });
+export const metadata = buildMetadata({ title: "Luyện tiếng Anh miễn phí, không cần đăng nhập", description: "Khám phá nội dung tiếng Anh theo kỹ năng, chủ đề và bài luyện tập. Không cần đăng nhập.", path: "/" });
 export const dynamic = "force-dynamic";
 export default async function Home() {
  await ensureContent();

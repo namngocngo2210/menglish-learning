@@ -14,7 +14,7 @@ const officialExamStatuses: Record<string, string> = {
  "parse-error": "Lỗi phân tích PDF — bỏ qua",
 };
 export const dynamic = "force-dynamic";
-export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh THCS.", path: "/nguon-du-lieu" });
+export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh.", path: "/nguon-du-lieu" });
 export default async function CreditsPage() {
  await ensureContent();
  const bank = loadBundle();
