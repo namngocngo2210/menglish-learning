@@ -2,6 +2,7 @@ import type { FastifyRequest } from "fastify";
 import type pg from "pg";
 import { hmacHex, newToken, safeEqual, sha256Hex } from "../admin/crypto";
 import { HttpProblem } from "../server/problems";
+import type { GoogleConfig } from "./google";
 import type { Mailer } from "./mailer";
 
 /** Parent cookie. Never the admin cookie (__Host-bj_admin): the two principals share nothing. */
@@ -17,6 +18,8 @@ export interface AccountsDeps {
   /** Exact site Origin allowed on state-changing requests, e.g. https://beejunior.meducation.vn */
   origin: string;
   mailer: Mailer;
+  /** Google sign-in; undefined = the /oauth/google routes answer 404. */
+  google?: GoogleConfig;
   now?: () => Date;
 }
 

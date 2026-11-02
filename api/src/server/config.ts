@@ -1,5 +1,7 @@
 import { readFileSync } from "node:fs";
 import { z } from "zod";
+import { GOOGLE_DEFAULTS } from "../accounts/google";
+import type { GoogleConfig } from "../accounts/google";
 
 const EnvSchema = z.object({
   PORT: z.coerce.number().int().min(1).max(65535).default(8080),
@@ -20,6 +22,15 @@ const EnvSchema = z.object({
   USER_SESSION_HMAC_KEY: z.string().min(32).optional(),
   USER_SESSION_HMAC_KEY_FILE: z.string().min(1).optional(),
   ACCOUNTS_ORIGIN: z.url().optional(),
+  GOOGLE_CLIENT_ID: z.string().min(1).optional(),
+  GOOGLE_CLIENT_SECRET: z.string().min(1).optional(),
+  GOOGLE_CLIENT_SECRET_FILE: z.string().min(1).optional(),
+  GOOGLE_REDIRECT_URI: z.url().optional(),
+  // Provider endpoints default to Google's; override only to point tests at a fake OIDC provider.
+  GOOGLE_AUTH_URL: z.url().optional(),
+  GOOGLE_TOKEN_URL: z.url().optional(),
+  GOOGLE_JWKS_URL: z.url().optional(),
+  GOOGLE_ISSUER: z.string().min(1).optional(),
   ADMIN_DIST: z.string().min(1).optional(),
   TRUST_PROXY: z.string().min(1).optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
@@ -39,7 +50,7 @@ export interface ServerConfig {
   /** ADMIN_DIST: directory of the built admin SPA; unset = /admin is not served. */
   adminDist: string | undefined;
   /** Parent accounts; undefined unless ACCOUNTS_ENABLED=true (default off: no routes, nothing visible). */
-  accounts: { hmacKey: string; origin: string } | undefined;
+  accounts: { hmacKey: string; origin: string; google?: GoogleConfig } | undefined;
   rateLimitPerMinute: number;
   /** TRUST_PROXY: "true" or a proxy IP/CIDR list; unset = do not trust X-Forwarded-For. */
   trustProxy: boolean | string;
@@ -88,7 +99,35 @@ export function loadServerConfig(
       throw new Error(
         "Invalid environment: USER_SESSION_HMAC_KEY must differ from SESSION_HMAC_KEY",
       );
-    accounts = { hmacKey: userKey, origin: new URL(v.ACCOUNTS_ORIGIN).origin };
+    const origin = new URL(v.ACCOUNTS_ORIGIN).origin;
+    accounts = { hmacKey: userKey, origin };
+    const secret = read(v.GOOGLE_CLIENT_SECRET_FILE, v.GOOGLE_CLIENT_SECRET);
+    const given = [v.GOOGLE_CLIENT_ID, secret, v.GOOGLE_REDIRECT_URI].filter(
+      (x) => x !== undefined,
+    );
+    if (given.length > 0 && given.length < 3)
+      throw new Error(
+        "Missing environment: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET or GOOGLE_CLIENT_SECRET_FILE, GOOGLE_REDIRECT_URI (set all or none)",
+      );
+    if (v.GOOGLE_CLIENT_ID && secret && v.GOOGLE_REDIRECT_URI) {
+      const redirect = new URL(v.GOOGLE_REDIRECT_URI);
+      if (
+        redirect.origin !== origin ||
+        redirect.pathname !== "/api/v1/account/oauth/google/callback"
+      )
+        throw new Error(
+          "Invalid environment: GOOGLE_REDIRECT_URI (must be ACCOUNTS_ORIGIN + /api/v1/account/oauth/google/callback)",
+        );
+      accounts.google = {
+        clientId: v.GOOGLE_CLIENT_ID,
+        clientSecret: secret,
+        redirectUri: v.GOOGLE_REDIRECT_URI,
+        authUrl: v.GOOGLE_AUTH_URL ?? GOOGLE_DEFAULTS.authUrl,
+        tokenUrl: v.GOOGLE_TOKEN_URL ?? GOOGLE_DEFAULTS.tokenUrl,
+        jwksUrl: v.GOOGLE_JWKS_URL ?? GOOGLE_DEFAULTS.jwksUrl,
+        issuers: v.GOOGLE_ISSUER ? [v.GOOGLE_ISSUER] : GOOGLE_DEFAULTS.issuers,
+      };
+    }
   }
   return {
     accounts,

@@ -48,6 +48,18 @@ export const ACCOUNT_OPERATIONS: readonly ExtraOperation[] = [
     "Set a new password from a reset token; revokes all sessions",
     "account-public",
   ),
+  op(
+    "get",
+    `${P}/oauth/google/start`,
+    "Start Google sign-in (302 to Google; 404 unless Google is configured)",
+    "account-public",
+  ),
+  op(
+    "get",
+    `${P}/oauth/google/callback`,
+    "Google redirect target: verifies state, PKCE and ID token, then 302 to the site",
+    "account-public",
+  ),
   op("post", `${P}/logout`, "Log out this session"),
   op("post", `${P}/logout-all`, "Revoke every session of the account"),
   op("get", `${P}/me`, "Current parent and CSRF token"),
