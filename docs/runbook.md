@@ -78,7 +78,7 @@ Diễn tập khôi phục từ bản R2 bằng khoá riêng: backup-offsite-r2.m
 
 ## 7. Giới hạn tài nguyên (D8) và số đo
 
-Giới hạn trong `deploy/compose.yml`: web 384 MB/1 CPU, api 160 MB/0,5, postgres 256 MB/0,5, worker 320 MB/0,5 (+192 MB khi mở Rooms); `memswap_limit = mem_limit`, `pids_limit`, `read_only`, `cap_drop: ALL`. Số đo thật toàn stack: [ops-measurements-s-f.md](ops-measurements-s-f.md).
+Giới hạn trong `deploy/compose.yml`: web 384 MB/1 CPU, api 192 MB/0,5 (160 trước khi có tài khoản; đỉnh đo 157 MB khi bị dội đăng nhập, pentest-asvs-l2-accounts.md), postgres 256 MB/0,5, worker 320 MB/0,5 (+192 MB khi mở Rooms); `memswap_limit = mem_limit`, `pids_limit`, `read_only`, `cap_drop: ALL`. Số đo thật toàn stack: [ops-measurements-s-f.md](ops-measurements-s-f.md).
 
 ## 8. Quan sát
 
@@ -96,7 +96,7 @@ Log JSON một dòng/sự kiện (pino; không PII, đã redact), xoay `json-fil
 5. Tải client ID/secret và đặt vào tệp env/secret trên host (9.2) bằng tay, không dán vào chat/card.
 
 ### 9.2 Biến môi trường (tên; mẫu ở `deploy/example.env`)
-Đặt trong tệp env quyền **600** của host (kiểm `stat -c %a <tệp>` = 600) hoặc dùng `*_FILE` trỏ tới Docker secret, rồi truyền vào dịch vụ `api`. Hiện `deploy/compose.yml` chưa chuyển các biến `ACCOUNTS_*`/`GOOGLE_*` vào `api`; đó là một thay đổi compose riêng cần làm trước khi bật.
+Đặt trong tệp env quyền **600** của host (kiểm `stat -c %a <tệp>` = 600) hoặc dùng `*_FILE` trỏ tới Docker secret, rồi truyền vào dịch vụ `api`. `deploy/compose.yml` đã chuyển các biến này vào `api` (S-U4); thứ tự và việc của chủ: [deploy-plan-accounts.md](deploy-plan-accounts.md).
 
 | Biến | Ghi chú |
 |---|---|
@@ -123,3 +123,32 @@ Log JSON một dòng/sự kiện (pino; không PII, đã redact), xoay `json-fil
 
 ### 9.5 Rollback
 Đặt `ACCOUNTS_ENABLED=false` (hoặc xóa dòng) trong tệp env ⇒ `dc up -d --force-recreate api`. Route tài khoản/Google về 404; dữ liệu đã tạo giữ nguyên (migration chỉ thêm bảng). Chỉ tắt Google, giữ email+mật khẩu: bỏ cả ba biến `GOOGLE_*`. Nghi lộ secret: thu hồi/tạo lại secret trong Console, cập nhật tệp, tạo lại `api`.
+
+## 10. Tài khoản phụ huynh: vi phạm dữ liệu, sao lưu và xóa
+
+Chỉ áp dụng khi `ACCOUNTS_ENABLED=true`. Dữ liệu có trong DB: email phụ huynh, băm argon2id (không phải mật khẩu), nickname + lớp của hồ sơ con, tiến độ, bằng chứng đồng ý, `sub` Google, băm HMAC của IP, `sha256` của token phiên (vô dụng nếu không có token thô). **Không** có họ tên, ngày sinh, SĐT, địa chỉ, ảnh.
+
+### 10.1 Nghi ngờ lộ/đánh cắp dữ liệu (checklist, làm theo thứ tự)
+Ghi giờ từng bước vào nhật ký sự cố (tệp riêng của chủ, không chứa dữ liệu cá nhân).
+1. **Chặn:** đặt `ACCOUNTS_ENABLED=false`, `dc up -d --force-recreate api web` (route về 404, luyện tập ẩn danh vẫn chạy). Nếu nghi lộ mã/secret: dừng `api` (`dc stop api`) cho tới khi rõ.
+2. **Giữ bằng chứng:** `docker logs` của `api`/`web` (đang xoay `10m×3`: sao chép ngay), bản backup gần nhất, `audit_log` các dòng `user.*` (`psql … -c "SELECT action, count(*), min(created_at), max(created_at) FROM audit_log WHERE entity_type='user' GROUP BY 1"`). DB chỉ đọc.
+3. **Xác định phạm vi:** nguồn (SQL injection? secret lộ? backup lộ? tài khoản chủ bị chiếm?), khoảng thời gian, bảng bị chạm, số tài khoản/hồ sơ (`SELECT count(*) FROM users`, `profiles`). Backup lộ ⇒ phạm vi = dữ liệu tại ngày bản đó.
+4. **Làm mất tác dụng thông tin đã lộ:** `UPDATE user_sessions SET revoked_at = now() WHERE revoked_at IS NULL` (đăng xuất tất cả). Nghi băm mật khẩu lộ ⇒ buộc đặt lại: `UPDATE users SET password_hash = NULL` chỉ khi chủ duyệt (người dùng Google không bị ảnh hưởng; người dùng email phải dùng "Quên mật khẩu"). Secret nghi lộ: thu hồi/tạo lại (Google client secret trong Console; `internal_token`, `session_hmac_key`, DB password theo `gen-secrets.sh` — xóa tệp rồi chạy lại). **Không xoay `user_session_hmac_key` tùy tiện:** nó tạo các mã giả danh dùng để xóa lại sau khôi phục (10.3) và để ký cookie OAuth; xoay thì giữ khóa cũ ở nơi an toàn cho `accounts:reapply-deletions`.
+5. **Sửa nguyên nhân** trước khi bật lại; chạy lại `api/tests/pentest-accounts.test.ts`.
+6. **Thông báo (thời hạn pháp định cần xác nhận với luật sư — NĐ 13/2023 Điều 23 từng quy định báo Bộ Công an trong 72 giờ; Luật 91/2025 và NĐ 356/2025 có thể đổi):** chủ quyết định, trong vòng 72 giờ kể từ khi biết, (a) báo cơ quan có thẩm quyền theo hướng dẫn của luật sư, (b) báo người dùng bị ảnh hưởng qua email (cần nhà gửi email, deploy-plan-accounts A). Nội dung tối thiểu: chuyện gì xảy ra và khi nào, dữ liệu nào bị ảnh hưởng, đã làm gì, người dùng nên làm gì (đặt lại mật khẩu, cẩn trọng thư giả mạo), kênh liên hệ. Không gửi qua kênh chưa xác thực.
+7. **Sau sự cố:** ghi nguyên nhân gốc, thay đổi đã làm, thêm test; cập nhật tài liệu này; chủ quyết định bật lại.
+
+### 10.2 Dọn dữ liệu quá hạn (tự động)
+`accounts:purge-expired` (cron hằng ngày, dịch vụ `accounts-maint`): `login_attempts` > 30 ngày; token email đã dùng/hết hạn > 30 ngày; phiên đã thu hồi/hết hạn tuyệt đối > 30 ngày; `audit_log` `user.*` > 12 tháng. In ra số dòng đã xóa. **Chưa có:** xóa tài khoản nhàn rỗi 24 tháng + email nhắc (thẻ riêng, hạn chót trước 11/2028).
+
+### 10.3 Sao lưu có chứa dữ liệu tài khoản — lưu giữ và xóa
+- **Lưu giữ backup** (đã có): local hằng ngày 14 ngày, hằng tuần 8 tuần, hằng tháng 6 tháng; R2 cùng nấc (+ khóa 14 ngày). ⇒ dữ liệu đã xóa khỏi DB sống **vẫn còn trong backup tối đa 183 ngày** (bản tháng) rồi tự hết; không có thao tác xóa tay trong từng bản (bản mã hóa/bất biến). Chính sách quyền riêng tư phải nói đúng điều này (O2 trong deploy-plan-accounts).
+- **Nguyên tắc:** bản backup chỉ dùng để khôi phục thảm họa; **không** truy vấn nó cho mục đích khác. Sau khôi phục, mọi xóa đã thực hiện phải được áp lại **trước khi mở lại** `api`.
+- **Quy trình khôi phục + xóa lại** (cần chủ duyệt, thêm vào bước 5.3 phía trên):
+  1. *Trước khi bỏ DB hỏng*, nếu còn đọc được, xuất bằng chứng xóa (không chứa dữ liệu cá nhân): `docker exec beejunior-postgres-1 psql -U postgres -d beejunior -At -c "SELECT coalesce(json_agg(json_build_object('userRef',user_ref,'scope',scope,'targetRef',target_ref)),'[]') FROM deletion_requests" > ~/deletions.json` (quyền 600).
+  2. Khôi phục bản backup như mục 5.3 (api đang dừng: `dc stop api`).
+  3. Nếu DB cũ đã mất: lấy `deletions.json` từ **bản backup mới nhất** (cùng truy vấn trên, chạy trong DB vừa khôi phục) — chỉ phủ các lần xóa tới ngày bản đó.
+  4. `dc run --rm -v ~/deletions.json:/in.json:ro accounts-maint accounts:reapply-deletions --file /in.json` ⇒ in `{"users":N,"profiles":M}` (số tài khoản/hồ sơ được xóa lại). Cần `user_session_hmac_key` **đúng bản đã dùng** khi xóa.
+  5. `dc up -d api`; kiểm đăng nhập một tài khoản thử còn tồn tại.
+  6. **Khoảng hở còn lại:** yêu cầu xóa xảy ra sau backup cuối mà không xuất được `deletions.json` sẽ không tự áp lại. Chủ đối chiếu các yêu cầu xóa nhận qua kênh liên hệ kể từ giờ bản backup và xóa tay bằng `psql`; ghi vào nhật ký.
+- **Kiểm định kỳ:** mỗi quý chạy diễn tập trên DB tạm: khôi phục một bản, áp `deletions.json` từ DB sống, kiểm số tài khoản đã xóa không còn (đã có test tự động `api/tests/accounts-maintenance.test.ts`).

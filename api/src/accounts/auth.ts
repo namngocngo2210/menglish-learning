@@ -46,6 +46,8 @@ export function createUserAuth(deps: AccountsDeps) {
   const ipHash = (request: FastifyRequest): string => hmacHex(hmacKey, request.ip);
   /** Stable pseudonym of a user for audit_log / deletion_requests, which must hold no personal data. */
   const userRef = (userId: string): string => hmacHex(hmacKey, `user:${userId}`);
+  /** Same idea for a deleted profile (its external id), so a restored old backup can be purged again. */
+  const profileRef = (externalId: string): string => hmacHex(hmacKey, `profile:${externalId}`);
 
   async function audit(
     action: string,
@@ -173,6 +175,7 @@ export function createUserAuth(deps: AccountsDeps) {
     now,
     ipHash,
     userRef,
+    profileRef,
     audit,
     originOk,
     denyCsrf,

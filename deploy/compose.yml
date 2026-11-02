@@ -126,13 +126,33 @@ services:
       postgres: { condition: service_healthy }
     profiles: [tools]
 
+  # Account retention + post-restore re-deletion (docs/runbook.md 10.3). Owner DB role: audit_log is append-only for bj_api.
+  #   dc run --rm accounts-maint accounts:purge-expired          (daily, deploy/ops/crontab.example)
+  #   dc run --rm -v /path/deletions.json:/in.json:ro accounts-maint accounts:reapply-deletions --file /in.json
+  accounts-maint:
+    <<: *hardening
+    image: beejunior-api:${TAG:-local}
+    entrypoint: ["node", "dist/main.mjs"]
+    restart: "no"
+    mem_limit: 128m
+    memswap_limit: 128m
+    tmpfs: [/tmp]
+    environment:
+      DATABASE_URL_FILE: /run/secrets/db_url_superuser
+      USER_SESSION_HMAC_KEY_FILE: /run/secrets/user_session_hmac_key
+    secrets: [db_url_superuser, user_session_hmac_key]
+    networks: [bj-internal]
+    depends_on:
+      postgres: { condition: service_healthy }
+    profiles: [tools]
+
   api:
     <<: *hardening
     image: beejunior-api:${TAG:-local}
     build: { context: .., dockerfile: api/Dockerfile }
     command: ["node", "--max-old-space-size=96", "--max-semi-space-size=2", "dist/server/main.mjs"]
-    mem_limit: 160m
-    memswap_limit: 160m
+    mem_limit: 192m
+    memswap_limit: 192m
     cpus: 0.5
     pids_limit: 128
     tmpfs: [/tmp]
@@ -144,7 +164,14 @@ services:
       TOTP_ENC_KEY_FILE: /run/secrets/totp_enc_key
       ADMIN_ORIGIN: ${ADMIN_ORIGIN:-https://beejunior.meducation.vn} # without these three the admin API stays disabled
       TRUST_PROXY: ${TRUST_PROXY:-} # proxy IP/CIDR (Caddy) or true; empty = ignore X-Forwarded-For
-    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key]
+      # Parent accounts (docs/deploy-plan-accounts.md). Off unless ACCOUNTS_ENABLED=true; then key + origin are required.
+      ACCOUNTS_ENABLED: ${ACCOUNTS_ENABLED:-false}
+      ACCOUNTS_ORIGIN: ${ACCOUNTS_ORIGIN:-https://beejunior.meducation.vn}
+      USER_SESSION_HMAC_KEY_FILE: /run/secrets/user_session_hmac_key
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-} # Google sign-in needs all three GOOGLE_* values, or none
+      GOOGLE_CLIENT_SECRET_FILE: ${GOOGLE_CLIENT_SECRET_FILE:-} # /run/secrets/google_client_secret once the owner fills it
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
+    secrets: [db_url_api, internal_token, report_salt, session_hmac_key, totp_enc_key, user_session_hmac_key, google_client_secret]
     depends_on:
       postgres: { condition: service_healthy }
     networks:
@@ -171,6 +198,7 @@ services:
         NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
         SEO_NOINDEX: ${SEO_NOINDEX:-false}
         ROOMS_ENABLED: ${ROOMS_ENABLED:-false} # read at build time by static pages: flip => rebuild web
+        ACCOUNTS_ENABLED: ${ACCOUNTS_ENABLED:-false} # same: web reads it at build AND run time (false = account pages 404)
     # Edge cache on :3100 spawns Next on 127.0.0.1:3000 inside the same container.
     command: ["node", "--max-old-space-size=256", "edge/edge.mjs"]
     mem_limit: 384m
@@ -183,6 +211,7 @@ services:
       DATABASE_URL_FILE: /run/secrets/db_url_web
       INTERNAL_TOKEN_FILE: /run/secrets/internal_token
       PG_POOL_MAX: "5"
+      ACCOUNTS_ENABLED: ${ACCOUNTS_ENABLED:-false}
       HTML_MAX_BYTES: "67108864"
       NODE_OPTIONS: "--max-old-space-size=256"
     secrets: [db_url_web, internal_token]
@@ -265,3 +294,5 @@ secrets:
   report_salt: { file: "${SECRETS_DIR}/report_salt" }
   session_hmac_key: { file: "${SECRETS_DIR}/session_hmac_key" }
   totp_enc_key: { file: "${SECRETS_DIR}/totp_enc_key" }
+  user_session_hmac_key: { file: "${SECRETS_DIR}/user_session_hmac_key" }
+  google_client_secret: { file: "${SECRETS_DIR}/google_client_secret" }

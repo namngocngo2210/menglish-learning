@@ -40,6 +40,14 @@ put internal_token "$(rand)"
 put report_salt "$(rand)"
 put session_hmac_key "$(rand)$(rand)"
 put totp_enc_key "$(openssl rand -base64 32)"
+# Parent accounts: a DIFFERENT key from session_hmac_key (admin). Unused while ACCOUNTS_ENABLED is off.
+put user_session_hmac_key "$(rand)$(rand)"
+# google_client_secret is never generated: the owner pastes the value from Google Cloud Console (runbook section 9).
+if [ ! -e "$dir/google_client_secret" ]; then
+  : > "$dir/google_client_secret"
+  chmod 600 "$dir/google_client_secret"
+  echo "create google_client_secret (EMPTY: paste the Google Cloud Console value)"
+fi
 
 # Off-host backup settings live in their OWN directory (mounted into the uploader container, never next to the
 # DB secrets). Only an empty 600 template is created; the owner fills in the R2 values and copies the PUBLIC key.
