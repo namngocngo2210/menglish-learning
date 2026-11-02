@@ -69,6 +69,19 @@ export interface AuditLog {
   ip_hash: string | null;
 }
 
+export interface Consents {
+  external_id: Generated<string>;
+  given_at: Generated<Timestamp>;
+  id: Generated<Int8>;
+  ip_hash: string | null;
+  policy_version: string;
+  profile_id: Int8 | null;
+  purpose: string;
+  text_hash: string;
+  user_id: Int8;
+  withdrawn_at: Timestamp | null;
+}
+
 export interface CrawlErrors {
   crawl_job_id: Int8;
   created_at: Generated<Timestamp>;
@@ -94,6 +107,24 @@ export interface CrawlJobs {
   source_id: Int8;
   started_at: Timestamp | null;
   status: Generated<string>;
+}
+
+export interface DeletionRequests {
+  done_at: Timestamp | null;
+  due_at: Timestamp;
+  id: Generated<Int8>;
+  requested_at: Generated<Timestamp>;
+  scope: string;
+  user_ref: string;
+}
+
+export interface Identities {
+  created_at: Generated<Timestamp>;
+  email_at_link: string;
+  id: Generated<Int8>;
+  provider: string;
+  subject: string;
+  user_id: Int8;
 }
 
 export interface LoginAttempts {
@@ -139,6 +170,21 @@ export interface Passages {
   updated_at: Generated<Timestamp>;
   version: Generated<number>;
   word_count: number;
+}
+
+export interface ProfileAttempts {
+  attempt_id: string;
+  created_at: Generated<Timestamp>;
+  profile_id: Int8;
+}
+
+export interface Profiles {
+  created_at: Generated<Timestamp>;
+  external_id: Generated<string>;
+  grade: number;
+  id: Generated<Int8>;
+  nickname: string;
+  user_id: Int8;
 }
 
 export interface QuestionReports {
@@ -246,6 +292,40 @@ export interface Topics {
   sort_order: Generated<number>;
 }
 
+export interface Users {
+  created_at: Generated<Timestamp>;
+  email: string;
+  email_verified_at: Timestamp | null;
+  id: Generated<Int8>;
+  last_login_at: Timestamp | null;
+  password_hash: string | null;
+  status: Generated<string>;
+}
+
+export interface UserSessions {
+  absolute_expires_at: Timestamp;
+  created_at: Generated<Timestamp>;
+  csrf_secret: string;
+  expires_at: Timestamp;
+  id: string;
+  ip_hash: string | null;
+  last_seen_at: Generated<Timestamp>;
+  revoked_at: Timestamp | null;
+  rotated_from: string | null;
+  user_agent_hash: string | null;
+  user_id: Int8;
+}
+
+export interface UserTokens {
+  created_at: Generated<Timestamp>;
+  expires_at: Timestamp;
+  id: Generated<Int8>;
+  purpose: string;
+  token_sha256: string;
+  used_at: Timestamp | null;
+  user_id: Int8;
+}
+
 export interface VPublicPassages {
   body: string | null;
   crawled_at: Timestamp | null;
@@ -321,12 +401,17 @@ export interface DB {
   admin_sessions: AdminSessions;
   admin_users: AdminUsers;
   audit_log: AuditLog;
+  consents: Consents;
   crawl_errors: CrawlErrors;
   crawl_jobs: CrawlJobs;
+  deletion_requests: DeletionRequests;
+  identities: Identities;
   login_attempts: LoginAttempts;
   mixer_presets: MixerPresets;
   outbox_events: OutboxEvents;
   passages: Passages;
+  profile_attempts: ProfileAttempts;
+  profiles: Profiles;
   question_reports: QuestionReports;
   question_revisions: QuestionRevisions;
   questions: Questions;
@@ -335,6 +420,9 @@ export interface DB {
   test_items: TestItems;
   tests: Tests;
   topics: Topics;
+  user_sessions: UserSessions;
+  user_tokens: UserTokens;
+  users: Users;
   v_public_passages: VPublicPassages;
   v_public_questions: VPublicQuestions;
   v_public_sources: VPublicSources;

@@ -8,7 +8,7 @@ import { CONTENT_DIR } from "./content-dir";
 import { ADMIN_URL, createMigratedDb, createTestDb } from "./helpers";
 import type { TestDb } from "./helpers";
 
-const MIGRATION_COUNT = 26;
+const MIGRATION_COUNT = 35;
 
 async function tables(db: TestDb): Promise<string[]> {
   const { rows } = await db.admin.query<{ table_name: string }>(
@@ -34,12 +34,17 @@ describe.skipIf(ADMIN_URL === undefined)("migrations on an empty database", () =
       "admin_sessions",
       "admin_users",
       "audit_log",
+      "consents",
       "crawl_errors",
       "crawl_jobs",
+      "deletion_requests",
+      "identities",
       "login_attempts",
       "mixer_presets",
       "outbox_events",
       "passages",
+      "profile_attempts",
+      "profiles",
       "question_reports",
       "question_revisions",
       "questions",
@@ -48,6 +53,9 @@ describe.skipIf(ADMIN_URL === undefined)("migrations on an empty database", () =
       "test_items",
       "tests",
       "topics",
+      "user_sessions",
+      "user_tokens",
+      "users",
     ]);
     const applied = await db.admin.query("SELECT 1 FROM pgmigrations");
     expect(applied.rowCount).toBe(MIGRATION_COUNT);
@@ -108,7 +116,7 @@ describe.skipIf(ADMIN_URL === undefined)("migrations on an empty database", () =
          AND table_name NOT LIKE 'v_public_%'`,
     );
     const odd = rows.filter((r) => !(r.data_type === "bigint" && r.is_identity === "YES"));
-    expect(odd.map((r) => r.table_name)).toEqual(["admin_sessions"]); // sha256(token) text key
+    expect(odd.map((r) => r.table_name)).toEqual(["admin_sessions", "user_sessions"]); // sha256(token) text key
   });
 
   it("stores no student personal data columns", async () => {
@@ -144,7 +152,7 @@ describe.skipIf(ADMIN_URL === undefined)("migration down/up", () => {
       }
       expect(await tables(db)).toEqual([]);
       expect(await migrate(db.url, { direction: "up" })).toHaveLength(MIGRATION_COUNT);
-      expect((await tables(db)).length).toBe(18);
+      expect((await tables(db)).length).toBe(26);
     } finally {
       await db.remove();
     }
