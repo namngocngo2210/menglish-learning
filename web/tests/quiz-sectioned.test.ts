@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { createElement } from "react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { cleanup, render, screen, within, fireEvent } from "@testing-library/react";
+import { cleanup, render, screen, within, fireEvent, waitFor } from "@testing-library/react";
 import { Quiz } from "@/components/quiz/Quiz";
 import { SectionedPractice } from "@/components/quiz/SectionedPractice";
 import { buildSections, type QuizQuestion } from "@/lib/quiz/sections";
@@ -9,6 +9,8 @@ import { buildSections, type QuizQuestion } from "@/lib/quiz/sections";
 const q = (id: string, passageId?: string): QuizQuestion => ({ id, stem: `Stem ${id}`, options: (["A", "B", "C", "D"] as const).map(key => ({ key, text: `${id} opt ${key}` })), correctKey: "A", explanation: `Giải thích ${id}`, passageId });
 const passages = [1, 2].map(n => ({ id: `p${n}`, title: `Title ${n}`, body: `Body ${n}`, wordCount: 2, level: 1 }));
 const questions = [q("a1", "p1"), q("a2", "p1"), q("b1", "p2"), q("s1")];
+// Dialogs are code-split, so they appear one tick after the click.
+const openDialog = () => waitFor(() => { const d = document.querySelector<HTMLElement>("dialog[open]"); if (!d) throw new Error("no dialog"); return d; });
 const mount = (props = {}) => render(createElement(Quiz, { questions, passages, progressKey: "demo", ...props }));
 const section = (id: string) => document.getElementById(`section-${id}`)!;
 const hidden = (el: HTMLElement) => el.hasAttribute("data-inactive");
@@ -72,26 +74,26 @@ describe("sectioned quiz", () => {
   expect(screen.getByText("Giải thích a1")).toBeTruthy();
   expect(document.querySelector<HTMLFieldSetElement>("#question-a1 fieldset")!.disabled).toBe(true);
  });
- it("asks for confirmation listing unanswered questions before submit", () => {
+ it("asks for confirmation listing unanswered questions before submit", async () => {
   mount();
   pick("a1");
   fireEvent.click(screen.getByRole("button", { name: "Nộp bài" }));
-  const dialog = (document.querySelector("dialog[open]") as HTMLElement);
+  const dialog = await openDialog();
   expect(dialog.textContent).toContain("Em còn 3 câu chưa làm");
   expect(dialog.textContent).toContain("Bài đọc 1/2: còn 1 câu");
   expect(dialog.textContent).toContain("Câu độc lập: còn 1 câu");
   fireEvent.click(within(dialog).getByRole("button", { name: "Quay lại làm tiếp" }));
   expect(screen.queryByText("Kết quả của em")).toBeNull();
   fireEvent.click(screen.getByRole("button", { name: "Nộp bài" }));
-  fireEvent.click(within((document.querySelector("dialog[open]") as HTMLElement)).getByRole("button", { name: "Nộp bài" }));
+  fireEvent.click(within(await openDialog()).getByRole("button", { name: "Nộp bài" }));
   expect(screen.getByText("Kết quả của em")).toBeTruthy();
   expect(screen.getByText("1/4")).toBeTruthy();
  });
- it("overview marks answered and unanswered questions and jumps to a section", () => {
+ it("overview marks answered and unanswered questions and jumps to a section", async () => {
   mount();
   pick("a1");
   fireEvent.click(screen.getByRole("button", { name: /Tổng quan/ }));
-  const dialog = (document.querySelector("dialog[open]") as HTMLElement);
+  const dialog = await openDialog();
   expect(within(dialog).getAllByText(/chưa làm/).length).toBe(3);
   expect(within(dialog).getByText("đã làm", { selector: ".sr-only" }).textContent).toContain("đã làm");
   fireEvent.click(within(dialog).getByRole("button", { name: /^4/ }));
@@ -109,11 +111,11 @@ describe("sectioned quiz", () => {
   expect(hidden(section("p2"))).toBe(false);
   expect(screen.getByText("Đã khôi phục bài làm đang dở.")).toBeTruthy();
  });
- it("clears saved state after submit", () => {
+ it("clears saved state after submit", async () => {
   mount();
   pick("a1");
   fireEvent.click(screen.getByRole("button", { name: "Nộp bài" }));
-  fireEvent.click(within((document.querySelector("dialog[open]") as HTMLElement)).getByRole("button", { name: "Nộp bài" }));
+  fireEvent.click(within(await openDialog()).getByRole("button", { name: "Nộp bài" }));
   expect(localStorage.getItem("ml:quiz:v1:demo")).toBeNull();
  });
 });

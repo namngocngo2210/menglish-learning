@@ -24,7 +24,7 @@ export function PageShell({ title, children, hero, compact }: { title: string; c
   <SiteHeader/>
   <main id="noi-dung" tabIndex={-1} className="flex-1 outline-none">
    {compact ? null : hero ?? <div className="border-b border-navy-soft/10 bg-warm"><div className="mx-auto max-w-6xl px-5 py-9 sm:px-8 sm:py-12"><p className="mb-3 text-sm font-semibold text-primary">BeeJunior · Luyện tập tiếng Anh</p><h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">{title}</h1></div></div>}
-   <div className={compact ? "mx-auto max-w-6xl space-y-3 px-5 py-2 sm:space-y-4 sm:px-8 sm:py-4" : "mx-auto max-w-6xl space-y-8 px-5 py-8 sm:px-8 sm:py-12"}>{children}</div>
+   <div className={compact ? "mx-auto max-w-6xl space-y-3 px-5 py-2 sm:space-y-3 sm:px-8 sm:py-3" : "mx-auto max-w-6xl space-y-8 px-5 py-8 sm:px-8 sm:py-12"}>{children}</div>
   </main>
   <SiteFooter/>
  </div>;
@@ -32,7 +32,7 @@ export function PageShell({ title, children, hero, compact }: { title: string; c
 /** Below 640px only the last two levels show, behind a "…" link to the level above; the full chain stays in the DOM and in JSON-LD. */
 export function Breadcrumbs({ items }: { items: readonly NavigationItem[] }) {
  const hiddenUntil = items.length - 2; const up = items[hiddenUntil - 1];
- return <nav aria-label="Đường dẫn"><ol className="flex min-w-0 items-center gap-x-2 text-sm max-sm:flex-nowrap sm:flex-wrap">{up?.href && <li className="flex shrink-0 items-center sm:hidden"><Link aria-label={`Lên ${up.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center" href={up.href}>…</Link></li>}{items.map((item, index) => <li key={index} className={`flex min-w-0 max-w-full items-center gap-2${index < hiddenUntil ? " max-sm:hidden" : ""}`}>{index > 0 && <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-navy-soft"/>}{item.href && index < items.length - 1 ? <Link className="inline-flex min-h-11 min-w-0 items-center py-2" href={item.href}><span className="truncate">{item.label}</span></Link> : <span className="min-w-0 truncate py-2 font-medium" aria-current="page">{item.label}</span>}</li>)}</ol></nav>;
+ return <nav aria-label="Đường dẫn"><ol className="flex min-w-0 items-center gap-x-2 text-sm max-sm:flex-nowrap sm:flex-wrap">{up?.href && <li className="flex shrink-0 items-center sm:hidden"><Link aria-label={`Lên ${up.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center" href={up.href}>…</Link></li>}{items.map((item, index) => <li key={index} className={`flex min-w-0 max-w-full items-center gap-2${index < hiddenUntil ? " max-sm:hidden" : ""}`}>{index > 0 && <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-navy-soft"/>}{item.href && index < items.length - 1 ? <Link className="inline-flex min-h-11 min-w-0 items-center py-2 pointer-fine:min-h-8 pointer-fine:py-0" href={item.href}><span className="truncate">{item.label}</span></Link> : <span className="min-w-0 truncate py-2 font-medium pointer-fine:py-0" aria-current="page">{item.label}</span>}</li>)}</ol></nav>;
 }
 export function LinkCardList({ items, emptyMessage = "Nội dung đang được chuẩn bị. Em hãy quay lại sau nhé." }: { items: readonly LinkCard[]; emptyMessage?: string }) {
  if (!items.length) return <div className="flex items-center gap-4 rounded-2xl border border-dashed border-navy-soft/30 bg-warm p-6"><Image unoptimized src="/brand/mascot.webp" alt="" width={512} height={348} loading="lazy" className="h-auto w-18 shrink-0"/><p>{emptyMessage}</p></div>;

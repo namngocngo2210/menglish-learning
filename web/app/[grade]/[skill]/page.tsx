@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ grade: st
  await ensureContent();
  const p = await params; const grade = parseGradeSlug(p.grade); const skill = parseSkill(p.skill);
  if (!grade || !skill || !getSkills(grade).includes(skill)) return {};
- return buildMetadata({ title: fitTitle(`${SKILL_NAMES[skill]} lớp ${grade}`, ": bài tập có đáp án"), description: `Luyện ${SKILL_NAMES[skill].toLowerCase()} tiếng Anh lớp ${grade}: ${skillStats(grade, skill).tests} đề, ${skillStats(grade, skill).questions} câu hỏi theo ${skillStats(grade, skill).topics} chủ đề, có đáp án và giải thích tiếng Việt.`, path: skillPath(grade, skill) });
+ return buildMetadata({ title: fitTitle(`${SKILL_NAMES[skill]} lớp ${grade}`, ": bài tập có đáp án"), description: `Luyện ${SKILL_NAMES[skill].toLowerCase()} tiếng Anh lớp ${grade}: ${skillStats(grade, skill).tests} đề, ${skillStats(grade, skill).questions} câu hỏi${skillStats(grade, skill).topics > 1 ? ` theo ${skillStats(grade, skill).topics} chủ đề` : ""}, có đáp án và giải thích tiếng Việt.`, path: skillPath(grade, skill) });
 }
 export default async function SkillPage({ params }: { params: Promise<{ grade: string; skill: string }> }) {
  await ensureContent();

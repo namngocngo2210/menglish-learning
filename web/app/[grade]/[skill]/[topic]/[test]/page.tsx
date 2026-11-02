@@ -10,7 +10,7 @@ import { Quiz } from "@/components/quiz/Quiz";
 import { JsonLd } from "@/components/json-ld";
 import { TITLE_MAX, buildMetadata, breadcrumbJsonLd, quizJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { PageShell, Breadcrumbs, PageTitle, ChipList } from "@/components/ui-kit";
+import { PageShell, Breadcrumbs, ChipList } from "@/components/ui-kit";
 import { roomsEnabled } from "@/lib/rooms/flag";
 import { getTestWithQuestions, getTopics, getTestsForTopic, estimateMinutes } from "@/lib/content/load";
 import { isSlug, roomsLandingPath, gradeSlug, parseGradeSlug, parseSkill, testPath, homePath, gradePath, skillPath, topicPath, SKILL_NAMES } from "@/lib/routes";
@@ -40,8 +40,7 @@ export default async function TestPage({ params }: { params: Promise<{ grade: st
  const roomHref = `${roomsLandingPath()}?de=${test.slug}#tao-phong`;
  return <PageShell compact title={heading}><JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: `Lớp ${grade}`, path: gradePath(grade) }, { name: SKILL_NAMES[skill], path: skillPath(grade, skill) }, { name: topic.name, path: topicPath(grade, skill, topic.slug) }, { name: test.title, path: testPath(grade, skill, topic.slug, p.test) }])}/><Breadcrumbs items={[{label:"Trang chủ",href:homePath()},{label:`Lớp ${grade}`,href:gradePath(grade)},{label:SKILL_NAMES[skill],href:skillPath(grade,skill)},{label:topic.name,href:topicPath(grade,skill,topic.slug)},{label:`Đề ${number}`}]}/>
  <JsonLd data={quizJsonLd({ name: test.title, description: `Bài tập tiếng Anh lớp ${grade}, kỹ năng ${SKILL_NAMES[skill].toLowerCase()}, chủ đề ${topic.name}.`, path: testPath(grade, skill, topic.slug, p.test), grade, skillName: SKILL_NAMES[skill], topicName: topic.name, questionCount: test.questions.length, datePublished: test.publishedAt })}/>
- <PageTitle title={heading}/>
- <div className="flex flex-wrap items-center gap-x-4"><p className="min-w-0 flex-1 text-sm font-semibold text-primary sm:text-base">{context}<PreviousResult slug={test.slug}/></p><HowTo/></div>
+ <header className="flex flex-wrap items-center gap-x-4"><h1 className="text-xl leading-tight font-extrabold tracking-tight sm:text-2xl">{heading}</h1><p className="min-w-0 flex-1 text-sm font-semibold text-primary sm:text-base">{context}<PreviousResult slug={test.slug}/></p><HowTo/></header>
  <RandomQuiz hideTrigger poolUrl={`/pool/${gradeSlug(grade)}/${skill}/${topic.slug}`} afterResult={<AdSlot slot="footer"/>}>
   <Quiz questions={quiz.questions.map(({ id, stem, options, correctKey, explanation, passageId }) => ({ id, stem, options, correctKey, explanation, passageId }))} passages={quiz.passages} progressKey={test.slug} afterResult={<AdSlot slot="footer"/>} menu={roomsEnabled() ? <Link href={roomHref}>Tạo phòng từ đề này</Link> : undefined}/>
   <nav aria-label="Đề liên quan" className="mt-8 space-y-3"><h2 className="text-lg font-bold">Đề tiếp theo</h2>
