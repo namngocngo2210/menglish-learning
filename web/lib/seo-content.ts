@@ -6,10 +6,10 @@ import { getTopicDef } from "@/lib/topics/registry";
 export type Faq = { question: string; answer: string };
 
 export const SKILL_INTROS: Record<Skill, string> = {
- "doc-hieu": "Đọc hiểu giúp em làm quen với bài đọc ngắn, tìm ý chính, chi tiết và nghĩa của từ trong ngữ cảnh. Hãy đọc bài một lần để nắm ý chung, sau đó quay lại đoạn liên quan trước khi chọn đáp án.",
- "ngu-phap": "Ngữ pháp luyện cách chia thì, chọn dạng từ và dùng cấu trúc câu đúng. Mỗi chủ đề có phần kiến thức cần nhớ, ví dụ và các đề để em kiểm tra xem mình đã hiểu quy tắc chưa.",
- "tu-vung": "Từ vựng giúp em mở rộng vốn từ theo chủ đề quen thuộc như gia đình, trường học, ẩm thực hay du lịch. Em học nghĩa, cách dùng trong câu và làm bài chọn đáp án để ghi nhớ lâu hơn.",
- "viet-cau": "Viết câu luyện cách sắp xếp ý, chọn câu có nghĩa và diễn đạt rõ ràng. Em nên đọc cả câu trước khi chọn, rồi so sánh đáp án với phần giải thích sau khi kiểm tra.",
+ "doc-hieu": "Đọc bài ngắn, tìm ý chính, chi tiết và nghĩa của từ trong ngữ cảnh.",
+ "ngu-phap": "Luyện chia thì, chọn dạng từ và dùng cấu trúc câu đúng; mỗi chủ đề có phần kiến thức cần nhớ và ví dụ.",
+ "tu-vung": "Mở rộng vốn từ theo chủ đề quen thuộc, học nghĩa và cách dùng trong câu.",
+ "viet-cau": "Luyện sắp xếp ý, chọn câu có nghĩa và diễn đạt rõ ràng.",
 };
 
 export function gradeStats(grade: Grade) {
@@ -43,8 +43,8 @@ export function buildSkillFaq(grade: Grade, skill: Skill): Faq[] {
  const s = skillStats(grade, skill);
  const name = SKILL_NAMES[skill].toLowerCase();
  return [
-  { question: `Lớp ${grade} có bao nhiêu đề ${name}?`, answer: `Hiện có ${s.tests} đề ${name} lớp ${grade} với ${s.questions} câu hỏi, chia theo ${s.topics} chủ đề và phần tổng hợp.` },
-  { question: `Nên bắt đầu luyện ${name} lớp ${grade} từ đâu?`, answer: "Em chọn một chủ đề muốn ôn, đọc phần kiến thức (nếu có) rồi làm đề đầu tiên. Khi đã quen, em có thể làm phần tổng hợp để trộn nhiều dạng câu." },
+  { question: `Lớp ${grade} có bao nhiêu đề ${name}?`, answer: `Hiện có ${s.tests} đề ${name} lớp ${grade} với ${s.questions} câu hỏi${skill === "doc-hieu" ? ", chia thành đề dài (khoảng 20 câu) và đề ngắn (khoảng 10 câu)" : s.topics ? `, chia theo ${s.topics} chủ đề và các đề tổng hợp` : ""}.` },
+  { question: `Nên bắt đầu luyện ${name} lớp ${grade} từ đâu?`, answer: skill === "doc-hieu" ? "Làm một đề ngắn để làm quen, rồi chuyển sang đề dài. Đọc bài một lần để nắm ý chung, sau đó quay lại đoạn liên quan trước khi chọn đáp án." : "Em chọn một chủ đề muốn ôn, đọc phần kiến thức (nếu có) rồi làm đề đầu tiên. Khi đã quen, em có thể làm đề tổng hợp để trộn nhiều dạng câu." },
   explanation,
  ];
 }
@@ -52,7 +52,7 @@ export function buildSkillFaq(grade: Grade, skill: Skill): Faq[] {
 export function buildTopicFaq(grade: Grade, skill: Skill, topicSlug: string, topicName: string, questionCount: number, testCount: number): Faq[] {
  const def = getTopicDef(skill, topicSlug);
  const faq: Faq[] = [
-  { question: `${topicName} lớp ${grade} có bao nhiêu câu hỏi?`, answer: `Có ${questionCount} câu hỏi trong ${testCount} đề luyện tập${testCount ? ", em có thể làm từng đề hoặc làm bài trộn ngẫu nhiên" : ""}.` },
+  { question: `${topicName} lớp ${grade} có bao nhiêu câu hỏi?`, answer: `Có ${questionCount} câu hỏi trong ${testCount} đề${skill === "doc-hieu" ? (topicSlug === "chung" ? ", mỗi đề khoảng 20 câu từ 2–4 bài đọc" : ", mỗi đề khoảng 10 câu") : ""}${testCount ? ". Em làm từng đề hoặc làm đề ngẫu nhiên" : ""}.` },
  ];
  if (def?.tips?.length) faq.push({ question: `Cần lưu ý gì khi làm bài ${topicName.toLowerCase()}?`, answer: def.tips.join(" ") });
  else faq.push({ question: `Em ôn ${topicName.toLowerCase()} như thế nào cho hiệu quả?`, answer: "Làm từng đề, bấm “Kiểm tra” sau mỗi câu để đọc giải thích, rồi làm lại các câu đã sai." });

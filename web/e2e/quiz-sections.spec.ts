@@ -10,7 +10,7 @@ async function shot(page: Page, info: TestInfo, name: string) {
 const isDesktop = (info: TestInfo) => info.project.name === "desktop-1440";
 async function openQuiz(page: Page, url: string) {
  await page.goto(url);
- await page.getByRole("heading", { name: "Bài luyện của em" }).waitFor();
+ await page.getByRole("button", { name: "Nộp bài" }).waitFor();
  // Wait for hydration: the control bar is live once Tổng quan responds.
  await expect(page.getByRole("button", { name: /Tổng quan/ })).toBeEnabled();
 }
