@@ -13,11 +13,11 @@ const hash = (items: unknown[]) => createHash("sha256").update(items.map(i => JS
 const bank = [6, 7, 8, 9].map(g => JSON.parse(readFileSync(`content/tests/bank-grade-${g}.json`, "utf8")));
 
 it("renaming display names left every question, passage and test composition unchanged", () => {
- // Hashes taken from the bank before the rename; only topic names, titles and descriptions may differ.
- const items = bank.flatMap(b => [...b.questions.map((q: Record<string, unknown>) => [q.id, q.stem, q.options, q.correctKey, q.explanation, q.passageId, q.topicSlug]), ...b.passages.map((p: Record<string, unknown>) => [p.id, p.title, p.body])]);
+ // Hashes taken from the bank before the rename (explanations excluded: they were reduced to the rule only, see why-not.test.ts); only topic names, titles and descriptions may differ.
+ const items = bank.flatMap(b => [...b.questions.map((q: Record<string, unknown>) => [q.id, q.stem, q.options, q.correctKey, q.passageId, q.topicSlug]), ...b.passages.map((p: Record<string, unknown>) => [p.id, p.title, p.body])]);
  const tests = bank.flatMap(b => b.tests.map((t: Record<string, unknown>) => [t.slug, t.grade, t.skill, t.topicSlug, t.kind, t.seed, t.questionIds, t.optionOrder]));
  expect(items).toHaveLength(2748); expect(tests).toHaveLength(295);
- expect(hash(items)).toBe("855239a026bb324803ad8bf4cc36b17f6e7d50bb7f6cf22c9b2e13b56b03fc47");
+ expect(hash(items)).toBe("bfd179a0b86fa74af76c11880ba6154a40da85bdb93f4235b0b11e8edeacca74");
  expect(hash(tests)).toBe("0bb912538768752f83ea9b55f4ea58c719c11609fe34b8a81f029ad090e5ef12");
 });
 it("shows reading's two sets as Đề dài / Đề ngắn without touching URLs", () => {

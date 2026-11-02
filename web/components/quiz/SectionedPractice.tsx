@@ -2,6 +2,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, CircleHelp, XCircle } from "lucide-react";
 import { numberQuestions, sectionProgress, type Answers, type DisplayQuestion, type QuizQuestion, type QuizSection } from "@/lib/quiz/sections";
+import { whyNot } from "@/lib/quiz/why-not";
 import type { OptionKey } from "@/lib/content/types";
 
 export interface FocusRequest { id: string; nonce: number }
@@ -37,6 +38,18 @@ function jump(id: string, block: ScrollLogicalPosition) {
  el.focus({ preventScroll: true });
 }
 
+function FeedbackBody({ question, selected, correct, Icon }: { question: QuizQuestion; selected: OptionKey | undefined; correct: boolean; Icon: typeof CircleHelp }) {
+ const label = (key: OptionKey | undefined) => { const o = question.options.find(item => item.key === key); return o ? `${o.key}. ${o.text}` : ""; };
+ const chosen = question.options.find(option => option.key === selected);
+ const reason = chosen && !correct ? whyNot(question.explanation, chosen.text) : null;
+ return <div className="mt-5 space-y-3 rounded-xl border border-navy-soft/20 bg-warm p-4">
+  <p className="flex items-center gap-2 font-bold"><Icon aria-hidden="true" className="size-5 shrink-0 text-primary"/><span>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : <>Em chọn <span lang="en">{label(selected)}</span> — chưa đúng.</>}</span></p>
+  {!correct && <p className="font-semibold">Đáp án đúng: <span lang="en">{label(question.correctKey)}</span></p>}
+  <p>{!correct && <strong>Vì sao đúng: </strong>}{question.explanation}</p>
+  {chosen && !correct && <p>{reason ? <><strong>Vì sao “<span lang="en">{chosen.text}</span>” chưa phù hợp: </strong>{reason}</> : <>Phương án “<span lang="en">{label(selected)}</span>” chưa phù hợp với cấu trúc của câu.</>}</p>}
+ </div>;
+}
+
 /** Only fully graded questions can show feedback; room questions never carry these fields. */
 const isGraded = (q: DisplayQuestion): q is QuizQuestion => "correctKey" in q;
 function QuestionCard({ question, number, selected, revealed, feedback, onSelect, onCheck }: { question: DisplayQuestion; number: number; selected: OptionKey | undefined; revealed: boolean; feedback: boolean; onSelect: SectionedPracticeProps["onSelect"]; onCheck?: SectionedPracticeProps["onCheck"] }) {
@@ -49,7 +62,7 @@ function QuestionCard({ question, number, selected, revealed, feedback, onSelect
    <div className="space-y-3">{question.options.map(option => <label key={option.key} className={`flex min-h-11 items-start gap-3 rounded-xl border p-3 ${selected === option.key ? "border-primary bg-warm" : "border-navy-soft/30"}`}><input className="mt-1 size-5 shrink-0 accent-primary" type="radio" name={`quiz-${question.id}`} value={option.key} checked={selected === option.key} onChange={() => onSelect(question.id, option.key)}/><span lang="en">{option.key}. {option.text}</span></label>)}</div>
   </fieldset>
   {graded && !revealed && <button type="button" disabled={!selected} onClick={() => { onCheck?.(question.id); requestAnimationFrame(() => document.getElementById(`feedback-${question.id}`)?.focus()); }} className={`${ctaClass} mt-5`}>Kiểm tra<span className="sr-only"> câu {number}</span></button>}
-  {graded && <div id={`feedback-${question.id}`} tabIndex={-1} aria-live="polite" aria-atomic="true">{revealed && <div className="mt-5 space-y-3 rounded-xl border border-navy-soft/20 bg-warm p-4"><p className="flex items-center gap-2 font-bold"><FeedbackIcon aria-hidden="true" className="size-5 shrink-0 text-primary"/>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : "Chưa đúng. Em hãy xem lời giải nhé."}</p><p className="font-semibold">Đáp án đúng: {graded.correctKey}.</p><p>{graded.explanation}</p></div>}</div>}
+  {graded && <div id={`feedback-${question.id}`} tabIndex={-1} aria-live="polite" aria-atomic="true">{revealed && <FeedbackBody question={graded} selected={selected} correct={correct} Icon={FeedbackIcon}/>}</div>}
  </section>;
 }
 
