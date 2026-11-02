@@ -43,12 +43,12 @@ Giai đoạn 1 **học sinh công khai không cần tài khoản**, không có t
 - `robots.txt` chặn bot cào dữ liệu đã biết (không chặn Googlebot/Bingbot).
 - Khi traffic lớn: cân nhắc Cloudflare (WAF, chống DDoS) phía trước Caddy.
 
-## Dữ liệu trẻ em (Nghị định 13/2023/NĐ-CP)
+## Dữ liệu trẻ em (Luật 91/2025/QH15, NĐ 356/2025/NĐ-CP)
 
-- Giai đoạn 1 không thu thập dữ liệu cá nhân: không đăng nhập, kết quả chỉ lưu ẩn danh (`device_hash`).
+- Khi `ACCOUNTS_ENABLED` tắt: không thu thập dữ liệu cá nhân (không đăng nhập, kết quả chỉ lưu ẩn danh `device_hash` và `localStorage`). Nghị định 13/2023 đã hết hiệu lực; căn cứ hiện hành theo [user-accounts.md](user-accounts.md) mục 1/7 (**chờ luật sư xác nhận**).
 - AdSense ở chế độ trẻ em (child-directed, không quảng cáo theo hành vi).
 - Có trang Chính sách quyền riêng tư và Điều khoản sử dụng.
-- Giai đoạn 2: tài khoản do phụ huynh tạo và đồng ý; mật khẩu băm argon2id; cookie phiên `HttpOnly`, `Secure`, `SameSite=Lax`; chống CSRF; phụ huynh xem/xóa được dữ liệu của con.
+- Khi bật tài khoản (mô hình B, [user-accounts.md](user-accounts.md)): chỉ phụ huynh ≥18 tuổi đăng ký; trẻ chỉ có hồ sơ (biệt danh + lớp) với hộp đồng ý riêng; mật khẩu băm argon2id; cookie phiên `HttpOnly`, `Secure`, `SameSite=Lax`; chống CSRF; phụ huynh xem, tải và xóa dữ liệu của con tại `/tai-khoan` và `/xoa-du-lieu`. Chính sách, Điều khoản và thông báo cookie hiện là **BẢN NHÁP** (placeholder `[TÊN PHÁP NHÂN]`, `[EMAIL LIÊN HỆ]`) chờ luật sư duyệt và chủ cung cấp thông tin; trang tài khoản `noindex`, không quảng cáo.
 
 ## Quy trình
 

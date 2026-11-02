@@ -12,6 +12,7 @@ services:
         NEXT_PUBLIC_ADSENSE_SLOT_FOOTER: ${NEXT_PUBLIC_ADSENSE_SLOT_FOOTER:-}
         SEO_NOINDEX: ${SEO_NOINDEX:-false}
         ROOMS_ENABLED: ${ROOMS_ENABLED:-false} # read at build time by static pages: flip => rebuild web
+        ACCOUNTS_ENABLED: ${ACCOUNTS_ENABLED:-false} # same: static account pages are built only when on
     container_name: menglish-learning
     restart: unless-stopped
     expose:
@@ -47,6 +48,7 @@ services:
     stop_grace_period: 40s # > ROOMS_DRAIN_MS (30 s)
     environment:
       ROOMS_ENABLED: ${ROOMS_ENABLED:-false}
+      ACCOUNTS_ENABLED: ${ACCOUNTS_ENABLED:-false}
     networks:
       - menglish-proxy
 
