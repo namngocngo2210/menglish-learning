@@ -102,8 +102,8 @@ afterEach(async () => {
   await Promise.all(open.splice(0).map((edge) => edge.close()));
 });
 
-const TOPIC = "/lop-6/ngu-phap/thi-hien-tai-don";
-const TEST_PAGE = `${TOPIC}/de-1`;
+const TOPIC = "/grade-6/grammar/present-simple";
+const TEST_PAGE = `${TOPIC}/test-1`;
 
 describe("cache state machine", () => {
   it("serves MISS then HIT with cache headers and a validator", async () => {
@@ -133,10 +133,10 @@ describe("cache state machine", () => {
     );
     expect((await h.get(TEST_PAGE)).headers["cache-control"]).toContain("s-maxage=300");
     expect((await h.get("/sitemap.xml")).headers["cache-control"]).toContain("s-maxage=300");
-    expect((await h.get("/thi-vao-lop-10/de-1")).headers["cache-control"]).toContain(
+    expect((await h.get("/grade-10-entrance/test-1")).headers["cache-control"]).toContain(
       "s-maxage=300",
     );
-    expect((await h.get("/pool/lop-6/ngu-phap/tong-hop")).headers["cache-control"]).toContain(
+    expect((await h.get("/pool/grade-6/grammar/mixed")).headers["cache-control"]).toContain(
       "s-maxage=300",
     );
     expect((await h.get("/")).headers["cache-control"]).toContain("s-maxage=60");
@@ -313,11 +313,11 @@ describe("failure handling", () => {
       headers: { "content-type": "text/html" },
       body: Buffer.from("nope"),
     }));
-    expect((await h.get("/lop-6/khong-co")).status).toBe(404);
-    const again = await h.get("/lop-6/khong-co");
+    expect((await h.get("/grade-6/khong-co")).status).toBe(404);
+    const again = await h.get("/grade-6/khong-co");
     expect([again.status, again.headers["x-cache"]]).toEqual([404, "HIT"]);
     h.clock.now += 31_000;
-    await h.get("/lop-6/khong-co");
+    await h.get("/grade-6/khong-co");
     expect(h.calls).toHaveLength(2);
   });
 
@@ -412,9 +412,9 @@ describe("purge and warmer", () => {
         ? { status: 200, headers: {}, body: Buffer.from("{}") }
         : html(request.path),
     );
-    for (const p of ["/a", "/b?x=1", "/lop-6/x", "/lop-6/y"]) await h.get(p);
+    for (const p of ["/a", "/b?x=1", "/grade-6/x", "/grade-6/y"]) await h.get(p);
     const auth = { authorization: `Bearer ${TOKEN}` };
-    const reply = await h.post("/_purge", { paths: ["/a", "/b"], prefixes: ["/lop-6/"] }, auth);
+    const reply = await h.post("/_purge", { paths: ["/a", "/b"], prefixes: ["/grade-6/"] }, auth);
     expect(JSON.parse(reply.body)).toEqual({ removed: 4, refreshed: true, warming: 4 });
     const refresh = h.calls.find((c) => c.path === "/internal/refresh");
     expect(refresh?.headers["x-internal-token"]).toBe(TOKEN);

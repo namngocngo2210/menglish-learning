@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { auditScreen, noHorizontalScroll, ROOMS, ROOMS_OFF, ROOMS_ON } from "./rooms-helpers";
 
-const roomPages = [`${ROOMS}/phong/K7M2QX`, `${ROOMS}/vao`];
+const roomPages = [`${ROOMS}/room/K7M2QX`, `${ROOMS}/join`];
 const adSelectors = ["text=Vị trí quảng cáo", "ins.adsbygoogle", "aside[aria-label='Quảng cáo']"];
 
 test.describe("rooms flag ON: noindex, sitemap, no ads", () => {
@@ -23,8 +23,8 @@ test.describe("rooms flag ON: noindex, sitemap, no ads", () => {
 
   test("sitemap lists the landing page but no room pages", async ({ request }) => {
     const xml = await (await request.get("/sitemap.xml")).text();
-    expect(xml).toContain("/luyen-tap-nhom</loc>");
-    expect(xml).not.toMatch(/\/luyen-tap-nhom\/(phong|vao)/);
+    expect(xml).toContain("/group-practice</loc>");
+    expect(xml).not.toMatch(/\/group-practice\/(room|join)/);
   });
 
   test("landing: indexable, a11y at this viewport", async ({ page }) => {
@@ -36,10 +36,10 @@ test.describe("rooms flag ON: noindex, sitemap, no ads", () => {
   });
 
   test("join screen and not-found panel: a11y", async ({ page }) => {
-    await page.goto(`${ROOMS}/vao`);
+    await page.goto(`${ROOMS}/join`);
     await noHorizontalScroll(page, "vao");
     await auditScreen(page, "vao");
-    await page.goto(`${ROOMS}/phong/K7M2QX`);
+    await page.goto(`${ROOMS}/room/K7M2QX`);
     await expect(page.getByRole("heading", { name: "Không tìm thấy phòng" })).toBeVisible();
     await auditScreen(page, "room not found");
   });
@@ -56,7 +56,7 @@ test.describe("rooms flag OFF: coming soon", () => {
     await noHorizontalScroll(page, "coming soon");
     await auditScreen(page, "coming soon");
     const xml = await (await request.get("/sitemap.xml")).text();
-    expect(xml).not.toContain("/luyen-tap-nhom");
+    expect(xml).not.toContain("/group-practice");
   });
 
   for (const path of roomPages) {

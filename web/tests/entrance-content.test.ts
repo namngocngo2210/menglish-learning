@@ -8,7 +8,7 @@ const dirs: string[] = [];
 afterEach(() => { delete process.env.QUESTION_CONTENT_DIR; dirs.splice(0).forEach(dir => rmSync(dir, { recursive: true, force: true })); });
 const entrance = { slug: "thi-vao-lop-10/de-1", grade: 9, kind: "entrance10", title: "Entrance", questionIds: ["q1"], publishedAt: "2026-10-31T00:00:00.000Z", seed: "entry", optionOrder: { q1: "DCAB" } };
 it("validates entrance paths without changing four-segment parsing", () => {
- expect(ENTRANCE_PATH).toBe("/thi-vao-lop-10"); expect(entranceTestPath(3)).toBe("/thi-vao-lop-10/de-3");
+ expect(ENTRANCE_PATH).toBe("/grade-10-entrance"); expect(entranceTestPath(3)).toBe("/grade-10-entrance/test-3");
  expect(parseEntranceSlug("thi-vao-lop-10/de-3")).toEqual({ test: "de-3" });
  for (const slug of ["thi-vao-lop-10/de-0", "thi-vao-lop-10/de-01", "thi-vao-lop-10/de-x", "thi-vao-lop-10/de-1/extra"]) expect(parseEntranceSlug(slug)).toBeNull();
  expect(() => entranceTestPath(0)).toThrow(); expect(parseTestSlug(entrance.slug)).toBeNull();

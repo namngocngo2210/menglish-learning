@@ -1,3 +1,5 @@
+import { legacyToPublicPath } from "@bj/core";
+import { testSlugPath, topicPath, gradeSlug, skillSegment, topicSegment } from "@/lib/routes";
 import { topicParams } from "@/lib/content/params";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
@@ -44,9 +46,9 @@ it("preserves legacy paths or redirects them to an existing same-grade skill mix
  expect(redirects).toEqual(generateLegacyRedirects(legacy, output));
  expect(new Set(redirects.map(r => r.source)).size).toBe(redirects.length);
  for (const old of legacy) {
-  if (paths.has(old)) { expect(redirects.some(r => r.source === old)).toBe(false); continue; }
+  if (paths.has(legacyToPublicPath(old)!)) { expect(redirects.some(r => r.source === old)).toBe(false); continue; }
   const redirect = redirects.find(r => r.source === old); expect(redirect, old).toBeDefined();
-  expect(paths.has(redirect!.destination)).toBe(true);
+  expect(paths.has(legacyToPublicPath(redirect!.destination)!)).toBe(true);
   expect(redirect!.destination).toBe(`/${old.split("/").slice(1,3).join("/")}/tong-hop`);
  }
  expect(() => generateLegacyRedirects(["/lop-6/ngu-phap/missing"], {})).toThrow(/destination/i);
@@ -55,13 +57,13 @@ it("includes every topic page and test in the sitemap, with unique bounded topic
  const paths = new Set(getAllRoutes().map(r => r.path)); const urls = new Set((await sitemap()).map(r => new URL(r.url).pathname));
  const titles: string[] = []; const descriptions: string[] = [];
  for (const topic of bundle.topics) {
-  const path = `/lop-${topic.grade}/${topic.skill}/${topic.slug}`; expect(paths.has(path)).toBe(true); expect(urls.has(path)).toBe(true);
-  const meta = await generateMetadata({ params: Promise.resolve({ grade: `lop-${topic.grade}`, skill: topic.skill, topic: topic.slug }) });
+  const path = topicPath(topic.grade, topic.skill, topic.slug); expect(paths.has(path)).toBe(true); expect(urls.has(path)).toBe(true);
+  const meta = await generateMetadata({ params: Promise.resolve({ grade: gradeSlug(topic.grade), skill: skillSegment(topic.skill), topic: topicSegment(topic.skill, topic.slug) }) });
   expect(typeof meta.title).toBe("string"); expect(`${meta.title as string} | ${SITE.name}`.length).toBeLessThanOrEqual(60);
   expect(meta.description!.length).toBeLessThanOrEqual(155); titles.push(meta.title as string); descriptions.push(meta.description!);
  }
  expect(new Set(titles).size).toBe(titles.length); expect(new Set(descriptions).size).toBe(descriptions.length);
- for (const test of bundle.tests) { expect(paths.has(`/${test.slug}`)).toBe(true); expect(urls.has(`/${test.slug}`)).toBe(true); }
+ for (const test of bundle.tests) { expect(paths.has(testSlugPath(test.slug))).toBe(true); expect(urls.has(testSlugPath(test.slug))).toBe(true); }
 });
 it("reproduces report and bank bytes independently of fragment order without mutating inputs", () => {
  const before = structuredClone(fragments); const output = buildBank(fragments);
@@ -75,18 +77,18 @@ it("reproduces report and bank bytes independently of fragment order without mut
 
 it("renders knowledge, counts and related links while mixed topics keep their description", async () => {
  const topic = bundle.topics.find(t => t.skill === "ngu-phap" && getTopicDef(t.skill, t.slug))!;
- const html = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: `lop-${topic.grade}`, skill: topic.skill, topic: topic.slug }) }));
+ const html = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: gradeSlug(topic.grade), skill: skillSegment(topic.skill), topic: topicSegment(topic.skill, topic.slug) }) }));
  const def = getTopicDef(topic.skill, topic.slug)!;
  for (const paragraph of def.intro) expect(html).toContain(renderToStaticMarkup(createElement("p", null, paragraph)));
  for (const example of def.examples!) expect(html).toContain(renderToStaticMarkup(createElement("span", { lang: "en" }, example.en)));
 expect(html).toContain("Bộ đề khác");
  expect(html).toContain("2 đề ·"); expect(html).toContain(`${topic.name} lớp 7`);
  expect(html).toContain("BreadcrumbList"); expect(html).toContain("FAQPage"); expect(html).toContain("Câu hỏi thường gặp");
- expect(html).toContain('href="/lop-6/ngu-phap/tong-hop"');
+ expect(html).toContain('href="/grade-6/grammar/mixed"');
  const mixed = bundle.topics.find(t => t.grade === topic.grade && t.skill === topic.skill && t.slug === "tong-hop")!;
- const mixedHtml = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: `lop-${topic.grade}`, skill: topic.skill, topic: "tong-hop" }) }));
+ const mixedHtml = renderToStaticMarkup(await TopicPage({ params: Promise.resolve({ grade: gradeSlug(topic.grade), skill: skillSegment(topic.skill), topic: topicSegment(topic.skill, "tong-hop") }) }));
  expect(mixedHtml).toContain(mixed.description); expect(mixedHtml).not.toContain('aria-label="Kiến thức cần nhớ"');
- expect(topicParams().map(p => `/${p.grade}/${p.skill}/${p.topic}`).sort()).toEqual(bundle.topics.map(t => `/lop-${t.grade}/${t.skill}/${t.slug}`).sort());
+ expect(topicParams().map(p => `/${p.grade}/${p.skill}/${p.topic}`).sort()).toEqual(bundle.topics.map(t => topicPath(t.grade, t.skill, t.slug)).sort());
 });
 it("uses provenance to find context for cloze items without passageId", () => {
  const q = { ...fragments.flatMap(f => f.questions).find(q => q.skill === "tu-vung")!, sourceId: "unit", sourceUrl: "https://example.test/food", stem: "The ___ is here.", options: (["A","B","C","D"] as const).map((key, i) => ({ key, text: ["oven","seem","very","also"][i] })), correctKey: "A" as const, passageId: undefined };

@@ -1,7 +1,7 @@
 import { expect, test, type Page, type TestInfo } from "@playwright/test";
 
-const READING = "/thi-vao-lop-10/de-1";
-const GRAMMAR = "/lop-6/ngu-phap/tong-hop/de-1";
+const READING = "/grade-10-entrance/test-1";
+const GRAMMAR = "/grade-6/grammar/mixed/test-1";
 const shotDir = process.env.SHOT_DIR;
 async function shot(page: Page, info: TestInfo, name: string) {
  await page.evaluate(() => document.getElementById("quiz-nav")?.scrollIntoView({ block: "start" }));

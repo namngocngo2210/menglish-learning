@@ -13,12 +13,12 @@ Mọi PR chạm `web/` phải đạt các mục dưới đây; CI chặn merge n
 Tiếng Việt không dấu, chữ thường, gạch nối, không đuôi `/`:
 
 ```
-/lop-6
-/lop-6/ngu-phap
-/lop-6/ngu-phap/thi-hien-tai-don
-/lop-6/ngu-phap/thi-hien-tai-don/de-1
-/thi-vao-lop-10
-/thi-vao-lop-10/de-1
+/grade-6
+/grade-6/grammar
+/grade-6/grammar/present-simple
+/grade-6/grammar/present-simple/test-1
+/grade-10-entrance
+/grade-10-entrance/test-1
 /tu-vung/<tu>
 ```
 
@@ -71,10 +71,10 @@ Chạy trên: trang chủ, trang lớp, trang chủ đề, trang đề.
 
 ## Phase B implementation (2026-10-31)
 
-- Source attribution is centralized at `/nguon-du-lieu`, an indexable page with
+- Source attribution is centralized at `/data-sources`, an indexable page with
   source links, licenses, attribution and published question/passage counts by grade.
   Test pages retain provenance in the bank without displaying it.
-- Entrance list/tests are static pages under `/thi-vao-lop-10`; all fixed tests
+- Entrance list/tests are static pages under `/grade-10-entrance`; all fixed tests
   and credits appear in `getAllRoutes()` and the sitemap.
 - Random quizzes use in-page client state and lazy static `/pool/…` JSON;
   they create no crawlable URL or sitemap entry.

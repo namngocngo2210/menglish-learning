@@ -62,9 +62,9 @@ export function buildTopicFaq(grade: Grade, skill: Skill, topicSlug: string, top
 
 export const NOT_FOUND_LINKS = [
  { label: "Trang chủ", href: "/" },
- { label: "Tiếng Anh lớp 6", href: "/lop-6" },
- { label: "Tiếng Anh lớp 7", href: "/lop-7" },
- { label: "Tiếng Anh lớp 8", href: "/lop-8" },
- { label: "Tiếng Anh lớp 9", href: "/lop-9" },
- { label: "Ôn thi vào lớp 10", href: "/thi-vao-lop-10" },
+ { label: "Tiếng Anh lớp 6", href: "/grade-6" },
+ { label: "Tiếng Anh lớp 7", href: "/grade-7" },
+ { label: "Tiếng Anh lớp 8", href: "/grade-8" },
+ { label: "Tiếng Anh lớp 9", href: "/grade-9" },
+ { label: "Ôn thi vào lớp 10", href: "/grade-10-entrance" },
 ];

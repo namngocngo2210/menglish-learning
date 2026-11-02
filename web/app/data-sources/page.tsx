@@ -14,12 +14,12 @@ const officialExamStatuses: Record<string, string> = {
  "parse-error": "Lỗi phân tích PDF — bỏ qua",
 };
 export const dynamic = "force-dynamic";
-export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh.", path: "/nguon-du-lieu" });
+export const metadata = buildMetadata({ title: "Nguồn dữ liệu và giấy phép", description: "Nguồn văn bản, giấy phép và thống kê câu hỏi, bài đọc theo lớp trong ngân hàng luyện tiếng Anh.", path: "/data-sources" });
 export default async function CreditsPage() {
  await ensureContent();
  const bank = loadBundle();
  return <PageShell title="Nguồn dữ liệu và giấy phép">
-  <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Nguồn dữ liệu và giấy phép", path: "/nguon-du-lieu" }])}/>
+  <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Nguồn dữ liệu và giấy phép", path: "/data-sources" }])}/>
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Nguồn dữ liệu và giấy phép" }]}/>
   <p>Câu hỏi được tạo tự động bằng thuật toán và quy tắc từ văn bản gốc của các nguồn dưới đây, không dùng AI. Nội dung có giải thích tiếng Việt và đã được chủ sở hữu duyệt xuất bản.</p>
   <p>Thống kê tính các câu hỏi đã xuất bản và bài đọc được dùng theo từng lớp. Một bài đọc có thể được dùng ở nhiều lớp; mỗi bài chỉ được tính một lần trong mỗi lớp.</p>

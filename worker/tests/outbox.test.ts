@@ -51,7 +51,7 @@ describe.skipIf(ADMIN_URL === undefined)("outbox dispatcher", () => {
     ]);
 
   it("delivers purge_paths and rebuild events with the bearer token and marks them delivered", async () => {
-    await add("purge_paths", { paths: ["/lop-9/ngu-phap/x/de-1"] });
+    await add("purge_paths", { paths: ["/grade-9/grammar/x/test-1"] });
     const q = await db.admin.query<{ id: string }>(
       "SELECT id::text FROM questions WHERE external_id = 'ob-1'",
     );
@@ -60,10 +60,10 @@ describe.skipIf(ADMIN_URL === undefined)("outbox dispatcher", () => {
       const r = await dispatchOutbox(db.worker, edgePoster(url, TOKEN), silentLog);
       expect(r).toEqual({ delivered: 2, failed: 0 });
       expect(seen.map((s) => s.auth)).toEqual([`Bearer ${TOKEN}`, `Bearer ${TOKEN}`]);
-      expect(seen[0]?.body).toEqual({ paths: ["/lop-9/ngu-phap/x/de-1", "/", "/sitemap.xml"] });
+      expect(seen[0]?.body).toEqual({ paths: ["/grade-9/grammar/x/test-1", "/", "/sitemap.xml"] });
       expect(seen[1]?.body).toEqual({
         paths: ["/", "/sitemap.xml"],
-        prefixes: ["/pool", "/lop-9", "/thi-vao-lop-10"],
+        prefixes: ["/pool", "/grade-9", "/grade-10-entrance"],
       });
     });
     const pending = await db.admin.query(

@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { normalizeRoomCode } from "@/lib/rooms/code";
 import { roomPath, roomsLandingPath } from "@/lib/routes";
 
-/** /luyen-tap-nhom/vao?ma=XXXXXX -> room shell, or back to the landing for an invalid code. */
+/** /group-practice/join?ma=XXXXXX -> room shell, or back to the landing for an invalid code. */
 export function RoomRedirect() {
  const router = useRouter();
  const code = normalizeRoomCode(useSearchParams().get("ma") ?? "");

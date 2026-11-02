@@ -6,11 +6,11 @@
       "startServerReadyTimeout": 60000,
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/lop-6",
-        "http://localhost:3000/lop-6/ngu-phap/dong-tu-nguyen-mau-co-to",
-        "http://localhost:3000/lop-6/doc-hieu/chung/de-1",
-        "http://localhost:3000/thi-vao-lop-10",
-        "http://localhost:3000/nguon-du-lieu"
+        "http://localhost:3000/grade-6",
+        "http://localhost:3000/grade-6/grammar/to-infinitive",
+        "http://localhost:3000/grade-6/reading/long-tests/test-1",
+        "http://localhost:3000/grade-10-entrance",
+        "http://localhost:3000/data-sources"
       ],
       "numberOfRuns": 3,
       "settings": {

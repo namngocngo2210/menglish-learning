@@ -246,7 +246,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     code: string,
   ) => {
     expect(res.statusCode).toBe(302);
-    expect(String(res.headers["location"])).toBe(`${ORIGIN}/dang-nhap?loi=google_${code}`);
+    expect(String(res.headers["location"])).toBe(`${ORIGIN}/log-in?loi=google_${code}`);
     expect(cookiesOf(res).join(";")).not.toContain("__Host-bj_user=");
   };
 
@@ -271,7 +271,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
   it("registers a new parent, opens a parent session and works end to end", async () => {
     const { res } = await flow();
     expect(res.statusCode).toBe(302);
-    expect(res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect(res.headers.location).toBe(`${ORIGIN}/account`);
     const cookies = cookiesOf(res);
     expect(cookies.some((c) => c.startsWith("__Host-bj_user=") && c.includes("HttpOnly"))).toBe(
       true,
@@ -311,7 +311,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     await flow();
     email = "renamed@example.test";
     const again = await flow(""); // no consent needed for a known sub
-    expect(again.res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect(again.res.headers.location).toBe(`${ORIGIN}/account`);
     expect(await count("users")).toBe(1);
     expect(await count("identities")).toBe(1);
     expect(
@@ -367,7 +367,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     for (const q of ["", `policyVersion=old&textHash=${CONSENT_TEXTS.account.textHash}`]) {
       const { res } = await flow(q);
       expect(res.statusCode).toBe(302);
-      expect(res.headers.location).toBe(`${ORIGIN}/dang-ky?google=xac-nhan`);
+      expect(res.headers.location).toBe(`${ORIGIN}/sign-up?google=xac-nhan`);
       expect(cookieOf(res, PENDING)).toBeDefined();
       expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
     }
@@ -431,7 +431,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
       "INSERT INTO users (username, email, email_verified_at, status, password_hash) VALUES ('parentx','Parent@Example.test',now(),'active','x')",
     );
     const { res } = await flow();
-    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(res.headers.location).toBe(`${ORIGIN}/log-in?google=lien-ket`);
     expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
     expect(await count("identities")).toBe(0);
     expect(await count("user_sessions")).toBe(0);
@@ -474,7 +474,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     ).toBe(409);
     // the linked sub now logs into that same parent
     const again = await flow("");
-    expect(again.res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect(again.res.headers.location).toBe(`${ORIGIN}/account`);
     expect(await count("users")).toBe(1);
   });
 
@@ -499,7 +499,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
       `code=${code}&state=${state}`,
       `${cookieOf(s, "__Host-bj_oauth")!}; ${me.cookie}`,
     );
-    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(res.headers.location).toBe(`${ORIGIN}/log-in?google=lien-ket`);
     expect(await count("users")).toBe(1);
     expect(await count("identities")).toBe(0);
   });
@@ -585,7 +585,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
 
   it("accepts a one-element audience array and the string form of email_verified", async () => {
     claimsOverride = { aud: [CLIENT_ID], email_verified: "true" };
-    expect((await flow()).res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect((await flow()).res.headers.location).toBe(`${ORIGIN}/account`);
   });
 
   it("answers 404 when Google is not configured or accounts are off", async () => {
@@ -643,7 +643,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
 
   it("does not sign in twice when the same code and state are replayed", async () => {
     const { res, oauthCookie, code, state } = await flow();
-    expect(res.headers.location).toBe(`${ORIGIN}/tai-khoan`);
+    expect(res.headers.location).toBe(`${ORIGIN}/account`);
     const sessions = await count("user_sessions");
     // the browser dropped the cookie: replay without it
     expectRejected(await callback(`code=${code}&state=${state}`, "x=1"), "failed");
@@ -671,7 +671,7 @@ describe.skipIf(ADMIN_URL === undefined)("Google sign-in against a fake OIDC pro
     );
     sub = "attacker-sub";
     const { res } = await flow(); // boxes ticked, new sub, same email
-    expect(res.headers.location).toBe(`${ORIGIN}/dang-nhap?google=lien-ket`);
+    expect(res.headers.location).toBe(`${ORIGIN}/log-in?google=lien-ket`);
     expect(cookieOf(res, "__Host-bj_user")).toBeUndefined();
     expect(await count("user_sessions")).toBe(0);
     expect(await count("identities")).toBe(0);

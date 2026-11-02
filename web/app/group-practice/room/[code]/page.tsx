@@ -7,8 +7,8 @@ import { roomsEnabled } from "@/lib/rooms/flag";
 // Private shell: no canonical/OG, never indexed (the response header is set in next.config.ts).
 export const metadata: Metadata = { title: "Phòng luyện tập", robots: { index: false, follow: false }, referrer: "no-referrer" };
 
-export default async function RoomPage({ params }: { params: Promise<{ ma: string }> }) {
- const code = normalizeRoomCode((await params).ma);
+export default async function RoomPage({ params }: { params: Promise<{ code: string }> }) {
+ const code = normalizeRoomCode((await params).code);
  if (!roomsEnabled() || !code) notFound();
  return <RoomShell code={code}/>;
 }

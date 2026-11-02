@@ -1,7 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, type Browser, type BrowserContext, type Page, type TestInfo } from "@playwright/test";
 
-export const ROOMS = "/luyen-tap-nhom";
+export const ROOMS = "/group-practice";
 export const ROOMS_ON = process.env.ROOMS_E2E === "on";
 export const ROOMS_OFF = process.env.ROOMS_E2E === "off";
 

@@ -1,17 +1,17 @@
 import { entranceParams, gradeParams, skillParams, topicParams, testParams } from "@/lib/content/params";
-import * as entrancePage from "@/app/thi-vao-lop-10/[test]/page";
-import { metadata as entrance } from "@/app/thi-vao-lop-10/page";
-import { metadata as credits } from "@/app/nguon-du-lieu/page";
+import * as entrancePage from "@/app/grade-10-entrance/[test]/page";
+import { metadata as entrance } from "@/app/grade-10-entrance/page";
+import { metadata as credits } from "@/app/data-sources/page";
 import { expect, it } from "vitest";
 import * as gradePage from "@/app/[grade]/page";
 import * as skillPage from "@/app/[grade]/[skill]/page";
 import * as topicPage from "@/app/[grade]/[skill]/[topic]/page";
 import * as testPage from "@/app/[grade]/[skill]/[topic]/[test]/page";
 import { metadata as home } from "@/app/page";
-import { metadata as quick } from "@/app/luyen-nhanh/page";
-import { metadata as about } from "@/app/gioi-thieu/page";
-import { metadata as contact } from "@/app/lien-he/page";
-import { metadata as privacy } from "@/app/chinh-sach-bao-mat/page";
+import { metadata as quick } from "@/app/quick-practice/page";
+import { metadata as about } from "@/app/about/page";
+import { metadata as contact } from "@/app/contact/page";
+import { metadata as privacy } from "@/app/privacy-policy/page";
 import { absoluteUrl, getAllRoutes } from "@/lib/seo";
 
 it("matches static page params exactly and gives every route unique metadata", async () => {
@@ -28,8 +28,8 @@ it("matches static page params exactly and gives every route unique metadata", a
  expect(new Set(metadata.map(m=>m.description)).size).toBe(metadata.length);
 });
 it("returns empty metadata safely for invalid or unavailable params", async () => {
- expect(await gradePage.generateMetadata({params:Promise.resolve({grade:"lop-5"})})).toEqual({});
- expect(await skillPage.generateMetadata({params:Promise.resolve({grade:"lop-6",skill:"unknown"})})).toEqual({});
- expect(await topicPage.generateMetadata({params:Promise.resolve({grade:"lop-6",skill:"ngu-phap",topic:"unknown"})})).toEqual({});
- for (const test of ["unknown","../invalid"]) expect(await testPage.generateMetadata({params:Promise.resolve({grade:"lop-6",skill:"ngu-phap",topic:"thi-hien-tai-don",test})})).toEqual({});
+ expect(await gradePage.generateMetadata({params:Promise.resolve({grade:"grade-5"})})).toEqual({});
+ expect(await skillPage.generateMetadata({params:Promise.resolve({grade:"grade-6",skill:"unknown"})})).toEqual({});
+ expect(await topicPage.generateMetadata({params:Promise.resolve({grade:"grade-6",skill:"grammar",topic:"unknown"})})).toEqual({});
+ for (const test of ["unknown","../invalid"]) expect(await testPage.generateMetadata({params:Promise.resolve({grade:"grade-6",skill:"grammar",topic:"present-simple",test})})).toEqual({});
 });

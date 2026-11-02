@@ -80,7 +80,7 @@ export function googleRoutes(
     reply
       .code(302)
       .header("set-cookie", clearOauthCookie)
-      .header("location", `${deps.origin}/dang-nhap?loi=google_${code}`)
+      .header("location", `${deps.origin}/log-in?loi=google_${code}`)
       .send();
 
   /** A signed, unexpired cookie payload; `purpose` keeps the two cookies from standing in for each other. */
@@ -321,7 +321,7 @@ export function googleRoutes(
       };
       await auth.audit("user.google_pending", request, null, { kind: outcome.pending });
       const page =
-        outcome.pending === "register" ? "dang-ky?google=xac-nhan" : "dang-nhap?google=lien-ket";
+        outcome.pending === "register" ? "sign-up?google=xac-nhan" : "log-in?google=lien-ket";
       return reply
         .code(302)
         .header("set-cookie", [clearOauthCookie, signedCookie(PENDING_COOKIE, "pending", pending)])
@@ -335,7 +335,7 @@ export function googleRoutes(
       outcome.userId,
     );
     void reply.header("set-cookie", clearOauthCookie); // appended to the session cookie set above
-    return reply.code(302).header("location", `${deps.origin}/tai-khoan`).send();
+    return reply.code(302).header("location", `${deps.origin}/account`).send();
   });
 
   // What the confirmation page shows: the parent's own verified Google email, nothing else.

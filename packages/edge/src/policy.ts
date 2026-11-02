@@ -5,7 +5,8 @@ export interface Policy {
 }
 
 const DAY = 86_400;
-const TEST_PAGE = /^\/(lop-[6-9]\/[a-z0-9-]+\/[a-z0-9-]+\/de-[0-9]+|thi-vao-lop-10\/[a-z0-9-]+)$/;
+const TEST_PAGE =
+  /^\/(grade-[6-9]\/[a-z0-9-]+\/[a-z0-9-]+\/test-[0-9]+|grade-10-entrance\/[a-z0-9-]+)$/;
 
 /** Policy for a successful (200) response of `path`. */
 export function policyFor(path: string): Policy {

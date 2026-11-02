@@ -18,17 +18,17 @@ it("flag is OFF by default and accepts only true/1", () => {
 });
 
 it("sitemap lists the landing only when enabled and never any room URL", async () => {
-  expect((await sitemap()).map(e => e.url)).not.toContain(absoluteUrl("/luyen-tap-nhom"));
+  expect((await sitemap()).map(e => e.url)).not.toContain(absoluteUrl("/group-practice"));
   vi.stubEnv("ROOMS_ENABLED", "true");
   const urls = (await sitemap()).map(e => e.url);
-  expect(urls).toContain(absoluteUrl("/luyen-tap-nhom"));
-  expect(urls.filter(u => /\/luyen-tap-nhom\/(phong|vao)/.test(u))).toEqual([]);
-  expect(getAllRoutes().filter(r => r.path.startsWith("/luyen-tap-nhom"))).toHaveLength(1);
+  expect(urls).toContain(absoluteUrl("/group-practice"));
+  expect(urls.filter(u => /\/group-practice\/(room|join)/.test(u))).toEqual([]);
+  expect(getAllRoutes().filter(r => r.path.startsWith("/group-practice"))).toHaveLength(1);
 });
 
 it("room shell routes send X-Robots-Tag noindex, nofollow, no-referrer and no-store", async () => {
   const rules = await config.headers!();
-  expect(rules.map(r => r.source).sort()).toEqual(["/luyen-tap-nhom/phong/:path*", "/luyen-tap-nhom/vao"]);
+  expect(rules.map(r => r.source).sort()).toEqual(["/group-practice/join", "/group-practice/room/:path*"]);
   for (const rule of rules) {
     const h = Object.fromEntries(rule.headers.map(x => [x.key, x.value]));
     expect(h).toMatchObject({ "X-Robots-Tag": "noindex, nofollow", "Referrer-Policy": "no-referrer", "Cache-Control": "no-store" });
@@ -46,7 +46,7 @@ it("/rt rewrite exists only with a local ROOMS_DEV_PROXY", async () => {
 });
 
 it("landing: indexable metadata with canonical/OG when on, noindex coming-soon when off", async () => {
-  const { generateMetadata, default: Landing } = await import("@/app/luyen-tap-nhom/page");
+  const { generateMetadata, default: Landing } = await import("@/app/group-practice/page");
   const off = generateMetadata();
   expect(off.robots).toEqual({ index: false, follow: false });
   const offHtml = renderToStaticMarkup(createElement(Landing));
@@ -56,8 +56,8 @@ it("landing: indexable metadata with canonical/OG when on, noindex coming-soon w
   vi.stubEnv("ROOMS_ENABLED", "1");
   const on = generateMetadata();
   expect(on.robots).toEqual({ index: true, follow: true });
-  expect(on.alternates?.canonical).toBe(absoluteUrl("/luyen-tap-nhom"));
-  expect(on.openGraph).toMatchObject({ url: absoluteUrl("/luyen-tap-nhom"), locale: "vi_VN" });
+  expect(on.alternates?.canonical).toBe(absoluteUrl("/group-practice"));
+  expect(on.openGraph).toMatchObject({ url: absoluteUrl("/group-practice"), locale: "vi_VN" });
   expect(String(on.title).length).toBeLessThanOrEqual(TITLE_MAX);
   expect(String(on.description).length).toBeGreaterThan(80);
   const html = renderToStaticMarkup(createElement(Landing));
@@ -67,27 +67,27 @@ it("landing: indexable metadata with canonical/OG when on, noindex coming-soon w
 });
 
 it("room shell and join routes: 404 when off or invalid code, noindex meta", async () => {
-  const room = await import("@/app/luyen-tap-nhom/phong/[ma]/page");
-  const join = await import("@/app/luyen-tap-nhom/vao/page");
+  const room = await import("@/app/group-practice/room/[code]/page");
+  const join = await import("@/app/group-practice/join/page");
   expect(room.metadata.robots).toEqual({ index: false, follow: false });
   expect(join.metadata.robots).toEqual({ index: false, follow: false });
-  await expect(room.default({ params: Promise.resolve({ ma: "K7M2QX" }) })).rejects.toThrow("NEXT_NOT_FOUND");
+  await expect(room.default({ params: Promise.resolve({ code: "K7M2QX" }) })).rejects.toThrow("NEXT_NOT_FOUND");
   expect(() => join.default()).toThrow("NEXT_NOT_FOUND");
   vi.stubEnv("ROOMS_ENABLED", "true");
-  await expect(room.default({ params: Promise.resolve({ ma: "bad!" }) })).rejects.toThrow("NEXT_NOT_FOUND");
-  await expect(room.default({ params: Promise.resolve({ ma: "k7m-2qx" }) })).resolves.toBeTruthy();
+  await expect(room.default({ params: Promise.resolve({ code: "bad!" }) })).rejects.toThrow("NEXT_NOT_FOUND");
+  await expect(room.default({ params: Promise.resolve({ code: "k7m-2qx" }) })).resolves.toBeTruthy();
   expect(() => join.default()).not.toThrow();
 });
 
 it("test page shows 'Tạo phòng từ đề này' only when the flag is on, with ?de= preselect link", async () => {
   const { default: TestPage } = await import("@/app/[grade]/[skill]/[topic]/[test]/page");
   const { getAllRoutes: routes } = await import("@/lib/seo");
-  const testRoute = routes().map(r => r.path).find(p => /^\/lop-\d\/[^/]+\/[^/]+\/de-\d+$/.test(p))!;
+  const testRoute = routes().map(r => r.path).find(p => /^\/grade-\d\/[^/]+\/[^/]+\/test-\d+$/.test(p))!;
   const [, grade, skill, topic, test] = testRoute.split("/");
   const render = async () => renderToStaticMarkup(await TestPage({ params: Promise.resolve({ grade, skill, topic, test }) }));
   expect(await render()).not.toContain("Tạo phòng từ đề này");
   vi.stubEnv("ROOMS_ENABLED", "true");
   const html = await render();
   expect(html).toContain("Tạo phòng từ đề này");
-  expect(html).toContain(`href="/luyen-tap-nhom?de=${testRoute.slice(1)}#tao-phong"`);
+  expect(html).toContain(`href="/group-practice?de=${testRoute.slice(1)}#tao-phong"`);
 });

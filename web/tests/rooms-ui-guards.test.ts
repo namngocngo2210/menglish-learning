@@ -7,14 +7,14 @@ const walk = (dir: string): string[] => readdirSync(dir).flatMap(n => { const p 
 const src = (dirs: string[]) => dirs.flatMap(d => walk(join(root, d))).filter(p => /\.tsx?$/.test(p));
 
 it("no ads or localStorage anywhere in room surfaces", () => {
-  const files = src(["components/rooms", "lib/rooms", "app/luyen-tap-nhom/phong", "app/luyen-tap-nhom/vao"]);
+  const files = src(["components/rooms", "lib/rooms", "app/group-practice/room", "app/group-practice/join"]);
   expect(files.length).toBeGreaterThan(5);
   for (const f of files) expect(readFileSync(f, "utf8"), relative(root, f)).not.toMatch(/AdSlot|AdUnit|AdSenseLoader|adsbygoogle|localStorage|sessionStorage/);
 });
 it("the landing is the only rooms route with an ad slot", () => {
-  const landing = readFileSync(join(root, "app/luyen-tap-nhom/page.tsx"), "utf8");
+  const landing = readFileSync(join(root, "app/group-practice/page.tsx"), "utf8");
   expect(landing.match(/<AdSlot /g)).toHaveLength(1);
-  expect(walk(join(root, "app/luyen-tap-nhom")).filter(p => /AdSlot/.test(readFileSync(p, "utf8")))).toEqual([join(root, "app/luyen-tap-nhom/page.tsx")]);
+  expect(walk(join(root, "app/group-practice")).filter(p => /AdSlot/.test(readFileSync(p, "utf8")))).toEqual([join(root, "app/group-practice/page.tsx")]);
 });
 it("room client never references answer keys on the play path and stays same-origin", () => {
   const types = readFileSync(join(root, "lib/rooms/types.ts"), "utf8");
