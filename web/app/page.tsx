@@ -1,26 +1,31 @@
-import { ensureContent } from "@/lib/content/source";
 import Image from "next/image";
-import { JsonLd } from "@/components/json-ld";
-import { buildMetadata, breadcrumbJsonLd, websiteJsonLd, organizationJsonLd } from "@/lib/seo";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ListChecks } from "lucide-react";
-import { PageShell } from "@/components/ui-kit";
+import { Shuffle, GraduationCap, Users } from "lucide-react";
+import { JsonLd } from "@/components/json-ld";
 import { AdSlot } from "@/components/ads/AdSlot";
-import { getGrades } from "@/lib/content/load";
-import { gradePath, roomsLandingPath, roomsJoinPath } from "@/lib/routes";
+import { SkillHub } from "@/components/home/SkillHub";
+import { tileClass } from "@/components/home/tiles";
+import { PageShell } from "@/components/ui-kit";
+import { getGrades, getSkills } from "@/lib/content/load";
+import { ensureContent } from "@/lib/content/source";
+import { ENTRANCE_PATH, roomsLandingPath } from "@/lib/routes";
 import { roomsEnabled } from "@/lib/rooms/flag";
+import { buildMetadata, breadcrumbJsonLd, websiteJsonLd, organizationJsonLd } from "@/lib/seo";
 import { SITE } from "@/lib/site-config";
 export const metadata = buildMetadata({ title: "Luyện tiếng Anh miễn phí, không cần đăng nhập", description: "Khám phá nội dung tiếng Anh theo kỹ năng, chủ đề và bài luyện tập. Không cần đăng nhập.", path: "/" });
 export const dynamic = "force-dynamic";
 export default async function Home() {
  await ensureContent();
- return <PageShell title={SITE.tagline} hero={<section className="border-b border-navy-soft/20 bg-warm"><div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-8 sm:py-20 lg:grid-cols-[1.4fr_1fr]"><div><p className="mb-5 text-sm font-bold tracking-wide text-primary">BeeJunior · Luyện tập tiếng Anh</p><h1 className="max-w-2xl text-4xl leading-tight font-extrabold tracking-tight sm:text-5xl lg:text-6xl">{SITE.tagline}</h1><p className="mt-6 max-w-xl text-lg leading-relaxed text-navy-soft">Bắt đầu từ một bài luyện nhỏ. Đọc kỹ, tự chọn đáp án và tìm hiểu lời giải để hiểu thêm sau mỗi câu hỏi.</p><Link href="#chon-lop" className="mt-8 inline-flex min-h-11 items-center justify-center gap-3 rounded-xl bg-cta px-6 py-3 font-bold text-navy! no-underline motion-safe:transition-colors hover:bg-cta-hover">Chọn lớp để bắt đầu <ArrowRight aria-hidden="true" className="size-5"/></Link><Link href="/thi-vao-lop-10" className="mt-3 inline-flex min-h-11 items-center justify-center rounded-xl border border-primary bg-surface px-6 py-3 font-bold sm:ml-3">Ôn thi vào lớp 10</Link><p className="mt-4 text-sm text-navy-soft">Không cần đăng nhập. Tự luyện theo nhịp của em.</p></div><aside className="self-center rounded-2xl border border-navy-soft/20 bg-sky-soft p-6 shadow-sm"><Image unoptimized src="/brand/mascot.webp" alt="Chú ong BeeJunior đeo kính cầm bút và sách" width={512} height={348} loading="eager" className="h-auto w-full"/><p className="mt-4 text-2xl leading-snug font-bold">Hiểu vì sao đúng.<br/>Biết mình cần luyện gì.</p><p className="mt-3 text-navy-soft">Chọn bài theo lớp và kỹ năng. Xem lời giải để hiểu thêm sau mỗi câu hỏi.</p><p className="mt-4 flex items-center gap-2 text-sm font-medium"><CheckCircle2 aria-hidden="true" className="size-5 shrink-0 text-primary"/>Có giải thích sau khi kiểm tra</p></aside></div></section>}>
- <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }])}/><JsonLd data={websiteJsonLd()}/><JsonLd data={organizationJsonLd()}/>
- <section id="chon-lop" aria-labelledby="grade-heading"><p className="text-sm font-semibold text-primary">Bắt đầu từ đây</p><h2 id="grade-heading" className="mt-2 text-2xl font-bold sm:text-3xl">Em đang học lớp mấy?</h2><div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">{getGrades().map(grade => <Link key={grade} href={gradePath(grade)} className="flex min-h-11 flex-col rounded-2xl border border-navy-soft/20 bg-warm p-5 text-navy! shadow-sm no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm-2"><span className="self-start rounded-xl bg-sky-soft px-3 py-1 text-sm font-bold text-primary">Tiếng Anh lớp</span><span className="my-3 text-5xl font-extrabold">{grade}</span><span className="flex items-center justify-between gap-2 text-sm font-semibold text-primary">Xem bài luyện <ArrowRight aria-hidden="true" className="size-5 shrink-0"/></span></Link>)}</div></section>
- {roomsEnabled() && <section aria-labelledby="rooms-heading" className="rounded-2xl border border-navy-soft/20 bg-sky-soft p-6 sm:p-8"><h2 id="rooms-heading" className="text-2xl font-bold sm:text-3xl">Luyện tập nhóm cùng bạn bè</h2><p className="mt-3 max-w-xl text-navy-soft">Tạo phòng, gửi mã cho bạn và cùng làm một đề. Không cần đăng nhập.</p><div className="mt-6 flex flex-col gap-3 sm:flex-row"><Link href={roomsLandingPath()} className="inline-flex min-h-11 items-center justify-center gap-3 rounded-xl bg-cta px-6 py-3 font-bold text-navy! no-underline motion-safe:transition-colors hover:bg-cta-hover">Tạo phòng luyện tập nhóm <ArrowRight aria-hidden="true" className="size-5"/></Link><Link href={roomsJoinPath()} className="inline-flex min-h-11 items-center justify-center rounded-xl border border-primary bg-surface px-6 py-3 font-bold">Vào phòng bằng mã</Link></div></section>}
- <Link href="/thi-vao-lop-10" className="inline-flex min-h-11 items-center rounded-xl border border-primary p-4 font-semibold">Ôn thi tiếng Anh vào lớp 10</Link>
- <p>Câu hỏi được tạo tự động từ bài đọc VOA Learning English, có giải thích tiếng Việt.</p>
- <AdSlot slot="in-content"/>
- <section aria-labelledby="how-heading" className="rounded-xl bg-warm p-6 sm:p-8"><div className="flex items-center gap-3"><ListChecks aria-hidden="true" className="size-6 text-primary"/><h2 id="how-heading" className="text-2xl font-bold">Cách luyện tập</h2></div><ol className="mt-7 grid gap-8 md:grid-cols-3">{[{title:"Chọn lớp và kỹ năng",body:"Tìm chủ đề em muốn ôn và mở một bài luyện."},{title:"Tự làm, rồi kiểm tra",body:"Chọn đáp án. Đọc giải thích sau khi kiểm tra từng câu."},{title:"Xem lại để hiểu hơn",body:"Nộp bài, xem kết quả và thử làm lại những câu cần luyện thêm."}].map((step,index) => <li key={step.title}><span className="text-sm font-bold text-primary">BƯỚC 0{index+1}</span><h3 className="mt-2 font-bold">{step.title}</h3><p className="mt-2 text-sm leading-relaxed text-navy-soft">{step.body}</p></li>)}</ol></section>
+ const grades = getGrades();
+ const quick = [
+  { href: "/luyen-nhanh", Icon: Shuffle, label: "Luyện nhanh 10 phút", hint: "Đề trộn ngẫu nhiên", hot: true },
+  { href: ENTRANCE_PATH, Icon: GraduationCap, label: "Thi vào lớp 10", hint: "Đề thi và đề luyện", hot: false },
+  ...(roomsEnabled() ? [{ href: roomsLandingPath(), Icon: Users, label: "Luyện tập nhóm", hint: "Tạo phòng, gửi mã cho bạn", hot: false }] : []),
+ ];
+ return <PageShell title={SITE.tagline} hero={<section className="border-b border-navy-soft/20 bg-warm"><div className="mx-auto grid max-w-6xl items-center gap-5 px-5 py-7 sm:px-8 md:grid-cols-[1.5fr_1fr] md:gap-12 md:py-14"><div><p className="mb-2 text-sm font-bold text-primary">Luyện tiếng Anh miễn phí</p><h1 className="text-3xl leading-tight font-bold md:text-5xl">{SITE.tagline}</h1><p className="mt-3 text-navy-soft">Chọn lớp, chọn kỹ năng, làm bài và xem lời giải. Không cần đăng nhập.</p></div><Image unoptimized priority src="/brand/mascot.webp" alt="Chú ong BeeJunior đeo kính cầm bút và sách" width={512} height={348} className="mx-auto hidden h-auto w-72 md:block"/></div></section>}>
+  <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }])}/><JsonLd data={websiteJsonLd()}/><JsonLd data={organizationJsonLd()}/>
+  <div><SkillHub grades={grades} skills={Object.fromEntries(grades.map(g => [g, getSkills(g)]))}/></div>
+  <section aria-labelledby="now-heading"><h2 id="now-heading" className="text-2xl font-bold">Làm ngay</h2><ul className={`mt-4 grid gap-3 ${quick.length > 2 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>{quick.map(({ href, Icon, label, hint, hot }) => <li key={href}><Link href={href} className={`${tileClass} ${hot ? "border-primary bg-sky-soft" : ""}`}><Icon aria-hidden="true" className="size-6 text-primary"/><b className="text-lg">{label}</b><span className="text-sm text-navy-soft">{hint}</span></Link></li>)}</ul></section>
+  <AdSlot slot="in-content"/>
  </PageShell>;
 }

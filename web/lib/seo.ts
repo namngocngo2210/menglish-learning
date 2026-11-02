@@ -59,6 +59,7 @@ export function getAllRoutes(): PublicRoute[] {
  const entrance = getEntranceTests();
  const entranceDates = entrance.map(t => new Date(t.publishedAt));
  all.push(...entranceDates);
+ routes.push({ path: "/luyen-nhanh", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.6 });
  routes.push({ path: "/thi-vao-lop-10", lastModified: newest(entranceDates), changeFrequency: "weekly", priority: 0.8 });
  routes.push(...entrance.map(t => ({ path: `/${t.slug}`, lastModified: new Date(t.publishedAt), changeFrequency: "monthly" as const, priority: 0.5 })));
  routes.unshift({ path: "/", lastModified: newest(all), changeFrequency: "weekly", priority: 1 });

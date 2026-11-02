@@ -3,7 +3,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, expect, it, vi } from "vitest";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { Breadcrumbs, LinkCardList, PageShell } from "@/components/ui-kit";
-import { GRADES, gradePath } from "@/lib/routes";
+import { GRADES, gradePath, skillPath } from "@/lib/routes";
+import { getGrades, getSkills } from "@/lib/content/load";
 import { SITE } from "@/lib/site-config";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/" }));
@@ -92,12 +93,26 @@ it("renders the home mascot outside questions and publishes BeeJunior organizati
  expect(html).toContain('href="/thi-vao-lop-10"');
 });
 
+it("renders the skill-first home: one grade picker, current grades only, every grade and skill link reachable", async () => {
+ const { default: Home } = await import("@/app/page");
+ const html = renderToStaticMarkup(await Home());
+ const links = [...html.matchAll(/href="(\/lop-[^"]+)"/g)].map(m => m[1]);
+ for (const grade of getGrades()) {
+  expect(links).toContain(gradePath(grade));
+  for (const skill of getSkills(grade)) expect(links).toContain(skillPath(grade, skill));
+ }
+ expect(links.length).toBeLessThanOrEqual(29);
+ expect(html).toContain('href="/luyen-nhanh"');
+ expect(html.match(/id="chon-lop"/g)).toHaveLength(1);
+ expect(html).not.toMatch(/sắp có|Lớp [1-5]\b/);
+ expect(html).not.toContain("mobile-navigation");
+});
+
 it("shows the home group-practice CTA only when ROOMS_ENABLED is on", async () => {
  const { default: Home } = await import("@/app/page");
  vi.stubEnv("ROOMS_ENABLED", "true");
  const on = renderToStaticMarkup(await Home());
  expect(on).toContain('href="/luyen-tap-nhom"');
- expect(on).toContain('href="/luyen-tap-nhom/vao"');
  vi.stubEnv("ROOMS_ENABLED", "false");
  expect(renderToStaticMarkup(await Home())).not.toContain("luyen-tap-nhom");
  vi.unstubAllEnvs();
