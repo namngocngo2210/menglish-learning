@@ -51,7 +51,14 @@ describe('chaos', () => {
       else if (roll < 0.33 && p) attempt(() => service.leave(room, p));
       else if (roll < 0.38 && p) attempt(() => service.kick(room, authed(room, room.players.get(room.hostId)!), p.playerId));
       else if (roll < 0.50 && p) attempt(() => service.setConnected(p.playerId, rand() < 0.5));
-      else if (roll < 0.58) attempt(() => service.start(room, room.players.get(room.hostId)!));
+      else if (roll < 0.52 && p) attempt(() => service.setReady(room, p, rand() < 0.7));
+      else if (roll < 0.58) attempt(() => {
+        const wasLobby = room.state === 'lobby';
+        const waiting = [...room.players.values()].some(x => x.connected && x.status !== 'left' && !x.ready);
+        service.start(room, room.players.get(room.hostId)!);
+        // Invariant: a game never starts while a connected player is not ready.
+        if (wasLobby) expect(waiting).toBe(false);
+      });
       else if (roll < 0.70 && p) attempt(() => service.answer(room, p, { questionId: rand() < 0.5 ? 'q1' : 'q2', key: pick(['A', 'B', 'C', 'D'] as const)! }));
       else if (roll < 0.78 && p) attempt(() => service.submit(room, p));
       else if (roll < 0.82) attempt(() => service.finish(room, room.players.get(room.hostId)!));

@@ -156,6 +156,7 @@ async function scenario(name: string, rooms: number, perRoom: number) {
     await pool([...roomsList.keys()], 40, async i => {
       const [hostP, ...rest] = roomsList[i];
       const t = performance.now();
+      await Promise.all(roomsList[i].map(p => call(port, m, 'ready', 'POST', `/rt/rooms/${p.code}/ready`, { xff: p.xff, cookie: p.cookie, body: {} })));
       const started = await call(port, m, 'start', 'POST', `/rt/rooms/${hostP.code}/start`, { xff: hostP.xff, cookie: hostP.cookie, body: {} });
       if (started.status !== 200) { m.errors++; throw new Error(`start ${started.status} ${started.text.slice(0, 120)}`); }
       scan(m, 'start', started.text);

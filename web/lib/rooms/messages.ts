@@ -3,6 +3,7 @@ import type { RoomErrorCode } from "./types";
 
 const TEXT: Partial<Record<RoomErrorCode, string>> = {
  not_host: "Chỉ chủ phòng làm được việc này.",
+ not_all_ready: "Chưa phải ai cũng sẵn sàng. Đang cập nhật…",
  bad_state: "Phòng đã chuyển sang bước khác. Đang cập nhật…",
  no_session: "Em không còn trong phòng này.",
  rate_limited: "Em thao tác hơi nhanh. Chờ một chút rồi thử lại.",

@@ -16,19 +16,19 @@
 ```
 Trang /luyen-tap-nhom ─┬─ Tạo phòng ─► (chọn đề, cài đặt, tên) ─► Phòng chờ (chủ phòng)
                        └─ Nhập mã / mở link ─► (tên) ─► Phòng chờ (người chơi)
-Phòng chờ ─► [chủ phòng: Bắt đầu] ─► Làm bài ─► Nộp bài ─► Chờ người khác ─► Kết quả ─► Chơi lại / Phòng mới / Thoát
+Phòng chờ ─► [mọi người bấm Sẵn sàng] ─► [chủ phòng: Bắt đầu] ─► Làm bài ─► Nộp bài ─► Chờ người khác ─► Kết quả ─► Chơi lại / Phòng mới / Thoát
 ```
 
 | # | Luồng | Mô tả | Màn hình |
 |---|-------|-------|----------|
 | 1 | Tạo phòng | Chọn **Đề có sẵn** (dán đường dẫn đề hoặc chọn) hoặc **Trộn theo loại** (lớp, kỹ năng nhiều lựa chọn, chủ đề, 10/20/40 câu, độ khó). Cài đặt: số người tối đa (2 = đấu đôi, 5, 10, 20, 30), giới hạn thời gian (không / 15 phút / 30 phút), tên hiển thị. Server dựng đề, trả mã 6 ký tự. | 01, 02 |
 | 2 | Vào phòng | Nhập mã (không phân biệt hoa thường) hoặc mở link `/luyen-tap-nhom/phong/<mã>`; nhập tên; vào phòng chờ. Xem tóm tắt phòng trước khi vào. | 03 |
-| 3 | Phòng chờ | Danh sách người chơi (cập nhật tức thời), sao chép mã/đường dẫn, chủ phòng chỉnh cài đặt, đuổi người chơi, bấm Bắt đầu (cần ≥ 2 người). Người chơi thấy "Chờ chủ phòng bấm Bắt đầu…". | 04 |
+| 3 | Phòng chờ | Danh sách người chơi (cập nhật tức thời), sao chép mã/đường dẫn, chủ phòng chỉnh cài đặt, đuổi người chơi, bấm Bắt đầu. **Bước Sẵn sàng:** mỗi người (kể cả chủ phòng, không tự động sẵn sàng) bấm "Sẵn sàng" / "Bỏ sẵn sàng"; danh sách hiện chữ "Sẵn sàng" / "Chưa sẵn sàng" và bộ đếm "Đã sẵn sàng 3/4". Nút Bắt đầu chỉ mở khi có ≥ 2 người đang kết nối **và mọi người đang kết nối đều đã sẵn sàng** (lý do hiện dưới nút: "Chờ N người sẵn sàng"). Người mất kết nối/đã rời không chặn. Người mới vào luôn "chưa sẵn sàng"; đổi cài đặt đề/giờ/sĩ số đặt lại mọi người về chưa sẵn sàng (có thông báo); khóa phòng thì không. Mất kết nối > 60 s rồi quay lại: phải bấm lại. Không tự bắt đầu: chủ phòng vẫn bấm Bắt đầu. | 04 |
 | 4 | Làm bài | Cùng đề cùng lúc. Mỗi người tự đi qua câu hỏi theo tốc độ của mình, đổi đáp án tự do tới khi nộp. Thấy **chỉ số "Đã nộp: x/y"**, không thấy đáp án/điểm/tiến độ từng câu của ai. | 05 |
 | 5 | Nộp bài | Nút Nộp bài (cảnh báo số câu chưa trả lời); nộp rồi không sửa được. | 05 |
 | 6 | Chờ người khác | Danh sách chỉ có trạng thái (Đã nộp / Đang làm / Mất kết nối), **chưa hiện điểm** của ai kể cả mình. Chủ phòng có "Kết thúc sớm". | 06 |
 | 7 | Kết quả | Khi mọi người đã nộp (hoặc kết thúc sớm / hết giờ): bảng xếp hạng, điểm của mình, xem đáp án + giải thích của mình. | 07 |
-| 8 | Chơi lại (rematch) | Chủ phòng bấm "Chơi lại" → cả phòng về phòng chờ, giữ nguyên người còn kết nối; đề mới (trộn: seed mới; đề có sẵn: giữ đề, đổi thứ tự phương án) hoặc chủ phòng đổi đề; bấm Bắt đầu lại. | 04 |
+| 8 | Chơi lại (rematch) | Chủ phòng bấm "Chơi lại" → cả phòng về phòng chờ, giữ nguyên người còn kết nối; đề mới (trộn: seed mới; đề có sẵn: giữ đề, đổi thứ tự phương án) hoặc chủ phòng đổi đề; mọi người bấm Sẵn sàng lại (về chưa sẵn sàng), rồi chủ phòng bấm Bắt đầu. | 04 |
 | 9 | Lỗi/trống | Phòng đầy, không tìm thấy/hết hạn, chủ phòng rời. | 08–10 |
 
 ## 3. Trạng thái phòng
@@ -36,7 +36,7 @@ Phòng chờ ─► [chủ phòng: Bắt đầu] ─► Làm bài ─► Nộp b
 ```mermaid
 stateDiagram-v2
     [*] --> lobby: tạo phòng
-    lobby --> playing: chủ phòng Bắt đầu (>= 2 người kết nối)
+    lobby --> playing: chủ phòng Bắt đầu (>= 2 người kết nối, mọi người kết nối đã Sẵn sàng)
     lobby --> closed: chủ phòng Đóng phòng / hết người / nhàn rỗi 30 phút
     playing --> results: mọi người đã nộp hoặc rời / Kết thúc sớm / hết giờ / quá 60 phút
     playing --> closed: không còn ai kết nối 5 phút

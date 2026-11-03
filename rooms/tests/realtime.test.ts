@@ -81,7 +81,7 @@ class Client {
   }
 }
 
-async function lobby(env: Record<string, string> = {}, opts: { maxPlayers?: number; timeLimitMinutes?: number | null } = {}) {
+async function lobby(env: Record<string, string> = {}, opts: { maxPlayers?: number; timeLimitMinutes?: number | null; ready?: boolean } = {}) {
   const ctx = await boot(env);
   const host = new Client(ctx.base), b = new Client(ctx.base);
   const created = await host.call('POST', '/rt/rooms', { name: 'An', test: fixed, maxPlayers: opts.maxPlayers ?? 10, timeLimitMinutes: opts.timeLimitMinutes ?? null });
@@ -89,6 +89,7 @@ async function lobby(env: Record<string, string> = {}, opts: { maxPlayers?: numb
   const hostId: string = created.json.me.playerId;
   const joined = await b.call('POST', `/rt/rooms/${code}/join`, { name: 'Bảo' });
   const bId: string = joined.json.me.playerId;
+  if (opts.ready !== false) for (const c of [host, b]) await c.call('POST', `/rt/rooms/${code}/ready`, {});
   const ev = (c: Client) => Stream.open(ctx.port, `/rt/rooms/${code}/events`, c.cookie);
   return { ...ctx, host, b, code, hostId, bId, ev, path: (a: string) => `/rt/rooms/${code}/${a}` };
 }
@@ -136,6 +137,23 @@ describe('sse', () => {
     const ids = hs.events.map(e => Number(e.id));
     expect([...ids].sort((a, c) => a - c)).toEqual(ids); // ids never go backwards
     expect(JSON.stringify(hs.events.find(e => e.event === 'results_ready')!.data)).toBe('{}');
+  });
+
+  it('broadcasts ready changes and the settings reset, and includes ready in snapshots', async () => {
+    const r = await lobby();
+    const hs = await r.ev(r.host), bs = await r.ev(r.b);
+    await hs.until(s => s.names().includes('snapshot'));
+    expect(hs.events[0].data.players.map((p: any) => p.ready)).toEqual([true, true]);
+    await r.b.call('POST', r.path('unready'), {});
+    await hs.until(s => s.names().includes('player_ready_changed'));
+    expect(hs.events.find(e => e.event === 'player_ready_changed')!.data).toEqual({ playerId: r.bId, ready: false });
+    await r.b.call('POST', r.path('ready'), {});
+    await r.host.call('POST', r.path('settings'), { timeLimitMinutes: 15 });
+    await bs.until(s => s.events.some(e => e.event === 'settings_changed'));
+    expect(bs.events.find(e => e.event === 'settings_changed')!.data.readyReset).toBe(true);
+    const snap = (await r.b.call('GET', r.path('snapshot'))).json;
+    expect(snap.players.map((p: any) => p.ready)).toEqual([false, false]);
+    expect(snap.me.ready).toBe(false);
   });
 
   it('reports joins, host close and ends streams', async () => {
@@ -316,12 +334,14 @@ describe('abuse protection', () => {
   });
 
   it('limits joins per IP, answers and other actions per player', async () => {
-    const r = await lobby({ ROOMS_JOIN_PER_MIN: '2', ROOMS_ANSWER_PER_MIN: '3', ROOMS_ACTION_PER_MIN: '2' });
+    const r = await lobby({ ROOMS_JOIN_PER_MIN: '2', ROOMS_ANSWER_PER_MIN: '3', ROOMS_ACTION_PER_MIN: '2' }, { ready: false });
     const x = new Client(r.base);
     expect((await x.call('POST', r.path('join'), { name: 'Cẩm' })).status).toBe(200);
     expect((await new Client(r.base).call('POST', r.path('join'), { name: 'Dũng' })).status).toBe(429);
 
-    await r.host.call('POST', r.path('start'), {}); // action 1 (host)
+    for (const c of [r.b, x]) await c.call('POST', r.path('ready'), {});
+    await r.host.call('POST', r.path('ready'), {}); // action 1 (host)
+    await r.host.call('POST', r.path('start'), {}); // action 2 (host)
     const quiz = (await r.b.call('GET', r.path('quiz'))).json;
     const put = () => r.b.call('PUT', r.path('answers'), { questionId: quiz.questions[0].id, key: 'A' });
     for (let i = 0; i < 3; i++) expect((await put()).status).toBe(200);

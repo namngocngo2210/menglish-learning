@@ -68,6 +68,7 @@ describe('http api', () => {
     expect((await b.call('POST', `/rt/rooms/${code}/join`, { name: 'Bảo' })).status).toBe(200);
     expect((await c.call('POST', `/rt/rooms/${code}/join`, { name: 'Minh' })).status).toBe(200);
     expect((await c.call('POST', `/rt/rooms/${code}/start`, {})).status).toBe(403);
+    for (const x of [host, b, c]) expect((await x.call('POST', `/rt/rooms/${code}/ready`, {})).status).toBe(200);
     expect((await host.call('POST', `/rt/rooms/${code}/start`, {})).status).toBe(200);
     expect((await b.call('POST', `/rt/rooms/${code}/join`, { name: 'Late' })).status).toBe(409);
 
@@ -172,6 +173,8 @@ describe('http api', () => {
     const a = new Client(base, log), b = new Client(base, log);
     const code: string = (await a.call('POST', '/rt/rooms', { name: 'An', test: fixed, maxPlayers: 2 })).json.code;
     await b.call('POST', `/rt/rooms/${code}/join`, { name: 'Bảo' });
+    await a.call('POST', `/rt/rooms/${code}/ready`, {});
+    await b.call('POST', `/rt/rooms/${code}/ready`, {});
     await a.call('POST', `/rt/rooms/${code}/start`, {});
     const quiz = (await a.call('GET', `/rt/rooms/${code}/quiz`)).json;
     for (const q of quiz.questions) await a.call('PUT', `/rt/rooms/${code}/answers`, { questionId: q.id, key: 'A' });

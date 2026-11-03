@@ -45,7 +45,7 @@ function Body({ s, retry, code, client, onJoined, onBlocked }: { s: ShellState; 
   case "error": return <Panel title="Có lỗi xảy ra" icon={<AlertTriangle aria-hidden="true" className="mx-auto mb-3 size-8 text-red-700"/>}><p>Không tải được phòng. Kiểm tra kết nối rồi thử lại.</p><button type="button" className={btn} onClick={retry}>Thử lại</button></Panel>;
   case "join": return <div data-slot="join"><JoinNameForm code={code} preview={s.preview} onJoined={onJoined} onBlocked={onBlocked}/></div>;
   case "kicked": return <Panel title="Em không còn trong phòng"><p role="alert">Chủ phòng đã mời em ra, hoặc phòng đã chuyển sang bước khác nên phiên của em không còn hiệu lực.</p>{toLanding}</Panel>;
-  case "lobby": return s.room && <RoomLobby client={client} room={s.room}/>;
+  case "lobby": return s.room && <RoomLobby client={client} room={s.room} notice={s.notice}/>;
   case "playing": return s.room && <RoomPlay client={client} room={s.room}/>;
   case "submitted": return s.room && <RoomWaiting client={client} room={s.room}/>;
   case "results": return s.room && <RoomResults client={client} room={s.room}/>;

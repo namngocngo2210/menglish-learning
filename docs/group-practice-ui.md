@@ -24,7 +24,8 @@ Realtime: `EventSource('/rt/rooms/<ma>/events')`; `snapshot`/`rematch` áp trự
 - Làm bài: dùng lại `SectionedPractice` (PR #16) với `feedback="none"`; **không** có đúng/sai, điểm, đáp án, lời giải, hay tiến độ người khác. Chỉ hiển thị "Đã nộp: x/y người". Đáp án lưu bằng `PUT /answers` ngay khi chọn (lạc quan, thử lại khi lỗi); vào lại thì khôi phục từ `GET /quiz`.
 - Nộp bài: nút "Nộp bài" ở `footer` của SectionedPractice; hộp xác nhận (`<dialog>`) nêu số câu chưa trả lời; sau khi nộp không sửa được.
 - Hẹn giờ: chip đồng hồ từ `deadlineAt` hiệu chỉnh bằng `serverNow`; `role="timer"`, không `aria-live` mỗi giây; thông báo lịch sự ở mốc còn 5 phút/1 phút. Hết giờ server tự nộp.
-- Chủ phòng: sao chép mã / đường dẫn (phản hồi bằng vùng aria-live), khóa phòng, chỉnh giờ & sĩ số, đuổi, Bắt đầu (cần ≥ 2 người đang kết nối), Kết thúc sớm, Đóng phòng, Chơi lại.
+- Mọi người chơi (cả chủ phòng) ở phòng chờ: nút lớn "Sẵn sàng" / "Bỏ sẵn sàng" (`aria-pressed`), bộ đếm "Đã sẵn sàng 3/4", mỗi người có nhãn chữ "Sẵn sàng" / "Chưa sẵn sàng" (không chỉ màu); thay đổi được đọc qua vùng aria-live; đổi cài đặt đề hiện thông báo "Mọi người cần bấm Sẵn sàng lại".
+- Chủ phòng: sao chép mã / đường dẫn (phản hồi bằng vùng aria-live), khóa phòng, chỉnh giờ & sĩ số, đuổi, Bắt đầu (cần ≥ 2 người đang kết nối và mọi người đã bấm Sẵn sàng; nút tắt kèm lý do "Chờ N người sẵn sàng"; khi đủ: "Tất cả đã sẵn sàng, chủ phòng có thể bắt đầu"), Kết thúc sớm, Đóng phòng, Chơi lại.
 - 1v1 (maxPlayers = 2): rời ở phòng chờ ⇒ ván hủy; rời lúc đang làm ⇒ đối thủ thắng (hiển thị `duel`).
 - Hòa điểm cùng hạng (không đua tốc độ). Chữ trong mockup "người nộp sớm hơn đứng trên" KHÔNG dùng; ghi "Bằng điểm: xếp chung hạng".
 - Báo cáo ẩn danh tối giản (D8): nút "Báo cáo" ở màn kết quả → chọn 1 trong 3 lý do (`ten_khong_phu_hop`, `noi_dung_sai`, `khac`) → `POST /report`; không văn bản tự do.

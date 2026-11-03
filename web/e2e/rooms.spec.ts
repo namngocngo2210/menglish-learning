@@ -22,6 +22,8 @@ async function createRoom(page: Page, name: string, max: "2 (đấu đôi)" | "5
   return page.url().split("/").pop()!;
 }
 
+const pressReady = (page: Page) => page.getByRole("button", { name: "Sẵn sàng", exact: true }).click();
+
 async function joinByCode(page: Page, code: string, name: string, viaLanding: boolean) {
   if (viaLanding) {
     await page.goto(ROOMS);
@@ -73,6 +75,16 @@ test.describe("rooms", () => {
       await auditScreen(host.page, "lobby host (waiting)");
       await expect(host.page.getByText(/Cần ít nhất 2 người/)).toBeVisible();
       await joinByCode(guest.page, code, "Lan", true);
+      // Ready step: nobody is ready, so the host cannot start; the host must press Sẵn sàng too.
+      await expect(host.page.getByRole("button", { name: "Bắt đầu" })).toBeDisabled();
+      await expect(host.page.getByText("Chờ 2 người sẵn sàng")).toBeVisible();
+      await pressReady(guest.page);
+      await expect(guest.page.getByRole("button", { name: "Bỏ sẵn sàng" })).toHaveAttribute("aria-pressed", "true");
+      await expect(host.page.getByText("Đã sẵn sàng 1/2")).toBeVisible();
+      await expect(host.page.getByText("Chờ 1 người sẵn sàng")).toBeVisible();
+      await expect(host.page.getByRole("button", { name: "Bắt đầu" })).toBeDisabled();
+      await pressReady(host.page);
+      await expect(host.page.getByText("Tất cả đã sẵn sàng, chủ phòng có thể bắt đầu")).toBeVisible();
       await expect(host.page.getByRole("button", { name: "Bắt đầu" })).toBeEnabled();
       await auditScreen(guest.page, "lobby guest");
       await guest.page.getByRole("button", { name: "Rời phòng" }).click();
@@ -89,6 +101,8 @@ test.describe("rooms", () => {
       // B) New room: guest leaves while playing -> host wins.
       code = await createRoom(host.page, "Minh", "2 (đấu đôi)");
       await joinByCode(guest.page, code, "Lan", false);
+      await pressReady(host.page);
+      await pressReady(guest.page);
       await host.page.getByRole("button", { name: "Bắt đầu" }).click();
       await answerAll(host.page, () => 0);
       await expect(guest.page.locator("[data-slot=play]")).toBeVisible();
@@ -120,6 +134,17 @@ test.describe("rooms", () => {
       await auditScreen(a.page, "lobby host (3)");
       await auditScreen(b.page, "lobby guest (3)");
 
+      // One player is not ready -> the host cannot start; all ready -> start works.
+      await expect(a.page.getByText("Đã sẵn sàng 0/3")).toBeVisible();
+      await pressReady(a.page);
+      await pressReady(b.page);
+      await expect(a.page.getByText("Đã sẵn sàng 2/3")).toBeVisible();
+      await expect(a.page.getByRole("button", { name: "Bắt đầu" })).toBeDisabled();
+      await expect(a.page.getByText("Chờ 1 người sẵn sàng")).toBeVisible();
+      await expect(a.page.getByText("Chưa sẵn sàng")).toHaveCount(1);
+      await auditScreen(a.page, "lobby host (2/3 ready)");
+      await auditScreen(c.page, "lobby guest (not ready)");
+      await pressReady(c.page);
       await expect(a.page.getByRole("button", { name: "Bắt đầu" })).toBeEnabled();
       await a.page.getByRole("button", { name: "Bắt đầu" }).click();
 
@@ -162,7 +187,9 @@ test.describe("rooms", () => {
       // Rematch: host restarts, everybody returns to a fresh lobby.
       await a.page.getByRole("button", { name: "Chơi lại" }).click();
       for (const p of players) await expect(p.page.locator("[data-slot=lobby]")).toBeVisible();
-      await expect(a.page.getByRole("button", { name: "Bắt đầu" })).toBeEnabled();
+      // Everybody is back in the lobby and must press Sẵn sàng again.
+      await expect(a.page.getByText("Đã sẵn sàng 0/3")).toBeVisible();
+      await expect(a.page.getByRole("button", { name: "Bắt đầu" })).toBeDisabled();
     } finally { for (const p of players) await p.ctx.close(); }
   });
 });

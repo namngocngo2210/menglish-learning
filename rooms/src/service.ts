@@ -18,6 +18,8 @@ export interface ServiceDependencies {
 const difficultyWeights={balanced:{1:.4,2:.4,3:.2},easy:{1:.6,2:.3,3:.1},medium:{1:.2,2:.6,3:.2},hard:{1:.2,2:.4,3:.4}};
 type Listener=(room:Room,name:string,data:Record<string,unknown>)=>void;
 const LIVENESS_MS=15_000;
+/** A ready player who stays disconnected longer than this must confirm again. */
+const READY_WINDOW_MS=60_000;
 const iso=(n:number|null)=>n===null?null:new Date(n).toISOString();
 export class RoomService {
  readonly bank:QuestionStore;readonly config:Config;readonly store:RoomStore;readonly now:()=>number;
@@ -66,7 +68,7 @@ export class RoomService {
  }
  private addPlayer(room:Room,name:string) {
   if([...room.players.values()].some(p=>p.status!=='left'&&nameIdentity(p.name)===nameIdentity(name)))fail('name_taken');
-  const token=this.crypto.token();const player:Player={playerId:this.crypto.playerId(),name,joinedOrder:room.nextJoinOrder++,tokenHash:hashToken(token),connected:true,lastSeenAt:this.now(),disconnectedAt:null,status:'joined',answers:new Map(),submittedAt:null};
+  const token=this.crypto.token();const player:Player={playerId:this.crypto.playerId(),name,joinedOrder:room.nextJoinOrder++,tokenHash:hashToken(token),connected:true,lastSeenAt:this.now(),disconnectedAt:null,status:'joined',ready:false,answers:new Map(),submittedAt:null};
   room.players.set(player.playerId,player);room.noConnectionsSince=null;this.bump(room);
   this.emit(room,'player_joined',{player:{playerId:player.playerId,name:player.name,isHost:false,status:player.status,connected:true}});return {player,token};
  }
@@ -93,6 +95,7 @@ export class RoomService {
  }
  markConnection(room:Room,player:Player,connected:boolean,at=this.now()) {
   if(player.status==='left'||room.closing)return;
+  if(connected&&!player.connected&&room.state==='lobby'&&player.ready&&player.disconnectedAt!==null&&this.now()-player.disconnectedAt>READY_WINDOW_MS)this.setReady(room,player,false);
   if(player.connected!==connected){player.connected=connected;player.disconnectedAt=connected?null:at;this.bump(room);this.emit(room,'player_connection',{playerId:player.playerId,connected});}
   if(connected){player.lastSeenAt=this.now();room.noConnectionsSince=null;}
   else if(![...room.players.values()].some(p=>p.connected&&p.status!=='left'))room.noConnectionsSince??=this.now();
@@ -108,12 +111,21 @@ export class RoomService {
   if(data.timeLimitMinutes!==undefined)room.settings.timeLimitMinutes=data.timeLimitMinutes;
   if(data.locked!==undefined)room.settings.locked=data.locked;
   if(test&&data.test){room.seed=seed;room.testSpec=data.test;room.questionIds=test.questionIds;room.passageIds=test.passageIds;room.settings.test=test.summary;}
-  this.bump(room);this.emit(room,'settings_changed',{settings:room.settings});
+  const readyReset=!!(data.maxPlayers!==undefined||data.timeLimitMinutes!==undefined||test)&&[...room.players.values()].some(p=>p.ready);
+  if(readyReset)for(const p of room.players.values())p.ready=false;
+  this.bump(room);this.emit(room,'settings_changed',{settings:room.settings,readyReset});
  }
  start(room:Room,player:Player) {
-  this.host(room,player);this.state(room,'lobby');if([...room.players.values()].filter(p=>p.connected).length<2)fail('bad_state');
+  this.host(room,player);this.state(room,'lobby');const live=[...room.players.values()].filter(p=>p.connected&&p.status!=='left');
+  if(live.length<2)fail('bad_state');
+  const waiting=live.filter(p=>!p.ready).length;if(waiting)fail('not_all_ready',409,'Not all connected players are ready',{notReady:waiting,connected:live.length});
   room.state='playing';room.startedAt=this.now();room.deadlineAt=this.now()+(room.settings.timeLimitMinutes??60)*60_000;
   for(const p of room.players.values())p.status='playing';this.bump(room);this.emit(room,'game_started',{startedAt:iso(room.startedAt),deadlineAt:iso(room.deadlineAt)});
+ }
+ /** Set own ready flag in the lobby; idempotent (no event when unchanged). */
+ setReady(room:Room,player:Player,ready:boolean) {
+  this.state(room,'lobby');if(player.ready===ready)return;
+  player.ready=ready;this.bump(room);this.emit(room,'player_ready_changed',{playerId:player.playerId,ready});
  }
  answer(room:Room,player:Player,input:z.input<typeof AnswerSchema>) {
   this.state(room,'playing');if(player.status!=='playing'||this.now()>=room.deadlineAt!)fail('bad_state');
@@ -173,7 +185,7 @@ export class RoomService {
   room.seed=seed;room.permKey=this.crypto.hex(32);room.questionIds=test.questionIds;room.passageIds=test.passageIds;room.settings.test=test.summary;
   for(const [id,p] of room.players) {
    if((!p.connected&&p.playerId!==player.playerId)||p.status==='left'){room.blockedTokens.add(p.tokenHash.toString('hex'));p.name='';p.answers.clear();room.players.delete(id);continue;}
-   p.status='joined';p.answers.clear();p.submittedAt=null;delete p.correct;delete p.forfeited;
+   p.status='joined';p.ready=false;p.answers.clear();p.submittedAt=null;delete p.correct;delete p.forfeited;
   }
   room.state='lobby';room.startedAt=null;room.deadlineAt=null;room.forfeit=false;room.noConnectionsSince=null;this.bump(room);this.emit(room,'rematch',{});
  }

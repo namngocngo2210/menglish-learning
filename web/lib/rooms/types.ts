@@ -6,8 +6,8 @@ export type TestSpec =
  | { mode: "mix"; grade: 6 | 7 | 8 | 9; skills: Skill[]; topicSlug: string | null; size: 10 | 20 | 40; difficulty: "balanced" | "easy" | "medium" | "hard" };
 export interface CreateRoomInput { name: string; maxPlayers?: number; timeLimitMinutes?: 15 | 30 | null; test: TestSpec }
 export interface RoomSettings { maxPlayers: number; timeLimitMinutes: 15 | 30 | null; locked: boolean; test: { title?: string; grade?: number; skills?: Skill[]; size?: number; kind?: "fixed" | "mix" } & Partial<TestSpec> }
-export interface PlayerView { playerId: string; name: string; isHost: boolean; status: PlayerStatus; connected: boolean }
-export interface Me { playerId: string; name?: string; isHost: boolean; status?: PlayerStatus; answeredCount?: number }
+export interface PlayerView { playerId: string; name: string; isHost: boolean; status: PlayerStatus; connected: boolean; ready: boolean }
+export interface Me { playerId: string; name?: string; isHost: boolean; ready?: boolean; status?: PlayerStatus; answeredCount?: number }
 export interface RoomSnapshot {
  code: string; state: RoomState; version: number; serverNow: string; settings: RoomSettings;
  startedAt: string | null; deadlineAt: string | null; players: PlayerView[]; submittedCount: number; playerCount: number; me: Me;
@@ -26,9 +26,9 @@ export interface ReviewItem { questionId: string; stem: string; options: QuizOpt
 export type ReportReason = "ten_khong_phu_hop" | "noi_dung_sai" | "khac";
 export type RoomSettingsPatch = Partial<Pick<RoomSettings, "maxPlayers" | "timeLimitMinutes" | "locked">> & { test?: TestSpec };
 
-export const ROOM_ERROR_CODES = ["invalid_input", "no_session", "not_host", "room_not_found", "room_not_joinable", "room_full", "name_taken", "already_joined", "bad_state", "name_rejected", "not_enough_questions", "rate_limited", "busy", "network", "unknown"] as const;
+export const ROOM_ERROR_CODES = ["invalid_input", "no_session", "not_host", "room_not_found", "room_not_joinable", "room_full", "name_taken", "already_joined", "bad_state", "not_all_ready", "name_rejected", "not_enough_questions", "rate_limited", "busy", "network", "unknown"] as const;
 export type RoomErrorCode = (typeof ROOM_ERROR_CODES)[number];
 
-export const SSE_EVENTS = ["snapshot", "player_joined", "player_left", "player_kicked", "player_connection", "host_changed", "settings_changed", "game_started", "progress", "results_ready", "rematch", "room_closed", "superseded", "server_restarting"] as const;
+export const SSE_EVENTS = ["snapshot", "player_joined", "player_left", "player_kicked", "player_connection", "host_changed", "settings_changed", "player_ready_changed", "game_started", "progress", "results_ready", "rematch", "room_closed", "superseded", "server_restarting"] as const;
 export type SseEventName = (typeof SSE_EVENTS)[number];
 export type CloseReason = "host_closed" | "idle" | "empty" | "maintenance" | "expired";

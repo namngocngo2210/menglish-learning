@@ -6,12 +6,19 @@ export const isDuel = (room: Pick<RoomSnapshot, "settings">) => room.settings.ma
 export const activePlayers = (room: Pick<RoomSnapshot, "players">): PlayerView[] => room.players.filter(p => p.status !== "left");
 export const connectedCount = (room: Pick<RoomSnapshot, "players">) => activePlayers(room).filter(p => p.connected).length;
 
-/** Host may start with at least two connected players. */
+/** Connected players who pressed Sẵn sàng, out of all connected players (the host counts like everyone else). */
+export function readyCounts(room: Pick<RoomSnapshot, "players">): { ready: number; total: number } {
+ const live = activePlayers(room).filter(p => p.connected);
+ return { ready: live.filter(p => p.ready).length, total: live.length };
+}
+
+/** Host may start with at least two connected players and every connected player ready. */
 export function startState(room: RoomSnapshot): { enabled: boolean; hint: string } {
- const connected = connectedCount(room);
+ const { ready, total } = readyCounts(room);
  if (!room.me.isHost) return { enabled: false, hint: "Chờ chủ phòng bấm Bắt đầu…" };
- if (connected < MIN_START_PLAYERS) return { enabled: false, hint: `Cần ít nhất ${MIN_START_PLAYERS} người đang kết nối (hiện có ${connected}).` };
- return { enabled: true, hint: "Mọi người sẽ bắt đầu cùng lúc." };
+ if (total < MIN_START_PLAYERS) return { enabled: false, hint: `Cần ít nhất ${MIN_START_PLAYERS} người đang kết nối (hiện có ${total}).` };
+ if (ready < total) return { enabled: false, hint: `Chờ ${total - ready} người sẵn sàng` };
+ return { enabled: true, hint: "Tất cả đã sẵn sàng, chủ phòng có thể bắt đầu" };
 }
 export const shareUrl = (origin: string, code: string) => `${origin.replace(/\/+$/, "")}${roomPath(code)}`;
 
@@ -29,5 +36,5 @@ export function statusLabel(p: PlayerView, roomState: RoomSnapshot["state"]): St
  if (!p.connected && p.status !== "submitted") return { text: "Mất kết nối", tone: "off" };
  if (p.status === "submitted") return { text: "Đã nộp", tone: "ok" };
  if (roomState === "playing") return { text: "Đang làm", tone: "wait" };
- return { text: "Sẵn sàng", tone: "ok" };
+ return p.ready ? { text: "Sẵn sàng", tone: "ok" } : { text: "Chưa sẵn sàng", tone: "wait" };
 }

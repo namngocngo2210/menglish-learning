@@ -2,7 +2,7 @@ import { RoomsApiError } from "./client";
 import type { CloseReason, PreviewResponse, RoomSnapshot, SseEventName } from "./types";
 
 export type Phase = "loading" | "join" | "not_found" | "unavailable" | "lobby" | "playing" | "submitted" | "results" | "closed" | "superseded" | "kicked" | "error";
-export interface ShellState { phase: Phase; room: RoomSnapshot | null; preview: PreviewResponse | null; closeReason: CloseReason | null; restarting: boolean; announcement: string | null; retryable: boolean }
+export interface ShellState { phase: Phase; room: RoomSnapshot | null; preview: PreviewResponse | null; closeReason: CloseReason | null; restarting: boolean; announcement: string | null; notice: string | null; retryable: boolean }
 export type ShellAction =
  | { type: "snapshot"; room: RoomSnapshot }
  | { type: "no_session"; preview: PreviewResponse }
@@ -10,7 +10,7 @@ export type ShellAction =
  | { type: "event"; name: SseEventName; data: unknown }
  | { type: "session_lost" }
  | { type: "retry" };
-export const initialShell: ShellState = { phase: "loading", room: null, preview: null, closeReason: null, restarting: false, announcement: null, retryable: false };
+export const initialShell: ShellState = { phase: "loading", room: null, preview: null, closeReason: null, restarting: false, announcement: null, notice: null, retryable: false };
 
 export function phaseOf(room: RoomSnapshot): Phase {
  switch (room.state) {
@@ -25,7 +25,7 @@ export function shellReducer(s: ShellState, a: ShellAction): ShellState {
   case "retry": return { ...initialShell };
   // Our cookie stopped working after we were in the room: kicked, or the room moved on without us.
   case "session_lost": return { ...s, phase: "kicked" };
-  case "snapshot": return s.phase === "superseded" || s.phase === "kicked" ? s : { ...s, room: a.room, preview: null, restarting: false, retryable: false, phase: phaseOf(a.room) };
+  case "snapshot": return s.phase === "superseded" || s.phase === "kicked" ? s : { ...s, room: a.room, preview: null, restarting: false, retryable: false, phase: phaseOf(a.room), notice: a.room.state === "lobby" && !a.room.me.ready ? s.notice : null };
   case "no_session": return { ...s, preview: a.preview, phase: a.preview.joinable ? "join" : "unavailable" };
   case "api_error": {
    const e = a.error;
@@ -42,6 +42,11 @@ export function shellReducer(s: ShellState, a: ShellAction): ShellState {
    if (a.name === "superseded") return { ...s, phase: "superseded" };
    if (a.name === "room_closed") return { ...s, phase: "closed", closeReason: (data.reason as CloseReason) ?? null };
    if (a.name === "server_restarting") return { ...s, restarting: true };
+   if (a.name === "settings_changed" && data.readyReset === true) return { ...s, notice: "Chủ phòng vừa đổi cài đặt bài. Mọi người cần bấm Sẵn sàng lại.", announcement: "Chủ phòng vừa đổi cài đặt bài. Mọi người cần bấm Sẵn sàng lại." };
+   if (a.name === "player_ready_changed") {
+    const who = s.room?.players.find(p => p.playerId === data.playerId);
+    return who ? { ...s, announcement: `${who.name} ${data.ready ? "đã sẵn sàng" : "đã bỏ sẵn sàng"}.` } : s;
+   }
    if (a.name === "host_changed") return { ...s, announcement: "Chủ phòng đã đổi." };
    return s;
   }
