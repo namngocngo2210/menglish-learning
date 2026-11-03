@@ -4,6 +4,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, it, vi } from "vitest";
 import { SiteHeader } from "@/components/chrome/SiteHeader";
+import { GradeChip } from "@/components/chrome/GradeChip";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
 import { getAllRoutes } from "@/lib/seo";
 import { getSkills } from "@/lib/content/load";
@@ -12,17 +13,24 @@ import { SITE } from "@/lib/site-config";
 
 vi.mock("next/navigation", () => ({ usePathname: () => "/grade-6" }));
 
-it("renders one closed 'Chọn lớp' popover with every grade link and no mobile menu or grade pills", () => {
- const html = renderToStaticMarkup(createElement(SiteHeader));
- expect(html).toContain('aria-label="Điều hướng chính"');
+it("renders an in-context grade chip with a crawlable link per grade", () => {
+ const html = renderToStaticMarkup(createElement(GradeChip));
  expect(html).toContain("<details");
  expect(html).not.toContain("<details open");
- expect(html.match(/Chọn lớp/g)).toHaveLength(1);
- expect(html).not.toContain("mobile-navigation");
- expect(html).toContain('aria-hidden="true"');
+ for (const grade of GRADES) expect(html).toContain(`href="${gradePath(grade)}"`);
+});
+it("renders task-based navigation with no grade dropdown or grade links in the header", () => {
+ const html = renderToStaticMarkup(createElement(SiteHeader));
+ expect(html).toContain('aria-label="Điều hướng chính"');
+ expect(html).not.toContain("Chọn lớp");
+ expect(html).not.toContain("<details");
+ for (const label of ["Luyện nhanh", "Thi vào lớp 10"]) expect(html).toContain(label);
+ expect(html).toContain('href="/quick-practice"');
+ expect(html).toContain('aria-controls="menu-di-dong"');
+ expect(html).toContain('aria-expanded="false"');
  expect(html).toMatch(/<img[^>]+alt="BeeJunior"[^>]+width="231"[^>]+height="44"/);
  expect(html).toContain("border-t-brand");
- for (const grade of GRADES) expect(html).toContain(`href="${gradePath(grade)}"`);
+ for (const grade of GRADES) expect(html).not.toContain(`href="${gradePath(grade)}"`);
  expect(html).not.toContain('type="search"');
 });
 it("renders a compact footer with only known public routes and every grade/skill link inside a closed details", () => {
