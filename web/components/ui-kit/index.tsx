@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import type { Question } from "@/lib/content/types";
 import { SiteHeader } from "@/components/chrome/SiteHeader";
 import { SiteFooter } from "@/components/chrome/SiteFooter";
+import { GradeChip } from "@/components/chrome/GradeChip";
 import { type Skill } from "@/lib/routes";
 
 export interface NavigationItem { label: string; href?: string; }
@@ -32,7 +33,7 @@ export function PageShell({ title, children, hero, compact }: { title: string; c
 /** Below 640px only the last two levels show, behind a "…" link to the level above; the full chain stays in the DOM and in JSON-LD. */
 export function Breadcrumbs({ items }: { items: readonly NavigationItem[] }) {
  const hiddenUntil = items.length - 2; const up = items[hiddenUntil - 1];
- return <nav aria-label="Đường dẫn"><ol className="flex min-w-0 items-center gap-x-2 text-sm max-sm:flex-nowrap sm:flex-wrap">{up?.href && <li className="flex shrink-0 items-center sm:hidden"><Link aria-label={`Lên ${up.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center" href={up.href}>…</Link></li>}{items.map((item, index) => <li key={index} className={`flex min-w-0 max-w-full items-center gap-2${index < hiddenUntil ? " max-sm:hidden" : ""}`}>{index > 0 && <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-navy-soft"/>}{item.href && index < items.length - 1 ? <Link className="inline-flex min-h-11 min-w-0 items-center py-2 pointer-fine:min-h-8 pointer-fine:py-0" href={item.href}><span className="truncate">{item.label}</span></Link> : <span className="min-w-0 truncate py-2 font-medium pointer-fine:py-0" aria-current="page">{item.label}</span>}</li>)}</ol></nav>;
+ return <div className="flex items-center justify-between gap-2"><nav aria-label="Đường dẫn" className="min-w-0"><ol className="flex min-w-0 items-center gap-x-2 text-sm max-sm:flex-nowrap sm:flex-wrap">{up?.href && <li className="flex shrink-0 items-center sm:hidden"><Link aria-label={`Lên ${up.label}`} className="inline-flex min-h-11 min-w-11 items-center justify-center" href={up.href}>…</Link></li>}{items.map((item, index) => <li key={index} className={`flex min-w-0 max-w-full items-center gap-2${index < hiddenUntil ? " max-sm:hidden" : ""}`}>{index > 0 && <ChevronRight aria-hidden="true" className="size-4 shrink-0 text-navy-soft"/>}{item.href && index < items.length - 1 ? <Link className="inline-flex min-h-11 min-w-0 items-center py-2 pointer-fine:min-h-8 pointer-fine:py-0" href={item.href}><span className="truncate">{item.label}</span></Link> : <span className="min-w-0 truncate py-2 font-medium pointer-fine:py-0" aria-current="page">{item.label}</span>}</li>)}</ol></nav><GradeChip/></div>;
 }
 export function LinkCardList({ items, emptyMessage = "Nội dung đang được chuẩn bị. Em hãy quay lại sau nhé." }: { items: readonly LinkCard[]; emptyMessage?: string }) {
  if (!items.length) return <div className="flex items-center gap-4 rounded-2xl border border-dashed border-navy-soft/30 bg-warm p-6"><Image unoptimized src="/brand/mascot.webp" alt="" width={512} height={348} loading="lazy" className="h-auto w-18 shrink-0"/><p>{emptyMessage}</p></div>;

@@ -6,7 +6,7 @@ import { ArrowRight, BookOpen, Languages, LibraryBig, PenLine } from "lucide-rea
 import { tileClass } from "./tiles";
 import { gradePath, skillPath, SKILL_NAMES, type Grade, type Skill } from "@/lib/routes";
 
-const KEY = "bj-grade";
+import { GRADE_KEY as KEY } from "@/components/chrome/GradeChip";
 const META: Record<Skill, [typeof BookOpen, string]> = {
  "doc-hieu": [BookOpen, "Bài đọc và câu hỏi"], "ngu-phap": [LibraryBig, "Thì, cấu trúc"],
  "tu-vung": [Languages, "Theo chủ đề"], "viet-cau": [PenLine, "Sắp xếp, viết lại"],
