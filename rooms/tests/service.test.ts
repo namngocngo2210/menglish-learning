@@ -1,5 +1,5 @@
 import { describe,it,expect } from 'vitest';
-import { party,setup,fixed,bank } from './fixture';
+import { party,setup,fixed,bank,readyAll } from './fixture';
 import { permutation, toDisplay } from '../src/perm';
 import { snapshot,quiz,results,review } from '../src/views';
 const minute=60_000;
@@ -7,7 +7,7 @@ describe('state machine',()=>{
  it('requires two connected players and authorizes roles',()=>{
   const {service}=setup();const h=service.create({name:'An',test:fixed});
   expect(()=>service.start(h.room,h.player)).toThrow('bad_state');
-  const b=service.join(h.room.code,'Bảo');
+  const b=service.join(h.room.code,'Bảo');readyAll(service,h.room);
   expect(()=>service.start(h.room,b.player)).toThrow('not_host');
   service.setConnected(b.player.playerId,false);expect(()=>service.start(h.room,h.player)).toThrow('bad_state');
   service.setConnected(b.player.playerId,true);service.start(h.room,h.player);
@@ -35,7 +35,7 @@ describe('state machine',()=>{
  it('supports settings replacement, rematch and explicit close',()=>{
   const {service,host,second,room}=party();
   const old=room.permKey;
-  service.updateSettings(room,host.player,{timeLimitMinutes:15,test:fixed});
+  service.updateSettings(room,host.player,{timeLimitMinutes:15,test:fixed});readyAll(service,room);
   service.start(room,host.player);service.finish(room,host.player);
   expect(room.state).toBe('results');service.setConnected(second.player.playerId,false);
   service.rematch(room,host.player);expect(room.state).toBe('lobby');expect(room.permKey).not.toBe(old);
@@ -48,7 +48,7 @@ describe('state machine',()=>{
   service.leave(room,second.player);expect(room.hostId).toBe(c.player.playerId);expect(room.players.has(second.player.playerId)).toBe(false);
  });
  it.each([null,15,30] as const)('auto submits at deadline %s',timeLimitMinutes=>{
-  const {service,advance,host,room}=party();service.updateSettings(room,host.player,{timeLimitMinutes});service.start(room,host.player);
+  const {service,advance,host,room}=party();service.updateSettings(room,host.player,{timeLimitMinutes});readyAll(service,room);service.start(room,host.player);
   advance((timeLimitMinutes??60)*minute);
   expect(()=>service.answer(room,host.player,{questionId:'q1',key:'A'})).toThrow('bad_state');
   service.tick();expect(room.state).toBe('results');expect([...room.players.values()].every(p=>p.status==='submitted')).toBe(true);
@@ -74,7 +74,7 @@ describe('state machine',()=>{
   const h=service.create({name:'An',test:{mode:'mix',grade:7,skills:['ngu-phap'],topicSlug:null,size:10,difficulty:'hard'}});
   expect(h.room.questionIds.length).toBeGreaterThanOrEqual(10);expect(h.room.seed).toMatch(/^[a-f0-9]+$/);
   expect(()=>service.create({name:'Minh',test:fixed})).toThrow('busy');
-  const b=service.join(h.room.code,'Bảo');service.start(h.room,h.player);service.finish(h.room,h.player);
+  const b=service.join(h.room.code,'Bảo');readyAll(service,h.room);service.start(h.room,h.player);service.finish(h.room,h.player);
   const oldSeed=h.room.seed;service.rematch(h.room,h.player);expect(h.room.seed).not.toBe(oldSeed);expect(b.player.status).toBe('joined');
   service.draining=true;expect(()=>service.create({name:'Minh',test:fixed})).toThrow('busy');
  });
@@ -121,6 +121,6 @@ describe('duels',()=>{
  it('handles win, draw and lose from each viewpoint',()=>{
   const {service,host,second,room}=party(2);service.start(room,host.player);service.answer(room,host.player,{questionId:'q1',key:toDisplay(permutation(room.permKey,host.player.playerId,'q1'),'C')});service.finish(room,host.player);
   expect(results(room,host.player).duel?.outcome).toBe('win');expect(results(room,second.player).duel?.outcome).toBe('lose');
-  service.rematch(room,host.player);service.start(room,host.player);service.finish(room,host.player);expect(results(room,host.player).duel?.outcome).toBe('draw');
+  service.rematch(room,host.player);readyAll(service,room);service.start(room,host.player);service.finish(room,host.player);expect(results(room,host.player).duel?.outcome).toBe('draw');
  });
 });

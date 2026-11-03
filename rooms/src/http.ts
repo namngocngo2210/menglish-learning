@@ -222,6 +222,7 @@ export function createHandler(service: RoomService, config: Config, deps: Handle
       case 'settings': expect('POST'); service.updateSettings(room, player, body as never); send(res, 200, snap()); return;
       case 'kick': expect('POST'); service.kick(room, player, parse(KickSchema, body).playerId); send(res, 200, snap()); return;
       case 'start': expect('POST'); parse(EmptySchema, body); service.start(room, player); send(res, 200, snap()); return;
+      case 'ready': case 'unready': expect('POST'); parse(EmptySchema, body); service.setReady(room, player, action === 'ready'); send(res, 200, snap()); return;
       case 'answers': expect('PUT'); send(res, 200, service.answer(room, player, body as never)); return;
       case 'submit': expect('POST'); parse(EmptySchema, body); send(res, 200, service.submit(room, player)); return;
       case 'finish': expect('POST'); parse(EmptySchema, body); service.finish(room, player); send(res, 200, snap()); return;
