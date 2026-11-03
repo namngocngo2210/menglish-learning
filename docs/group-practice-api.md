@@ -15,7 +15,8 @@ Quy ước: tiền tố `/rt` (Caddy chuyển tới service `rooms`); JSON UTF-8
 | GET | `/rt/rooms/{code}/snapshot` | đã vào | Trạng thái hiện tại (dự phòng khi SSE hỏng; polling 3 s) |
 | POST | `/rt/rooms/{code}/settings` | chủ phòng, `lobby` | Sửa cài đặt/đề; khóa phòng |
 | POST | `/rt/rooms/{code}/kick` | chủ phòng | `{ playerId }` |
-| POST | `/rt/rooms/{code}/start` | chủ phòng, `lobby` | Bắt đầu (≥ 2 kết nối) |
+| POST | `/rt/rooms/{code}/ready` · `/unready` | đã vào, `lobby` | Đặt/bỏ "sẵn sàng" của chính mình (idempotent, trả snapshot; 409 `bad_state` ngoài `lobby`) |
+| POST | `/rt/rooms/{code}/start` | chủ phòng, `lobby` | Bắt đầu (≥ 2 kết nối và mọi người kết nối đã sẵn sàng; nếu không: 409 `not_all_ready` kèm `notReady`, `connected`) |
 | GET | `/rt/rooms/{code}/quiz` | đã vào, `playing` | Nội dung đề của riêng mình (câu + phương án theo hoán vị của mình, **không đáp án**) |
 | PUT | `/rt/rooms/{code}/answers` | đã vào, `playing` | `{ questionId, key }` (lưu/đổi đáp án, key = khóa hiển thị) |
 | POST | `/rt/rooms/{code}/submit` | đã vào, `playing` | Nộp bài; không sửa được nữa. Không trả điểm |
@@ -27,7 +28,7 @@ Quy ước: tiền tố `/rt` (Caddy chuyển tới service `rooms`); JSON UTF-8
 | POST | `/rt/rooms/{code}/close` | chủ phòng | Đóng phòng |
 | GET | `/rt/healthz` | nội bộ | Sức khỏe + số liệu tổng hợp |
 
-Mã lỗi: `400 invalid_input`, `401 no_session`, `403 not_host`, `404 room_not_found` (gộp không tồn tại/hết hạn), `409 room_not_joinable` (đã bắt đầu / khóa), `409 room_full`, `409 name_taken`, `409 bad_state`, `422 name_rejected` (thông điệp chung), `429 rate_limited` (+`Retry-After`), `503 busy`.
+Mã lỗi: `400 invalid_input`, `401 no_session`, `403 not_host`, `404 room_not_found` (gộp không tồn tại/hết hạn), `409 room_not_joinable` (đã bắt đầu / khóa), `409 room_full`, `409 name_taken`, `409 bad_state`, `409 not_all_ready` (`{notReady, connected}`), `422 name_rejected` (thông điệp chung), `429 rate_limited` (+`Retry-After`), `503 busy`.
 
 ## 2. Payload chính
 
@@ -56,9 +57,9 @@ Mã lỗi: `400 invalid_input`, `401 no_session`, `403 not_host`, `404 room_not_
                 "test": { "title": "Thì hiện tại đơn — Đề 1", "grade": 7, "skills": ["ngu-phap"], "size": 20, "kind": "fixed|mix" } },
   "startedAt": null, "deadlineAt": null,
   "players": [ { "playerId": "p_a1", "name": "An (mẫu)", "isHost": true, "status": "joined|playing|submitted|left",
-                 "connected": true } ],     // KHÔNG có điểm/đáp án/tiến độ câu
+                 "connected": true, "ready": false } ],     // KHÔNG có điểm/đáp án/tiến độ câu
   "submittedCount": 0, "playerCount": 6,
-  "me": { "playerId": "p_a1", "isHost": true, "status": "joined", "answeredCount": 0 }
+  "me": { "playerId": "p_a1", "isHost": true, "status": "joined", "ready": false, "answeredCount": 0 }
 }
 ```
 
@@ -90,7 +91,8 @@ Mỗi sự kiện: `id: <version>`, `event: <tên>`, `data: <json>`. Nối lại
 | `player_joined` / `player_left` / `player_kicked` | phòng chờ hoặc rời | `{ player }` |
 | `player_connection` | mất/có lại kết nối | `{ playerId, connected }` |
 | `host_changed` | chuyển quyền chủ phòng | `{ hostId }` |
-| `settings_changed` | chủ phòng sửa | `{ settings }` |
+| `settings_changed` | chủ phòng sửa | `{ settings, readyReset }` (`readyReset=true`: đổi đề/giờ/sĩ số nên mọi người về chưa sẵn sàng) |
+| `player_ready_changed` | ai đó bấm Sẵn sàng/Bỏ (hoặc hết hạn kết nối lại) | `{ playerId, ready }` |
 | `game_started` | bắt đầu | `{ startedAt, deadlineAt }` (client gọi `GET /quiz`) |
 | `progress` | có người nộp/tự nộp | `{ submittedCount, playerStatuses }` — **không** điểm |
 | `results_ready` | xong | `{}` (client gọi `GET /results`) |
@@ -118,8 +120,8 @@ Tombstone   { code, closedAt }   // 10 phút, không tên
 ```mermaid
 stateDiagram-v2
     [*] --> lobby: POST /rooms
-    lobby --> lobby: join / leave / kick / settings / lock
-    lobby --> playing: POST /start (host, >=2 connected)
+    lobby --> lobby: join / leave / kick / settings / lock / ready
+    lobby --> playing: POST /start (host, >=2 connected, all connected ready)
     lobby --> closed: close / idle 30m / no players
     playing --> playing: PUT /answers / submit (một người)
     playing --> results: tất cả đã nộp hoặc rời / finish (host) / deadline / hard cap 60m

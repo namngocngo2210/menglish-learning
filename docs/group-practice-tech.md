@@ -95,7 +95,7 @@ Port sang Go (C) chỉ nên làm khi (a) kiến trúc Go `api` đã có, và (b)
 | Vào phòng (thành công) | 120/phút mỗi IP |
 | Người chơi mỗi phòng | ≤ 45 (mặc định 10); kết nối SSE ≤ 2 mỗi token, ≤ 60 mỗi IP; ≤ 2.000 toàn hệ thống |
 | `PUT /answers` | 120/phút mỗi người chơi |
-| Các POST khác (start, kick…) | 30/phút mỗi người chơi |
+| Các POST khác (ready, unready, start, kick…) | 30/phút mỗi người chơi |
 | Thân request | ≤ 4 KB, JSON, thư viện parse chặt (schema zod strict) |
 | Phòng không hoạt động | `lobby` 30 phút, `results` 10 phút, `playing` ≤ 60 phút |
 

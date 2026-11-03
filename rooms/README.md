@@ -26,7 +26,7 @@ S1 = room core + HTTP API. S2 (this README) adds SSE, polling fallback, liveness
 All limits are per hashed IP (salted, rotated daily, never logged) or per player id, sliding windows in RAM. They are deliberately generous for school NAT; tune via env.
 
 ## Realtime
-- `GET /rt/rooms/{code}/events` (cookie auth): `retry: 3000`, then `snapshot`, then `player_joined`, `player_left`, `player_kicked`, `player_connection`, `host_changed`, `settings_changed`, `game_started`, `progress`, `results_ready`, `rematch` (per-player snapshot), `room_closed{reason}`, `superseded`, `server_restarting`; `: ping` every 20 s. Event `id` = room version. Broadcasts are identical for everybody and carry no scores/answers (scanned in tests and in the load test).
+- `GET /rt/rooms/{code}/events` (cookie auth): `retry: 3000`, then `snapshot`, then `player_joined`, `player_left`, `player_kicked`, `player_connection`, `host_changed`, `settings_changed{readyReset}`, `player_ready_changed`, `game_started`, `progress`, `results_ready`, `rematch` (per-player snapshot), `room_closed{reason}`, `superseded`, `server_restarting`; `: ping` every 20 s. Event `id` = room version. Broadcasts are identical for everybody and carry no scores/answers (scanned in tests and in the load test).
 - A second stream for the same token replaces the first (`superseded`). Slow consumers (>64 KB buffered) are dropped; EventSource reconnects and gets a fresh snapshot.
 - Fallback: `GET /snapshot` every 3 s with `If-None-Match` (ETag `W/"<version>-<playerId>"`, 304 when unchanged). Any authenticated request counts as liveness; a player without a stream and silent for 15 s is marked disconnected (host transfer after 60 s, auto-submit after 120 s).
 - A join request that carries a cookie token already active in that room is refused (`409 already_joined`).
@@ -44,6 +44,8 @@ All limits are per hashed IP (salted, rotated daily, never logged) or per player
 - `npm test`, `npm run typecheck`, `npm run build` (→ `dist/server.mjs`), `npm run mem-check` (300 rooms × 6 players)
 
 ## Rules implemented
+Ready step: `POST /ready` / `/unready` (own token, lobby only, idempotent, counts as an action for the rate limit). `start` needs >= 2 connected players and every connected player ready, else `409 not_all_ready {notReady, connected}`; the host is not auto-ready. A new player joins not ready; changing test/time/size resets everybody (`settings_changed.readyReset`), locking does not; rematch resets everybody; a ready player who stays disconnected > 60 s is reset on return.
+
 Per-player option permutation (HMAC), server-side scoring, ranking with shared ranks (ties by join order, never by speed), 1v1: leaving in the lobby cancels the match, leaving while playing makes the opponent win, 6-char codes (31-char alphabet, tombstones), SHA-256-hashed tokens in an HttpOnly `SameSite=Strict` cookie, no answer/score data in any response before `results`.
 
 `src/blocklist.json` is a **draft** name blocklist (D12): the owner must review it before enabling.

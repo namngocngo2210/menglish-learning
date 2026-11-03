@@ -11,6 +11,7 @@ const test = [...bank.tests.values()].find(t => t.kind === 'topic')!;
 for (let i = 0; i < 300; i++) {
   const host = service.create({ name: `Host${i}`, test: { mode: 'fixed', slug: test.slug } });
   for (let p = 1; p < 6; p++) service.join(host.room.code, `Player${p}x${i}`);
+  for (const p of host.room.players.values()) service.setReady(host.room, p, true);
   service.start(host.room, host.player);
 }
 global.gc?.();
