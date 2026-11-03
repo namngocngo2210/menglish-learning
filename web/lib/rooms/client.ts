@@ -50,6 +50,7 @@ export function createRoomsClient({ baseUrl = "/rt", fetchImpl }: { baseUrl?: st
   },
   settings: (code: string, patch: RoomSettingsPatch) => post(`${room(code)}/settings`, patch),
   kick: (code: string, playerId: string) => post(`${room(code)}/kick`, { playerId }),
+  ready: (code: string, ready: boolean) => post(`${room(code)}/${ready ? "ready" : "unready"}`),
   start: (code: string) => post(`${room(code)}/start`),
   quiz: (code: string) => json<QuizResponse>(`${room(code)}/quiz`),
   putAnswer: (code: string, questionId: string, key: string | null) => json(`${room(code)}/answers`, { method: "PUT", json: { questionId, key } }),

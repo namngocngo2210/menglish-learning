@@ -4,13 +4,13 @@ import { describe, expect, it } from "vitest";
 import { answeredCount, initialPlay, playReducer, toRoomSections } from "@/lib/rooms/play-state";
 import { clockOffset, formatClock, milestoneCrossed, remainingMs } from "@/lib/rooms/timer";
 import { duelHeadline, hasTies, initialLoad, isSharedRank, loadReducer, reviewStatus, reviewSummary } from "@/lib/rooms/results";
-import { isDuel, leaveWarning, startState, statusLabel } from "@/lib/rooms/lobby";
+import { isDuel, leaveWarning, readyCounts, startState, statusLabel } from "@/lib/rooms/lobby";
 import { errorMessage } from "@/lib/rooms/messages";
 import { RoomsApiError } from "@/lib/rooms/client";
 import { initialShell, shellReducer } from "@/lib/rooms/shell-state";
 import type { PlayerView, QuizResponse, RankingRow, RoomSnapshot } from "@/lib/rooms/types";
 
-const player = (id: string, over: Partial<PlayerView> = {}): PlayerView => ({ playerId: id, name: id, isHost: false, status: "joined", connected: true, ...over });
+const player = (id: string, over: Partial<PlayerView> = {}): PlayerView => ({ playerId: id, name: id, isHost: false, status: "joined", connected: true, ready: false, ...over });
 const room = (over: Partial<RoomSnapshot> = {}): RoomSnapshot => ({
  code: "K7M2QX", state: "lobby", version: 1, serverNow: "2026-11-01T09:00:00Z",
  settings: { maxPlayers: 10, timeLimitMinutes: null, locked: false, test: {} }, startedAt: null, deadlineAt: null,
@@ -58,10 +58,34 @@ describe("timer", () => {
 });
 
 describe("lobby rules", () => {
- it("start needs the host and two connected players", () => {
-  expect(startState(room()).enabled).toBe(true);
-  expect(startState(room({ players: [player("a", { isHost: true }), player("b", { connected: false })] })).enabled).toBe(false);
-  expect(startState(room({ me: { playerId: "b", isHost: false } })).enabled).toBe(false);
+ const allReady = [player("a", { isHost: true, ready: true }), player("b", { ready: true })];
+ it("start needs the host, two connected players and every connected player ready", () => {
+  expect(startState(room({ players: allReady })).enabled).toBe(true);
+  expect(startState(room({ players: allReady })).hint).toBe("Tất cả đã sẵn sàng, chủ phòng có thể bắt đầu");
+  expect(startState(room()).enabled).toBe(false); // host is not auto-ready
+  expect(startState(room()).hint).toBe("Chờ 2 người sẵn sàng");
+  expect(startState(room({ players: [player("a", { isHost: true, ready: true }), player("b")] })).hint).toBe("Chờ 1 người sẵn sàng");
+  expect(startState(room({ players: [player("a", { isHost: true, ready: true }), player("b", { connected: false })] })).enabled).toBe(false);
+  expect(startState(room({ players: [...allReady, player("c", { connected: false })] })).enabled).toBe(true); // disconnected do not block
+  expect(startState(room({ players: allReady, me: { playerId: "b", isHost: false } })).enabled).toBe(false);
+ });
+ it("counts only connected players and labels readiness with text", () => {
+  expect(readyCounts(room({ players: [...allReady, player("c"), player("d", { connected: false, ready: true })] }))).toEqual({ ready: 2, total: 3 });
+  expect(statusLabel(player("a", { ready: true }), "lobby").text).toBe("Sẵn sàng");
+  expect(statusLabel(player("a"), "lobby").text).toBe("Chưa sẵn sàng");
+ });
+ it("announces ready changes and a settings reset notice; the notice clears once I am ready again", () => {
+  const inLobby = shellReducer(initialShell, { type: "snapshot", room: room() });
+  expect(shellReducer(inLobby, { type: "event", name: "player_ready_changed", data: { playerId: "b", ready: true } }).announcement).toBe("b đã sẵn sàng.");
+  expect(shellReducer(inLobby, { type: "event", name: "player_ready_changed", data: { playerId: "b", ready: false } }).announcement).toBe("b đã bỏ sẵn sàng.");
+  const reset = shellReducer(inLobby, { type: "event", name: "settings_changed", data: { readyReset: true } });
+  expect(reset.notice).toMatch(/Sẵn sàng lại/);
+  expect(shellReducer(inLobby, { type: "event", name: "settings_changed", data: { readyReset: false } }).notice).toBeNull();
+  expect(shellReducer(reset, { type: "snapshot", room: room() }).notice).toMatch(/Sẵn sàng lại/);
+  expect(shellReducer(reset, { type: "snapshot", room: room({ me: { playerId: "a", isHost: true, ready: true } }) }).notice).toBeNull();
+ });
+ it("not_all_ready has a friendly message", () => {
+  expect(errorMessage(new RoomsApiError(409, "not_all_ready", "x"))).toMatch(/sẵn sàng/);
  });
  it("D7 duel leave warnings", () => {
   const duel = (state: RoomSnapshot["state"]) => room({ state, settings: { ...room().settings, maxPlayers: 2 } });

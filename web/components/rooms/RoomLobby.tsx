@@ -1,18 +1,21 @@
 "use client";
 import { useRef, useState } from "react";
-import { Copy, Link2, Lock, Play, UserX, XCircle } from "lucide-react";
-import { isDuel, shareUrl, startState, statusLabel } from "@/lib/rooms/lobby";
+import { CheckCircle2, Copy, Link2, Lock, Play, UserX, XCircle } from "lucide-react";
+import { isDuel, readyCounts, shareUrl, startState, statusLabel } from "@/lib/rooms/lobby";
 import { btnCta, btnSecondary, card, ConfirmDialog, ErrorLine, LeaveButton, PlayerList, StatusChip, useAction, type RoomScreenProps } from "./ui";
 
 const TIME_OPTIONS = [{ value: "", label: "Không giới hạn" }, { value: "15", label: "15 phút" }, { value: "30", label: "30 phút" }] as const;
 
-export function RoomLobby({ client, room }: RoomScreenProps) {
+export function RoomLobby({ client, room, notice = null }: RoomScreenProps & { notice?: string | null }) {
  const host = room.me.isHost;
  const [copied, setCopied] = useState("");
  const [confirmClose, setConfirmClose] = useState(false);
  const [kicking, setKicking] = useState<{ id: string; name: string } | null>(null);
  const closeTrigger = useRef<HTMLButtonElement>(null);
  const start = startState(room);
+ const counts = readyCounts(room);
+ const me = room.players.find(p => p.playerId === room.me.playerId);
+ const iAmReady = me?.ready ?? room.me.ready ?? false;
  const act = useAction();
  const test = room.settings.test;
 
@@ -41,7 +44,10 @@ export function RoomLobby({ client, room }: RoomScreenProps) {
     <StatusChip label={statusLabel(p, room.state)}/>
     {host && p.playerId !== room.me.playerId && <button type="button" className={`${btnSecondary} px-3`} aria-label={`Mời ra khỏi phòng: ${p.name}`} onClick={() => setKicking({ id: p.playerId, name: p.name })}><UserX aria-hidden="true" className="size-5"/><span className="max-sm:sr-only">Mời ra</span></button>}
    </>}</PlayerList>
-   <p role="status" className="mt-3 font-semibold text-navy-soft">{host ? start.hint : "Đang chờ chủ phòng bấm Bắt đầu…"}</p>
+   <p className="mt-3 font-bold" data-slot="ready-count">Đã sẵn sàng {counts.ready}/{counts.total}</p>
+   {notice && <p className="mt-2 rounded-xl border-2 border-navy/20 bg-warm p-3 font-semibold" data-slot="ready-reset-notice">{notice}</p>}
+   <button type="button" className={`${iAmReady ? btnSecondary : btnCta} mt-3 w-full text-lg`} disabled={act.pending} aria-pressed={iAmReady} onClick={() => void act.run(() => client.ready(room.code, !iAmReady))}>{iAmReady ? <XCircle aria-hidden="true" className="size-5"/> : <CheckCircle2 aria-hidden="true" className="size-5"/>}{iAmReady ? "Bỏ sẵn sàng" : "Sẵn sàng"}</button>
+   <p id="start-hint" role="status" aria-live="polite" className="mt-3 font-semibold text-navy-soft">{host ? start.hint : counts.ready === counts.total ? "Tất cả đã sẵn sàng. Đang chờ chủ phòng bấm Bắt đầu…" : "Đang chờ mọi người sẵn sàng…"}</p>
   </section>
 
   {host && <section className={card} aria-labelledby="host-title">
@@ -56,7 +62,7 @@ export function RoomLobby({ client, room }: RoomScreenProps) {
    </div>
    <div className="mt-4"><ErrorLine message={act.error}/></div>
    <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-    <button type="button" className={btnCta} disabled={!start.enabled || act.pending} onClick={() => void act.run(() => client.start(room.code))}><Play aria-hidden="true" className="size-5"/>Bắt đầu</button>
+    <button type="button" className={btnCta} disabled={!start.enabled || act.pending} aria-describedby="start-hint" onClick={() => void act.run(() => client.start(room.code))}><Play aria-hidden="true" className="size-5"/>Bắt đầu</button>
     <button ref={closeTrigger} type="button" className={btnSecondary} onClick={() => setConfirmClose(true)}><XCircle aria-hidden="true" className="size-5"/>Đóng phòng</button>
     <LeaveButton client={client} room={room}/>
    </div>

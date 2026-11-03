@@ -20,7 +20,7 @@ export async function newPlayer(browser: Browser, info: TestInfo): Promise<{ ctx
     class Spy extends Native {
       constructor(url: string | URL, init?: EventSourceInit) {
         super(url, init);
-        for (const name of ["snapshot", "player_joined", "player_left", "player_kicked", "player_connection", "host_changed", "settings_changed", "game_started", "progress", "results_ready", "rematch", "room_closed", "superseded", "server_restarting"]) {
+        for (const name of ["snapshot", "player_joined", "player_left", "player_kicked", "player_connection", "host_changed", "settings_changed", "player_ready_changed", "game_started", "progress", "results_ready", "rematch", "room_closed", "superseded", "server_restarting"]) {
           this.addEventListener(name, e => w.__sse.push(`${name} ${(e as MessageEvent).data}`));
         }
       }
