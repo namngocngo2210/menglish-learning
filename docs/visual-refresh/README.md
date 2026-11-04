@@ -36,5 +36,13 @@ Updated per card (home in part A; the rest in following cards of the same PR).
 | Group practice `/group-practice` | 58 | 94 | 280 |
 | Sign-up `/sign-up` | 67 | 83 | 109 |
 | Test `/grade-6/grammar/mixed/test-1` (quiz UI only) | 108 | 119 | 362 |
+| Grade `/grade-6` | 64 | 111 | 77 |
+| Skill `/grade-6/grammar` | 129 | 201 | 60 |
+| Topic `/grade-6/grammar/mixed` | 85 | 136 | 142 |
+| Grade 10 entrance `/grade-10-entrance` | 69 | 104 | 275 |
 
 Home hero (h1 + line + grade badges) = 23 words. Fold at 1440 additionally shows the four skill tiles.
+
+Part C notes: skill/topic/test cards show the skill icon plus one count line; the SEO intro sentences moved into a native `<details>` ("Xem thêm") below the cards and stay in the server HTML. Empty states use the sleepy mascot. Skill page fold stays ~129 words at 390 because the topic/test lists themselves are the content. No new SVG assets (existing SkillIcon/Mascot reused); home SVG weight in HTML is 8.5 KB raw / 1.7 KB gzip.
+
+Lighthouse (mobile, `next start`, lighthouse 12): home P95 A100 SEO100 CLS0; /grade-6 P96 A100 SEO100 CLS0; /grade-6/grammar P96 A100 SEO100 CLS0; /grade-6/grammar/to-infinitive P91 A100 SEO100 CLS0; test page P91 A100 SEO100 CLS0; /grade-10-entrance P92 A100 SEO100 CLS0.
