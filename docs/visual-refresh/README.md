@@ -32,5 +32,9 @@ Updated per card (home in part A; the rest in following cards of the same PR).
 | Page | Fold 390 | Fold 1440 | Total words |
 | --- | --- | --- | --- |
 | Home | 40 | 58 | 94 |
+| Quick practice `/quick-practice` | 42 | 42 | 42 |
+| Group practice `/group-practice` | 58 | 94 | 280 |
+| Sign-up `/sign-up` | 67 | 83 | 109 |
+| Test `/grade-6/grammar/mixed/test-1` (quiz UI only) | 108 | 119 | 362 |
 
 Home hero (h1 + line + grade badges) = 23 words. Fold at 1440 additionally shows the four skill tiles.

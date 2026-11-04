@@ -45,7 +45,7 @@ it("keeps fixed children in server HTML and fetches only after a click, with loa
  expect(loading.button.disabled).toBe(true);
  expect(loading.button["aria-busy"]).toBe(true);
  expect(loading.status["aria-live"]).toBe("polite");
- expect(loading.status.children).toContain("Đang tải");
+ expect(JSON.stringify(loading.status.children)).toContain("Đang tải");
  resolvePool({ ok: true, json: async () => ({ questions: [{ id: "q1", stem: "Choose.", options: [{ key: "A", text: "One" }, { key: "B", text: "Two" }, { key: "C", text: "Three" }, { key: "D", text: "Four" }], correctKey: "A", explanation: "One.", difficulty: 1, skill: "ngu-phap" }], passages: [] }) });
  await pending;
  const active = render();
@@ -72,7 +72,7 @@ it("announces fetch errors and lets the learner retry while keeping fixed childr
  vi.stubGlobal("fetch", fetchPool);
  await (render().button.onClick as () => Promise<void>)();
  const failed = render();
- expect(failed.status.children).toContain("Chưa tải được đề ngẫu nhiên");
+ expect(JSON.stringify(failed.status.children)).toContain("Chưa tải được đề");
  expect(failed.button.disabled).toBe(false);
  expect(failed.nodes.some(n => n.props.children === "Fixed quiz HTML")).toBe(true);
  await (failed.button.onClick as () => Promise<void>)();

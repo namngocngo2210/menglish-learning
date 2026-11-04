@@ -1,4 +1,5 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useRef, useState } from "react";
 import { CheckCircle2, Copy, Link2, Lock, Play, UserX, XCircle } from "lucide-react";
 import { isDuel, readyCounts, shareUrl, startState, statusLabel } from "@/lib/rooms/lobby";
@@ -27,7 +28,7 @@ export function RoomLobby({ client, room, notice = null }: RoomScreenProps & { n
  return <div className="space-y-5" data-slot="lobby">
   <section className={card} aria-labelledby="lobby-title">
    <p className="text-sm font-bold text-primary">{isDuel(room) ? "Phòng đấu đôi" : "Phòng luyện tập nhóm"}</p>
-   <h1 id="lobby-title" className="mt-1 text-2xl font-extrabold">{test.title ?? "Bài luyện tập"}</h1>
+   <h1 id="lobby-title" className="mt-1 flex items-center gap-3 text-2xl font-extrabold"><Mascot pose="group" size={64}/>{test.title ?? "Bài luyện tập"}</h1>
    <p className="mt-1 text-navy-soft">{[test.grade ? `Lớp ${test.grade}` : null, test.size ? `${test.size} câu` : null, room.settings.timeLimitMinutes ? `${room.settings.timeLimitMinutes} phút` : "Không giới hạn thời gian"].filter(Boolean).join(" · ")}</p>
    <div className="mt-4 flex flex-wrap items-center gap-3">
     <p className="rounded-xl border-2 border-navy bg-warm px-4 py-2 text-3xl font-extrabold tracking-[0.25em]" aria-label={`Mã phòng ${room.code.split("").join(" ")}`}>{room.code}</p>
@@ -47,7 +48,7 @@ export function RoomLobby({ client, room, notice = null }: RoomScreenProps & { n
    <p className="mt-3 font-bold" data-slot="ready-count">Đã sẵn sàng {counts.ready}/{counts.total}</p>
    {notice && <p className="mt-2 rounded-xl border-2 border-navy/20 bg-warm p-3 font-semibold" data-slot="ready-reset-notice">{notice}</p>}
    <button type="button" className={`${iAmReady ? btnSecondary : btnCta} mt-3 w-full text-lg`} disabled={act.pending} aria-pressed={iAmReady} onClick={() => void act.run(() => client.ready(room.code, !iAmReady))}>{iAmReady ? <XCircle aria-hidden="true" className="size-5"/> : <CheckCircle2 aria-hidden="true" className="size-5"/>}{iAmReady ? "Bỏ sẵn sàng" : "Sẵn sàng"}</button>
-   <p id="start-hint" role="status" aria-live="polite" className="mt-3 font-semibold text-navy-soft">{host ? start.hint : counts.ready === counts.total ? "Tất cả đã sẵn sàng. Đang chờ chủ phòng bấm Bắt đầu…" : "Đang chờ mọi người sẵn sàng…"}</p>
+   <p id="start-hint" role="status" aria-live="polite" className="mt-3 font-semibold text-navy-soft">{host ? start.hint : counts.ready === counts.total ? "Đã sẵn sàng. Chờ chủ phòng bấm Bắt đầu…" : "Đang chờ mọi người sẵn sàng…"}</p>
   </section>
 
   {host && <section className={card} aria-labelledby="host-title">
@@ -71,7 +72,7 @@ export function RoomLobby({ client, room, notice = null }: RoomScreenProps & { n
   {!host && <ErrorLine message={act.error}/>}
 
   <ConfirmDialog open={confirmClose} title="Đóng phòng?" onClose={() => { setConfirmClose(false); closeTrigger.current?.focus(); }}>
-   <p>Mọi người sẽ bị đưa ra khỏi phòng và phòng bị xóa.</p>
+   <p>Đóng phòng sẽ xóa phòng và mời mọi người ra.</p>
    <div className="flex flex-col gap-3 sm:flex-row"><button type="button" className={btnSecondary} onClick={() => setConfirmClose(false)}>Giữ phòng</button><button type="button" className={btnCta} onClick={() => { setConfirmClose(false); void act.run(() => client.close(room.code)); }}>Đóng phòng</button></div>
   </ConfirmDialog>
   <ConfirmDialog open={kicking !== null} title="Mời bạn ra khỏi phòng?" onClose={() => setKicking(null)}>

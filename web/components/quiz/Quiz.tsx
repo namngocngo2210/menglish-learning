@@ -1,8 +1,11 @@
 "use client";
-import Image from "next/image";
+import { Mascot } from "@/components/art/Mascot";
+import { ScoreRing, ResultStars } from "./ScoreRing";
+import { checkedStreak } from "@/lib/quiz/streak";
+import { resultPose, starCount } from "@/lib/quiz/result-visual";
 
 import { useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from "react";
-import { CheckCircle2, CircleHelp, Ellipsis, ListChecks, RotateCcw, XCircle } from "lucide-react";
+import { CheckCircle2, CircleHelp, Flame, Ellipsis, ListChecks, RotateCcw, XCircle } from "lucide-react";
 import { saveProgress } from "@/lib/progress";
 import type { PoolPassage } from "@/lib/random-quiz";
 import { scoreTest, scoreOutOf10 } from "@/lib/scoring";
@@ -48,6 +51,7 @@ export function Quiz({ questions, passages = [], afterResult, progressKey, stora
  const persistId = storageKey ?? progressKey;
  const result = state.submitted ? scoreTest(ordered, state.answers) : null;
  const answered = ordered.filter(question => state.answers[question.id] !== undefined).length;
+ const streak = checkedStreak(ordered, state.answers, state.checked);
  const missing = unansweredIds(sections, state.answers);
  useEffect(() => { if (state.submitted) resultRef.current?.focus(); }, [state.submitted]);
  useEffect(() => {
@@ -83,7 +87,8 @@ export function Quiz({ questions, passages = [], afterResult, progressKey, stora
  // Sticky compact header: progress, overview, submit and a ⋯ menu (room link / random exam).
  const bar = !state.submitted && <div data-js-only="" className="pb-1">
   <div className="flex items-center gap-2">
-   <div className="min-w-0 flex-1"><b className="block text-sm">{answered}/{ordered.length} câu</b><div role="progressbar" aria-label="Tiến độ" aria-valuemin={0} aria-valuemax={ordered.length} aria-valuenow={answered} className="mt-1 h-1.5 overflow-hidden rounded-full bg-sky-soft"><div className="h-full bg-primary" style={{ width: `${ordered.length ? answered / ordered.length * 100 : 0}%` }}/></div></div>
+   <div className="min-w-0 flex-1"><div className="flex min-h-8 flex-wrap items-center gap-1"><b className="text-sm">{answered}/{ordered.length} câu</b>{streak >= 2 && <span aria-label={`Chuỗi đúng liên tiếp: ${streak}`} className="inline-flex shrink-0 items-center gap-1 rounded-full bg-warm px-2 py-1 font-bold text-primary"><Flame width={18} height={18} aria-hidden="true"/>{streak}</span>}</div><div role="progressbar" aria-label="Tiến độ" aria-valuemin={0} aria-valuemax={ordered.length} aria-valuenow={answered} className="mt-1 h-1.5 overflow-hidden rounded-full bg-sky-soft"><div className="h-full bg-primary" style={{ width: `${ordered.length ? answered / ordered.length * 100 : 0}%` }}/></div></div>
+
    <button ref={overviewTrigger} type="button" className={`${secondaryClass} max-sm:px-3`} onClick={() => setDialog("overview")}><ListChecks aria-hidden="true" className="size-5 max-sm:hidden"/>Tổng quan</button>
    <button ref={submitTrigger} type="button" className={`${buttonClass} whitespace-nowrap max-sm:px-3`} onClick={() => setDialog("confirm")}>Nộp bài</button>
    <details className="relative"><summary aria-label="Thêm tùy chọn" className={`${secondaryClass} min-w-11 cursor-pointer list-none px-0 [&::-webkit-details-marker]:hidden`}><Ellipsis aria-hidden="true" className="size-5"/></summary>
@@ -98,10 +103,13 @@ export function Quiz({ questions, passages = [], afterResult, progressKey, stora
   <noscript><p className="font-semibold">Em cần bật JavaScript để kiểm tra đáp án, nộp bài và xem kết quả. Em vẫn có thể đọc bài và chọn đáp án bên dưới.</p></noscript>
   <SectionedPractice header={bar} sections={sections} answers={state.answers} checked={state.checked} revealAll={state.submitted} activeIndex={activeIndex} onActiveChange={setActiveIndex} onSelect={(id, key) => dispatch({ type: "select", id, key })} onCheck={id => dispatch({ type: "check", id })} focusRequest={focusRequest} compactHeading/>
   {dialog && <QuizDialogs dialog={dialog} sections={sections} answers={state.answers} numbers={numbers} total={ordered.length} answered={answered} missing={missing} onClose={() => setDialog(null)} onJump={jumpTo} onSubmit={submit} overviewTrigger={overviewTrigger} submitTrigger={submitTrigger}/>}
-  {result && <section ref={resultRef} tabIndex={-1} aria-live="polite" aria-labelledby="result-heading" className="space-y-6 rounded-xl border border-navy-soft/20 bg-warm p-5 sm:p-8">
-   <div className="flex items-center gap-4"><Image unoptimized src="/brand/mascot.webp" alt="" width={512} height={348} loading="lazy" className="h-auto w-24 shrink-0"/><div><p className="text-sm font-semibold text-primary">Đã hoàn thành bài luyện</p><h2 id="result-heading" className="mt-2 text-2xl font-bold">Kết quả của em</h2></div></div>
-   <dl className="grid gap-4 sm:grid-cols-3"><div className="rounded-xl bg-surface p-4"><dt>Số câu đúng</dt><dd className="mt-1 text-3xl font-bold">{result.score}/{result.total}</dd></div><div className="rounded-xl bg-surface p-4"><dt>Điểm trên thang 10</dt><dd className="mt-1 text-3xl font-bold">{scoreOutOf10(result.score,result.total).toLocaleString("vi-VN",{maximumFractionDigits:1})}/10</dd></div><div className="rounded-xl bg-surface p-4"><dt>Tỷ lệ đúng</dt><dd className="mt-1 text-3xl font-bold">{result.percent.toLocaleString("vi-VN",{maximumFractionDigits:1})}%</dd></div></dl>
-   <p>Hãy xem lại lời giải để biết phần nào em cần luyện thêm.</p>
+  {result && <section ref={resultRef} tabIndex={-1} aria-live="polite" aria-labelledby="result-heading" className="relative isolate overflow-hidden space-y-6 rounded-xl border border-navy-soft/20 bg-warm p-5 sm:p-8">
+   {starCount(result.percent) >= 2 && <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">{Array.from({ length: 10 }, (_, i) => <span key={i} className={`result-confetti absolute top-0 h-3 w-2 rounded-sm ${i % 2 ? "bg-primary" : "bg-cta"}`} style={{ left: `${5 + i * 10}%`, animationDelay: `${i * 60}ms` }}/>)}</div>}
+   <div className="flex flex-wrap items-center justify-center gap-5 sm:justify-start">
+    <ScoreRing score={result.score} total={result.total} percent={result.percent}/>
+    <div className="flex items-center gap-3"><Mascot pose={resultPose(result.percent)} size={96}/><div><ResultStars percent={result.percent}/><h2 id="result-heading" className="mt-2 text-2xl font-bold">Kết quả của em</h2><p className="mt-1">{result.percent >= 60 ? "Giỏi lắm! Cùng xem lại lời giải nhé." : "Cùng xem lời giải, rồi thử lại nhé!"}</p></div></div>
+   </div>
+   <dl className="sr-only"><dt>Số câu đúng</dt><dd>{result.score}/{result.total}</dd><dt>Điểm trên thang 10</dt><dd>{scoreOutOf10(result.score,result.total).toLocaleString("vi-VN",{maximumFractionDigits:1})}/10</dd><dt>Tỷ lệ đúng</dt><dd>{result.percent.toLocaleString("vi-VN",{maximumFractionDigits:1})}%</dd></dl>
    <ul className="grid gap-2 sm:grid-cols-2">{result.perQuestion.map(item => { const Icon = !item.answered ? CircleHelp : item.correct ? CheckCircle2 : XCircle; return <li key={item.questionId}><a href={`#question-${item.questionId}`} onClick={event => { event.preventDefault(); jumpTo(item.questionId); }} className="flex min-h-11 items-center gap-2 rounded-xl border border-navy-soft/20 bg-surface px-3 py-2"><Icon aria-hidden="true" className="size-5 shrink-0"/>Câu {numbers[item.questionId]}: {!item.answered ? "Chưa trả lời" : item.correct ? "Đúng" : "Chưa đúng"}</a></li>; })}</ul>
    <button type="button" className={buttonClass} onClick={() => { dispatch({type:"reset"}); if (persistId) clearQuiz(persistId); setActiveIndex(0); setRestored(false); startRef.current?.focus(); }}><RotateCcw aria-hidden="true" className="size-5"/>Làm lại</button>
    {afterResult && <div className="border-t border-navy-soft/20 pt-6">{afterResult}</div>}

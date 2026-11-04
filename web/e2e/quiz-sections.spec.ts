@@ -97,7 +97,7 @@ test.describe("sectioned reading test", () => {
   const q1 = page.locator("[data-quiz-sections] > section").first().locator("fieldset").first();
   await q1.getByRole("radio").nth(1).check();
   await page.getByRole("button", { name: /Kiểm tra câu 1/ }).click();
-  await expect(page.locator("[id^='feedback-']").first()).toContainText(/Chính xác!|Đáp án đúng/);
+  await expect(page.locator("[id^='feedback-']").first()).toContainText(/Chính xác!|Chưa đúng — đáp án:|Đáp án đúng/);
   await expect(q1).toHaveAttribute("disabled", "");
   await page.reload();
   await expect(page.getByText("Đã khôi phục bài làm đang dở.")).toBeVisible();

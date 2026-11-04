@@ -1,4 +1,5 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,7 +16,7 @@ import { Turnstile, turnstileOn } from "./Turnstile";
 const useClient = () => useState(createAccountClient)[0];
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const USERNAME_RE = /^[a-z0-9][a-z0-9._-]{2,19}$/;
-export const USERNAME_HINT = "3–20 ký tự: chữ thường a-z, số 0-9, dấu . _ -. Đừng dùng tên thật của bé.";
+export const USERNAME_HINT = "3–20 ký tự: a-z/0-9/._-. Không dùng tên thật của bé.";
 const link = "font-semibold text-primary underline";
 const Busy = ({ pending, text }: { pending: boolean; text: string }) => pending ? <><Loader2 aria-hidden="true" className="size-5 motion-safe:animate-spin"/>Đang xử lý…</> : <>{text}</>;
 const NO_RECOVERY = "Nếu không có email đã xác minh và không còn mã khôi phục, BeeJunior không thể khôi phục tài khoản.";
@@ -55,11 +56,12 @@ export function RegisterForm() {
  if (result?.mailUnavailable) return <section className={`${card} space-y-3`} role="status"><h2 className="text-xl font-extrabold">Chưa gửi được email xác minh lúc này</h2><p>Tài khoản đã được tạo. BeeJunior chưa gửi được email xác minh lúc này nên email chưa được lưu. Bạn vẫn dùng được tài khoản, và có thể thêm lại email trong trang Tài khoản sau.</p><Link className={ctaCls} href={accountPath()}>Vào tài khoản</Link></section>;
  if (result) return <section className={`${card} space-y-3`} role="status"><MailCheck aria-hidden="true" className="size-8 text-primary"/><h2 className="text-xl font-extrabold">Hãy kiểm tra email</h2><p>BeeJunior đã gửi một liên kết xác minh (hiệu lực 24 giờ). Mở liên kết đó để xác minh email; sau đó bạn có thể dùng email để đặt lại mật khẩu.</p><Link className={ctaCls} href={accountPath()}>Vào tài khoản</Link></section>;
  return <form onSubmit={submit} noValidate className={`${card} space-y-5`} aria-label="Đăng ký tài khoản phụ huynh">
-  <p>Tài khoản dành cho <strong>cha/mẹ hoặc người giám hộ</strong>. Con em sẽ có hồ sơ riêng chỉ gồm biệt danh và lớp.</p>
+  <Mascot pose="welcome" size={56}/>
+  <p>Dành cho <strong>cha/mẹ hoặc người giám hộ</strong>.</p>
   <Field id="dk-ten" label="Tên đăng nhập" hint={USERNAME_HINT} error={errs.username}>{a => <input {...a} type="text" autoComplete="username" autoCapitalize="none" spellCheck={false} maxLength={20} value={username} onChange={e => setUsername(e.target.value)} className={inputCls}/>}</Field>
   <Field id="dk-mat-khau" label="Mật khẩu" hint="Ít nhất 10 ký tự, không quá phổ biến." error={errs.password}>{a => <input {...a} type="password" autoComplete="new-password" value={password} onChange={e => setPassword(e.target.value)} className={inputCls}/>}</Field>
-  <Field id="dk-email" label="Email (không bắt buộc)" hint="Nên thêm email để khôi phục mật khẩu khi quên. Nếu bỏ trống, bạn chỉ khôi phục được bằng mã khôi phục." error={errs.email}>{a => <input {...a} type="email" autoComplete="email" inputMode="email" value={email} onChange={e => setEmail(e.target.value)} className={inputCls}/>}</Field>
-  <fieldset aria-describedby="dk-consent-error" className="min-w-0"><legend className="sr-only">Xác nhận và đồng ý</legend>
+  <Field id="dk-email" label="Email (không bắt buộc)" hint="Email giúp khôi phục. Bỏ trống: chỉ dùng mã khôi phục." error={errs.email}>{a => <input {...a} type="email" autoComplete="email" inputMode="email" value={email} onChange={e => setEmail(e.target.value)} className={inputCls}/>}</Field>
+  <fieldset aria-describedby="dk-consent-error" className="min-w-0 text-sm"><legend className="sr-only">Xác nhận và đồng ý</legend>
    <CheckRow id="dk-adult" checked={adult} onChange={setAdult}>{ADULT_LABEL}</CheckRow>
    <CheckRow id="dk-policy" checked={policy} onChange={setPolicy}>{POLICY_LABEL_PREFIX}<Link className={link} href={privacyPath()} target="_blank">{POLICY_LINK_TEXT}</Link> và <Link className={link} href={termsPath()} target="_blank">{TERMS_LINK_TEXT}</Link>{POLICY_LABEL_SUFFIX}</CheckRow>
    <p id="dk-consent-error" role={errs.consent ? "alert" : undefined} className={errs.consent ? "mt-1 text-sm font-semibold text-red-700" : "sr-only"}>{errs.consent}</p>

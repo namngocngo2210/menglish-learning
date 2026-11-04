@@ -2,6 +2,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, CircleHelp, XCircle } from "lucide-react";
 import { numberQuestions, sectionProgress, type Answers, type DisplayQuestion, type QuizQuestion, type QuizSection } from "@/lib/quiz/sections";
+import { Mascot } from "@/components/art/Mascot";
 import { whyNot } from "@/lib/quiz/why-not";
 import type { OptionKey } from "@/lib/content/types";
 
@@ -43,8 +44,8 @@ function FeedbackBody({ question, selected, correct, Icon }: { question: QuizQue
  const chosen = question.options.find(option => option.key === selected);
  const reason = chosen && !correct ? whyNot(question.explanation, chosen.text) : null;
  return <div className="mt-5 space-y-3 rounded-xl border border-navy-soft/20 bg-warm p-4">
-  <p className="flex items-center gap-2 font-bold"><Icon aria-hidden="true" className="size-5 shrink-0 text-primary"/><span>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : <>Em chọn <span lang="en">{label(selected)}</span> — chưa đúng.</>}</span></p>
-  {!correct && <p className="font-semibold">Đáp án đúng: <span lang="en">{label(question.correctKey)}</span></p>}
+  <p className="flex items-center gap-2 font-bold">{selected ? <span className="shrink-0"><Mascot pose={correct ? "correct" : "oops"} size={48}/></span> : <Icon aria-hidden="true" className="size-5 shrink-0 text-primary"/>}<span>{!selected ? "Em chưa chọn đáp án." : correct ? "Chính xác!" : <>Chưa đúng — đáp án: <span lang="en">{label(question.correctKey)}</span></>}</span></p>
+  {!selected && <p className="font-semibold">Đáp án đúng: <span lang="en">{label(question.correctKey)}</span></p>}
   <p>{!correct && <strong>Vì sao đúng: </strong>}{question.explanation}</p>
   {chosen && !correct && <p>{reason ? <><strong>Vì sao “<span lang="en">{chosen.text}</span>” chưa phù hợp: </strong>{reason}</> : <>Phương án “<span lang="en">{label(selected)}</span>” chưa phù hợp với cấu trúc của câu.</>}</p>}
  </div>;
@@ -61,7 +62,7 @@ function QuestionCard({ question, number, selected, revealed, feedback, onSelect
    <legend className="mb-5 w-full font-bold"><span className="mb-2 block text-sm text-primary">Câu {number}</span><span lang="en">{question.stem}</span></legend>
    <div className="space-y-3">{question.options.map(option => <label key={option.key} className={`flex min-h-11 items-start gap-3 rounded-xl border p-3 ${selected === option.key ? "border-primary bg-warm" : "border-navy-soft/30"}`}><input className="mt-1 size-5 shrink-0 accent-primary" type="radio" name={`quiz-${question.id}`} value={option.key} checked={selected === option.key} onChange={() => onSelect(question.id, option.key)}/><span lang="en">{option.key}. {option.text}</span></label>)}</div>
   </fieldset>
-  {graded && !revealed && <button type="button" disabled={!selected} onClick={() => { onCheck?.(question.id); requestAnimationFrame(() => document.getElementById(`feedback-${question.id}`)?.focus()); }} className={`${ctaClass} mt-5`}>Kiểm tra<span className="sr-only"> câu {number}</span></button>}
+  {graded && !revealed && <button type="button" disabled={!selected} aria-label={`Kiểm tra câu ${number}`} onClick={() => { onCheck?.(question.id); requestAnimationFrame(() => document.getElementById(`feedback-${question.id}`)?.focus()); }} className={`${ctaClass} mt-5`}>Kiểm tra<span className="sr-only"> câu {number}</span></button>}
   {graded && <div id={`feedback-${question.id}`} tabIndex={-1} aria-live="polite" aria-atomic="true">{revealed && <FeedbackBody question={graded} selected={selected} correct={correct} Icon={FeedbackIcon}/>}</div>}
  </section>;
 }
@@ -104,7 +105,7 @@ export function SectionedPractice({ sections, answers, checked, revealAll = fals
   <nav id="quiz-nav" aria-label="Các phần của bài" className="scroll-mt-2">
    <ol className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:thin] lg:flex-wrap lg:overflow-visible">{sections.map((section, index) => {
     const progress = sectionProgress(section, answers);
-    return <li key={section.id} className="shrink-0"><a href={`#${section.id}-heading`} aria-current={index === activeIndex ? "step" : undefined} onClick={event => { event.preventDefault(); goTo(index); }} className={`flex min-h-11 flex-col justify-center rounded-xl border px-4 py-1 leading-tight no-underline! motion-safe:transition-colors ${index === activeIndex ? "border-primary bg-primary text-surface!" : "border-navy-soft/30 bg-surface text-navy! hover:bg-warm"}`}><span className="font-bold">{section.label}</span><span className="text-sm">{progress.answered}/{progress.total} đã làm</span></a></li>;
+    return <li key={section.id} className="shrink-0"><a href={`#${section.id}-heading`} aria-current={index === activeIndex ? "step" : undefined} onClick={event => { event.preventDefault(); goTo(index); }} className={`flex min-h-11 flex-col justify-center rounded-xl border px-4 py-1 leading-tight no-underline! motion-safe:transition-colors ${index === activeIndex ? "border-primary bg-primary text-surface!" : "border-navy-soft/30 bg-surface text-navy! hover:bg-warm"}`}><span className="font-bold">{section.label}</span><span className="flex items-center gap-1 text-sm">{progress.answered}/{progress.total}<span className="sr-only"> đã làm</span>{progress.answered === progress.total && <CheckCircle2 width={14} height={14} aria-hidden="true"/>}</span></a></li>;
    })}</ol>
   </nav>
   </div>

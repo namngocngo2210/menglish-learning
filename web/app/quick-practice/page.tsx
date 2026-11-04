@@ -11,7 +11,7 @@ export default async function QuickPage() {
  return <PageShell title="Luyện nhanh 10 phút">
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: "/" }, { name: "Luyện nhanh 10 phút", path: "/quick-practice" }])}/>
   <Breadcrumbs items={[{ label: "Trang chủ", href: "/" }, { label: "Luyện nhanh 10 phút" }]}/>
-  <p>Mười câu trộn ngẫu nhiên từ ngân hàng câu hỏi. Chọn đáp án, kiểm tra từng câu rồi nộp bài để xem điểm.</p>
+  <p>10 câu trộn ngẫu nhiên. Làm, kiểm tra, nộp bài.</p>
   <QuickPractice afterResult={<AdSlot slot="footer"/>}/>
   <AdSlot slot="footer"/>
  </PageShell>;

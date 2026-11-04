@@ -1,4 +1,5 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { buildRandomQuiz, QuizPool } from "@/lib/random-quiz";
 import type { Quiz } from "./Quiz";
@@ -30,12 +31,12 @@ export function RandomQuiz({ poolUrl, size = 20, children, afterResult, hideTrig
    const mixed = mixerModule.buildRandomQuiz(loadedPool, seed, size);
    if (!mixed.questions.length) throw new Error("Empty pool");
    setActive({ quiz: mixed, Quiz: quizModule.Quiz });
-  } catch { setError("Chưa tải được đề ngẫu nhiên. Em hãy thử lại hoặc làm đề cố định bên dưới."); }
+  } catch { setError("Chưa tải được đề. Thử lại hoặc chọn đề có sẵn."); }
   finally { setLoading(false); }
  }
  return <RandomStartContext.Provider value={{ start, again: Boolean(quiz), loading }}><div ref={region} className="space-y-6">
   {(!hideTrigger || quiz) && <div className="flex flex-col gap-3 sm:flex-row"><button ref={trigger} type="button" disabled={loading} aria-busy={loading} className={buttonClass} onClick={start}>{quiz ? "Làm đề ngẫu nhiên khác" : "Làm đề ngẫu nhiên"}</button>{quiz && <button type="button" className="min-h-11 w-full rounded-xl border border-primary bg-surface px-5 py-3 font-bold text-primary hover:bg-sky-soft sm:w-auto" onClick={() => { setActive(null); trigger.current?.focus(); }}>Quay lại đề cố định</button>}</div>}
-  <p role="status" aria-live="polite" className="empty:hidden">{loading ? "Đang tải và trộn đề…" : error}</p>
+  <p role="status" aria-live="polite" className={loading || error ? "flex min-h-24 items-center gap-3" : "sr-only"}>{(loading || error) && <Mascot pose="sleepy" size={64}/>} {loading ? "Đang tải và trộn đề…" : error}</p>
   {active ? <active.Quiz key={active.quiz.seed} lead={<p className="font-bold text-primary">Đề ngẫu nhiên · {active.quiz.questions.length} câu</p>} questions={active.quiz.questions} passages={active.quiz.passages} storageKey={`random:${active.quiz.seed}`} afterResult={afterResult}/> : children}
  </div></RandomStartContext.Provider>;
 }

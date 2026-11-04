@@ -1,4 +1,5 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Clock3, Send } from "lucide-react";
 import { SectionedPractice } from "@/components/quiz/SectionedPractice";
@@ -76,7 +77,7 @@ export function RoomPlay({ client, room }: RoomScreenProps) {
  };
 
  if (load.status === "error") return <div className={card} data-slot="play"><h1 className="text-2xl font-extrabold">Không tải được đề</h1><div className="mt-3"><ErrorLine message="Không tải được đề thi. Kiểm tra mạng rồi thử lại."/></div><button type="button" className={`${btnCta} mt-4`} onClick={() => void fetchQuiz()}>Thử lại</button></div>;
- if (load.status !== "ready") return <p role="status" className={card} data-slot="play">Đang tải đề…</p>;
+ if (load.status !== "ready") return <p role="status" className={`${card} flex min-h-32 items-center gap-3`} data-slot="play"><Mascot pose="sleepy" size={64}/>Đang tải đề…</p>;
 
  const footer = <>
   <TimerChip room={room}/>

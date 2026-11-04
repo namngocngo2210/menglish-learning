@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Link2, Play, PlusCircle } from "lucide-react";
+import { Mascot } from "@/components/art/Mascot";
 import { AdSlot } from "@/components/ads/AdSlot";
 import { FaqSection } from "@/components/faq-section";
 import { JsonLd } from "@/components/json-ld";
@@ -41,9 +43,10 @@ function ComingSoon() {
 export default function RoomsLandingPage() {
  if (!roomsEnabled()) return <ComingSoon/>;
  return <PageShell title="Luyện tập nhóm" hero={<div className="border-b border-navy-soft/10 bg-warm"><div className="mx-auto max-w-6xl px-5 py-9 sm:px-8 sm:py-12">
+  <Mascot pose="group" size={128} className="float-right ml-3 max-sm:w-24 max-sm:h-24"/>
   <p className="mb-3 text-sm font-semibold text-primary">BeeJunior · Luyện tập nhóm</p>
   <h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">Luyện tập nhóm</h1>
-  <p className="mt-3 max-w-2xl text-lg">Cùng làm một đề, cùng lúc, xếp hạng khi nộp bài. Không cần tài khoản.</p>
+  <p className="mt-3 max-w-2xl text-lg">Cùng làm bài, cùng xem thứ hạng. Không cần tài khoản.</p>
  </div></div>}>
   <JsonLd data={breadcrumbJsonLd([{ name: "Trang chủ", path: homePath() }, { name: "Luyện tập nhóm", path: roomsLandingPath() }])}/>
   <JsonLd data={webPageJsonLd({ name: ROOMS_TITLE, description: ROOMS_DESCRIPTION, path: roomsLandingPath() })}/>
@@ -51,12 +54,18 @@ export default function RoomsLandingPage() {
   <RoomEntry catalog={buildRoomCatalog()}/>
   <section aria-labelledby="cach-choi" className="space-y-4">
    <h2 id="cach-choi" className="text-xl font-bold">Cách chơi trong 3 bước</h2>
-   <ol className="grid gap-4 md:grid-cols-3">{ROOMS_STEPS.map((s, i) => <li key={s.title} className="rounded-2xl border-2 border-navy/20 bg-sky-soft p-5"><span className="flex size-9 items-center justify-center rounded-full bg-cta font-bold" aria-hidden="true">{i + 1}</span><h3 className="mt-3 font-bold">{s.title}</h3><p className="mt-1 text-navy-soft">{s.text}</p></li>)}</ol>
+   <ol className="grid gap-4 md:grid-cols-3">{ROOMS_STEPS.map((s, i) => {
+    const Icon = [PlusCircle, Link2, Play][i];
+    return <li key={s.title} className="relative rounded-2xl bg-sky-soft p-5 md:after:absolute md:after:top-10 md:after:-right-4 md:after:h-0.5 md:after:w-4 md:after:bg-primary/30 md:last:after:hidden">
+     <div className="flex items-center gap-3"><span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-cta font-bold text-navy" aria-hidden="true">{i + 1}</span><span aria-hidden="true" className="h-0.5 flex-1 bg-primary/30"/><Icon width={28} height={28} aria-hidden="true" className="text-primary"/></div>
+     <h3 className="mt-3 font-bold">{s.title}</h3><p className="mt-1 text-navy">{s.text}</p>
+    </li>;
+   })}</ol>
   </section>
-  <section aria-labelledby="an-toan" className="space-y-3">
-   <h2 id="an-toan" className="text-xl font-bold">An toàn và riêng tư</h2>
-   <ul className="list-disc space-y-2 pl-6">{ROOMS_PRIVACY.map(t => <li key={t}>{t}</li>)}</ul>
-  </section>
+  <details className="space-y-3 rounded-xl border border-navy/20 px-4">
+   <summary className="min-h-11 cursor-pointer py-2 font-bold text-primary">An toàn và riêng tư</summary>
+   <ul className="list-disc space-y-2 pb-4 pl-6">{ROOMS_PRIVACY.map(t => <li key={t}>{t}</li>)}</ul>
+  </details>
   <AdSlot slot="in-content"/>
   <FaqSection items={ROOMS_FAQ}/>
   <section aria-labelledby="luyen-them" className="space-y-3"><h2 id="luyen-them" className="text-xl font-bold">Luyện tập một mình</h2>{gradeLinks}</section>

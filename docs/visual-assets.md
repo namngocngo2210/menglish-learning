@@ -33,3 +33,9 @@ Source sizes above use UTF-8 byte lengths and Node `zlib.gzipSync` with default 
 All three bee keyframes and animation classes live inside `prefers-reduced-motion: no-preference`. `bee-float` bobs 3px twice over six seconds; `bee-wing` flutters six times over 3.6 seconds, then rests. `bee-pop` scales feedback poses in once over 250ms. Motion is finite so the hero settles without needing a pause control. Tile/grade hover lift and transitions are motion-safe; the reused `.press` helper scales active links to .97 only when motion is allowed. The existing reduced-motion block remains intact.
 
 Every SVG reserves width and height. Mascots with a title expose `role="img"` and a title; other artwork is decorative, aria-hidden and unfocusable. Grade numerals are paths; visible link labels carry their meaning. Shapes are server-renderable without client directives or runtime animation code.
+
+## Visual refresh B
+
+`web/components/quiz/ScoreRing.tsx` draws an original inline circle score ring and path stars (1–3). The result confetti uses ten original CSS rectangles, contained behind the result content; its finite animation only runs with `prefers-reduced-motion: no-preference`. The ring reserves its dimensions; confetti stays out of document flow. Neither uses external references.
+
+The group landing three-step strip combines original numbered circles and CSS connector lines with the existing inline Lucide `PlusCircle`, `Link2`, and `Play` icons. The circles, ring, stars, and confetti are authored in-code; the reused Lucide icons are from the existing dependency. No external SVG references or raster images are added. Decorative SVGs have explicit dimensions and `aria-hidden`.
