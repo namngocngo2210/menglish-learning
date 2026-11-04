@@ -1,0 +1,98 @@
+[
+ {
+  "page": "home",
+  "w": 390,
+  "fold": 70,
+  "total": 101
+ },
+ {
+  "page": "home",
+  "w": 1440,
+  "fold": 72,
+  "total": 101
+ },
+ {
+  "page": "grade",
+  "w": 390,
+  "fold": 124,
+  "total": 161
+ },
+ {
+  "page": "grade",
+  "w": 1440,
+  "fold": 161,
+  "total": 161
+ },
+ {
+  "page": "skill",
+  "w": 390,
+  "fold": 144,
+  "total": 96
+ },
+ {
+  "page": "skill",
+  "w": 1440,
+  "fold": 206,
+  "total": 97
+ },
+ {
+  "page": "topic",
+  "w": 390,
+  "fold": 115,
+  "total": 181
+ },
+ {
+  "page": "topic",
+  "w": 1440,
+  "fold": 178,
+  "total": 184
+ },
+ {
+  "page": "test",
+  "w": 390,
+  "fold": 136,
+  "total": 362
+ },
+ {
+  "page": "test",
+  "w": 1440,
+  "fold": 150,
+  "total": 362
+ },
+ {
+  "page": "quick",
+  "w": 390,
+  "fold": 55,
+  "total": 55
+ },
+ {
+  "page": "quick",
+  "w": 1440,
+  "fold": 55,
+  "total": 55
+ },
+ {
+  "page": "group",
+  "w": 390,
+  "fold": 62,
+  "total": 363
+ },
+ {
+  "page": "group",
+  "w": 1440,
+  "fold": 98,
+  "total": 363
+ },
+ {
+  "page": "signup",
+  "w": 390,
+  "fold": 101,
+  "total": 143
+ },
+ {
+  "page": "signup",
+  "w": 1440,
+  "fold": 135,
+  "total": 143
+ }
+]

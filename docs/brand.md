@@ -66,3 +66,5 @@ Không dùng `#10b7eb` hay `#ffc001` làm màu chữ trên nền sáng (tương 
 - Nút phụ: nền trắng/kem, viền xanh đậm, chữ xanh đậm.
 - Hiệu ứng chỉ `motion-safe`, tôn trọng giảm chuyển động.
 - Font: Be Vietnam Pro phục vụ cục bộ, không thêm CDN hay thư viện.
+
+Original inline SVG art, skill colours, sizes and motion rules: [visual-assets.md](visual-assets.md).

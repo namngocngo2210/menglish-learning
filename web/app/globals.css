@@ -1,8 +1,23 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@theme {
+@theme static {
+  /* Keep dynamic SVG palette references available in the generated CSS. */
   /* Yellow CTAs use ink text; sky is decorative on light surfaces. */
+  --color-skill-read: #0a6590;
+  --color-skill-read-soft: #e8f7fd;
+  --color-skill-grammar: #145e7a;
+  --color-skill-grammar-soft: #e8f7fd;
+  --color-skill-vocab: #286344;
+  --color-skill-vocab-soft: #eaf5ed;
+  --color-skill-write: #a23e48;
+  --color-skill-write-soft: #fceef0;
+  --color-skill-exam: #0a6590;
+  --color-skill-exam-soft: #e8f7fd;
+  --color-skill-quick: #805500;
+  --color-skill-quick-soft: #fff6d6;
+  --color-skill-group: #286344;
+  --color-skill-group-soft: #eaf5ed;
   --color-brand: #ffc001;
   --color-cta-hover: #e6ac00;
   --color-sky: #10b7eb;
@@ -33,3 +48,13 @@ a:focus-visible, summary:focus-visible { outline: 2px solid var(--color-primary)
 :where([id]) { scroll-margin-top: 1.5rem; }
 button:not(:disabled), label:has(input:not(:disabled)) { cursor: pointer; }
 button:disabled { cursor: not-allowed; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes bee-float { 50% { transform: translateY(-3px); } }
+  @keyframes bee-wing { 50% { transform: scaleX(.88); } }
+  @keyframes bee-pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .bee-float { animation: bee-float 3s ease-in-out 2; }
+  .bee-wing { transform-box: fill-box; transform-origin: center; animation: bee-wing .6s ease-in-out 6; }
+  .bee-pop { transform-box: fill-box; transform-origin: center; animation: bee-pop .25s ease-out both; }
+  .press:active { transform: scale(.97); }
+}
