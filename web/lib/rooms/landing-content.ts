@@ -3,9 +3,9 @@ import type { Faq } from "@/lib/seo-content";
 export const ROOMS_TITLE = "Luyện tập nhóm tiếng Anh";
 export const ROOMS_DESCRIPTION = "Cùng bạn bè làm một đề tiếng Anh cùng lúc, xếp hạng khi nộp bài. Tạo phòng 1v1 hoặc cả lớp, miễn phí, không cần tài khoản.";
 export const ROOMS_STEPS = [
- { title: "Tạo phòng", text: "Chọn đề có sẵn hoặc trộn câu theo lớp, kỹ năng và chủ đề." },
- { title: "Gửi mã hoặc đường dẫn", text: "Bạn bè nhập mã 6 ký tự hoặc mở đường dẫn, đặt tên hiển thị rồi vào phòng." },
- { title: "Chủ phòng bấm Bắt đầu", text: "Mọi người làm cùng một đề, cùng lúc; bảng xếp hạng hiện khi cả phòng nộp xong." },
+ { title: "Tạo phòng", text: "Chọn đề có sẵn hoặc trộn câu theo lớp." },
+ { title: "Gửi mã hoặc đường dẫn", text: "Gửi mã 6 ký tự, mời bạn bè vào phòng." },
+ { title: "Chủ phòng bấm Bắt đầu", text: "Cùng làm bài, nộp xong xem bảng xếp hạng." },
 ] as const;
 export const ROOMS_PRIVACY = [
  "Không cần tài khoản, không có chat giữa các bạn.",

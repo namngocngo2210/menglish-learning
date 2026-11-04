@@ -36,8 +36,12 @@ describe("username accounts", () => {
   const out = html(createElement(RegisterForm));
   expect(out).toContain("Tên đăng nhập");
   expect(out).toContain("không bắt buộc");
-  expect(out).toContain("Nên thêm email để khôi phục mật khẩu");
-  expect(out).toContain("Đừng dùng tên thật của bé");
+  expect(out).toContain("Email giúp khôi phục. Bỏ trống: chỉ dùng mã khôi phục.");
+  expect(out).toContain("Không dùng tên thật của bé");
+  expect(out).toContain("Tôi là cha/mẹ hoặc người giám hộ, từ đủ 18 tuổi.");
+  expect(out).toContain("Chính sách quyền riêng tư</a> và <a");
+  expect(out).toContain("Điều khoản sử dụng</a> của BeeJunior.");
+  for (const hint of out.matchAll(/id="dk-(?:ten|mat-khau|email)-hint"[^>]*>([^<]*)</g)) expect(hint[1].trim().split(/\s+/).length).toBeLessThanOrEqual(12);
   expect((out.match(/type="checkbox"/g) ?? []).length).toBe(2);
  });
  it("login asks for a username, not an email, and links to password recovery", () => {

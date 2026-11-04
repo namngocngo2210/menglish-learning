@@ -3,6 +3,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import config from "@/next.config";
 import sitemap from "@/app/sitemap";
+import { ROOMS_PRIVACY, ROOMS_STEPS } from "@/lib/rooms/landing-content";
 import { roomsEnabled } from "@/lib/rooms/flag";
 import { getAllRoutes, absoluteUrl, TITLE_MAX } from "@/lib/seo";
 
@@ -62,7 +63,14 @@ it("landing: indexable metadata with canonical/OG when on, noindex coming-soon w
   expect(String(on.description).length).toBeGreaterThan(80);
   const html = renderToStaticMarkup(createElement(Landing));
   for (const t of ["BreadcrumbList", "FAQPage", "WebPage"]) expect(html).toContain(`"@type":"${t}"`);
-  expect(html).toContain("Cùng làm một đề, cùng lúc");
+  expect(html).toContain("Cùng làm bài, cùng xem thứ hạng.");
+  expect(html).toMatch(/<details[^>]*><summary[^>]*>An toàn và riêng tư<\/summary>/);
+  expect(html).not.toMatch(/<details[^>]*open[^>]*><summary[^>]*>An toàn/);
+  for (const text of ROOMS_PRIVACY) expect(html).toContain(text);
+  for (const step of ROOMS_STEPS) {
+    expect(html).toContain(step.title); expect(html).toContain(step.text);
+    expect(step.text.split(/\s+/).length).toBeLessThanOrEqual(12);
+  }
   expect(html.match(/Vị trí quảng cáo/g)).toHaveLength(1);
 });
 

@@ -29,8 +29,8 @@ describe("answer feedback", () => {
  });
  it("wrong: names the choice, states the key once, explains why it is right and why the choice is not", () => {
   const box = feedback("A"); const text = box.textContent!;
-  expect(text).toContain("Em chọn A. turning — chưa đúng.");
-  expect(count(text, "Đáp án đúng")).toBe(1); expect(count(text, "D. turn")).toBe(1);
+  expect(text).toContain("Chưa đúng — đáp án: D. turn");
+  expect(count(text, "Đáp án đúng")).toBe(0); expect(count(text, "D. turn")).toBe(1);
   expect(text).toContain(`Vì sao đúng: ${rule}`);
   expect(text).toContain("Vì sao “turning” chưa phù hợp: Sau “to” cần dạng nguyên thể; “turning” là dạng V-ing.");
   expect(count(text, "Đáp án đúng là")).toBe(0);

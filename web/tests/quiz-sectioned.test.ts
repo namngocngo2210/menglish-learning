@@ -40,7 +40,20 @@ describe("sectioned quiz", () => {
   mount();
   pick("a1");
   const nav = screen.getByRole("navigation", { name: "Các phần của bài" });
-  expect(within(nav).getAllByText(/đã làm/).map(n => n.textContent)).toEqual(["1/2 đã làm", "0/1 đã làm", "0/1 đã làm"]);
+  expect(within(nav).getAllByText(/đã làm/).map(n => n.parentElement?.textContent)).toEqual(["1/2 đã làm", "0/1 đã làm", "0/1 đã làm"]);
+ });
+ it("shows the checked streak from state and resets it after a wrong answer", () => {
+  mount();
+  pick("a1");
+  fireEvent.click(screen.getByRole("button", { name: "Kiểm tra câu 1" }));
+  expect(screen.queryByLabelText(/Chuỗi đúng liên tiếp/)).toBeNull();
+  pick("a2");
+  fireEvent.click(screen.getByRole("button", { name: "Kiểm tra câu 2" }));
+  expect(screen.getByLabelText("Chuỗi đúng liên tiếp: 2").textContent).toBe("2");
+  fireEvent.click(screen.getByRole("button", { name: /Phần sau/ }));
+  pick("b1", "B");
+  fireEvent.click(screen.getByRole("button", { name: "Kiểm tra câu 3" }));
+  expect(screen.queryByLabelText(/Chuỗi đúng liên tiếp/)).toBeNull();
  });
  it("gives desktop panes their own overflow container, focus stop and labels", () => {
   mount();
@@ -87,7 +100,26 @@ describe("sectioned quiz", () => {
   fireEvent.click(screen.getByRole("button", { name: "Nộp bài" }));
   fireEvent.click(within(await openDialog()).getByRole("button", { name: "Nộp bài" }));
   expect(screen.getByText("Kết quả của em")).toBeTruthy();
-  expect(screen.getByText("1/4")).toBeTruthy();
+  expect(screen.getByText("1/4", { selector: "span" })).toBeTruthy();
+  expect(screen.getByRole("img", { name: "1 sao" })).toBeTruthy();
+  expect(document.querySelector(".result-confetti")).toBeNull();
+  for (const term of ["Số câu đúng", "Điểm trên thang 10", "Tỷ lệ đúng"]) expect(screen.getByText(term, { selector: "dt" })).toBeTruthy();
+ });
+ it("celebrates a completed quiz and preserves the result slot and retry", async () => {
+  mount({ afterResult: createElement("p", null, "Sau kết quả") });
+  for (const question of questions) pick(question.id);
+  fireEvent.click(screen.getByRole("button", { name: "Nộp bài" }));
+  fireEvent.click(within(await openDialog()).getByRole("button", { name: "Nộp bài" }));
+  const result = screen.getByRole("region", { name: "Kết quả của em" });
+  expect(within(result).getByRole("img", { name: "3 sao" })).toBeTruthy();
+  expect(result.querySelectorAll(".result-confetti")).toHaveLength(10);
+  expect(result.className).toContain("overflow-hidden");
+  expect(result.querySelector('circle[stroke-dasharray="100 100"]')).not.toBeNull();
+  expect(within(result).getByText("Sau kết quả")).toBeTruthy();
+  expect(within(result).getAllByRole("link")).toHaveLength(4);
+  fireEvent.click(within(result).getByRole("button", { name: "Làm lại" }));
+  expect(screen.queryByRole("region", { name: "Kết quả của em" })).toBeNull();
+  expect(document.querySelector<HTMLInputElement>('input[name="quiz-a1"]')?.checked).toBe(false);
  });
  it("overview marks answered and unanswered questions and jumps to a section", async () => {
   mount();

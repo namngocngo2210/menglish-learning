@@ -4,8 +4,8 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { JsonLd } from "@/components/json-ld";
 import { fitTitle, buildMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { PageShell, Breadcrumbs, PageTitle, TestTileList, ChipList } from "@/components/ui-kit";
-import { getGrades, getTopics, getTestsForTopic, loadBundle, estimateMinutes } from "@/lib/content/load";
+import { PageShell, Breadcrumbs, PageTitle, TestTileList, ChipList, LinkCardList } from "@/components/ui-kit";
+import { getGrades, getTopics, getTestsForTopic, loadBundle } from "@/lib/content/load";
 import { topicPath, parseTopicSegment, skillSegment, topicSegment, gradeSlug, parseGradeSlug, parseSkillUrl, parseTestSlug, homePath, gradePath, skillPath, testPath, SKILL_NAMES, type Grade, type Skill } from "@/lib/routes";
 import { FaqSection } from "@/components/faq-section";
 import { buildTopicFaq } from "@/lib/seo-content";
@@ -39,7 +39,7 @@ export default async function TopicPage({ params }: { params: Promise<{ grade: s
    {def.tips && <details className="rounded-xl border border-navy-soft/20 bg-surface p-4"><summary className="flex min-h-11 cursor-pointer items-center"><h2 className="text-lg font-bold">Lưu ý khi làm bài</h2></summary><ul className="mt-3 list-disc space-y-2 pl-6">{def.tips.map(tip => <li key={tip}>{tip}</li>)}</ul></details>}
   </section>}
   <RandomQuiz poolUrl={`/pool/${gradeSlug(grade)}/${skillSegment(skill)}/${topicSegment(skill, topic.slug)}`} afterResult={<AdSlot slot="footer"/>}>
-   {tests.length ? <TestTileList items={tests.map(test => ({ label: `Đề ${parseTestSlug(test.slug)!.test.replace("de-", "")}`, meta: `${test.questionIds.length} câu · ~${estimateMinutes(test.questionIds.length)} phút`, href: testPath(grade, skill, topic.slug, parseTestSlug(test.slug)!.test), progressKey: test.slug }))}/> : <p>Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé.</p>}
+   {tests.length ? <TestTileList items={tests.map(test => ({ label: `Đề ${parseTestSlug(test.slug)!.test.replace("de-", "")}`, meta: `${test.questionIds.length} câu`, href: testPath(grade, skill, topic.slug, parseTestSlug(test.slug)!.test), progressKey: test.slug }))}/> : <LinkCardList items={[]} emptyMessage="Chủ đề này chưa có bài luyện. Em hãy quay lại sau nhé."/>}
   </RandomQuiz>
   <section aria-labelledby="bo-de-khac" className="space-y-3"><h2 id="bo-de-khac" className="text-lg font-bold">Bộ đề khác</h2>
    <ChipList items={[...getTopics(grade, skill).filter(t => t.slug !== topic.slug).map(t => ({ label: `${t.name} · ${getTestsForTopic(grade, skill, t.slug).length} đề`, href: topicPath(grade, skill, t.slug) })), ...otherGrades.map(t => ({ label: `${t.name} lớp ${t.grade}`, href: topicPath(t.grade, skill, t.slug) }))]}/></section>

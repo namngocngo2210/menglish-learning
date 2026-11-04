@@ -1,1 +1,1 @@
-export const tileClass = "flex h-full min-h-24 flex-col gap-1 rounded-2xl border border-navy-soft/20 border-t-4 border-t-brand bg-surface p-4 text-navy! no-underline motion-safe:transition-colors hover:border-primary hover:bg-warm";
+export const tileClass = "press flex h-full min-h-24 flex-col gap-1 rounded-2xl border border-navy-soft/20 border-t-4 bg-surface p-4 text-navy! no-underline shadow-sm motion-safe:transition motion-safe:hover:-translate-y-1 hover:shadow-md hover:bg-warm";

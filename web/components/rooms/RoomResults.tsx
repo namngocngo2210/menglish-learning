@@ -1,6 +1,7 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import { BookOpen, Flag, RotateCcw, Trophy } from "lucide-react";
+import { BookOpen, Flag, RotateCcw } from "lucide-react";
 import { duelHeadline, hasTies, initialLoad, isSharedRank, loadReducer, REPORT_REASONS, reviewStatus, reviewSummary } from "@/lib/rooms/results";
 import type { ReportReason, ResultsResponse, ReviewItem } from "@/lib/rooms/types";
 import { btnCta, btnSecondary, card, ConfirmDialog, ErrorLine, LeaveButton, useAction, type RoomScreenProps } from "./ui";
@@ -16,7 +17,7 @@ function Review({ client, code }: { client: RoomScreenProps["client"]; code: str
  return <section className={card} aria-labelledby="review-title">
   <h2 id="review-title" className="text-xl font-bold">Xem lại bài của em</h2>
   {!open && <button type="button" className={`${btnSecondary} mt-3`} onClick={() => { setOpen(true); void load(); }}><BookOpen aria-hidden="true" className="size-5"/>Xem đáp án và lời giải</button>}
-  {open && state.status === "loading" && <p role="status" className="mt-3">Đang tải…</p>}
+  {open && state.status === "loading" && <p role="status" className="mt-3 flex min-h-24 items-center gap-3"><Mascot pose="sleepy" size={64}/>Đang tải…</p>}
   {open && state.status === "error" && <div className="mt-3"><ErrorLine message="Không tải được phần xem lại."/><button type="button" className={`${btnSecondary} mt-2`} onClick={() => void load()}>Thử lại</button></div>}
   {sum && state.status === "ready" && <>
    <p className="mt-2 font-semibold">Đúng {sum.correct} · Sai {sum.wrong} · Bỏ trống {sum.blank}</p>
@@ -59,12 +60,12 @@ export function RoomResults({ client, room }: RoomScreenProps) {
  useEffect(() => { void load(); }, [load]);
 
  if (state.status === "error") return <div className={card} data-slot="results"><h1 className="text-2xl font-extrabold">Không tải được kết quả</h1><div className="mt-3"><ErrorLine message="Không tải được kết quả. Em thử lại nhé."/></div><button type="button" className={`${btnCta} mt-4`} onClick={() => void load()}>Thử lại</button></div>;
- if (state.status !== "ready") return <p role="status" className={card} data-slot="results">Đang tải kết quả…</p>;
+ if (state.status !== "ready") return <p role="status" className={`${card} flex min-h-32 items-center gap-3`} data-slot="results"><Mascot pose="sleepy" size={64}/>Đang tải kết quả…</p>;
  const r = state.data;
  const opponentLeft = r.ranking.some(x => !x.isMe && x.note === "left") || (r.duel !== null && r.ranking.length < 2); // the server drops players who left
  return <div className="space-y-5" data-slot="results">
   <section className={card} aria-labelledby="res-title">
-   <h1 id="res-title" className="flex items-center gap-2 text-2xl font-extrabold"><Trophy aria-hidden="true" className="size-6"/>{r.duel ? duelHeadline(r.duel, opponentLeft) : "Kết quả"}</h1>
+   <h1 id="res-title" className="flex items-center gap-2 text-2xl font-extrabold"><Mascot pose="trophy" size={64}/>{r.duel ? duelHeadline(r.duel, opponentLeft) : "Kết quả"}</h1>
    <p className="mt-2 text-lg font-bold">Em đúng {r.me.correct}/{r.me.total} câu · hạng {r.me.rank}</p>
    {hasTies(r.ranking) && <p className="text-navy-soft">Bằng điểm: xếp chung hạng.</p>}
    <ol className="mt-4 divide-y divide-navy/10" aria-label="Bảng xếp hạng">

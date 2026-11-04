@@ -1,4 +1,5 @@
 "use client";
+import { Mascot } from "@/components/art/Mascot";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, PlusCircle } from "lucide-react";
@@ -78,8 +79,8 @@ export function CreateRoomForm({ catalog, initialSlug = null }: { catalog: RoomC
     {([6, 7, 8, 9] as const).map(g => <optgroup key={g} label={`Lớp ${g}`}>{catalog.tests.filter(t => t.grade === g).map(t => <option key={t.slug} value={t.slug}>{t.title} ({t.size} câu)</option>)}</optgroup>)}
    </select>}</Field>
    <Field id="tao-dan" label="Hoặc dán đường dẫn đề" hint="Ví dụ: /grade-7/grammar/present-simple/test-1" error={pasteInvalid ? "Đường dẫn không phải một đề hợp lệ." : pasteUnknown ? "Không có đề này trong thư viện." : null}>{a => <input {...a} className={inputCls} inputMode="url" autoComplete="off" spellCheck={false} value={paste} onChange={e => { setPaste(e.target.value); const s = parseTestInput(e.target.value, window.location.host); set({ slug: s && catalog.tests.some(t => t.slug === s) ? s : null }); }}/>}</Field>
-   <div aria-live="polite" data-slot="test-preview" className="rounded-xl border-2 border-navy/20 bg-sky-soft p-3">
-    {picked ? <p><span className="font-bold">{picked.title}</span><br/><span className="text-navy-soft">{picked.size} câu · Lớp {picked.grade}{picked.skill ? ` · ${SKILL_NAMES[picked.skill]}` : ""}</span></p> : <p className="text-navy-soft">Chưa chọn đề.</p>}
+   <div aria-live="polite" data-slot="test-preview" className="min-h-32 rounded-xl border-2 border-navy/20 bg-sky-soft p-3">
+    {picked ? <p><span className="font-bold">{picked.title}</span><br/><span className="text-navy-soft">{picked.size} câu · Lớp {picked.grade}{picked.skill ? ` · ${SKILL_NAMES[picked.skill]}` : ""}</span></p> : <p role="status" className="flex min-h-24 items-center gap-3 text-navy"><Mascot pose="sleepy" size={64}/>Chưa chọn đề.</p>}
    </div>
   </div> : <div className="space-y-4">
    <ChoiceGroup legend="Lớp" name="grade" value={d.grade} options={GRADE_OPTIONS} onChange={grade => set({ grade, topic: null })}/>
@@ -99,13 +100,13 @@ export function CreateRoomForm({ catalog, initialSlug = null }: { catalog: RoomC
    <ChoiceGroup legend="Số câu" name="size" value={d.size} options={SIZES} onChange={size => set({ size })}/>
    <ChoiceGroup legend="Độ khó" name="difficulty" value={d.difficulty} options={DIFFICULTY} onChange={difficulty => set({ difficulty })}/>
    <p id="tao-size" tabIndex={-1} aria-live="polite" data-slot="available-count" className={`rounded-xl border-2 p-3 font-semibold ${short ? "border-red-700 bg-red-50 text-red-700" : "border-navy/20 bg-sky-soft"}`}>
-    {d.skills.length === 0 ? "Chọn kỹ năng để xem số câu khả dụng." : <>Có <strong>{available}</strong> câu phù hợp{short ? ` — ít hơn ${d.size} câu đã chọn, hãy bớt số câu hoặc mở rộng bộ lọc.` : "."}</>}
+    {d.skills.length === 0 ? "Chọn kỹ năng để xem số câu khả dụng." : <>Có <strong>{available}</strong> câu phù hợp{short ? `. Cần ${d.size} câu: giảm số câu hoặc mở rộng bộ lọc.` : "."}</>}
    </p>
   </div>}
 
-  <ChoiceGroup legend="Giới hạn thời gian" name="time" value={d.time} options={TIME} onChange={time => set({ time })} hint="Không giới hạn: phòng tự kết thúc sau tối đa 60 phút."/>
+  <ChoiceGroup legend="Giới hạn thời gian" name="time" value={d.time} options={TIME} onChange={time => set({ time })} hint="Không giới hạn: tự kết thúc trong tối đa 60 phút."/>
   <ChoiceGroup legend="Số người tối đa" name="max" value={d.maxPlayers} options={PLAYERS} onChange={maxPlayers => set({ maxPlayers })} hint="Tối đa 45 người, phù hợp cả lớp." errorId="tao-maxPlayers-error" error={errors.maxPlayers}/>
-  <Field id="tao-name" label="Tên hiển thị của bạn" hint="Dùng tên gọi, không dùng họ tên đầy đủ hoặc số điện thoại. 2–20 ký tự." error={nameErr}>{a => <input {...a} className={inputCls} maxLength={40} autoComplete="off" value={d.name} onChange={e => { setD(p => ({ ...p, name: e.target.value })); setErrors(p => ({ ...p, name: undefined })); setServerError(s => s?.field === "name" ? null : s); }}/>}</Field>
+  <Field id="tao-name" label="Tên hiển thị của bạn" hint="Biệt danh 2–20 ký tự; tránh tên thật, số điện thoại." error={nameErr}>{a => <input {...a} className={inputCls} maxLength={40} autoComplete="off" value={d.name} onChange={e => { setD(p => ({ ...p, name: e.target.value })); setErrors(p => ({ ...p, name: undefined })); setServerError(s => s?.field === "name" ? null : s); }}/>}</Field>
 
   <div role="alert" className={formErr ? "rounded-xl border-2 border-red-700 bg-red-50 p-3 font-semibold text-red-700" : "sr-only"}>{formErr}</div>
   <button type="submit" className={ctaCls} disabled={busy}>{busy ? <><Loader2 aria-hidden="true" className="size-5 animate-spin motion-reduce:animate-none"/>Đang tạo phòng…</> : <><PlusCircle aria-hidden="true" className="size-5"/>Tạo phòng</>}</button>

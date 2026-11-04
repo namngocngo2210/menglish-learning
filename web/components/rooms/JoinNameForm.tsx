@@ -37,7 +37,7 @@ export function JoinNameForm({ code, preview, onJoined, onBlocked }: { code: str
    <p className="flex items-center gap-1.5 text-navy-soft"><Users aria-hidden="true" className="size-4"/>{preview.playerCount}/{preview.maxPlayers} người</p>
   </div>}
   <form onSubmit={submit} noValidate className="mt-5 space-y-4">
-   <Field id="vao-ten" label="Tên hiển thị" hint="Dùng tên gọi, không dùng họ tên đầy đủ hoặc số điện thoại. 2–20 ký tự." error={error}>{a => <input {...a} className={inputCls} maxLength={40} autoComplete="off" value={name} onChange={e => { setName(e.target.value); setError(null); }}/>}</Field>
+   <Field id="vao-ten" label="Tên hiển thị" hint="Biệt danh 2–20 ký tự; tránh tên thật, số điện thoại." error={error}>{a => <input {...a} className={inputCls} maxLength={40} autoComplete="off" value={name} onChange={e => { setName(e.target.value); setError(null); }}/>}</Field>
    <div role="alert" className={formError ? "rounded-xl border-2 border-red-700 bg-red-50 p-3 font-semibold text-red-700" : "sr-only"}>{formError}</div>
    <button type="submit" className={ctaCls} disabled={busy}>{busy ? <><Loader2 aria-hidden="true" className="size-5 animate-spin motion-reduce:animate-none"/>Đang vào phòng…</> : "Vào phòng"}</button>
   </form>
